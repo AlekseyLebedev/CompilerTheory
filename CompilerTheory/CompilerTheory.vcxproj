@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C48FF5DB-0D42-4E79-BE4D-AFD8936D27CB}</ProjectGuid>
+    <ProjectGuid>{D024FA53-C472-4819-A8E4-EA4C5D761674}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CompilerTheory</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -141,6 +141,16 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CompoundStm.h" />
+    <ClInclude Include="AssignStm.h" />
+    <ClInclude Include="IdExp.h" />
+    <ClInclude Include="IExp.h" />
+    <ClInclude Include="LasrExpList.h" />
+    <ClInclude Include="NumExp.h" />
+    <ClInclude Include="PrintStm.h" />
+    <ClInclude Include="OpExp.h" />
+    <ClInclude Include="INode.h" />
+    <ClInclude Include="IVisitor.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
