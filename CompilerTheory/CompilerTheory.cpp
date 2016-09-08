@@ -1,11 +1,11 @@
-// CompilerTheory.cpp: главный файл проекта.
+// CompilerTheory.cpp: определяет точку входа для консольного приложения.
+//
 
 #include "stdafx.h"
 
-using namespace System;
 
-int main(array<System::String ^> ^args)
+int main()
 {
-    Console::WriteLine(L"Здравствуй, мир!");
     return 0;
 }
+
