@@ -9,7 +9,12 @@
 
 #include <stdio.h>
 #include <tchar.h>
-
+#include <string>
+#include <map>
+#include <set>
+#include <vector>
+#include <iostream>
+#include <fstream>
 
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы

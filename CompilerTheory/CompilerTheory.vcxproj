@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D024FA53-C472-4819-A8E4-EA4C5D761674}</ProjectGuid>
+    <ProjectGuid>{C48FF5DB-0D42-4E79-BE4D-AFD8936D27CB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CompilerTheory</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -143,6 +143,8 @@
   <ItemGroup>
     <ClInclude Include="CompoundStm.h" />
     <ClInclude Include="AssignStm.h" />
+    <ClInclude Include="DotOutputVisitor.h" />
+    <ClInclude Include="GraphvizLauncher.h" />
     <ClInclude Include="IdExp.h" />
     <ClInclude Include="IExp.h" />
     <ClInclude Include="LasrExpList.h" />
@@ -156,6 +158,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CompilerTheory.cpp" />
+    <ClCompile Include="DotOutputVisitor.cpp" />
+    <ClCompile Include="GraphvizLauncher.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
