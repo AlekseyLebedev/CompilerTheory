@@ -83,5 +83,8 @@
     <ClCompile Include="AssignStm.cpp">
       <Filter>FirstTask</Filter>
     </ClCompile>
+    <ClCompile Include="OpExp.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
