@@ -3,7 +3,7 @@
 
 namespace GraphvizOutput {
 
-	class CDotOutputVisitor : public IVisitor
+	class CDotOutputVisitor : public FirstTask::IVisitor
 	{
 	public:
 		CDotOutputVisitor();
@@ -15,10 +15,10 @@ namespace GraphvizOutput {
 		std::ofstream dotFile;
 
 		// Унаследовано через IVisitor
-		virtual void Visit(CCompoundStm *) override;
-		virtual void Visit(CPrintStm *) override;
-		virtual void Visit(COpExp *) override;
-		virtual void Visit(CNumExp *) override;
+		virtual void Visit(FirstTask::CCompoundStm *) override;
+		virtual void Visit(FirstTask::CPrintStm *) override;
+		virtual void Visit(FirstTask::COpExp *) override;
+		virtual void Visit(FirstTask::CNumExp *) override;
 	};
 
 }

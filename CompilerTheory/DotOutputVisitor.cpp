@@ -25,19 +25,19 @@ namespace GraphvizOutput {
 	{
 	}
 
-	void CDotOutputVisitor::Visit(CCompoundStm *)
+	void CDotOutputVisitor::Visit(FirstTask::CCompoundStm *)
 	{
 	}
 
-	void CDotOutputVisitor::Visit(CPrintStm *)
+	void CDotOutputVisitor::Visit(FirstTask::CPrintStm *)
 	{
 	}
 
-	void CDotOutputVisitor::Visit(COpExp *)
+	void CDotOutputVisitor::Visit(FirstTask::COpExp *)
 	{
 	}
 
-	void CDotOutputVisitor::Visit(CNumExp *)
+	void CDotOutputVisitor::Visit(FirstTask::CNumExp *)
 	{
 	}
 

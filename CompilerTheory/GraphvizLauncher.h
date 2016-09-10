@@ -7,7 +7,7 @@ namespace GraphvizOutput {
 	public:
 		CGraphvizLauncher();
 		virtual ~CGraphvizLauncher();
-		static void Launch(::INode* node);
+		static void Launch(FirstTask::INode* node);
 
 	private:
 		static const char* filename;

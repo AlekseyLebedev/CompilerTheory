@@ -15,6 +15,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <memory>
 
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
