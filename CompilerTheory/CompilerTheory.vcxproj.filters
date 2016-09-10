@@ -48,9 +48,6 @@
     <ClInclude Include="IVisitor.h">
       <Filter>FirstTask</Filter>
     </ClInclude>
-    <ClInclude Include="LasrExpList.h">
-      <Filter>FirstTask</Filter>
-    </ClInclude>
     <ClInclude Include="NumExp.h">
       <Filter>FirstTask</Filter>
     </ClInclude>
@@ -66,6 +63,9 @@
     <ClInclude Include="GraphvizLauncher.h">
       <Filter>GraphvizOutput</Filter>
     </ClInclude>
+    <ClInclude Include="LastExpList.h">
+      <Filter>FirstTask</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -79,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="GraphvizLauncher.cpp">
       <Filter>GraphvizOutput</Filter>
+    </ClCompile>
+    <ClCompile Include="AssignStm.cpp">
+      <Filter>FirstTask</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

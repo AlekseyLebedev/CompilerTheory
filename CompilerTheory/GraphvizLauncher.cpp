@@ -11,10 +11,12 @@ namespace GraphvizOutput {
 	CGraphvizLauncher::~CGraphvizLauncher()
 	{
 	}
+
 	void CGraphvizLauncher::Launch(::INode * node)
 	{
 		CDotOutputVisitor visitor;
 		visitor.Start(filename);
+		visitor.Visit(node);
 		visitor.Close();
 		system(convertString);
 		system(launchString);

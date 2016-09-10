@@ -11,14 +11,12 @@ namespace GraphvizOutput {
 	void CDotOutputVisitor::Start(std::string filename)
 	{
 		dotFile.open(filename, std::ios_base::out | std::ios_base::trunc);
-		dotFile << "digraph G{\n"
-			"\tmain->parse->execute;\n"
-			"\tmain->init;\n"
-			"}\n";
+		dotFile << "digraph G{\n";
 	}
 
 	void CDotOutputVisitor::Close()
 	{
+		dotFile << "}\n";
 		dotFile.close();
 	}
 

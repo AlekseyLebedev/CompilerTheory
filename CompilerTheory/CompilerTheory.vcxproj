@@ -147,7 +147,7 @@
     <ClInclude Include="GraphvizLauncher.h" />
     <ClInclude Include="IdExp.h" />
     <ClInclude Include="IExp.h" />
-    <ClInclude Include="LasrExpList.h" />
+    <ClInclude Include="LastExpList.h" />
     <ClInclude Include="NumExp.h" />
     <ClInclude Include="PrintStm.h" />
     <ClInclude Include="OpExp.h" />
@@ -157,6 +157,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AssignStm.cpp" />
     <ClCompile Include="CompilerTheory.cpp" />
     <ClCompile Include="DotOutputVisitor.cpp" />
     <ClCompile Include="GraphvizLauncher.cpp" />
