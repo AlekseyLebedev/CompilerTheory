@@ -4,10 +4,10 @@ namespace FirstTask {
 	class NumExp
 	{
 	public:
-		NumExp();
+		NumExp(int _value);
 		virtual ~NumExp();
 
 	private:
-
+		int value;
 	};
 }

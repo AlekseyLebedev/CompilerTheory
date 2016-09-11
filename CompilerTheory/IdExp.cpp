@@ -1,8 +1,7 @@
 #include "IdExp.h"
 
-FirstTask::IdExp::IdExp()
+FirstTask::IdExp::IdExp(std::string _name) : name(_name)
 {
-	// TODO: написать адекватный конструктор
 }
 
 FirstTask::IdExp::~IdExp()
