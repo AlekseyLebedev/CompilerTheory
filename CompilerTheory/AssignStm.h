@@ -1,10 +1,11 @@
 #pragma once
+
 namespace FirstTask {
-	class CompoundStm
+	class AssignStm
 	{
 	public:
-		CompoundStm();
-		virtual ~CompoundStm();
+		AssignStm();
+		virtual ~AssignStm();
 
 	private:
 		
