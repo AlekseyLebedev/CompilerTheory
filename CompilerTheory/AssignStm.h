@@ -4,10 +4,10 @@ namespace FirstTask {
 	class AssignStm
 	{
 	public:
-		AssignStm();
+		AssignStm(const std::string name);
 		virtual ~AssignStm();
 
 	private:
-		
+		std::string variableName;
 	};
 }
