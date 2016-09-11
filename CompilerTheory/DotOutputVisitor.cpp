@@ -31,7 +31,7 @@ namespace GraphvizOutput {
 		int current = enterNode("CompoundStatement");
 	}
 
-	void CDotOutputVisitor::Visit(FirstTask::CPrintStm *)
+	void CDotOutputVisitor::Visit(FirstTask::CPrintStatement *)
 	{
 		int current = enterNode("CompoundStatement");
 	}
@@ -41,7 +41,7 @@ namespace GraphvizOutput {
 		int current = enterNode("CompoundStatement");
 	}
 
-	void CDotOutputVisitor::Visit(FirstTask::CNumExp *)
+	void CDotOutputVisitor::Visit(FirstTask::CNumExpression *)
 	{
 		int current = enterNode("CompoundStatement");
 	}

@@ -13,9 +13,9 @@ namespace GraphvizOutput {
 
 		// Унаследовано через IVisitor
 		virtual void Visit(FirstTask::CCompoundStm *) override;
-		virtual void Visit(FirstTask::CPrintStm *) override;
+		virtual void Visit(FirstTask::CPrintStatement *) override;
 		virtual void Visit(FirstTask::COpExp *) override;
-		virtual void Visit(FirstTask::CNumExp *) override;
+		virtual void Visit(FirstTask::CNumExpression *) override;
 
 
 	private:

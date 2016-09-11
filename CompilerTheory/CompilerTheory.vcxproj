@@ -141,16 +141,17 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CompoundStm.h" />
-    <ClInclude Include="AssignStm.h" />
+    <ClInclude Include="CompoundStatement.h" />
+    <ClInclude Include="AssignStatement.h" />
     <ClInclude Include="DotOutputVisitor.h" />
     <ClInclude Include="GraphvizLauncher.h" />
-    <ClInclude Include="IdExp.h" />
-    <ClInclude Include="IExp.h" />
+    <ClInclude Include="IdExpression.h" />
+    <ClInclude Include="IExpression.h" />
+    <ClInclude Include="IStatemnet.h" />
     <ClInclude Include="LastExpList.h" />
-    <ClInclude Include="NumExp.h" />
-    <ClInclude Include="PrintStm.h" />
-    <ClInclude Include="OpExp.h" />
+    <ClInclude Include="NumExpression.h" />
+    <ClInclude Include="PrintStatement.h" />
+    <ClInclude Include="OperationExpression.h" />
     <ClInclude Include="INode.h" />
     <ClInclude Include="IVisitor.h" />
     <ClInclude Include="stdafx.h" />
@@ -158,22 +159,22 @@
     <ClInclude Include="VariablesTable.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AssignStm.cpp" />
+    <ClCompile Include="AssignStatement.cpp" />
     <ClCompile Include="CompilerTheory.cpp" />
-    <ClCompile Include="CompoundStm.cpp" />
+    <ClCompile Include="CompoundStatement.cpp" />
     <ClCompile Include="DotOutputVisitor.cpp" />
     <ClCompile Include="GraphvizLauncher.cpp" />
-    <ClCompile Include="IdExp.cpp" />
-    <ClCompile Include="NumExp.cpp" />
-    <ClCompile Include="OpExp.cpp" />
-    <ClCompile Include="PrintStm.cpp" />
+    <ClCompile Include="IdExpression.cpp" />
+    <ClCompile Include="NumExpression.cpp" />
+    <ClCompile Include="OperationExpression.cpp" />
+    <ClCompile Include="PrintStatement.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="VariablesTablecpp.cpp" />
+    <ClCompile Include="VariablesTable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

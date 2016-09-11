@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "VariablesTable.h"
 
 FirstTask::VariablesTable::VariablesTable(const char* name, const int value,
