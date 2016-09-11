@@ -1,16 +1,22 @@
 #pragma once
 
 namespace FirstTask {
-	class CCompoundStm;
+	class CCompoundStatement;
 	class CPrintStatement;
-	class COpExp;
+	class COperationExpression;
 	class CNumExpression;
+	class CAssignStatement;
+	class CLastExpList; 
+	class CIdExpression;
 
 	__interface IVisitor {
 	public:
-		virtual void Visit(CCompoundStm*) = 0;
+		virtual void Visit(CIdExpression*) = 0;
+		virtual void Visit(CLastExpList*) = 0;
+		virtual void Visit(CAssignStatement*) = 0;		
+		virtual void Visit(CCompoundStatement*) = 0;
 		virtual void Visit(CPrintStatement*) = 0;
-		virtual void Visit(COpExp*) = 0;
+		virtual void Visit(COperationExpression*) = 0;
 		virtual void Visit(CNumExpression*) = 0;
 	};
 }

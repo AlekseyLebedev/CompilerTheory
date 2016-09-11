@@ -4,7 +4,7 @@
 #include "IExpression.h"
 
 namespace FirstTask {
-	struct COpExp : public IExpression {
+	class COperationExpression : public IExpression {
 	public:
 		enum TOperationType {
 			Plus,
@@ -13,8 +13,9 @@ namespace FirstTask {
 			Divide
 		};
 
-		COpExp(std::shared_ptr<IExpression> left, std::shared_ptr<IExpression> right, TOperationType type);
-		virtual ~COpExp();
+		COperationExpression(std::shared_ptr<IExpression> left, std::shared_ptr<IExpression> right, TOperationType type);
+		virtual ~COperationExpression();
+		virtual void Accept(IVisitor*) override;
 		std::shared_ptr<IExpression> GetLeftOperand() const;
 		std::shared_ptr<IExpression> GetRightOperand() const;
 		TOperationType GetOperationType() const;

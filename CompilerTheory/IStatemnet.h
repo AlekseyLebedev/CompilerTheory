@@ -3,6 +3,6 @@
 
 namespace FirstTask {
 	__interface IStatemnet : public INode {
-
+		
 	};
 }

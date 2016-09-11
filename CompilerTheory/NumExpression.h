@@ -8,7 +8,8 @@ namespace FirstTask {
 	public:
 		CNumExpression(int _value);
 		virtual ~CNumExpression();
-
+		virtual void Accept(IVisitor*) override;
+		int GetValue() const;
 	private:
 		int value;
 	};

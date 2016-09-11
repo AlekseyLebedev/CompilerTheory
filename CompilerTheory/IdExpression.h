@@ -8,7 +8,9 @@ namespace FirstTask {
 	public:
 		CIdExpression(std::string _name);
 		virtual ~CIdExpression();
+		virtual void Accept(IVisitor*) override;
 
+		std::string GetName() const;
 	private:
 		std::string name;
 	};

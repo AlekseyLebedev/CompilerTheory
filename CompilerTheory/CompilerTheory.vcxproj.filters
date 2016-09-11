@@ -42,12 +42,6 @@
     <ClInclude Include="GraphvizLauncher.h">
       <Filter>GraphvizOutput</Filter>
     </ClInclude>
-    <ClInclude Include="VariablesTable.h">
-      <Filter>Global h</Filter>
-    </ClInclude>
-    <ClInclude Include="INode.h">
-      <Filter>FirstTask\h</Filter>
-    </ClInclude>
     <ClInclude Include="IVisitor.h">
       <Filter>FirstTask\h</Filter>
     </ClInclude>
@@ -76,6 +70,12 @@
       <Filter>FirstTask\h</Filter>
     </ClInclude>
     <ClInclude Include="PrintStatement.h">
+      <Filter>FirstTask\h</Filter>
+    </ClInclude>
+    <ClInclude Include="INode.h">
+      <Filter>FirstTask\h</Filter>
+    </ClInclude>
+    <ClInclude Include="VariablesTable.h">
       <Filter>FirstTask\h</Filter>
     </ClInclude>
   </ItemGroup>
@@ -111,6 +111,9 @@
       <Filter>FirstTask\cpp</Filter>
     </ClCompile>
     <ClCompile Include="OperationExpression.cpp">
+      <Filter>FirstTask\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="LastExpList.cpp">
       <Filter>FirstTask\cpp</Filter>
     </ClCompile>
   </ItemGroup>

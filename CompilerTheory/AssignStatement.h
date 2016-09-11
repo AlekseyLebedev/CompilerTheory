@@ -8,7 +8,9 @@ namespace FirstTask {
 	public:
 		CAssignStatement(const std::string name);
 		virtual ~CAssignStatement();
+		virtual void Accept(IVisitor* v) override;
 
+		std::string GetVariableName() const;
 	private:
 		std::string variableName;
 	};

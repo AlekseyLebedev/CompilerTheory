@@ -12,9 +12,9 @@ namespace GraphvizOutput {
 		virtual ~CDotOutputVisitor();
 
 		// Унаследовано через IVisitor
-		virtual void Visit(FirstTask::CCompoundStm *) override;
+		virtual void Visit(FirstTask::CCompoundStatement *) override;
 		virtual void Visit(FirstTask::CPrintStatement *) override;
-		virtual void Visit(FirstTask::COpExp *) override;
+		virtual void Visit(FirstTask::COperationExpression *) override;
 		virtual void Visit(FirstTask::CNumExpression *) override;
 
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "DotOutputVisitor.h"
-#include "CompoundStm.h"
+#include "CompoundStatement.h"
 
 namespace GraphvizOutput {
 
@@ -26,7 +26,7 @@ namespace GraphvizOutput {
 	{
 	}
 
-	void CDotOutputVisitor::Visit(FirstTask::CCompoundStm * statement)
+	void CDotOutputVisitor::Visit(FirstTask::CCompoundStatement * statement)
 	{
 		int current = enterNode("CompoundStatement");
 	}
@@ -36,7 +36,7 @@ namespace GraphvizOutput {
 		int current = enterNode("CompoundStatement");
 	}
 
-	void CDotOutputVisitor::Visit(FirstTask::COpExp *)
+	void CDotOutputVisitor::Visit(FirstTask::COperationExpression *)
 	{
 		int current = enterNode("CompoundStatement");
 	}
