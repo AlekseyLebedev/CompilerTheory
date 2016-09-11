@@ -1,8 +1,7 @@
 #include "NumExp.h"
 
-FirstTask::NumExp::NumExp()
+FirstTask::NumExp::NumExp(int value_) : value(_value)
 {
-	// TODO: написать адекватный конструктор
 }
 
 FirstTask::NumExp::~NumExp()
