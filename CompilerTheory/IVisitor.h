@@ -1,12 +1,13 @@
 #pragma once
 
 namespace FirstTask {
-	struct CCompoundStm;
-	struct CPrintStm;
-	struct COpExp;
-	struct CNumExp;
+	class CCompoundStm;
+	class CPrintStm;
+	class COpExp;
+	class CNumExp;
 
 	__interface IVisitor {
+	public:
 		virtual void Visit(CCompoundStm*) = 0;
 		virtual void Visit(CPrintStm*) = 0;
 		virtual void Visit(COpExp*) = 0;

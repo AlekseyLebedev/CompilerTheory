@@ -11,14 +11,18 @@ namespace GraphvizOutput {
 		void Close();
 		virtual ~CDotOutputVisitor();
 
-	private:
-		std::ofstream dotFile;
-
 		// Унаследовано через IVisitor
 		virtual void Visit(FirstTask::CCompoundStm *) override;
 		virtual void Visit(FirstTask::CPrintStm *) override;
 		virtual void Visit(FirstTask::COpExp *) override;
 		virtual void Visit(FirstTask::CNumExp *) override;
+
+
+	private:
+		std::ofstream dotFile;
+		size_t id;
+
+		size_t enterNode(const std::string & label);
 	};
 
 }
