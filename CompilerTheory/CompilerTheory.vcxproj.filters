@@ -45,9 +45,6 @@
     <ClInclude Include="IVisitor.h">
       <Filter>FirstTask\h</Filter>
     </ClInclude>
-    <ClInclude Include="LastExpList.h">
-      <Filter>FirstTask\h</Filter>
-    </ClInclude>
     <ClInclude Include="AssignStatement.h">
       <Filter>FirstTask\h</Filter>
     </ClInclude>
@@ -79,6 +76,9 @@
       <Filter>FirstTask\h</Filter>
     </ClInclude>
     <ClInclude Include="FirstTaskMain.h">
+      <Filter>FirstTask\h</Filter>
+    </ClInclude>
+    <ClInclude Include="LastExpressionList.h">
       <Filter>FirstTask\h</Filter>
     </ClInclude>
   </ItemGroup>
@@ -116,10 +116,10 @@
     <ClCompile Include="OperationExpression.cpp">
       <Filter>FirstTask\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="LastExpList.cpp">
+    <ClCompile Include="FirstTaskMain.cpp">
       <Filter>FirstTask\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="FirstTaskMain.cpp">
+    <ClCompile Include="LastExpressionList.cpp">
       <Filter>FirstTask\cpp</Filter>
     </ClCompile>
   </ItemGroup>

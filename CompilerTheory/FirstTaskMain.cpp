@@ -8,7 +8,7 @@
 #include "OperationExpression.h"
 #include "NumExpression.h"
 #include "PrintStatement.h"
-#include "LastExpList.h"
+#include "LastExpressionList.h"
 #include "IdExpression.h"
 
 void FirstTask::FirstTaskMain()
@@ -20,7 +20,7 @@ void FirstTask::FirstTaskMain()
 				std::shared_ptr<CNumExpression>(new CNumExpression(3)),
 				COperationExpression::Plus)))),
 		std::shared_ptr<CPrintStatement>(new CPrintStatement(
-			std::shared_ptr<CLastExpList>(new CLastExpList(
+			std::shared_ptr<CLastExpressionList>(new CLastExpressionList(
 				std::shared_ptr<CIdExpression>(new CIdExpression("a"))))))));
 	GraphvizOutput::CGraphvizLauncher::Launch(root.get());
 }

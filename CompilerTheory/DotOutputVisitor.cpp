@@ -7,7 +7,7 @@
 #include "OperationExpression.h"
 #include "NumExpression.h"
 #include "PrintStatement.h"
-#include "LastExpList.h"
+#include "LastExpressionList.h"
 #include "IdExpression.h"
 
 namespace GraphvizOutput {
@@ -39,7 +39,7 @@ namespace GraphvizOutput {
 		size_t current = enterNode("CompoundStatement");
 		compoundStatement->GetLeftChild()->Accept(this);
 		addArrrow(current, current + 1);
-			size_t rightId = id + 1;
+		size_t rightId = id + 1;
 		compoundStatement->GetRightChild()->Accept(this);
 		addArrrow(current, rightId);
 
@@ -47,7 +47,7 @@ namespace GraphvizOutput {
 
 	void CDotOutputVisitor::Visit(FirstTask::CPrintStatement *printStatement)
 	{
-		size_t current = enterNode("CompoundStatement");
+		size_t current = enterNode("PrintStatement");
 		printStatement->GetExpression()->Accept(this);
 		addArrrow(current, current + 1);
 	}
@@ -57,29 +57,51 @@ namespace GraphvizOutput {
 		size_t current = enterNode("OperationExpression");
 		operationExpression->GetLeftOperand()->Accept(this);
 		addArrrow(current, current + 1);
+		switch (operationExpression->GetOperationType())
+		{
+			case FirstTask::COperationExpression::Divide:
+				addSubNode(current, "Divide");
+				break;
+			case FirstTask::COperationExpression::Plus:
+				addSubNode(current, "Plus");
+				break;
+			case FirstTask::COperationExpression::Minus:
+				addSubNode(current, "Minus");
+				break;
+			case FirstTask::COperationExpression::Times:
+				addSubNode(current, "Times");
+				break;
+		}
 		size_t rightId = id + 1;
 		operationExpression->GetRightOperand()->Accept(this);
 		addArrrow(current, rightId);
 	}
 
-	void CDotOutputVisitor::Visit(FirstTask::CNumExpression *numExpressio)
+	void CDotOutputVisitor::Visit(FirstTask::CNumExpression *numExpression)
 	{
 		size_t current = enterNode("NumExpression");
+		addSubNode(current, numExpression->GetValue());
 	}
 
 	void CDotOutputVisitor::Visit(FirstTask::CIdExpression *idExpression)
 	{
 		size_t current = enterNode("IdExpression");
+		addSubNode(current, idExpression->GetName());
 	}
 
-	void CDotOutputVisitor::Visit(FirstTask::CLastExpList *lastExpList)
+	void CDotOutputVisitor::Visit(FirstTask::CLastExpressionList *lastExpList)
 	{
-		size_t current = enterNode("LastExpList");
+		size_t current = enterNode("LastExpressionList");
+		lastExpList->GetExpression()->Accept(this);
+		addArrrow(current, current + 1);
 	}
 
 	void CDotOutputVisitor::Visit(FirstTask::CAssignStatement *assignStatement)
 	{
 		size_t current = enterNode("AssignStatement");
+		addSubNode(current, assignStatement->GetVariableName());
+		assignStatement->GetExpression()->Accept(this);
+		addArrrow(current, current + 1);
 	}
 
 
@@ -89,7 +111,17 @@ namespace GraphvizOutput {
 		return id;
 	}
 
-	void CDotOutputVisitor::addArrrow(const int from, const int to) {
+	void CDotOutputVisitor::addSubNode(size_t id, const std::string& label, const std::string& postfix) {
+		dotFile << "\tn" << id << postfix << "[label=\"" << label << "\"]" << std::endl;
+		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
+	}
+
+	void CDotOutputVisitor::addSubNode(size_t id, const size_t label, const std::string& postfix) {
+		dotFile << "\tn" << id << postfix << "[label=\"" << label << "\"]" << std::endl;
+		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
+	}
+
+	void CDotOutputVisitor::addArrrow(const size_t from, const size_t to) {
 		dotFile << "\tn" << from << " -> n" << to << ";" << std::endl;
 	}
 }

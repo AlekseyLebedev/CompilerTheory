@@ -149,7 +149,7 @@
     <ClInclude Include="IdExpression.h" />
     <ClInclude Include="IExpression.h" />
     <ClInclude Include="IStatemnet.h" />
-    <ClInclude Include="LastExpList.h" />
+    <ClInclude Include="LastExpressionList.h" />
     <ClInclude Include="NumExpression.h" />
     <ClInclude Include="PrintStatement.h" />
     <ClInclude Include="OperationExpression.h" />
@@ -167,7 +167,7 @@
     <ClCompile Include="FirstTaskMain.cpp" />
     <ClCompile Include="GraphvizLauncher.cpp" />
     <ClCompile Include="IdExpression.cpp" />
-    <ClCompile Include="LastExpList.cpp" />
+    <ClCompile Include="LastExpressionList.cpp" />
     <ClCompile Include="NumExpression.cpp" />
     <ClCompile Include="OperationExpression.cpp" />
     <ClCompile Include="PrintStatement.cpp" />
