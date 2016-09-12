@@ -2,11 +2,11 @@
 //
 
 #include "stdafx.h"
-#include "GraphvizLauncher.h"
+#include "FirstTaskMain.h"
 
 int main()
 {
-	GraphvizOutput::CGraphvizLauncher::Launch(0);
+	FirstTask::FirstTaskMain();
     return 0;
 }
 

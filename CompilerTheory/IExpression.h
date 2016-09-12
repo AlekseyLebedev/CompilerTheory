@@ -2,7 +2,7 @@
 #include "INode.h";
 
 namespace FirstTask {
-	__interface IExpression : INode {
+	class IExpression : public INode {
 		
 	};
 }

@@ -2,7 +2,8 @@
 #include "IVisitor.h"
 
 namespace FirstTask {
-	__interface INode {
+	class INode {
+	public:
 		virtual void Accept(IVisitor*) = 0;
 	};
 }

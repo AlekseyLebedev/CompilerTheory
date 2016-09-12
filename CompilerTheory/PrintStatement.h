@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "IStatemnet.h"
 #include "IExpression.h"
+
 namespace FirstTask {
 	class CPrintStatement : public IStatemnet
 	{

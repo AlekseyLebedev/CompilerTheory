@@ -1,8 +1,8 @@
 #pragma once
-#include "INode.h"
+#include "INode.h";
 
 namespace FirstTask {
-	__interface IStatemnet : public INode {
+	class IStatemnet : public INode {
 		
 	};
 }

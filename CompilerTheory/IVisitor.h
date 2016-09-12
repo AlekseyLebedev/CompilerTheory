@@ -9,7 +9,7 @@ namespace FirstTask {
 	class CLastExpList; 
 	class CIdExpression;
 
-	__interface IVisitor {
+	class IVisitor {
 	public:
 		virtual void Visit(CIdExpression*) = 0;
 		virtual void Visit(CLastExpList*) = 0;

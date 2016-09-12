@@ -16,6 +16,9 @@ namespace GraphvizOutput {
 		virtual void Visit(FirstTask::CPrintStatement *) override;
 		virtual void Visit(FirstTask::COperationExpression *) override;
 		virtual void Visit(FirstTask::CNumExpression *) override;
+		virtual void Visit(FirstTask::CIdExpression *) override;
+		virtual void Visit(FirstTask::CLastExpList *) override;
+		virtual void Visit(FirstTask::CAssignStatement *) override;
 
 
 	private:
@@ -23,6 +26,7 @@ namespace GraphvizOutput {
 		size_t id;
 
 		size_t enterNode(const std::string & label);
+		void addArrrow(const int from, const int to);
 	};
 
 }

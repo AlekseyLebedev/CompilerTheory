@@ -144,6 +144,7 @@
     <ClInclude Include="CompoundStatement.h" />
     <ClInclude Include="AssignStatement.h" />
     <ClInclude Include="DotOutputVisitor.h" />
+    <ClInclude Include="FirstTaskMain.h" />
     <ClInclude Include="GraphvizLauncher.h" />
     <ClInclude Include="IdExpression.h" />
     <ClInclude Include="IExpression.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="CompilerTheory.cpp" />
     <ClCompile Include="CompoundStatement.cpp" />
     <ClCompile Include="DotOutputVisitor.cpp" />
+    <ClCompile Include="FirstTaskMain.cpp" />
     <ClCompile Include="GraphvizLauncher.cpp" />
     <ClCompile Include="IdExpression.cpp" />
     <ClCompile Include="LastExpList.cpp" />

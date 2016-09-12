@@ -16,7 +16,7 @@ namespace GraphvizOutput {
 	{
 		CDotOutputVisitor visitor;
 		visitor.Start(filename);
-		//visitor.Visit(node);
+		node->Accept(&visitor);
 		visitor.Close();
 		system(convertString);
 		system(launchString);
