@@ -13,15 +13,14 @@
 
 void FirstTask::FirstTaskMain()
 {
-	std::shared_ptr<INode> root(new CCompoundStatement(
-		std::make_shared<IStatemnet>(new CAssignStatement("a",
-			std::make_shared<IExpression>(new COperationExpression(
-				std::make_shared<IExpression>(new CNumExpression(5)),
-				std::make_shared<IExpression>(new CNumExpression(3)),
+	std::shared_ptr<CCompoundStatement> root(new CCompoundStatement(
+		std::shared_ptr<CAssignStatement>(new CAssignStatement("a",
+			std::shared_ptr<COperationExpression>(new COperationExpression(
+				std::shared_ptr<CNumExpression>(new CNumExpression(5)),
+				std::shared_ptr<CNumExpression>(new CNumExpression(3)),
 				COperationExpression::Plus)))),
-		std::make_shared<IStatemnet>(new CPrintStatement(
-			std::make_shared<IExpression>(new CLastExpList(
-				std::make_shared<IExpression>(new CIdExpression("a"))))))));
-	//std::shared_ptr<INode> root(0);
+		std::shared_ptr<CPrintStatement>(new CPrintStatement(
+			std::shared_ptr<CLastExpList>(new CLastExpList(
+				std::shared_ptr<CIdExpression>(new CIdExpression("a"))))))));
 	GraphvizOutput::CGraphvizLauncher::Launch(root.get());
 }
