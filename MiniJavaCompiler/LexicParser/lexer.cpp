@@ -1,6 +1,6 @@
-#line 2 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 2 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
-#line 4 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 4 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -364,8 +364,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 3
-#define YY_END_OF_BUFFER 4
+#define YY_NUM_RULES 23
+#define YY_END_OF_BUFFER 24
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -373,28 +373,32 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[12] =
+static yyconst flex_int16_t yy_accept[55] =
     {   0,
-        0,    0,    4,    2,    3,    2,    0,    0,    0,    1,
-        0
+       18,   18,   24,   22,   19,   13,   18,   16,   22,   10,
+       11,   12,   17,   22,   22,   21,    8,    9,    9,    9,
+        9,    9,   14,   15,   19,   18,   20,    0,   21,    0,
+       21,    9,    9,    9,    9,    5,    9,    9,    0,    0,
+        9,    9,    9,    3,    9,    1,    4,    9,    6,    9,
+        2,    9,    7,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    2,
+        1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    3,    1,    1,    1,    1,    4,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    4,    5,    6,    1,    1,    1,    1,    1,    7,
+        8,    9,    1,   10,   11,   12,   13,   14,   14,   14,
+       14,   14,   14,   14,   14,   14,   14,    1,   15,    1,
+        1,    1,    1,    1,   16,   16,   16,   16,   16,   16,
+       16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+       16,   16,   16,   16,   16,   16,   16,   16,   16,   16,
+        1,    1,    1,    1,    1,    1,   17,   16,   18,   16,
 
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+       19,   20,   16,   21,   22,   16,   16,   23,   16,   24,
+       16,   16,   16,   25,   26,   27,   28,   16,   16,   16,
+       16,   16,   29,    1,   30,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -411,33 +415,61 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[5] =
+static yyconst flex_int32_t yy_meta[31] =
     {   0,
-        1,    1,    2,    1
+        1,    1,    1,    1,    1,    2,    1,    1,    1,    1,
+        1,    2,    1,    3,    1,    3,    3,    3,    3,    3,
+        3,    3,    3,    3,    3,    3,    3,    3,    1,    1
     } ;
 
-static yyconst flex_int16_t yy_base[14] =
+static yyconst flex_int16_t yy_base[58] =
     {   0,
-        0,    0,   11,   12,   12,    0,    7,    6,    4,   12,
-       12,    5,    4
+        0,    0,   69,   70,   66,   70,   63,   70,   60,   70,
+       70,   70,   70,   51,   55,   49,   70,    0,   10,   39,
+       12,   42,   70,   70,   58,   55,   70,   52,   43,   47,
+       41,    0,   37,   36,   26,    0,   24,   23,   40,   35,
+       22,   20,   26,    0,   16,   70,    0,   17,    0,   17,
+        0,   11,    0,   70,   35,   31,   38
     } ;
 
-static yyconst flex_int16_t yy_def[14] =
+static yyconst flex_int16_t yy_def[58] =
     {   0,
-       11,    1,   11,   11,   11,   12,   13,   13,   13,   11,
-        0,   11,   11
+       54,    1,   54,   54,   54,   54,   54,   54,   55,   54,
+       54,   54,   54,   54,   54,   54,   54,   56,   56,   56,
+       56,   56,   54,   54,   54,   54,   54,   55,   54,   57,
+       54,   56,   56,   56,   56,   56,   56,   56,   57,   57,
+       56,   56,   56,   56,   56,   54,   56,   56,   56,   56,
+       56,   56,   56,    0,   54,   54,   54
     } ;
 
-static yyconst flex_int16_t yy_nxt[17] =
+static yyconst flex_int16_t yy_nxt[101] =
     {   0,
-        4,    5,    4,    6,    8,    8,    7,   10,    9,    9,
-       11,    3,   11,   11,   11,   11
+        4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
+       14,    4,   15,   16,   17,   18,   18,   19,   20,   18,
+       18,   21,   18,   18,   22,   18,   18,   18,   23,   24,
+       33,   36,   34,   32,   53,   37,   28,   28,   39,   39,
+       39,   52,   51,   50,   49,   48,   47,   46,   40,   45,
+       44,   43,   42,   41,   31,   40,   31,   27,   26,   25,
+       38,   35,   31,   30,   29,   27,   26,   25,   54,    3,
+       54,   54,   54,   54,   54,   54,   54,   54,   54,   54,
+       54,   54,   54,   54,   54,   54,   54,   54,   54,   54,
+       54,   54,   54,   54,   54,   54,   54,   54,   54,   54
+
     } ;
 
-static yyconst flex_int16_t yy_chk[17] =
+static yyconst flex_int16_t yy_chk[101] =
     {   0,
-        1,    1,    1,    1,   13,   13,   12,    9,    8,    7,
-        3,   11,   11,   11,   11,   11
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+       19,   21,   19,   56,   52,   21,   55,   55,   57,   57,
+       57,   50,   48,   45,   43,   42,   41,   40,   39,   38,
+       37,   35,   34,   33,   31,   30,   29,   28,   26,   25,
+       22,   20,   16,   15,   14,    9,    7,    5,    3,   54,
+       54,   54,   54,   54,   54,   54,   54,   54,   54,   54,
+       54,   54,   54,   54,   54,   54,   54,   54,   54,   54,
+       54,   54,   54,   54,   54,   54,   54,   54,   54,   54
+
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -454,16 +486,14 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
-#line 4 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 1 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 4 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 #include <iostream>
+#include <cstring>
 
-static void updateLocation()
-{
-	std::cout << "Hello, world!";
-}
-#define YY_USER_ACTION updateLocation();
-#line 467 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+int col = 1;
+int row = 1;
+#line 497 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 #define INITIAL 0
 
@@ -642,9 +672,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 15 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 13 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 
-#line 648 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 678 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -697,13 +727,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 12 )
+				if ( yy_current_state >= 55 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 12 );
+		while ( yy_base[yy_current_state] != 70 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -730,20 +760,195 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 16 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 14 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 { std::cout << "comment"; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 17 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
-{ return yytext[0]; }
+#line 15 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "CLASS";
+
+}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 18 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 19 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "INT";
+	std::cout << "{" << row << "," << col << "} ";
+	col+=3;
+}
+	YY_BREAK
+case 4:
+YY_RULE_SETUP
+#line 24 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "CHAR";
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 4;
+}
+	YY_BREAK
+case 5:
+YY_RULE_SETUP
+#line 29 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "IF";
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 2;
+}
+	YY_BREAK
+case 6:
+YY_RULE_SETUP
+#line 34 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "ELSE";
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 4;
+}
+	YY_BREAK
+case 7:
+YY_RULE_SETUP
+#line 39 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "RETURN";
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 6;
+}
+	YY_BREAK
+case 8:
+YY_RULE_SETUP
+#line 44 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "SEMI";
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 1;
+}
+	YY_BREAK
+case 9:
+YY_RULE_SETUP
+#line 49 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "ID(" << yytext << ")";	
+	std::cout << "{" << row << "," << col << "} ";
+	col+= strlen(yytext);	
+}
+	YY_BREAK
+case 10:
+YY_RULE_SETUP
+#line 54 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "LPAREN";	
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 1;	
+}
+	YY_BREAK
+case 11:
+YY_RULE_SETUP
+#line 59 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "RPAREN";	
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 1;
+}
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 64 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "STAR";	
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 1;
+}
+	YY_BREAK
+case 13:
+/* rule 13 can match eol */
+YY_RULE_SETUP
+#line 69 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{	
+	row++;
+	col = 1;
+}
+	YY_BREAK
+case 14:
+YY_RULE_SETUP
+#line 73 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "LBRACE";	
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 1;
+}
+	YY_BREAK
+case 15:
+YY_RULE_SETUP
+#line 78 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "RBRACE";	
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 1;
+}
+	YY_BREAK
+case 16:
+YY_RULE_SETUP
+#line 83 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "BANG";	
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 1;
+}
+	YY_BREAK
+case 17:
+YY_RULE_SETUP
+#line 88 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "COMMA";	
+	std::cout << "{" << row << "," << col << "} ";
+	col+= 1;
+}
+	YY_BREAK
+case 18:
+YY_RULE_SETUP
+#line 93 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{	
+	col+=1;
+}
+	YY_BREAK
+case 19:
+YY_RULE_SETUP
+#line 96 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{	
+	col+=1;
+}
+	YY_BREAK
+case 20:
+YY_RULE_SETUP
+#line 99 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "STRING(" << yytext << ")";	
+	std::cout << "{" << row << "," << col << "} ";
+	col+= strlen(yytext);
+}
+	YY_BREAK
+case 21:
+YY_RULE_SETUP
+#line 104 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	std::cout << "NUM(" << yytext << ")";	
+	std::cout << "{" << row << "," << col << "} ";
+	col+= strlen(yytext);
+}
+	YY_BREAK
+case 22:
+YY_RULE_SETUP
+#line 110 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{ return yytext[0]; }
+	YY_BREAK
+case 23:
+YY_RULE_SETUP
+#line 111 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 ECHO;
 	YY_BREAK
-#line 747 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 952 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1035,7 +1240,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 12 )
+			if ( yy_current_state >= 55 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1063,11 +1268,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 12 )
+		if ( yy_current_state >= 55 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 11);
+	yy_is_jam = (yy_current_state == 54);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1737,7 +1942,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 17 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 110 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 
 
 //123
