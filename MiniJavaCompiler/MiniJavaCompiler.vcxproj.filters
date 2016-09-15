@@ -13,14 +13,17 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="flexicParser">
+    <Filter Include="LexicParser">
       <UniqueIdentifier>{4aac5cc6-05ff-48a9-b6b6-910dc77f3139}</UniqueIdentifier>
     </Filter>
-    <Filter Include="flexicParser\h">
+    <Filter Include="LexicParser\h">
       <UniqueIdentifier>{92c8f1fc-ef28-4dd5-bb04-35c49dbcc689}</UniqueIdentifier>
     </Filter>
-    <Filter Include="flexicParser\cpp">
+    <Filter Include="LexicParser\cpp">
       <UniqueIdentifier>{a4822c33-3f2d-439d-b17b-4a1c836b2d9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LexicParser\resources">
+      <UniqueIdentifier>{4eb39863-6fa6-43be-87f8-2b3252c633fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -34,7 +37,7 @@
       <Filter>Global h</Filter>
     </ClInclude>
     <ClInclude Include="LexicParser\MiniJavaParser.h">
-      <Filter>flexicParser\h</Filter>
+      <Filter>LexicParser\h</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -45,7 +48,15 @@
       <Filter>global cpp</Filter>
     </ClCompile>
     <ClCompile Include="LexicParser\MiniJavaParser.cpp">
-      <Filter>flexicParser\cpp</Filter>
+      <Filter>LexicParser\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="LexicParser\lexer.cpp">
+      <Filter>LexicParser\cpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="LexicParser\grammar.l">
+      <Filter>LexicParser\resources</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>
