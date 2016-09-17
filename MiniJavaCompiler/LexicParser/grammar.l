@@ -3,10 +3,6 @@
 %{
 #include <iostream>
 #include <cstring>
-#include <iostream>
-#include <fstream>
-
-std::ostream* globalOut;
 %}
 
 DIGIT [0-9]
