@@ -39,6 +39,9 @@
     <ClInclude Include="LexicParser\MiniJavaParser.h">
       <Filter>LexicParser\h</Filter>
     </ClInclude>
+    <ClInclude Include="LexicParser\lexer.h">
+      <Filter>LexicParser\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
