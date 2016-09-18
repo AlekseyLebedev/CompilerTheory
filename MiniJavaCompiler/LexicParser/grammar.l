@@ -18,7 +18,7 @@ static void updateLocation(bool needLocation = true)
 %}
 
 DIGIT [0-9]
-LETTER [a-zA-Z]
+LETTER [_a-zA-Z]
 
 %%
 
@@ -26,9 +26,32 @@ LETTER [a-zA-Z]
 	//Comment
 	updateLocation();
 }
-
+"//" {
+	//Comment
+		updateLocation();
+}
 class {
 	std::cout << "CLASS";
+	updateLocation();
+}
+public {
+	std::cout << "PUBLIC";
+	updateLocation();
+}
+protected {
+	std::cout << "PROTECTED";
+	updateLocation();
+}
+private {
+	std::cout << "PRIVATE";
+	updateLocation();
+}
+static {
+	std::cout << "STATIC";
+	updateLocation();
+}
+void {
+	std::cout << "VOID";
 	updateLocation();
 }
 int {
@@ -39,6 +62,10 @@ char {
 	std::cout << "CHAR";
 	updateLocation();
 }
+boolean {
+	std::cout << "BOOLEAN";
+	updateLocation();
+}
 if {
 	std::cout << "IF";
 	updateLocation();
@@ -47,8 +74,20 @@ else {
 	std::cout << "ELSE";
 	updateLocation();
 }
+while {
+	std::cout << "WHILE";
+	updateLocation();
+}
 return {
 	std::cout << "RETURN";
+	updateLocation();
+}
+this {
+	std::cout << "THIS";
+	updateLocation();
+}
+new {
+	std::cout << "NEW";
 	updateLocation();
 }
 ";" {
@@ -65,6 +104,14 @@ return {
 }
 ")" {
 	std::cout << "RPAREN";	
+	updateLocation();
+}
+"[" {
+	std::cout << "LBRACKET";	
+	updateLocation();
+}
+"]" {
+	std::cout << "RBRACKET";	
 	updateLocation();
 }
 "*" {
@@ -94,8 +141,36 @@ return {
 	std::cout << "BANG";	
 	updateLocation();
 }
+"<" {
+	std::cout << "LESS";	
+	updateLocation();
+}
+"=" {
+	std::cout << "EQUAL";	
+	updateLocation();
+}
+"+" {
+	std::cout << "PLUS";	
+	updateLocation();
+}
+"-" {
+	std::cout << "MINUS";	
+	updateLocation();
+}
+"&" {
+	std::cout << "&";	
+	updateLocation();
+}
+"|" {
+	std::cout << "|";	
+	updateLocation();
+}
 "," {
 	std::cout << "COMMA";	
+	updateLocation();
+}
+"." {
+	std::cout << ".";	
 	updateLocation();
 }
 (" ")* {	
@@ -114,7 +189,6 @@ return {
 	std::cout << "NUM(" << yytext << ")";	
 	updateLocation();
 }
-
 . { return yytext[0]; }
 %%
 //Empty
