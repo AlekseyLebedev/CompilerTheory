@@ -6,9 +6,8 @@
 
 int col = 1;
 int row = 1;
-bool needLocation = true;
 
-static void updateLocation()
+static void updateLocation(bool needLocation = true)
 {
 	if(needLocation) {
 		std::cout << "{" << row << "," << col << "}";
@@ -16,9 +15,6 @@ static void updateLocation()
 	col += strlen(yytext);
 	needLocation = true;
 }
-
-#define YY_USER_ACTION updateLocation();
-
 %}
 
 DIGIT [0-9]
@@ -28,72 +24,95 @@ LETTER [a-zA-Z]
 
 "/*"((("*"[^/])?)|[^*])*"*/" { 
 	//Comment
+	updateLocation();
 }
 
 class {
 	std::cout << "CLASS";
+	updateLocation();
 }
 int {
 	std::cout << "INT";
+	updateLocation();
 }
 char {
 	std::cout << "CHAR";
+	updateLocation();
 }
 if {
 	std::cout << "IF";
+	updateLocation();
 }
 else {
 	std::cout << "ELSE";
+	updateLocation();
 }
 return {
 	std::cout << "RETURN";
+	updateLocation();
 }
 ";" {
 	std::cout << "SEMI";
+	updateLocation();
 }
 {LETTER}({DIGIT}|{LETTER})* {
 	std::cout << "ID(" << yytext << ")";	
+	updateLocation();
 }
 "(" {
 	std::cout << "LPAREN";	
+	updateLocation();
 }
 ")" {
 	std::cout << "RPAREN";	
+	updateLocation();
 }
 "*" {
 	std::cout << "STAR";	
+	updateLocation();
 }
-"\n|(\n\r)" {	
+"\r" {	
+	std::cout << yytext;
+	updateLocation(false);
+}
+"\n" {	
 	row++;
 	col = 1;
+	updateLocation(false);
+	col = 1;
 	std::cout << yytext;
-	needLocation = false;
 }
 "{" {
 	std::cout << "LBRACE";	
+	updateLocation();
 }
 "}" {
 	std::cout << "RBRACE";	
+	updateLocation();
 }
 "!" {
 	std::cout << "BANG";	
+	updateLocation();
 }
 "," {
 	std::cout << "COMMA";	
+	updateLocation();
 }
 (" ")* {	
 	std::cout << yytext;
-	needLocation = false;
+	updateLocation(false);
 }
 ("\t")* {	
 	std::cout << yytext;
-	needLocation = false;
+	updateLocation(false);
 }
 "\""({DIGIT}|{LETTER}|".")*"\"" {
 	std::cout << "STRING(" << yytext << ")";	
+	updateLocation();
 }
 ({DIGIT}|"-"{DIGIT})({DIGIT})* {
 	std::cout << "NUM(" << yytext << ")";	
+	updateLocation();
 }
 
 . { return yytext[0]; }
