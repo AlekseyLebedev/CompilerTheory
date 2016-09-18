@@ -10,6 +10,7 @@
 int yylex();
 extern FILE* yyin, *yyout;
 void yyrestart(FILE * input_file);
+extern int row, col;
 
 int main(int argc, char** argv)
 {
@@ -20,7 +21,8 @@ int main(int argc, char** argv)
 		std::stringstream buffer;
 		for (size_t i = 1; i < argc; i++)
 		{
-
+			row = 1; 
+			col = 1;
 			buffer << argv[i];
 			std::cout << std::endl << "Processing: " << buffer.str() << std::endl;
 			yyin = fopen(buffer.str().c_str(), "r");

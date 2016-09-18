@@ -1,6 +1,6 @@
-#line 2 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 2 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
-#line 4 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 4 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -373,21 +373,21 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[113] =
+static yyconst flex_int16_t yy_accept[115] =
     {   0,
-       38,   38,   44,   42,   39,   26,   25,   38,   29,   42,
-       34,   20,   21,   24,   32,   36,   33,   37,   42,   41,
-       18,   30,   31,   19,   22,   23,   19,   19,   19,   19,
-       19,   19,   19,   19,   19,   19,   19,   27,   35,   28,
-       39,   38,   40,    0,   41,    0,    2,   41,   19,   19,
-       19,   19,   19,   12,   19,   19,   19,   19,   19,   19,
-       19,   19,   19,    0,    0,   19,   19,   19,   19,    9,
-       17,   19,   19,   19,   19,   19,   19,   19,   19,    1,
-       19,   10,   19,   13,   19,   19,   19,   19,   19,   16,
-        8,   19,   19,    3,   19,   19,   19,   19,   19,   14,
+       39,   39,   44,   42,   40,   27,   26,   39,   30,   42,
+       35,   21,   22,   25,   33,   37,   34,   38,   42,   41,
+       19,   31,   32,   20,   23,   24,   20,   20,   20,   20,
+       20,   20,   20,   20,   20,   20,   20,   28,   36,   29,
+       40,   39,    2,    0,   41,    0,    0,   41,   20,   20,
+       20,   20,   20,   13,   20,   20,   20,   20,   20,   20,
+       20,   20,   20,    0,    0,    0,    3,   20,   20,   20,
+       20,   10,   18,   20,   20,   20,   20,   20,   20,   20,
+       20,    1,   20,   11,   20,   14,   20,   20,   20,   20,
+       20,   17,    9,   20,   20,    4,   20,   20,   20,   20,
 
-       19,   19,   19,    4,   15,    7,   11,    6,   19,   19,
-        5,    0
+       20,   15,   20,   20,   20,    5,   16,    8,   12,    7,
+       20,   20,    6,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -431,82 +431,84 @@ static yyconst flex_int32_t yy_meta[45] =
         3,    1,    1,    1
     } ;
 
-static yyconst flex_int16_t yy_base[116] =
+static yyconst flex_int16_t yy_base[119] =
     {   0,
-        0,    0,  125,  126,  122,  126,  126,  118,  126,  115,
-      126,  126,  126,  126,  126,  126,  104,  126,   34,  103,
-      126,  126,  126,    0,  126,  126,   85,   16,   86,   18,
-       89,   13,   88,   77,   84,   79,   82,  126,  126,  126,
-      109,  105,  126,  102,   91,   96,  126,   89,    0,   71,
-       80,   79,   65,    0,   63,   59,   22,   74,   60,   73,
-       65,   64,   63,   82,   76,   59,   54,   52,   60,    0,
-        0,   47,   48,   53,   45,   45,   45,   54,   48,  126,
-       51,    0,   41,    0,   53,   48,   44,   38,   42,    0,
-        0,   44,   47,    0,   32,   43,   42,   34,   40,    0,
+        0,    0,  130,  131,  127,  131,  131,  123,  131,  120,
+      131,  131,  131,  131,  131,  131,  109,  131,   34,  108,
+      131,  131,  131,    0,  131,  131,   90,   16,   91,   18,
+       94,   13,   93,   82,   89,   84,   87,  131,  131,  131,
+      114,  110,  131,  107,   96,  101,  108,   93,    0,   75,
+       84,   83,   69,    0,   67,   63,   22,   78,   64,   77,
+       69,   68,   67,   86,   80,   92,  131,   62,   57,   55,
+       63,    0,    0,   50,   51,   56,   48,   48,   48,   57,
+       51,  131,   54,    0,   44,    0,   56,   51,   47,   41,
+       45,    0,    0,   47,   50,    0,   35,   46,   45,   37,
 
-       32,   36,   25,    0,    0,    0,    0,    0,   34,   28,
-        0,  126,   55,   51,   58
+       43,    0,   35,   39,   28,    0,    0,    0,    0,    0,
+       37,   28,    0,  131,   55,   51,   58,   61
     } ;
 
-static yyconst flex_int16_t yy_def[116] =
+static yyconst flex_int16_t yy_def[119] =
     {   0,
-      112,    1,  112,  112,  112,  112,  112,  112,  112,  113,
-      112,  112,  112,  112,  112,  112,  112,  112,  112,  112,
-      112,  112,  112,  114,  112,  112,  114,  114,  114,  114,
-      114,  114,  114,  114,  114,  114,  114,  112,  112,  112,
-      112,  112,  112,  113,  112,  115,  112,  112,  114,  114,
+      114,    1,  114,  114,  114,  114,  114,  114,  114,  115,
       114,  114,  114,  114,  114,  114,  114,  114,  114,  114,
-      114,  114,  114,  115,  115,  114,  114,  114,  114,  114,
-      114,  114,  114,  114,  114,  114,  114,  114,  114,  112,
-      114,  114,  114,  114,  114,  114,  114,  114,  114,  114,
-      114,  114,  114,  114,  114,  114,  114,  114,  114,  114,
+      114,  114,  114,  116,  114,  114,  116,  116,  116,  116,
+      116,  116,  116,  116,  116,  116,  116,  114,  114,  114,
+      114,  114,  114,  115,  114,  117,  118,  114,  116,  116,
+      116,  116,  116,  116,  116,  116,  116,  116,  116,  116,
+      116,  116,  116,  117,  117,  118,  114,  116,  116,  116,
+      116,  116,  116,  116,  116,  116,  116,  116,  116,  116,
+      116,  114,  116,  116,  116,  116,  116,  116,  116,  116,
+      116,  116,  116,  116,  116,  116,  116,  116,  116,  116,
 
-      114,  114,  114,  114,  114,  114,  114,  114,  114,  114,
-      114,    0,  112,  112,  112
+      116,  116,  116,  116,  116,  116,  116,  116,  116,  116,
+      116,  116,  116,    0,  114,  114,  114,  114
     } ;
 
-static yyconst flex_int16_t yy_nxt[171] =
+static yyconst flex_int16_t yy_nxt[176] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
        14,   15,   16,   17,   18,   19,   20,   21,   22,   23,
        24,   25,   26,   24,   27,   28,   24,   29,   24,   24,
        30,   24,   31,   24,   32,   33,   34,   35,   24,   36,
        37,   38,   39,   40,   46,   51,   54,   52,   57,   47,
-       55,   58,   72,   49,  111,   73,   44,   44,   64,   64,
-       64,  110,  109,  108,  107,  106,  105,  104,  103,  102,
-      101,  100,   99,   98,   97,   96,   95,   94,   93,   92,
-       91,   90,   89,   88,   87,   86,   85,   84,   83,   82,
-       81,   80,   65,   79,   78,   77,   76,   75,   74,   71,
+       55,   58,   74,   49,  113,   75,   44,   44,   64,   64,
+       64,   66,   66,   66,  112,  111,  110,  109,  108,  107,
+      106,  105,  104,  103,  102,  101,  100,   99,   98,   97,
+       96,   95,   94,   93,   92,   91,   90,   89,   88,   87,
+       86,   85,   84,   83,   67,   82,   65,   81,   80,   79,
 
-       70,   69,   68,   67,   66,   48,   65,   48,   43,   42,
-       41,   63,   62,   61,   60,   59,   56,   53,   50,   48,
-       45,   43,   42,   41,  112,    3,  112,  112,  112,  112,
-      112,  112,  112,  112,  112,  112,  112,  112,  112,  112,
-      112,  112,  112,  112,  112,  112,  112,  112,  112,  112,
-      112,  112,  112,  112,  112,  112,  112,  112,  112,  112,
-      112,  112,  112,  112,  112,  112,  112,  112,  112,  112
+       78,   77,   76,   73,   72,   71,   70,   69,   68,   48,
+       67,   65,   48,   43,   42,   41,   63,   62,   61,   60,
+       59,   56,   53,   50,   48,   45,   43,   42,   41,  114,
+        3,  114,  114,  114,  114,  114,  114,  114,  114,  114,
+      114,  114,  114,  114,  114,  114,  114,  114,  114,  114,
+      114,  114,  114,  114,  114,  114,  114,  114,  114,  114,
+      114,  114,  114,  114,  114,  114,  114,  114,  114,  114,
+      114,  114,  114,  114,  114
     } ;
 
-static yyconst flex_int16_t yy_chk[171] =
+static yyconst flex_int16_t yy_chk[176] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,   19,   28,   30,   28,   32,   19,
-       30,   32,   57,  114,  110,   57,  113,  113,  115,  115,
-      115,  109,  103,  102,  101,   99,   98,   97,   96,   95,
-       93,   92,   89,   88,   87,   86,   85,   83,   81,   79,
-       78,   77,   76,   75,   74,   73,   72,   69,   68,   67,
-       66,   65,   64,   63,   62,   61,   60,   59,   58,   56,
+       30,   32,   57,  116,  112,   57,  115,  115,  117,  117,
+      117,  118,  118,  118,  111,  105,  104,  103,  101,  100,
+       99,   98,   97,   95,   94,   91,   90,   89,   88,   87,
+       85,   83,   81,   80,   79,   78,   77,   76,   75,   74,
+       71,   70,   69,   68,   66,   65,   64,   63,   62,   61,
 
-       55,   53,   52,   51,   50,   48,   46,   45,   44,   42,
-       41,   37,   36,   35,   34,   33,   31,   29,   27,   20,
-       17,   10,    8,    5,    3,  112,  112,  112,  112,  112,
-      112,  112,  112,  112,  112,  112,  112,  112,  112,  112,
-      112,  112,  112,  112,  112,  112,  112,  112,  112,  112,
-      112,  112,  112,  112,  112,  112,  112,  112,  112,  112,
-      112,  112,  112,  112,  112,  112,  112,  112,  112,  112
+       60,   59,   58,   56,   55,   53,   52,   51,   50,   48,
+       47,   46,   45,   44,   42,   41,   37,   36,   35,   34,
+       33,   31,   29,   27,   20,   17,   10,    8,    5,    3,
+      114,  114,  114,  114,  114,  114,  114,  114,  114,  114,
+      114,  114,  114,  114,  114,  114,  114,  114,  114,  114,
+      114,  114,  114,  114,  114,  114,  114,  114,  114,  114,
+      114,  114,  114,  114,  114,  114,  114,  114,  114,  114,
+      114,  114,  114,  114,  114
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -523,13 +525,13 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
-#line 4 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 1 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 4 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 #include <iostream>
 #include <cstring>
 
-int col = 1;
-int row = 1;
+int col=1;
+int row=1;
 
 static void updateLocation(bool needLocation = true)
 {
@@ -537,9 +539,14 @@ static void updateLocation(bool needLocation = true)
 		std::cout << "{" << row << "," << col << "}";
 	}
 	col += strlen(yytext);
-	needLocation = true;
 }
-#line 543 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+
+void newLine(){
+	++row;
+	col=1;
+	std::cout<<"\n";
+}
+#line 550 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 #define INITIAL 0
 
@@ -718,10 +725,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 23 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 28 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 
 
-#line 725 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 732 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -774,13 +781,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 113 )
+				if ( yy_current_state >= 115 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 126 );
+		while ( yy_base[yy_current_state] != 131 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -807,7 +814,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 25 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 30 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 { 
 	//Comment
 	updateLocation();
@@ -815,307 +822,305 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 29 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 34 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
-	//Comment
-		updateLocation();
+	std::cout << "STRING(" << yytext << ")";	
+	updateLocation();
 }
 	YY_BREAK
 case 3:
+/* rule 3 can match eol */
 YY_RULE_SETUP
-#line 33 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 38 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{
+	//Comment
+	newLine();
+}
+	YY_BREAK
+case 4:
+YY_RULE_SETUP
+#line 42 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "CLASS";
 	updateLocation();
 }
 	YY_BREAK
-case 4:
+case 5:
 YY_RULE_SETUP
-#line 37 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 46 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "PUBLIC";
 	updateLocation();
 }
 	YY_BREAK
-case 5:
+case 6:
 YY_RULE_SETUP
-#line 41 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 50 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "PROTECTED";
 	updateLocation();
 }
 	YY_BREAK
-case 6:
+case 7:
 YY_RULE_SETUP
-#line 45 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 54 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "PRIVATE";
 	updateLocation();
 }
 	YY_BREAK
-case 7:
+case 8:
 YY_RULE_SETUP
-#line 49 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 58 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "STATIC";
 	updateLocation();
 }
 	YY_BREAK
-case 8:
+case 9:
 YY_RULE_SETUP
-#line 53 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 62 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "VOID";
 	updateLocation();
 }
 	YY_BREAK
-case 9:
+case 10:
 YY_RULE_SETUP
-#line 57 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 66 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "INT";
 	updateLocation();
 }
 	YY_BREAK
-case 10:
+case 11:
 YY_RULE_SETUP
-#line 61 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 70 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "CHAR";
 	updateLocation();
 }
 	YY_BREAK
-case 11:
+case 12:
 YY_RULE_SETUP
-#line 65 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 74 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "BOOLEAN";
 	updateLocation();
 }
 	YY_BREAK
-case 12:
+case 13:
 YY_RULE_SETUP
-#line 69 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 78 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "IF";
 	updateLocation();
 }
 	YY_BREAK
-case 13:
+case 14:
 YY_RULE_SETUP
-#line 73 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 82 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "ELSE";
 	updateLocation();
 }
 	YY_BREAK
-case 14:
+case 15:
 YY_RULE_SETUP
-#line 77 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 86 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "WHILE";
 	updateLocation();
 }
 	YY_BREAK
-case 15:
+case 16:
 YY_RULE_SETUP
-#line 81 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 90 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "RETURN";
 	updateLocation();
 }
 	YY_BREAK
-case 16:
+case 17:
 YY_RULE_SETUP
-#line 85 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 94 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "THIS";
 	updateLocation();
 }
 	YY_BREAK
-case 17:
+case 18:
 YY_RULE_SETUP
-#line 89 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 98 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "NEW";
 	updateLocation();
 }
 	YY_BREAK
-case 18:
+case 19:
 YY_RULE_SETUP
-#line 93 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 102 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "SEMI";
 	updateLocation();
 }
 	YY_BREAK
-case 19:
+case 20:
 YY_RULE_SETUP
-#line 97 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 106 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "ID(" << yytext << ")";	
 	updateLocation();
 }
 	YY_BREAK
-case 20:
+case 21:
 YY_RULE_SETUP
-#line 101 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 110 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "LPAREN";	
 	updateLocation();
 }
 	YY_BREAK
-case 21:
+case 22:
 YY_RULE_SETUP
-#line 105 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 114 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "RPAREN";	
 	updateLocation();
 }
 	YY_BREAK
-case 22:
+case 23:
 YY_RULE_SETUP
-#line 109 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 118 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "LBRACKET";	
 	updateLocation();
 }
 	YY_BREAK
-case 23:
+case 24:
 YY_RULE_SETUP
-#line 113 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 122 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "RBRACKET";	
 	updateLocation();
 }
 	YY_BREAK
-case 24:
+case 25:
 YY_RULE_SETUP
-#line 117 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 126 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "STAR";	
 	updateLocation();
 }
 	YY_BREAK
-case 25:
-YY_RULE_SETUP
-#line 121 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
-{	
-	std::cout << yytext;
-	updateLocation(false);
-}
-	YY_BREAK
 case 26:
-/* rule 26 can match eol */
 YY_RULE_SETUP
-#line 125 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 130 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {	
-	row++;
-	col = 1;
-	updateLocation(false);
-	col = 1;
 	std::cout << yytext;
+	updateLocation(false);
 }
 	YY_BREAK
 case 27:
+/* rule 27 can match eol */
 YY_RULE_SETUP
-#line 132 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 134 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{	
+	row++;
+	newLine();
+}
+	YY_BREAK
+case 28:
+YY_RULE_SETUP
+#line 138 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "LBRACE";	
 	updateLocation();
 }
 	YY_BREAK
-case 28:
+case 29:
 YY_RULE_SETUP
-#line 136 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 142 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "RBRACE";	
 	updateLocation();
 }
 	YY_BREAK
-case 29:
+case 30:
 YY_RULE_SETUP
-#line 140 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 146 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "BANG";	
 	updateLocation();
 }
 	YY_BREAK
-case 30:
+case 31:
 YY_RULE_SETUP
-#line 144 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 150 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "LESS";	
 	updateLocation();
 }
 	YY_BREAK
-case 31:
+case 32:
 YY_RULE_SETUP
-#line 148 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 154 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "EQUAL";	
 	updateLocation();
 }
 	YY_BREAK
-case 32:
+case 33:
 YY_RULE_SETUP
-#line 152 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 158 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "PLUS";	
 	updateLocation();
 }
 	YY_BREAK
-case 33:
+case 34:
 YY_RULE_SETUP
-#line 156 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 162 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "MINUS";	
 	updateLocation();
 }
 	YY_BREAK
-case 34:
+case 35:
 YY_RULE_SETUP
-#line 160 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 166 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "&";	
 	updateLocation();
 }
 	YY_BREAK
-case 35:
+case 36:
 YY_RULE_SETUP
-#line 164 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 170 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "|";	
 	updateLocation();
 }
 	YY_BREAK
-case 36:
+case 37:
 YY_RULE_SETUP
-#line 168 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 174 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "COMMA";	
 	updateLocation();
 }
 	YY_BREAK
-case 37:
+case 38:
 YY_RULE_SETUP
-#line 172 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 178 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << ".";	
 	updateLocation();
 }
 	YY_BREAK
-case 38:
-YY_RULE_SETUP
-#line 176 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
-{	
-	std::cout << yytext;
-	updateLocation(false);
-}
-	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 180 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 182 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {	
 	std::cout << yytext;
 	updateLocation(false);
@@ -1123,15 +1128,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 184 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
-{
-	std::cout << "STRING(" << yytext << ")";	
-	updateLocation();
+#line 186 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+{	
+	std::cout << yytext;
+	updateLocation(false);
 }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 188 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 190 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "NUM(" << yytext << ")";	
 	updateLocation();
@@ -1139,15 +1144,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 192 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 194 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 { return yytext[0]; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 193 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 195 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 ECHO;
 	YY_BREAK
-#line 1151 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 1156 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1439,7 +1444,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 113 )
+			if ( yy_current_state >= 115 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1467,11 +1472,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 113 )
+		if ( yy_current_state >= 115 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 112);
+	yy_is_jam = (yy_current_state == 114);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -2141,7 +2146,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 192 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 194 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 
 
 //Empty

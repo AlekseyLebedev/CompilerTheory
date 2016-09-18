@@ -1,4 +1,4 @@
-int match0( char* str )
+int match0( char* str ) //zero searching
 {
     if( !strncmp( str, "0.0", 3 ) ) {
         return 0;
