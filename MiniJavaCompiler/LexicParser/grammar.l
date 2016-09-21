@@ -28,7 +28,7 @@ LETTER [_a-zA-Z]
 %%
 
 
-"\""({DIGIT}|{LETTER}|"."|"\\"|"\/")*"\"" {
+"\""({DIGIT}|{LETTER}|"."|"\\"|"\/"|"*")*"\"" {
 	std::cout << "STR(" << yytext << ")";	
 	updateLocation();
 }
