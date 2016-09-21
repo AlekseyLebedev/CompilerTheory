@@ -1,9 +1,18 @@
 class Program { 
 	public static void main() {
 /*3	
-4
-5
-6		String s = "\\"; 
-*/		String s = "\\";
+dsfsg ssfs
+sdf
+sgsgsg
+gfsfsgfsgfdgnfdgnkjfsdn kj nkfgfg
+gffggfdgfdg
+	dfgfdgfdgd	*/		String s = "\\";
+		String s = "\\";
+		String s = "\t";
+		String a = "//";
+		String b = "\n";
+		String d = "aba/*c*/aba";
+		String e = "/*aba"cab"a*/";
+
 	}
 }
