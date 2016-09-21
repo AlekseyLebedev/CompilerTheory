@@ -1,5 +1,9 @@
-class Program {
+class Program { 
 	public static void main() {
-		String s = "\\";
+/*3	
+4
+5
+6		String s = "\\"; 
+*/		String s = "\\";
 	}
 }

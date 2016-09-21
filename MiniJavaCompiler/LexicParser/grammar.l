@@ -27,16 +27,27 @@ LETTER [_a-zA-Z]
 
 %%
 
-"/*"((("*"[^/])?)|[^*])*"*/" { 
-	//Comment
+
+"\""({DIGIT}|{LETTER}|"."|"\\")*"\"" {
+	std::cout << "STR(" << yytext << ")";	
 	updateLocation();
 }
-"\""({DIGIT}|{LETTER}|".")*"\"" {
-	std::cout << "STRING(" << yytext << ")";	
-	updateLocation();
+"/*"((("*"[^/])?)|[^*])*"*/" {
+	// Comment: /**/
+
+	int countOf = 0;
+	for (int i = 0; i < strlen(yytext); ++i) {
+		if ((yytext[i] == '\r') || (yytext[i] == '\n')) {
+			countOf = i;
+			++row;
+			col = 1;
+		}
+	}
+	col = -countOf;
+	updateLocation(false);
 }
-"//"(.)*"\n" {
-	//Comment
+"//""//"(.)*"\n" {
+	// Comment: //
 	newLine();
 }
 class {
@@ -73,6 +84,10 @@ char {
 }
 boolean {
 	std::cout << "BOOLEAN";
+	updateLocation();
+}
+String {
+	std::cout << "STRING";
 	updateLocation();
 }
 if {
@@ -127,12 +142,7 @@ new {
 	std::cout << "STAR";	
 	updateLocation();
 }
-"\r" {	
-	std::cout << yytext;
-	updateLocation(false);
-}
-"\n" {	
-	row++;
+"\n" {
 	newLine();
 }
 "{" {
@@ -179,11 +189,15 @@ new {
 	std::cout << ".";	
 	updateLocation();
 }
-(" ")* {	
+(" ")* {
 	std::cout << yytext;
 	updateLocation(false);
 }
-("\t")* {	
+("\t")* {
+	std::cout << yytext;
+	updateLocation(false);
+}
+"\r" {
 	std::cout << yytext;
 	updateLocation(false);
 }
