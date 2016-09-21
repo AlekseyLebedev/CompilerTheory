@@ -132,8 +132,7 @@ new {
 	std::cout << "STAR";	
 	updateLocation();
 }
-"\n" {	
-	row++;
+"\n" {
 	newLine();
 }
 "{" {
