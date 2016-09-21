@@ -32,12 +32,22 @@ LETTER [_a-zA-Z]
 	std::cout << "STR(" << yytext << ")";	
 	updateLocation();
 }
-"/*"((("*"[^/])?)|[^*])*"*/" { 
-	//Comment
+"/*"((("*"[^/])?)|[^*])*"*/" {
+	// Comment: /**/
+
+	int countOf = 0;
+	for (int i = 0; i < strlen(yytext); ++i) {
+		if ((yytext[i] == '\r') || (yytext[i] == '\n')) {
+			countOf = i;
+			++row;
+			col = 1;
+		}
+	}
+	col = -countOf;
 	updateLocation(false);
 }
-"//"(.)*"\n" {
-	//Comment
+"//""//"(.)*"\n" {
+	// Comment: //
 	newLine();
 }
 class {
@@ -105,7 +115,7 @@ new {
 	updateLocation();
 }
 ";" {
-	std::cout << " SEMI";
+	std::cout << "SEMI";
 	updateLocation();
 }
 {LETTER}({DIGIT}|{LETTER})* {
@@ -113,11 +123,11 @@ new {
 	updateLocation();
 }
 "(" {
-	std::cout << " LPAREN";	
+	std::cout << "LPAREN";	
 	updateLocation();
 }
 ")" {
-	std::cout << " RPAREN";	
+	std::cout << "RPAREN";	
 	updateLocation();
 }
 "[" {
@@ -179,15 +189,15 @@ new {
 	std::cout << ".";	
 	updateLocation();
 }
-(" ")* {	
+(" ")* {
 	std::cout << yytext;
 	updateLocation(false);
 }
-("\t")* {	
+("\t")* {
 	std::cout << yytext;
 	updateLocation(false);
 }
-"\r" {	
+"\r" {
 	std::cout << yytext;
 	updateLocation(false);
 }
