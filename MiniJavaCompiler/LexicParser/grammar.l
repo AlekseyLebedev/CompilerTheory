@@ -27,12 +27,13 @@ LETTER [_a-zA-Z]
 
 %%
 
-"/*"((("*"[^/])?)|[^*])*"*/" { 
-	//Comment
+
+"\""({DIGIT}|{LETTER}|"."|"\\")*"\"" {
+	std::cout << "STR(" << yytext << ")";	
 	updateLocation();
 }
-"\""({DIGIT}|{LETTER}|".")*"\"" {
-	std::cout << "STRING(" << yytext << ")";	
+"/*"((("*"[^/])?)|[^*])*"*/" { 
+	//Comment
 	updateLocation();
 }
 "//"(.)*"\n" {
@@ -75,6 +76,10 @@ boolean {
 	std::cout << "BOOLEAN";
 	updateLocation();
 }
+String {
+	std::cout << "STRING";
+	updateLocation();
+}
 if {
 	std::cout << "IF";
 	updateLocation();
@@ -100,7 +105,7 @@ new {
 	updateLocation();
 }
 ";" {
-	std::cout << "SEMI";
+	std::cout << " SEMI";
 	updateLocation();
 }
 {LETTER}({DIGIT}|{LETTER})* {
@@ -108,11 +113,11 @@ new {
 	updateLocation();
 }
 "(" {
-	std::cout << "LPAREN";	
+	std::cout << " LPAREN";	
 	updateLocation();
 }
 ")" {
-	std::cout << "RPAREN";	
+	std::cout << " RPAREN";	
 	updateLocation();
 }
 "[" {
@@ -126,10 +131,6 @@ new {
 "*" {
 	std::cout << "STAR";	
 	updateLocation();
-}
-"\r" {	
-	std::cout << yytext;
-	updateLocation(false);
 }
 "\n" {	
 	row++;
@@ -184,6 +185,10 @@ new {
 	updateLocation(false);
 }
 ("\t")* {	
+	std::cout << yytext;
+	updateLocation(false);
+}
+"\r" {	
 	std::cout << yytext;
 	updateLocation(false);
 }
