@@ -34,7 +34,7 @@ LETTER [_a-zA-Z]
 }
 "/*"((("*"[^/])?)|[^*])*"*/" { 
 	//Comment
-	updateLocation();
+	updateLocation(false);
 }
 "//"(.)*"\n" {
 	//Comment

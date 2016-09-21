@@ -1,5 +1,14 @@
 class Program { 
 	public static void main() {
-		String s = "\\";
-	}
+		String /*s = "\\";
+	sf
+sdf
+sdf
+sdf
+sdf
+sdf
+sdf
+sdf
+sdf
+sd*/}
 }
