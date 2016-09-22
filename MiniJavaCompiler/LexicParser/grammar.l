@@ -3,13 +3,16 @@
 %{
 #include <iostream>
 #include <cstring>
+#include <string>
+
+#include <algorithm>
 
 int col=1;
 int row=1;
 
 static void updateLocation(bool needLocation = true)
 {
-	if(needLocation) {
+	if (needLocation ) {
 		std::cout << "{" << row << "," << col << "}";
 	}
 	col += strlen(yytext);
@@ -21,11 +24,18 @@ void newLine() {
 	std::cout<<"\n";
 }
 
-void printText(char* text, bool needLocation = true, int countOfWordsIsOne = true) {
-	if (countOfWordsIsOne) {
-		std::cout << text;
+void printText( char* text = "", bool isValue = false, bool needLocation = true) {
+	
+	if( strcmp(text, "") == 0 ) {
+		std::string str = yytext;
+		std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+	
+		std::cout << str;
 	} else {
-		std::cout << text << "(" << yytext << ")";
+		std::cout << text;
+		if( isValue ) {
+			std::cout << "(" << yytext << ")";
+		}
 	}
 	updateLocation(needLocation);
 }
@@ -39,7 +49,7 @@ LETTER [_a-zA-Z]
 
 
 "\""({DIGIT}|{LETTER}|"."|"\\"|"\/"|"*")*"\"" {
-	printText("STR", true, true);
+													printText("STR", true);
 }
 "/*"((("*"[^/])?)|[^*])*"*/" {
 	// Comment: /**/
@@ -59,77 +69,38 @@ LETTER [_a-zA-Z]
 	// Comment: //
 	newLine();
 }
-class {
-	printText("CLASS");
+class|public|private|protected|static|extends {
+	printText();
 }
-extends {
-	printText("EXTENDS");
-}
-public {
-	printText("PUBLIC");
-}
-protected {
-	printText("PROTECTED");
-}
-private {
-	printText("PRIVATE");
-}
-static {
-	printText("STATIC");
-}
-void {
-	printText("VOID");
+void|int|char|String|boolean {
+	printText();
 }
 main {
-	printText("MAIN");
+	printText();
 }
-int {
-	printText("INT");
-}
-char {
-	printText("CHAR");
-}
-boolean {
-	printText("BOOLEAN");
-}
-String {
-	printText("STRING");
-}
-if {
-	printText("IF");
-}
-else {
-	printText("ELSE");
-}
-while {
-	printText("WHILE");
+if|else|while|do {
+	printText();
 }
 return {
-	printText("RETURN");
+	printText();
 }
-this {
-	printText("THIS");
-}
-new {
-	printText("NEW");
+this|new {
+	printText();
 }
 System.out.println {
 	printText("SOP");
 }
 length {
-	printText("LENGTH");
+	printText();
 }
-true {
-	printText("TRUE");
-}
-false {
-	printText("FALSE");
+true|false {
+	printText();
 }
 ";" {
 	printText("SEMI");
 }
 {LETTER}({DIGIT}|{LETTER})* {
-	printText("ID", true, true);
+	printText("ID", true);
 }
 "(" {
 	printText("LPAREN");
@@ -185,17 +156,11 @@ false {
 "." {
 	printText("DOT");
 }
-(" ")* {
-	printText(yytext, false);
-}
-("\t")* {
-	printText(yytext, false);
-}
-"\r" {
-	printText(yytext, false);
+(" ")*|("\t")*|"\r" {
+	printText(yytext, false, false);
 }
 ({DIGIT}|"-"{DIGIT})({DIGIT})* {
-	printText("NUM", true, true);
+	printText("NUM", true);
 }
 . { return yytext[0]; }
 %%
