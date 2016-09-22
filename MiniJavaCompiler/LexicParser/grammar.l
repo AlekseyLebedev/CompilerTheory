@@ -128,7 +128,7 @@ System.out.println {
 }
 length {
 	std::cout << "LENGTH";
-	updateLocationI();
+	updateLocation();
 }
 true {
 	std::cout << "TRUE";
@@ -162,13 +162,6 @@ false {
 	std::cout << "RBRACKET";	
 	updateLocation();
 }
-"*" {
-	std::cout << "STAR";	
-	updateLocation();
-}
-"\n" {
-	newLine();
-}
 "{" {
 	std::cout << "LBRACE";	
 	updateLocation();
@@ -176,6 +169,17 @@ false {
 "}" {
 	std::cout << "RBRACE";	
 	updateLocation();
+}
+"*" {
+	std::cout << "STAR";	
+	updateLocation();
+}
+"%" {
+	std::cout << "%";
+	updateLocation();
+}
+"\n" {
+	newLine();
 }
 "!" {
 	std::cout << "BANG";	
@@ -201,8 +205,8 @@ false {
 	std::cout << "&&";	
 	updateLocation();
 }
-"|" {
-	std::cout << "|";	
+"||" {
+	std::cout << "||";	
 	updateLocation();
 }
 "," {
