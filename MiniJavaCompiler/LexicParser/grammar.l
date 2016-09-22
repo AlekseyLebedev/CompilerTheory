@@ -173,8 +173,8 @@ new {
 	std::cout << "MINUS";	
 	updateLocation();
 }
-"&" {
-	std::cout << "&";	
+"&&" {
+	std::cout << "&&";	
 	updateLocation();
 }
 "|" {
