@@ -21,8 +21,12 @@ void newLine() {
 	std::cout<<"\n";
 }
 
-void printText(char* text, bool needLocation = true) {
-	std::cout << text;
+void printText(char* text, bool needLocation = true, int countOfWordsIsOne = true) {
+	if (countOfWordsIsOne) {
+		std::cout << text;
+	} else {
+		std::cout << text << "(" << yytext << ")";
+	}
 	updateLocation(needLocation);
 }
 
@@ -35,8 +39,7 @@ LETTER [_a-zA-Z]
 
 
 "\""({DIGIT}|{LETTER}|"."|"\\"|"\/"|"*")*"\"" {
-	std::cout << "STR(" << yytext << ")";	
-	updateLocation();
+	printText("STR", true, true);
 }
 "/*"((("*"[^/])?)|[^*])*"*/" {
 	// Comment: /**/
@@ -126,8 +129,7 @@ false {
 	printText("SEMI");
 }
 {LETTER}({DIGIT}|{LETTER})* {
-	std::cout << "ID(" << yytext << ")";	
-	updateLocation();
+	printText("ID", true, true);
 }
 "(" {
 	printText("LPAREN");
@@ -193,8 +195,7 @@ false {
 	printText(yytext, false);
 }
 ({DIGIT}|"-"{DIGIT})({DIGIT})* {
-	std::cout << "NUM(" << yytext << ")";	
-	updateLocation();
+	printText("NUM", true, true);
 }
 . { return yytext[0]; }
 %%
