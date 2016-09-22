@@ -54,6 +54,10 @@ class {
 	std::cout << "CLASS";
 	updateLocation();
 }
+extends {
+	std::cout << "EXTENDS";
+	updateLocation();
+}
 public {
 	std::cout << "PUBLIC";
 	updateLocation();
@@ -72,6 +76,10 @@ static {
 }
 void {
 	std::cout << "VOID";
+	updateLocation();
+}
+main {
+	std::cout << "MAIN";
 	updateLocation();
 }
 int {
@@ -112,6 +120,22 @@ this {
 }
 new {
 	std::cout << "NEW";
+	updateLocation();
+}
+System.out.println {
+	std::cout << "SOP";
+	updateLocation();
+}
+length {
+	std::cout << "LENGTH";
+	updateLocationI();
+}
+true {
+	std::cout << "TRUE";
+	updateLocation();
+}
+false {
+	std::cout << "TRUE";
 	updateLocation();
 }
 ";" {
