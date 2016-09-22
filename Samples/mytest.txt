@@ -12,7 +12,7 @@ gffggfdgfdg
 		String a = "//";
 		String b = "\n";
 		String d = "aba/*c*/aba";
-		String e = "/*aba"cab"a*/";
+		String e = "/*abacaba*/";
 
 	}
 }
