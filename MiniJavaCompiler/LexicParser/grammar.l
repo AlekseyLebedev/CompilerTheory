@@ -49,7 +49,7 @@ LETTER [_a-zA-Z]
 
 
 "\""({DIGIT}|{LETTER}|"."|"\\"|"\/"|"*")*"\"" {
-													printText("STR", true);
+	printText("STR", true);
 }
 "/*"((("*"[^/])?)|[^*])*"*/" {
 	// Comment: /**/
@@ -75,26 +75,14 @@ class|public|private|protected|static|extends {
 void|int|char|String|boolean {
 	printText();
 }
-main {
-	printText();
-}
 if|else|while|do {
 	printText();
 }
-return {
-	printText();
-}
-this|new {
+main|length|return|this|new|true|false {
 	printText();
 }
 System.out.println {
 	printText("SOP");
-}
-length {
-	printText();
-}
-true|false {
-	printText();
 }
 ";" {
 	printText("SEMI");
