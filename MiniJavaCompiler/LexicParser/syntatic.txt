@@ -1,0 +1,60 @@
+%code requires {
+// Эти заголовки попадут в syntactic.hpp
+#include <GrammarDefs.h>
+#include <Symbol.h>
+}
+
+%code top{
+#include <common.h>
+#pragma hdrstop
+
+#pragma warning( disable : 4065 )	// switch statement contains 'default' but no 'case' labels
+}
+
+%code {
+int yylex (void);
+void yyerror ( const IProgram*&, char const * );
+}
+
+%error-verbose // более подробная информация об ошибке
+%verbose // output-файл с правилами грамматики
+%parse-param { const IProgram*& program } // результат работы анализатора
+%locations  // Подключаем yylloc без появления @n в коде
+
+%union {
+	Symbol::CSymbol* Symbol; // символ
+
+	const IProgram* Program; // Указатель на класс-программу
+	const IMainClass* MainClass; // Указатель на главный класс
+	const IStatement* Statement;
+	const IExpList* ExpList;
+	const IExp* Exp;
+}
+
+%token T_Class T_Extends T_Public
+%token T_Static T_Void T_Main T_String
+
+// Особые (типизированные) токены
+%token <Symbol> T_Identifier
+
+%type <Program> Program
+
+%%
+Program: MainClass ClassDeclList { program = $$ = new CProgram( $1, $2 ); }
+;
+
+// Главный класс программы (с одним элементарным методом)
+MainClass: T_Class T_Identifier '{'
+	T_Public T_Static T_Void T_Main '(' T_String '[' ']' T_Identifier ')'
+	'{' Statement '}' '}'
+	{
+		$$ = new CMainClass( $2, $12, $15 );
+	}
+;
+
+// Выражение
+Exp:
+	Exp '+' Exp { $$ = new CAriphmeticExp( $1, CAriphmeticExp::O_Plus, $3 ); }
+	| Exp '-' Exp { $$ = new CAriphmeticExp( $1, CAriphmeticExp::O_Minus, $3 ); }
+%%
+
