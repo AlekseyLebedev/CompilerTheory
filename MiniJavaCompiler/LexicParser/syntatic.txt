@@ -1,60 +1,49 @@
-%code requires {
-// Эти заголовки попадут в syntactic.hpp
-#include <GrammarDefs.h>
-#include <Symbol.h>
+/* Mini Calculator */
+/* calc.y */
+
+%{
+int yyerror(char *s);
+int yylex(void);
+%}
+
+%union{
+  int		int_val;
+  string*	op_val;
 }
 
-%code top{
-#include <common.h>
-#pragma hdrstop
+%start	input 
 
-#pragma warning( disable : 4065 )	// switch statement contains 'default' but no 'case' labels
-}
-
-%code {
-int yylex (void);
-void yyerror ( const IProgram*&, char const * );
-}
-
-%error-verbose // более подробная информация об ошибке
-%verbose // output-файл с правилами грамматики
-%parse-param { const IProgram*& program } // результат работы анализатора
-%locations  // Подключаем yylloc без появления @n в коде
-
-%union {
-	Symbol::CSymbol* Symbol; // символ
-
-	const IProgram* Program; // Указатель на класс-программу
-	const IMainClass* MainClass; // Указатель на главный класс
-	const IStatement* Statement;
-	const IExpList* ExpList;
-	const IExp* Exp;
-}
-
-%token T_Class T_Extends T_Public
-%token T_Static T_Void T_Main T_String
-
-// Особые (типизированные) токены
-%token <Symbol> T_Identifier
-
-%type <Program> Program
+%token	<int_val>	INTEGER_LITERAL
+%type	<int_val>	exp
+%left	PLUS
+%left	MULT
 
 %%
-Program: MainClass ClassDeclList { program = $$ = new CProgram( $1, $2 ); }
-;
 
-// Главный класс программы (с одним элементарным методом)
-MainClass: T_Class T_Identifier '{'
-	T_Public T_Static T_Void T_Main '(' T_String '[' ']' T_Identifier ')'
-	'{' Statement '}' '}'
-	{
-		$$ = new CMainClass( $2, $12, $15 );
-	}
-;
+input:		/* empty */
+		| exp	{ cout << "Result: " << $1 << endl; }
+		;
 
-// Выражение
-Exp:
-	Exp '+' Exp { $$ = new CAriphmeticExp( $1, CAriphmeticExp::O_Plus, $3 ); }
-	| Exp '-' Exp { $$ = new CAriphmeticExp( $1, CAriphmeticExp::O_Minus, $3 ); }
+exp:		INTEGER_LITERAL	{ $$ = $1; }
+		| exp PLUS exp	{ $$ = $1 + $3; }
+		| exp MULT exp	{ $$ = $1 * $3; }
+		;
+
 %%
+
+int yyerror(string s)
+{
+  extern int yylineno;	// defined and maintained in lex.c
+  extern char *yytext;	// defined and maintained in lex.c
+  
+  cerr << "ERROR: " << s << " at symbol \"" << yytext;
+  cerr << "\" on line " << yylineno << endl;
+  exit(1);
+}
+
+int yyerror(char *s)
+{
+  return yyerror(string(s));
+}
+
 

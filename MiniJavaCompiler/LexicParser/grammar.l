@@ -3,6 +3,7 @@
 %{
 #include <iostream>
 #include <cstring>
+#include "syntatic.h"
 
 int col=1;
 int row=1;

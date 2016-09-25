@@ -146,9 +146,9 @@
     <CustomBuild Include="LexicParser\syntatic.txt">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(SolutionDir)winflexbison\tools\win_bison.exe" "$(ProjectDir)LexicParser\syntatic.txt"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">WinBisonLauncher</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(SolutionDir)winflexbison\tools\win_bison.exe" -o"$(ProjectDir)LexicParser\syntatic.cpp" "$(ProjectDir)LexicParser\syntatic.txt"</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">WinFlexLauncher</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)LexicParser\syntatic.cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(SolutionDir)winflexbison\tools\win_bison.exe" -o"$(ProjectDir)LexicParser\syntatic.cpp"  --defines="$(ProjectDir)LexicParser\syntatic.h" "$(ProjectDir)LexicParser\syntatic.txt"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">WinBisonLauncher</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)LexicParser\syntatic.cpp </Outputs>
     </CustomBuild>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
@@ -161,7 +161,7 @@
   <ItemGroup>
     <ClCompile Include="LexicParser\lexer.cpp" />
     <ClCompile Include="LexicParser\MiniJavaParser.cpp" />
-    <ClCompile Include="LexicParser\syntetic.cpp" />
+    <ClCompile Include="LexicParser\syntatic.cpp" />
     <ClCompile Include="MiniJavaCompiler.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -172,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MiniJavaCompiler.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LexicParser\syntatic.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

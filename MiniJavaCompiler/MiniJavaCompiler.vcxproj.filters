@@ -28,9 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
-    <Text Include="LexicParser\syntatic.txt">
-      <Filter>LexicParser\resources</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -59,7 +56,7 @@
     <ClCompile Include="LexicParser\lexer.cpp">
       <Filter>LexicParser\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="LexicParser\syntetic.cpp">
+    <ClCompile Include="LexicParser\syntatic.cpp">
       <Filter>LexicParser\cpp</Filter>
     </ClCompile>
   </ItemGroup>
@@ -67,10 +64,18 @@
     <CustomBuild Include="LexicParser\grammar.l">
       <Filter>LexicParser\resources</Filter>
     </CustomBuild>
+    <CustomBuild Include="LexicParser\syntatic.txt">
+      <Filter>LexicParser\resources</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MiniJavaCompiler.rc">
       <Filter>Файлы ресурсов</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LexicParser\syntatic.h">
+      <Filter>LexicParser\h</Filter>
+    </None>
   </ItemGroup>
 </Project>
