@@ -36,9 +36,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Global h</Filter>
     </ClInclude>
-    <ClInclude Include="LexicParser\MiniJavaParser.h">
-      <Filter>LexicParser\h</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Global h</Filter>
     </ClInclude>
@@ -49,9 +46,6 @@
     </ClCompile>
     <ClCompile Include="MiniJavaCompiler.cpp">
       <Filter>global cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="LexicParser\MiniJavaParser.cpp">
-      <Filter>LexicParser\cpp</Filter>
     </ClCompile>
     <ClCompile Include="LexicParser\lexer.cpp">
       <Filter>LexicParser\cpp</Filter>

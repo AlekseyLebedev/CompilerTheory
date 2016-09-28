@@ -54,6 +54,7 @@ LETTER [_a-zA-Z]
 class {
 	std::cout << "CLASS";
 	updateLocation();
+	return CLASS;
 }
 extends {
 	std::cout << "EXTENDS";

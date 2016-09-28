@@ -7,7 +7,7 @@
 #include <fstream>
 #include <sstream>
 
-int yylex();
+int yyparse();
 extern FILE* yyin, *yyout;
 void yyrestart(FILE * input_file);
 extern int row, col;
@@ -15,7 +15,7 @@ extern int row, col;
 int main(int argc, char** argv)
 {
 	if (argc == 0) {
-		yylex();
+		yyparse();
 	}
 	else {
 		std::stringstream buffer;
@@ -28,7 +28,7 @@ int main(int argc, char** argv)
 			yyin = fopen(buffer.str().c_str(), "r");
 			buffer << "-out.txt";
 			yyrestart(yyin);
-			yylex();
+			yyparse();
 			fclose(yyin);
 			buffer.str("");
 		}

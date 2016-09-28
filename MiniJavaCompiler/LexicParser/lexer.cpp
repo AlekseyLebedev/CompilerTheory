@@ -1,6 +1,6 @@
-#line 2 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 2 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
-#line 4 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 4 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -580,8 +580,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
-#line 4 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 1 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 4 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 #include <iostream>
 #include <cstring>
 #include "syntatic.h"
@@ -602,7 +602,7 @@ void newLine(){
 	col=1;
 	std::cout<<"\n";
 }
-#line 606 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 606 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 #define INITIAL 0
 
@@ -781,11 +781,11 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 29 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 29 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 
 
 
-#line 789 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 789 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -870,7 +870,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 32 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 32 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "STR(" << yytext << ")";	
 	updateLocation();
@@ -879,7 +879,7 @@ YY_RULE_SETUP
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 36 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 36 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	// Comment: /**/
 
@@ -898,7 +898,7 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 50 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 50 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	// Comment: //
 	newLine();
@@ -906,15 +906,16 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 54 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 54 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "CLASS";
 	updateLocation();
+	return CLASS;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 58 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 59 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "EXTENDS";
 	updateLocation();
@@ -922,7 +923,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 62 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 63 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "PUBLIC";
 	updateLocation();
@@ -930,7 +931,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 66 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 67 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "PROTECTED";
 	updateLocation();
@@ -938,7 +939,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 70 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 71 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "PRIVATE";
 	updateLocation();
@@ -946,7 +947,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 74 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 75 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "STATIC";
 	updateLocation();
@@ -954,7 +955,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 78 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 79 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "VOID";
 	updateLocation();
@@ -962,7 +963,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 82 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 83 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "MAIN";
 	updateLocation();
@@ -970,7 +971,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 86 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 87 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "INT";
 	updateLocation();
@@ -978,7 +979,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 90 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 91 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "CHAR";
 	updateLocation();
@@ -986,7 +987,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 94 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 95 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "BOOLEAN";
 	updateLocation();
@@ -994,7 +995,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 98 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 99 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "STRING";
 	updateLocation();
@@ -1002,7 +1003,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 102 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 103 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "IF";
 	updateLocation();
@@ -1010,7 +1011,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 106 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 107 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "ELSE";
 	updateLocation();
@@ -1018,7 +1019,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 110 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 111 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "WHILE";
 	updateLocation();
@@ -1026,7 +1027,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 114 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 115 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "RETURN";
 	updateLocation();
@@ -1034,7 +1035,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 118 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 119 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "THIS";
 	updateLocation();
@@ -1042,7 +1043,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 122 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 123 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "NEW";
 	updateLocation();
@@ -1050,7 +1051,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 126 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 127 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "SOP";
 	updateLocation();
@@ -1058,7 +1059,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 130 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 131 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "LENGTH";
 	updateLocation();
@@ -1066,7 +1067,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 134 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 135 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "TRUE";
 	updateLocation();
@@ -1074,7 +1075,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 138 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 139 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "TRUE";
 	updateLocation();
@@ -1082,7 +1083,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 142 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 143 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "SEMI";
 	updateLocation();
@@ -1090,7 +1091,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 146 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 147 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "ID(" << yytext << ")";	
 	updateLocation();
@@ -1098,7 +1099,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 150 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 151 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "LPAREN";	
 	updateLocation();
@@ -1106,7 +1107,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 154 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 155 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "RPAREN";	
 	updateLocation();
@@ -1114,7 +1115,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 158 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 159 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "LBRACKET";	
 	updateLocation();
@@ -1122,7 +1123,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 162 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 163 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "RBRACKET";	
 	updateLocation();
@@ -1130,7 +1131,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 166 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 167 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "LBRACE";	
 	updateLocation();
@@ -1138,7 +1139,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 170 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 171 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "RBRACE";	
 	updateLocation();
@@ -1146,7 +1147,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 174 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 175 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "STAR";	
 	updateLocation();
@@ -1154,7 +1155,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 178 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 179 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "%";
 	updateLocation();
@@ -1163,14 +1164,14 @@ YY_RULE_SETUP
 case 36:
 /* rule 36 can match eol */
 YY_RULE_SETUP
-#line 182 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 183 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	newLine();
 }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 185 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 186 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "BANG";	
 	updateLocation();
@@ -1178,7 +1179,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 189 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 190 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "LESS";	
 	updateLocation();
@@ -1186,7 +1187,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 193 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 194 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "EQUAL";	
 	updateLocation();
@@ -1194,7 +1195,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 197 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 198 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "PLUS";	
 	updateLocation();
@@ -1202,7 +1203,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 201 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 202 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "MINUS";	
 	updateLocation();
@@ -1210,7 +1211,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 205 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 206 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "&&";	
 	updateLocation();
@@ -1218,7 +1219,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 209 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 210 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "||";	
 	updateLocation();
@@ -1226,7 +1227,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 213 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 214 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "COMMA";	
 	updateLocation();
@@ -1234,7 +1235,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 217 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 218 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << ".";	
 	updateLocation();
@@ -1242,7 +1243,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 221 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 222 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << yytext;
 	updateLocation(false);
@@ -1250,7 +1251,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 225 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 226 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << yytext;
 	updateLocation(false);
@@ -1258,7 +1259,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 229 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 230 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << yytext;
 	updateLocation(false);
@@ -1266,7 +1267,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 233 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 234 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "NUM(" << yytext << ")";	
 	updateLocation();
@@ -1274,15 +1275,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 237 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 238 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 { return yytext[0]; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 238 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 239 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 ECHO;
 	YY_BREAK
-#line 1286 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 1287 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2276,7 +2277,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 237 "C:\\Users\\Sdern_000\\Desktop\\Jackals\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 238 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 
 
 //Empty
