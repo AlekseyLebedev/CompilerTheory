@@ -6,6 +6,10 @@
 #include <string>
 int yyerror(char *s);
 int yylex(void);
+
+void DebugOutput(const std::string& s){
+	std::cout << s << std::endl;
+}
 %}
 
 %union{
@@ -20,7 +24,7 @@ int yylex(void);
 %%
 
 input:
-	CLASS { std::cout << "CLASS: " << std::endl; }
+	CLASS { DebugOutput("Class: "); }
 
 %%
 

@@ -21,6 +21,10 @@ void newLine(){
 	col=1;
 	std::cout<<"\n";
 }
+
+void debugOutput(const char* text){
+	std::cout << text;
+}
 %}
 
 DIGIT [0-9]
@@ -52,188 +56,192 @@ LETTER [_a-zA-Z]
 	newLine();
 }
 class {
-	std::cout << "CLASS";
+	debugOutput("CLASS");
 	updateLocation();
 	return CLASS;
 }
 extends {
-	std::cout << "EXTENDS";
+	debugOutput("EXTENDS");
 	updateLocation();
 }
 public {
-	std::cout << "PUBLIC";
+	debugOutput("PUBLIC");
 	updateLocation();
 }
 protected {
-	std::cout << "PROTECTED";
+	debugOutput("PROTECTED");
 	updateLocation();
 }
 private {
-	std::cout << "PRIVATE";
+	debugOutput("PRIVATE");
 	updateLocation();
 }
 static {
-	std::cout << "STATIC";
+	debugOutput("STATIC");
 	updateLocation();
 }
 void {
-	std::cout << "VOID";
+	debugOutput("VOID");
 	updateLocation();
 }
 main {
-	std::cout << "MAIN";
+	debugOutput("MAIN");
 	updateLocation();
 }
 int {
-	std::cout << "INT";
+	debugOutput("INT");
 	updateLocation();
 }
 char {
-	std::cout << "CHAR";
+	debugOutput("CHAR");
 	updateLocation();
 }
 boolean {
-	std::cout << "BOOLEAN";
+	debugOutput("BOOLEAN");
 	updateLocation();
 }
 String {
-	std::cout << "STRING";
+	debugOutput("STRING");
 	updateLocation();
 }
 if {
-	std::cout << "IF";
+	debugOutput("IF");
 	updateLocation();
 }
 else {
-	std::cout << "ELSE";
+	debugOutput("ELSE");
 	updateLocation();
 }
 while {
-	std::cout << "WHILE";
+	debugOutput("WHILE");
 	updateLocation();
 }
 return {
-	std::cout << "RETURN";
+	debugOutput("RETURN");
 	updateLocation();
 }
 this {
-	std::cout << "THIS";
+	debugOutput("THIS");
 	updateLocation();
 }
 new {
-	std::cout << "NEW";
+	debugOutput("NEW");
 	updateLocation();
 }
 System.out.println {
-	std::cout << "SOP";
+	debugOutput("SOP");
 	updateLocation();
 }
 length {
-	//std::cout << "LENGTH";
+	debugOutput("LENGTH");
 	updateLocation();
 	return LENGTH;
 }
 true {
-	std::cout << "TRUE";
+	debugOutput("TRUE");
 	updateLocation();
 }
 false {
-	std::cout << "TRUE";
+	debugOutput("TRUE");
 	updateLocation();
 }
 ";" {
-	std::cout << "SEMI";
+	debugOutput("SEMI");
 	updateLocation();
 }
 {LETTER}({DIGIT}|{LETTER})* {
-	std::cout << "ID(" << yytext << ")";	
+	debugOutput("ID(");
+	debugOutput(yytext);
+	debugOutput(")");	
 	updateLocation();
 }
 "(" {
-	std::cout << "LPAREN";	
+	debugOutput("LPAREN");	
 	updateLocation();
 }
 ")" {
-	std::cout << "RPAREN";	
+	debugOutput("RPAREN");	
 	updateLocation();
 }
 "[" {
-	std::cout << "LBRACKET";	
+	debugOutput("LBRACKET");	
 	updateLocation();
 }
 "]" {
-	std::cout << "RBRACKET";	
+	debugOutput("RBRACKET");	
 	updateLocation();
 }
 "{" {
-	std::cout << "LBRACE";	
+	debugOutput("LBRACE");	
 	updateLocation();
 }
 "}" {
-	std::cout << "RBRACE";	
+	debugOutput("RBRACE");	
 	updateLocation();
 }
 "*" {
-	std::cout << "STAR";	
+	debugOutput("STAR");	
 	updateLocation();
 }
 "%" {
-	std::cout << "%";
+	debugOutput("%");
 	updateLocation();
 }
 "\n" {
 	newLine();
 }
 "!" {
-	std::cout << "BANG";	
+	debugOutput("BANG");	
 	updateLocation();
 }
 "<" {
-	std::cout << "LESS";	
+	debugOutput("LESS");	
 	updateLocation();
 }
 "=" {
-	std::cout << "EQUAL";	
+	debugOutput("EQUAL");	
 	updateLocation();
 }
 "+" {
-	std::cout << "PLUS";	
+	debugOutput("PLUS");	
 	updateLocation();
 }
 "-" {
-	std::cout << "MINUS";	
+	debugOutput("MINUS");	
 	updateLocation();
 }
 "&&" {
-	std::cout << "&&";	
+	debugOutput("&&");	
 	updateLocation();
 }
 "||" {
-	std::cout << "||";	
+	debugOutput("||");	
 	updateLocation();
 }
 "," {
-	std::cout << "COMMA";	
+	debugOutput("COMMA");	
 	updateLocation();
 }
 "." {
-	std::cout << ".";	
+	debugOutput(".");	
 	updateLocation();
 }
 (" ")* {
-	std::cout << yytext;
+	debugOutput(yytext);
 	updateLocation(false);
 }
 ("\t")* {
-	std::cout << yytext;
+	debugOutput(yytext);
 	updateLocation(false);
 }
 "\r" {
-	std::cout << yytext;
+	debugOutput(yytext);
 	updateLocation(false);
 }
 ({DIGIT}|"-"{DIGIT})({DIGIT})* {
-	std::cout << "NUM(" << yytext << ")";	
+	debugOutput("NUM(");
+	debugOutput(yytext);
+	debugOutput(")");	
 	updateLocation();
 }
 . {
