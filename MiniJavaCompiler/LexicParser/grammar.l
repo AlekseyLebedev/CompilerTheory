@@ -47,7 +47,7 @@ LETTER [_a-zA-Z]
 	col = -countOf;
 	updateLocation(false);
 }
-"//""//"(.)*"\n" {
+"//"(.)*"\n" {
 	// Comment: //
 	newLine();
 }
@@ -129,8 +129,9 @@ System.out.println {
 	updateLocation();
 }
 length {
-	std::cout << "LENGTH";
+	//std::cout << "LENGTH";
 	updateLocation();
+	return LENGTH;
 }
 true {
 	std::cout << "TRUE";
@@ -235,6 +236,8 @@ false {
 	std::cout << "NUM(" << yytext << ")";	
 	updateLocation();
 }
-. { return yytext[0]; }
+. {
+	std::cerr<<"ERROR IN FLEX:"<<yytext[0]<<std::endl;
+  }
 %%
 //Empty

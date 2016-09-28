@@ -63,7 +63,7 @@
 
 /* Copy the first part of user declarations.  */
 /* Line 371 of yacc.c  */
-#line 4 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 4 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
 #include  <iostream>
 #include <string>
@@ -71,7 +71,7 @@ int yyerror(char *s);
 int yylex(void);
 
 /* Line 371 of yacc.c  */
-#line 75 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 75 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -91,8 +91,8 @@ int yylex(void);
 
 /* In a future release of Bison, this section will be replaced
    by #include "syntatic.h".  */
-#ifndef YY_YY_C_USERS_LEB_A_DOCUMENTS_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
-# define YY_YY_C_USERS_LEB_A_DOCUMENTS_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
+#ifndef YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
+# define YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
 /* Enabling traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -107,7 +107,8 @@ extern int yydebug;
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     CLASS = 258
+     CLASS = 258,
+     LENGTH = 259
    };
 #endif
 
@@ -116,14 +117,14 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 11 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 11 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
   int		int_val;
   std::string*	op_val;
 
 
 /* Line 387 of yacc.c  */
-#line 127 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 128 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -146,12 +147,12 @@ int yyparse ();
 #endif
 #endif /* ! YYPARSE_PARAM */
 
-#endif /* !YY_YY_C_USERS_LEB_A_DOCUMENTS_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED  */
+#endif /* !YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 155 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 156 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 
 #ifdef short
 # undef short
@@ -374,7 +375,7 @@ union yyalloc
 #define YYLAST   1
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  4
+#define YYNTOKENS  5
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  2
 /* YYNRULES -- Number of rules.  */
@@ -384,7 +385,7 @@ union yyalloc
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   258
+#define YYMAXUTOK   259
 
 #define YYTRANSLATE(YYX)						\
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -417,7 +418,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     1,     2,     3
+       2,     2,     2,     2,     2,     2,     1,     2,     3,     4
 };
 
 #if YYDEBUG
@@ -431,7 +432,7 @@ static const yytype_uint8 yyprhs[] =
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-       5,     0,    -1,     3,    -1
+       6,     0,    -1,     3,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
@@ -446,7 +447,7 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "CLASS", "$accept", "input", YY_NULL
+  "$end", "error", "$undefined", "CLASS", "LENGTH", "$accept", "input", YY_NULL
 };
 #endif
 
@@ -455,14 +456,14 @@ static const char *const yytname[] =
    token YYLEX-NUM.  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258
+       0,   256,   257,   258,   259
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     4,     5
+       0,     5,     6
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -523,7 +524,7 @@ static const yytype_uint8 yycheck[] =
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     5,     0
+       0,     3,     6,     0
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1325,13 +1326,13 @@ yyreduce:
     {
         case 2:
 /* Line 1792 of yacc.c  */
-#line 23 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 23 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     { std::cout << "CLASS: " << std::endl; }
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1335 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 1336 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1563,7 +1564,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 25 "C:\\Users\\leb-a\\documents\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 25 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
 
 int yyerror(std::string s)
