@@ -1,5 +1,8 @@
 #pragma once
 #include "IVisitor.h"
+#include <string>
+#include <fstream>
+
 
 namespace GraphvizOutput {
 

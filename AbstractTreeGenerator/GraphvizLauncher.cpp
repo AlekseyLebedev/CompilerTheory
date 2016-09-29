@@ -1,6 +1,6 @@
-#include "stdafx.h"
 #include "GraphvizLauncher.h"
 #include "DotOutputVisitor.h"
+#include <stdlib.h>
 
 namespace GraphvizOutput {
 	CGraphvizLauncher::CGraphvizLauncher()

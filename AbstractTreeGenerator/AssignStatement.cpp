@@ -1,5 +1,6 @@
-#include "stdafx.h"
 #include "AssignStatement.h"
+#include <memory>
+#include <string>
 
 FirstTask::CAssignStatement::CAssignStatement(const std::string name, std::shared_ptr<IExpression> operation) : 
 	variableName(name), expression(operation)

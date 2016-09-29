@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "LastExpressionList.h"
 
 FirstTask::CLastExpressionList::CLastExpressionList(std::shared_ptr<FirstTask::

@@ -1,6 +1,6 @@
 #pragma once
-#include "stdafx.h"
 #include "IExpression.h"
+#include <string>
 
 namespace FirstTask {
 	class CIdExpression : public IExpression

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "NumExpression.h"
 
 FirstTask::CNumExpression::CNumExpression(int _value) : value(_value)

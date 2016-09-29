@@ -1,7 +1,8 @@
 #pragma once
-#include "stdafx.h"
 #include "IStatemnet.h"
 #include "IExpression.h"
+#include <memory>
+#include <string>
 
 namespace FirstTask {
 	class CAssignStatement : public IStatemnet

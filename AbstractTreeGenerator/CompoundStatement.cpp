@@ -1,5 +1,5 @@
-#include "stdafx.h"
 #include "CompoundStatement.h"
+#include <memory>
 
 FirstTask::CCompoundStatement::CCompoundStatement(std::shared_ptr<INode> left, 
 	std::shared_ptr<INode> right) : leftChild(left), rightChild(right)

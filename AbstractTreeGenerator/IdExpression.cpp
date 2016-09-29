@@ -1,6 +1,5 @@
-#include "stdafx.h"
 #include "IdExpression.h"
-
+#include <string>
 
 FirstTask::CIdExpression::CIdExpression(std::string _name) : name(_name)
 {

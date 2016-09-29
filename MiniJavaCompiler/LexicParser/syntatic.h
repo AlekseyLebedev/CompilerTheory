@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
-# define YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
+#ifndef YY_YY_C_USERS_USER_SOURCE_REPOS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
+# define YY_YY_C_USERS_USER_SOURCE_REPOS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
 /* Enabling traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -55,14 +55,14 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 15 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 15 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
   int		int_val;
   std::string*	op_val;
 
 
 /* Line 2058 of yacc.c  */
-#line 66 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.h"
+#line 66 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -85,4 +85,4 @@ int yyparse ();
 #endif
 #endif /* ! YYPARSE_PARAM */
 
-#endif /* !YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED  */
+#endif /* !YY_YY_C_USERS_USER_SOURCE_REPOS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED  */

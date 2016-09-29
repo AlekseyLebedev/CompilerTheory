@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "FirstTaskMain.h"
 
 #include "GraphvizLauncher.h"
