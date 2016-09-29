@@ -19,12 +19,11 @@ void DebugOutput(const std::string& s){
 
 %start	input 
 
-%token	CLASS
-%token  LENGTH
+%token	T_class
 %%
 
 input:
-	CLASS { DebugOutput("Class: "); }
+	T_class { DebugOutput("Class: "); }
 
 %%
 

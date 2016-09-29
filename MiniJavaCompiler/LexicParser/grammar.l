@@ -58,7 +58,7 @@ LETTER [_a-zA-Z]
 class {
 	debugOutput("CLASS");
 	updateLocation();
-	return CLASS;
+	return T_class;
 }
 extends {
 	debugOutput("EXTENDS");
@@ -135,7 +135,6 @@ System.out.println {
 length {
 	debugOutput("LENGTH");
 	updateLocation();
-	return LENGTH;
 }
 true {
 	debugOutput("TRUE");
