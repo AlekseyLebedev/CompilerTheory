@@ -32,7 +32,7 @@ input: MainProgram
 
 MainProgram: MainClass {$$ = new IProgram($1);} Class
 
-MainClass: T_Class Identifier T_lbrace 
+MainClass: T_class Identifier T_lbrace 
 	T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace
 		Statement T_rbrace
 	T_rbrace
@@ -40,7 +40,24 @@ MainClass: T_Class Identifier T_lbrace
 
 Identifier: T_id {$$ = yylloc;}
 
+Class: T_class Identifier ClassExtend T_lbrace 
+	VarDecList
+	MethodDecList
+	T_rbrace 
 
+ClassExtend: { $$ = nullptr; }
+			| T_lparen T_extends Identifier T_rparen 
+			{ $$ = new ClassExtend($3); }
+
+VariableList: { $$ = nullptr }
+				| VarDeclaration  VarDecList {$$ = new VarDecList($1, $2);}
+
+VarDeclaration : Type Identifier T_semi {$$ = new VarDeclaration($1, $2);}
+
+Type: T_int T_lbracket T_rbracket {$$ = "INTLIST";}
+	| T_boolean {$$ = "BOOL";}
+	| T_int {$$ = "INT";}
+	| Identifier {$$ = $1;}
 
 %%
 
