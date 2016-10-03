@@ -57,7 +57,7 @@ LETTER [_a-zA-Z]
 }
 class {
 	debugOutput("CLASS");
-	updateLocation();
+	updateLocation();	
 	return T_class;
 }
 extends {

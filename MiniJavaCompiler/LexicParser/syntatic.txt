@@ -19,11 +19,24 @@ void DebugOutput(const std::string& s){
 
 %start	input 
 
-%token	T_class
+%token <Symbol>	T_class
+%type MainProgram
+%type MainClass
+%type Class
+%type ClassDeclaration
+%type Main
 %%
 
-input:
-	T_class { DebugOutput("Class: "); }
+input: MainProgram 	
+
+MainProgram: MainClass {$$ = new IProgram($1);} Class
+
+MainClass: T_Class T_ID "{" T_public T_static" "void" "main" "(" "String" "[" "]" Identifier ")" "{" Statement "}" "}"
+{$$ = new IClass(yyloc.Symbol);} '{' MainClassDeclaration '}'
+
+T_
+
+
 
 %%
 
