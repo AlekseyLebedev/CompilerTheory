@@ -25,16 +25,20 @@ void DebugOutput(const std::string& s){
 %type Class
 %type ClassDeclaration
 %type Main
+%type Identifier
 %%
 
 input: MainProgram 	
 
 MainProgram: MainClass {$$ = new IProgram($1);} Class
 
-MainClass: T_Class T_ID "{" T_public T_static" "void" "main" "(" "String" "[" "]" Identifier ")" "{" Statement "}" "}"
-{$$ = new IClass(yyloc.Symbol);} '{' MainClassDeclaration '}'
+MainClass: T_Class Identifier T_lbrace 
+	T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace
+		Statement T_rbrace
+	T_rbrace
+		{$$ = new IClass($2, $12, $15);}
 
-T_
+Identifier: T_id {$$ = yylloc;}
 
 
 
