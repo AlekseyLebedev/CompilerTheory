@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AbstractTreeGenerator\AssignStatement.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\BOOL_LITERAL.h" />
     <ClInclude Include="..\AbstractTreeGenerator\CompoundStatement.h" />
     <ClInclude Include="..\AbstractTreeGenerator\DotOutputVisitor.h" />
     <ClInclude Include="..\AbstractTreeGenerator\FirstTaskMain.h" />
@@ -164,6 +165,8 @@
     <ClInclude Include="..\AbstractTreeGenerator\IStatemnet.h" />
     <ClInclude Include="..\AbstractTreeGenerator\IVisitor.h" />
     <ClInclude Include="..\AbstractTreeGenerator\LastExpressionList.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\LogicExpression.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\MainClass.h" />
     <ClInclude Include="..\AbstractTreeGenerator\NumExpression.h" />
     <ClInclude Include="..\AbstractTreeGenerator\OperationExpression.h" />
     <ClInclude Include="..\AbstractTreeGenerator\PrintStatement.h" />
@@ -174,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\AbstractTreeGenerator\AssignStatement.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\BOOL_LITERAL.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\CompilerTheory.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\CompoundStatement.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\DotOutputVisitor.cpp" />
@@ -181,6 +185,8 @@
     <ClCompile Include="..\AbstractTreeGenerator\GraphvizLauncher.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\IdExpression.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\LastExpressionList.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\LogicExpression.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\MainClass.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\NumExpression.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\OperationExpression.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\PrintStatement.cpp" />

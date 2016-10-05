@@ -65,7 +65,7 @@
 /* Line 371 of yacc.c  */
 #line 4 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
-#include  <iostream>
+#include <iostream>
 #include <string>
 int yyerror(char *s);
 int yylex(void);

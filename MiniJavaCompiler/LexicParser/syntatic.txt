@@ -2,7 +2,7 @@
 /* calc.y */
 
 %{
-#include  <iostream>
+#include <iostream>
 #include <string>
 int yyerror(char *s);
 int yylex(void);
