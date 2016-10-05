@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "DotOutputVisitor.h"
 
 #include "INode.h"
@@ -9,6 +8,8 @@
 #include "PrintStatement.h"
 #include "LastExpressionList.h"
 #include "IdExpression.h"
+
+#include <string>
 
 namespace GraphvizOutput {
 

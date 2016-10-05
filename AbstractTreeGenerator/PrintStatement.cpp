@@ -1,5 +1,5 @@
-#include "stdafx.h"
 #include "PrintStatement.h"
+#include <memory>
 
 FirstTask::CPrintStatement::CPrintStatement(std::shared_ptr<IExpression>
 	_expression) : expression(_expression) {

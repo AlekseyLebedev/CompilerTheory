@@ -1,5 +1,5 @@
-#include "stdafx.h"
 #include "OperationExpression.h"
+#include <memory>
 
 FirstTask::COperationExpression::COperationExpression(std::shared_ptr<IExpression> left, std::shared_ptr<IExpression> right, TOperationType type) :
 	leftOperand(left), rightOperand(right), operation(type)

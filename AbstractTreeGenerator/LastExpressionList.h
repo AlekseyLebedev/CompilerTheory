@@ -1,7 +1,7 @@
 #pragma once
 
-#include "stdafx.h"
 #include "IExpression.h"
+#include <memory>
 
 namespace FirstTask {
 	class CLastExpressionList : public IExpression {

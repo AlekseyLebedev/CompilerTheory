@@ -1,5 +1,5 @@
-#include "stdafx.h"
 #include "LastExpressionList.h"
+#include <memory>
 
 FirstTask::CLastExpressionList::CLastExpressionList(std::shared_ptr<FirstTask::
 	IExpression> _exp) : exp(_exp) {

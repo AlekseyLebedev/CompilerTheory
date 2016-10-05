@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "FirstTaskMain.h"
 
 #include "GraphvizLauncher.h"
@@ -10,6 +9,8 @@
 #include "PrintStatement.h"
 #include "LastExpressionList.h"
 #include "IdExpression.h"
+
+#include <memory>
 
 void FirstTask::FirstTaskMain()
 {

@@ -63,7 +63,7 @@
 
 /* Copy the first part of user declarations.  */
 /* Line 371 of yacc.c  */
-#line 4 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 4 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
 #include  <iostream>
 #include <string>
@@ -75,7 +75,7 @@ void DebugOutput(const std::string& s){
 }
 
 /* Line 371 of yacc.c  */
-#line 79 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 79 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -95,8 +95,8 @@ void DebugOutput(const std::string& s){
 
 /* In a future release of Bison, this section will be replaced
    by #include "syntatic.h".  */
-#ifndef YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
-# define YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
+#ifndef YY_YY_C_USERS_USER_SOURCE_REPOS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
+# define YY_YY_C_USERS_USER_SOURCE_REPOS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
 /* Enabling traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -120,14 +120,14 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 15 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 15 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
   int		int_val;
   std::string*	op_val;
 
 
 /* Line 387 of yacc.c  */
-#line 131 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 131 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -150,12 +150,12 @@ int yyparse ();
 #endif
 #endif /* ! YYPARSE_PARAM */
 
-#endif /* !YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED  */
+#endif /* !YY_YY_C_USERS_USER_SOURCE_REPOS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 159 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 159 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 
 #ifdef short
 # undef short
@@ -1329,13 +1329,13 @@ yyreduce:
     {
         case 2:
 /* Line 1792 of yacc.c  */
-#line 26 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 26 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     { DebugOutput("Class: "); }
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1339 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 1339 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1567,7 +1567,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 28 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 28 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
 
 int yyerror(std::string s)
