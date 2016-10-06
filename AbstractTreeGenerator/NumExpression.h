@@ -1,15 +1,17 @@
 #pragma once
 #include "IExpression.h"
+#include "INTEGER_LITERAL.h"
+#include <memory>
 
 namespace FirstTask {
 	class CNumExpression : public IExpression
 	{
 	public:
-		CNumExpression(int _value);
+		CNumExpression(std::shared_ptr<CINTEGER_LITERAL> theValue);
 		virtual ~CNumExpression();
 		virtual void Accept(IVisitor*) override;
-		int GetValue() const;
+		std::shared_ptr<CINTEGER_LITERAL> GetValue() const;
 	private:
-		int value;
+		std::shared_ptr<CINTEGER_LITERAL> value;
 	};
 }

@@ -1,6 +1,8 @@
 #include "NumExpression.h"
+#include "INTEGER_LITERAL.h"
 
-FirstTask::CNumExpression::CNumExpression(int _value) : value(_value)
+FirstTask::CNumExpression::CNumExpression(std::shared_ptr<FirstTask::CINTEGER_LITERAL> theValue) :
+	value(theValue)
 {
 }
 
@@ -8,7 +10,7 @@ FirstTask::CNumExpression::~CNumExpression()
 {
 }
 
-int FirstTask::CNumExpression::GetValue() const {
+std::shared_ptr<FirstTask::CINTEGER_LITERAL> FirstTask::CNumExpression::GetValue() const {
 	return value;
 }
 

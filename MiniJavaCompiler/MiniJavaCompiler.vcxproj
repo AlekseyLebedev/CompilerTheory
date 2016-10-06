@@ -162,6 +162,7 @@
     <ClInclude Include="..\AbstractTreeGenerator\IdExpression.h" />
     <ClInclude Include="..\AbstractTreeGenerator\IExpression.h" />
     <ClInclude Include="..\AbstractTreeGenerator\INode.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\INTEGER_LITERAL.h" />
     <ClInclude Include="..\AbstractTreeGenerator\IStatemnet.h" />
     <ClInclude Include="..\AbstractTreeGenerator\IVisitor.h" />
     <ClInclude Include="..\AbstractTreeGenerator\LastExpressionList.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="..\AbstractTreeGenerator\FirstTaskMain.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\GraphvizLauncher.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\IdExpression.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\INTEGER_LITERAL.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\LastExpressionList.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\LogicExpression.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\MainClass.cpp" />

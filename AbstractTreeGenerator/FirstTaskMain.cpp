@@ -14,14 +14,16 @@
 
 void FirstTask::FirstTaskMain()
 {
-	std::shared_ptr<CCompoundStatement> root(new CCompoundStatement(
-		std::shared_ptr<CAssignStatement>(new CAssignStatement("a",
-			std::shared_ptr<COperationExpression>(new COperationExpression(
-				std::shared_ptr<CNumExpression>(new CNumExpression(5)),
-				std::shared_ptr<CNumExpression>(new CNumExpression(3)),
-				COperationExpression::Plus)))),
-		std::shared_ptr<CPrintStatement>(new CPrintStatement(
-			std::shared_ptr<CLastExpressionList>(new CLastExpressionList(
-				std::shared_ptr<CIdExpression>(new CIdExpression("a"))))))));
-	GraphvizOutput::CGraphvizLauncher::Launch(root.get());
+	// TODO: разобраться с конструкторами
+	// TODO: нужен ли вообще этот код? он вроде бы не вызывается
+	//std::shared_ptr<CCompoundStatement> root(new CCompoundStatement(
+	//	std::shared_ptr<CAssignStatement>(new CAssignStatement("a",
+	//		std::shared_ptr<COperationExpression>(new COperationExpression(
+	//			std::shared_ptr<CNumExpression>(std::shared_ptr<FirstTask::CINTEGER_LITERAL>(5)),
+	//			std::shared_ptr<CNumExpression>(std::shared_ptr<FirstTask::CINTEGER_LITERAL>(3)),
+	//			COperationExpression::Plus)))),
+	//	std::shared_ptr<CPrintStatement>(new CPrintStatement(
+	//		std::shared_ptr<CLastExpressionList>(new CLastExpressionList(
+	//			std::shared_ptr<CIdExpression>(new CIdExpression("a"))))))));
+	//GraphvizOutput::CGraphvizLauncher::Launch(root.get());
 }

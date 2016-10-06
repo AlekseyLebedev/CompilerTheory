@@ -104,6 +104,9 @@
     <ClInclude Include="..\AbstractTreeGenerator\BOOL_LITERAL.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\INTEGER_LITERAL.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -158,6 +161,9 @@
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\AbstractTreeGenerator\BOOL_LITERAL.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\INTEGER_LITERAL.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
   </ItemGroup>
