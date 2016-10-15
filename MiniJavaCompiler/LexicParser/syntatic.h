@@ -46,8 +46,7 @@ extern int yydebug;
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     CLASS = 258,
-     LENGTH = 259
+     T_class = 258
    };
 #endif
 
@@ -56,14 +55,14 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 11 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 15 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
   int		int_val;
   std::string*	op_val;
 
 
 /* Line 2058 of yacc.c  */
-#line 67 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.h"
+#line 66 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
