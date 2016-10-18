@@ -90,7 +90,7 @@ ClassDeclaration: T_class Identifier ClassExtend T_lbrace
 		MethodDecList
 	T_rbrace {
 		$$ = std::make_shared<CClassDeclaration>(new CClassDeclaration($2, $3, $5, $6));
-		//ClassDeclaration(Identifier, ClassExtend, VarDecList, MethodList)
+		//ClassDeclaration(Identifier, ClassExtend, VarDeclarationList, MethodList)
 	} 	
 
 ClassExtend: 
