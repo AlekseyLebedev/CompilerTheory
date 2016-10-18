@@ -2,7 +2,7 @@
 
 FirstTask::CAssignmentStatement::CAssignmentStatement( std::shared_ptr<CIdExpression> theIdExpression,
 	std::shared_ptr<IExpression> theExpression ) :
-	idExpression( theIdExpression), expression( theExpression )
+	idExpression( theIdExpression ), expression( theExpression )
 {
 }
 

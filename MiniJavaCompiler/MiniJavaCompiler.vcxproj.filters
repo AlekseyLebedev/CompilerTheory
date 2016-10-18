@@ -47,9 +47,6 @@
     <ClInclude Include="resource.h">
       <Filter>Global h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\AssignStatement.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="..\AbstractTreeGenerator\CompoundStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
@@ -152,6 +149,33 @@
     <ClInclude Include="..\AbstractTreeGenerator\VarDeclarationList.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\AssignmentListStatement.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\AssignmentStatement.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\CExpression.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\CondtitionStatement.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\ExpressionList.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\FirstTaskMain.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\IndexExpression.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\LengthExpression.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\PreconditionStatement.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -162,9 +186,6 @@
     </ClCompile>
     <ClCompile Include="LexicParser\syntatic.cpp">
       <Filter>LexicParser\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\AssignStatement.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\AbstractTreeGenerator\CompilerTheory.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
@@ -254,6 +275,33 @@
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\AbstractTreeGenerator\VarDeclarationList.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\AssignmentListStatement.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\AssignmentStatement.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\CExpression.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\CondtitionStatement.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\ExpressionList.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\FirstTaskMain.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\IndexExpression.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\LengthExpression.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\PreconditionStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
   </ItemGroup>
