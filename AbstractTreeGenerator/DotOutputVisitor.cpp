@@ -81,7 +81,7 @@ namespace GraphvizOutput {
 	void CDotOutputVisitor::Visit(FirstTask::CNumExpression *numExpression)
 	{
 		size_t current = enterNode("NumExpression");
-		addSubNode(current, numExpression->GetValue()->GetStringValue());
+		//addSubNode(current, numExpression->GetValue()->GetStringValue());
 		//// TODO: возможно было бы логично получать не строку а интовое значение?
 		//addSubNode(current, numExpression->GetValue()->GetValue());
 	}

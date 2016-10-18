@@ -4,7 +4,7 @@
 
 
 namespace FirstTask {
-	class CLengthExpression {
+	class CLengthExpression : public IExpression {
 	public:
 		CLengthExpression( std::shared_ptr<IExpression> theExpression );
 		virtual ~CLengthExpression();

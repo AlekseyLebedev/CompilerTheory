@@ -4,7 +4,7 @@
 #include "IExpression.h"
 
 namespace FirstTask {
-	class CListConstructorExpression {
+	class CListConstructorExpression : public IExpression {
 	public:
 		CListConstructorExpression( std::shared_ptr<IExpression> theExpression );
 		virtual ~CListConstructorExpression();

@@ -86,18 +86,6 @@
     <ClInclude Include="..\AbstractTreeGenerator\MainClass.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\LogicExpression.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\BOOL_LITERAL.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\INTEGER_LITERAL.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
-    <ClInclude Include="CExpression.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="..\AbstractTreeGenerator\IStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
@@ -155,16 +143,10 @@
     <ClInclude Include="..\AbstractTreeGenerator\AssignmentStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\CExpression.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="..\AbstractTreeGenerator\CondtitionStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
     <ClInclude Include="..\AbstractTreeGenerator\ExpressionList.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\FirstTaskMain.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
     <ClInclude Include="..\AbstractTreeGenerator\IndexExpression.h">
@@ -218,15 +200,6 @@
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\AbstractTreeGenerator\MainClass.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\LogicExpression.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\BOOL_LITERAL.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\INTEGER_LITERAL.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\AbstractTreeGenerator\Program.cpp">
@@ -283,16 +256,10 @@
     <ClCompile Include="..\AbstractTreeGenerator\AssignmentStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\CExpression.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="..\AbstractTreeGenerator\CondtitionStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\AbstractTreeGenerator\ExpressionList.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\FirstTaskMain.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\AbstractTreeGenerator\IndexExpression.cpp">

@@ -13,6 +13,6 @@ namespace FirstTask {
 		//		virtual void Accept(IVisitor*) override;
 	private:
 		std::shared_ptr<CArgument> argument;
-		std::shared_ptr<CArgumentList> argumentList
+		std::shared_ptr<CArgumentList> argumentList;
 	};
 }

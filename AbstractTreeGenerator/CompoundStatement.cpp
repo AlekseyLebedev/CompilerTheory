@@ -6,7 +6,7 @@ FirstTask::CCompoundStatement::CCompoundStatement(std::shared_ptr<INode> left,
 {	
 }
 
-FirstTask::CCompoundStatement::CCompoundStatement( std::shared_ptr<CStatementList> theStatementList = nullptr ) :
+FirstTask::CCompoundStatement::CCompoundStatement( std::shared_ptr<CStatementList> theStatementList ) :
 	statementList( theStatementList )
 {
 }

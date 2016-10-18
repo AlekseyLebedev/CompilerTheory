@@ -4,7 +4,7 @@
 #include "IExpression.h"
 
 namespace FirstTask {
-	class CNegationExpression {
+	class CNegationExpression : public IExpression {
 	public:
 		CNegationExpression( std::shared_ptr<IExpression> theExpression );
 		virtual ~CNegationExpression();

@@ -7,7 +7,7 @@ namespace FirstTask {
 	class CClassDeclarationList {
 	public:
 		CClassDeclarationList( std::shared_ptr<CClassDeclaration> theClassDeclaration,
-			std::shared_ptr<CClassDeclarationList> theClassDeclarationList );
+			std::shared_ptr<CClassDeclarationList> theClassDeclarationList = nullptr );
 		virtual ~CClassDeclarationList();
 
 		//		virtual void Accept(IVisitor*) override;

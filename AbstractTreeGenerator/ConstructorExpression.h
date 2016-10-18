@@ -4,7 +4,7 @@
 #include "IdExpression.h"
 
 namespace FirstTask {
-	class CConstructorExpression {
+	class CConstructorExpression : public IExpression {
 	public:
 		CConstructorExpression( std::shared_ptr<CIdExpression> theIdExpression );
 		virtual ~CConstructorExpression();

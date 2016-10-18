@@ -5,7 +5,7 @@
 
 
 namespace FirstTask {
-	class CPreconditionStatement {
+	class CPreconditionStatement : public IStatement {
 	public:
 		CPreconditionStatement( std::shared_ptr<CIdExpression> theIdExpression,
 			std::shared_ptr<IStatement> theStatement );
