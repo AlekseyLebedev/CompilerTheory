@@ -1,9 +1,9 @@
 #pragma once
 #include <memory>
-#include "IStatemnet.h"
+#include "IStatement.h"
 
 namespace FirstTask {
-	class CCompoundStatement : public IStatemnet
+	class CCompoundStatement : public IStatement
 	{
 	public:
 		CCompoundStatement(std::shared_ptr<INode> left, std::shared_ptr<INode> right);

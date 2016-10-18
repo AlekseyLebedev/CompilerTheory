@@ -1,6 +1,6 @@
 #pragma once
 #include "IdExpression.h"
-#include "IStatemnet.h"
+#include "IStatement.h"
 #include <memory>
 
 
@@ -10,7 +10,7 @@ namespace FirstTask {
 	public:
 		CMainClass( std::shared_ptr<CIdExpression> theClassName,
 			std::shared_ptr<CIdExpression> theArgv,
-			std::shared_ptr<IStatemnet> theCode );
+			std::shared_ptr<IStatement> theStatement );
 		virtual ~CMainClass();
 
 //		virtual void Accept(IVisitor*) override;
@@ -19,6 +19,6 @@ namespace FirstTask {
 	private:
 		std::shared_ptr<CIdExpression> className;
 		std::shared_ptr<CIdExpression> argv;
-		std::shared_ptr<IStatemnet> code;
+		std::shared_ptr<IStatement> statement;
 	};
 }

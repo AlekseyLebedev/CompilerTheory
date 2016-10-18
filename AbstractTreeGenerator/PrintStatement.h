@@ -1,11 +1,11 @@
 #pragma once
 
-#include "IStatemnet.h"
+#include "IStatement.h"
 #include "IExpression.h"
 #include <memory>
 
 namespace FirstTask {
-	class CPrintStatement : public IStatemnet
+	class CPrintStatement : public IStatement
 	{
 	public:
 		CPrintStatement(std::shared_ptr<IExpression> _expression);

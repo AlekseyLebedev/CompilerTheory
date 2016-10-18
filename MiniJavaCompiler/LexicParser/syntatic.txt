@@ -2,8 +2,9 @@
 /* calc.y */
 
 %{
-#include <iostream>
+#include  <iostream>
 #include <string>
+#include <memory>
 int yyerror(char *s);
 int yylex(void);
 
@@ -13,22 +14,272 @@ void DebugOutput(const std::string& s){
 %}
 
 %union{
-  int		int_val;
-  std::string*	op_val;
+	int		int_val;
+	std::string str_val;
+	std::shared_ptr<CProgram> program;
+	std::shared_ptr<CMainClass> mainClass;
+	std::shared_ptr<CClassDeclarationList> classDeclarationList;
+	std::shared_ptr<CClassDeclaration> classDeclaration;
+	std::shared_ptr<CClassExtend> classExtend;
+	std::shared_ptr<CVarDeclarationList> varDeclarationList;
+	std::shared_ptr<CVarDeclaration> varDeclaration;
+	std::shared_ptr<CMethodDeclarationList> methodDeclarationList;
+	std::shared_ptr<CMethodDeclaration> methodDeclaration;
+	std::shared_ptr<CType> type;
+	std::shared_ptr<CExpressionList> expressionList;
+	std::shared_ptr<IExpression> expression;
+	std::shared_ptr<CStatementList> statementList;
+	std::shared_ptr<IStatement> statement;
+	std::shared_ptr<CArgumentList> argumentList;
+	std::shared_ptr<CArgument> argument;  
 }
 
 %start	input 
 
-%token	T_class
+%token<int_val> T_NUM
+%token<str_val> T_ID
+%token T_class, T_public, T_private, T_static, T_main,  T_extends, T_return, T_new
+%token T_void, T_int, T_boolean, T_string
+%token T_lparen, T_rparen, T_lbrace, T_rbrace, T_lbracket, T_rbracket
+%token T_if, T_while, T_sop, T_length, T_true, T_false, T_this
+%token T_equal,  T_and, T_less, T_plus, T_minus, T_times, T_divide, T_mod, T_or
+%token T_semi, T_comma, T_not
+
+%type<program> MainProgram
+%type<mainClass> MainClass
+%type<classDeclarationList> ClassDeclarationList
+%type<classDeclaration> ClassDeclaration
+%type<classExtend> ClassExtend
+%type<varDeclarationList> VarDeclarationList
+%type<varDeclaration> VarDeclaration
+%type<methodDeclarationList> MethodDeclarationList
+%type<methodDeclaration> MethodDeclaration
+%type<argumentList> ArgumentList
+%type<argument> Argument 
+%type<type> Type
+%type<statementList> StatementList
+%type<statement> Statement
+%type<expressionList> ExpressionList
+%type<expression> Expression, Identifier 
+
 %%
 
-input:
-	T_class { DebugOutput("Class: "); }
+input: MainProgram 	
+
+MainProgram: MainClass ClassDeclarationList {
+	$$ = std::make_shared<CProgram>(new CProgram($1, $2));
+	//Program(MainClass, ClassDeclarationList)
+}
+
+MainClass: T_class Identifier T_lbrace 
+	T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace
+		Statement T_rbrace
+	T_rbrace {
+		$$ = std::make_shared<CMainClass>(new  CMainClass($2, $12, $15));
+		//MainClass(Identifier, Identifier, Statement)
+		} 
+
+ClassDeclarationList:  
+	| ClassDeclaration ClassDeclarationList {
+		$$ = std::make_shared<CClassDeclarationList>(new CClassDeclarationList($1, $2));
+		//ClassDeclarationList(ClassDeclaration, ClassDeclarationList)
+	}
+
+ClassDeclaration: T_class Identifier ClassExtend T_lbrace 
+		VarDecList
+		MethodDecList
+	T_rbrace {
+		$$ = std::make_shared<CClassDeclaration>(new CClassDeclaration($2, $3, $5, $6));
+		//ClassDeclaration(Identifier, ClassExtend, VarDecList, MethodList)
+	} 	
+
+ClassExtend: 
+	| T_lparen T_extends Identifier T_rparen { 
+		$$ = std::make_shared<CClassExtend>(new CClassExtend($3)); 
+		//ClassExtend(Identifier)
+	}				
+	
+VarDeclarationList: 
+	| VarDeclaration VarDeclarationList {
+		$$ = std::make_shared<CVarDeclarationList>(new CVarDeclarationList($1, $2));
+		//VarDeclarationList(VarDeclaration,VarDeclarationList)
+	}	
+	
+VarDeclaration : Type Identifier T_semi {
+		$$ = std::make_shared<CVarDeclaration>(new CVarDeclaration($1, $2));
+		//VarDeclaration(Type, Identifier)
+	}	
+	
+MethodDeclarationList:
+	| MethodDeclaration MethodDeclarationList {
+		$$ = std::make_shared<CMethodDeclarationList>(new CMethodDeclarationList($1, $2));
+		//MethodDeclarationList(MethodDeclaration, MethodDeclarationList)
+	}
+
+MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace
+	VarDeclarationList StatementList T_return Expression T_semi T_rbrace {
+		$$ = std::make_shared<CMethodDeclaration>(new CMethodDeclaration($2, $3, $5, $8, $9, $11));
+		//MethodDeclaration(Type, Identifier, ArgumentList, VarDeclarationList, StatementList, Expression)
+	}		
+	
+ArgumentList:
+	| Argument {
+		$$ = std::make_shared<CArgumentList>(CArgumentList($1, nullptr));
+		//ArgumentList(Argument, nullptr)
+	}
+	| Argument T_comma ArgumentList {
+		$$ = std::make_shared<CArgumentList>(new CArgumentList($1, $3));
+		//ArgumentList(Argument, ArgumentList)
+	 }
+
+Argument: Type Identifier {
+		$$ = std::make_shared<CArgument>(new CArgument($1, $2));
+		//Argument(Type, Identifier)
+	}
+
+Type: T_int T_lbracket T_rbracket {
+		$$ = std::shared_ptr<CType>(new CType("INTLIST"));
+	}
+	| T_boolean {
+		$$ = std::make_shared<CType>(new CType("BOOL"));
+	}
+	| T_int {
+		$$ = std::shared_ptr<CType>(new CType("INT"));
+	}
+	| Identifier {
+		$$ = std::shared_ptr<CType>(new CType($1));
+		//Type(Identifier)
+	}
+
+StatementList: 
+	| Statement StatementList {
+		$$ = std::make_shared<CStatementList>(new CStatementList($1, $2));
+		//StatementList(Statement, StatementList)
+	}
+
+Statement: T_lbrace StatementList T_rbrace {
+		$$ = std::make_shared<IStatement>(new CCompoundStatement($2));
+		//CompoundStatement(StatementList)
+	}
+	| T_if T_lparen Expression T_rparen Statemet T_else Statement {
+		$$ = std::make_shared<IStatement>(new CConditionStatement($3, $5, $7));
+		//CondtitionStatement(Expression, Statement, Statement)
+	}
+	| T_while T_lparen Expression T_rparen Statemet {
+		$$ = std::make_shared<IStatement>(new CPreconditionStatement($3, $5));
+		//PreconditionStatement(Expression, Statement)
+	}
+	| T_sop  T_lparen Expression T_rparen T_semi {
+		$$ = std::make_shared<IStatement>(new CPrintStatement($3));
+		//PrintStatement(Expression)
+	}
+	| Identifier T_equal Expression T_semi {
+		$$ = std::make_shared<IStatement>(new CAssignmentStatement($1, $3));
+		//AssignmentStatement(Identifier, Expression)
+	}
+	| Identifier T_lbracket Expression T_rbracket T_equal Expression T_semi {
+		$$ = std::make_shared<IStatement>(AssignmentListStatement($1, $3, $6));
+		//AssignmentListStatement(Identifier, Expression, Expression)
+	}
+
+Expression: Expression T_and Expression {
+		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::And));
+		//OperationExpression(Expression, Expression, And) 
+	}
+	|  Expression T_less Expression {
+		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Less));
+		//OperationExpression(Expression, Expression, Less) 
+	}
+	|  Expression T_plus Expression {
+		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Plus));
+		//OperationExpression(Expression, Expression, Plus) 
+	}
+	|  Expression T_minus Expression {
+		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Minus));
+		//OperationExpression(Expression, Expression, Minus) 
+	}
+	|  Expression T_star Expression {
+		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Times));
+		//OperationExpression(Expression, Expression, Times) 
+	}
+	|  Expression T_divide Expression {
+		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Devide));
+		//OperationExpression(Expression, Expression, Devide) 
+	}
+	|  Expression T_mod Expression {
+		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Mod));
+		//OperationExpression(Expression, Expression, Mod) 
+	}
+	|  Expression T_or Expression {
+		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Or));
+		//OperationExpression(Expression, Expression, Or) 
+	}
+	| Expression T_lbracket Expression T_rbracket {
+		$$ = std::make_shared<IExpression>(new CIndexExpression($1, $3));
+		//IndexExpression(Expression,Expression)
+	}
+	| Expression T_dot T_length {
+		$$ = std::make_shared<IExpression>(new CLengthExpression($1));
+		//LengthExpression(Expression)
+	}
+	| Expression T_dot Identifier T_lparen ExpressionList T_rparen {
+		$$ = std::make_shared<IExpression>(new CGetFieldExpression($1, $3, $5));
+		//GetFieldExpression(Expression, Identifier, ExpressionList)
+	}
+	| T_NUM { 
+		$$ = std::make_shared<IExpression>(new CNumExpression($2));
+		//NumExpression(int)
+	}
+	| T_true {
+		$$ = std::make_shared<IExpression>(new CTrueExpression());
+	} 
+	| T_false {
+		$$ = std::make_shared<IExpression>(new CFalseExpression());
+	}
+	| Identifier {
+		$$ = std::make_shared<IExpression>(new CIdExpression($1));
+		//IdExpression(Identifier)
+	}
+	| T_this {
+		$$ = std::make_shared<IExpression>(new CThisExpression());
+		//ThisExpression()
+	}
+	| T_new T_int T_lbracket Expression T_rbracket {
+		$$ = std::make_shared<IExpression>(new CListConstructorExpression($4));
+		//ListConstructorExpression(Expression) 
+	}
+	| T_new Identifier T_lparen T_rparen {
+		$$ = std::make_shared<IExpression>(new CConstructorExpression($2));
+		//ConstructorExpression(Identifier)
+	}
+	| T_not Expression {
+		$$ = std::make_shared_ptr<IExpression>(new CNegationExpression($2));
+		//NegationExpression(Expression)
+	}
+	| T_lparen Expression T_rparen {
+		$$ = std::make_shared<IExpression>(new CParenExpression($2));
+		//ParenExpression(Expression)
+	}
+
+ExpressionList: 
+	| Expression T_comma ExpressionList { 
+		$$ = std::make_shared<CExpressionList>(new CExpressionList($1, $3));
+		//ExpressionList(Expression, ExpressionList)
+	}	
+	| Expression {
+		$$ = std::make_shared<CExpressionList>(new CExpressionList($1, nullptr));
+		//ExpressionList(Expression, nullptr)
+	}
+	
+Identifier: T_ID {
+		$$ = std::make_shared<IExpression>(new CIdExpression($2));
+		//IdExpression(string);
+	}
+
 
 %%
 
-int yyerror(std::string s)
-{
+int yyerror(std::string s) {
   extern int yylineno;	// defined and maintained in lex.c
   extern char *yytext;	// defined and maintained in lex.c
   
@@ -37,8 +288,6 @@ int yyerror(std::string s)
   exit(1);
 }
 
-int yyerror(char *s)
-{
+int yyerror(char *s) {
 	return yyerror(std::string(s));
 }
-

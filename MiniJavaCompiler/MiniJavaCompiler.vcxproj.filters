@@ -41,9 +41,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Global h</Filter>
-    </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Global h</Filter>
     </ClInclude>
@@ -59,9 +56,6 @@
     <ClInclude Include="..\AbstractTreeGenerator\DotOutputVisitor.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\FirstTaskMain.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="..\AbstractTreeGenerator\GraphvizLauncher.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
@@ -72,9 +66,6 @@
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
     <ClInclude Include="..\AbstractTreeGenerator\INode.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\IStatemnet.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
     <ClInclude Include="..\AbstractTreeGenerator\IVisitor.h">
@@ -107,6 +98,18 @@
     <ClInclude Include="..\AbstractTreeGenerator\INTEGER_LITERAL.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
+    <ClInclude Include="CExpression.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\IStatement.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\Program.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AbstractTreeGenerator\ClassDeclarationList.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -128,9 +131,6 @@
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\AbstractTreeGenerator\DotOutputVisitor.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\FirstTaskMain.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\AbstractTreeGenerator\GraphvizLauncher.cpp">
@@ -164,6 +164,12 @@
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\AbstractTreeGenerator\INTEGER_LITERAL.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\Program.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AbstractTreeGenerator\ClassDeclarationList.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
   </ItemGroup>

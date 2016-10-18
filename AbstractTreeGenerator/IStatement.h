@@ -2,7 +2,7 @@
 #include "INode.h"
 
 namespace FirstTask {
-	class IStatemnet : public INode {
+	class IStatement : public INode {
 		
 	};
 }

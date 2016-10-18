@@ -1,11 +1,11 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "IStatemnet.h"
+#include "IStatement.h"
 #include "IExpression.h"
 
 namespace FirstTask {
-	class CAssignStatement : public IStatemnet
+	class CAssignStatement : public IStatement
 	{
 	public:
 		CAssignStatement(const std::string name, std::shared_ptr<IExpression> operation);
