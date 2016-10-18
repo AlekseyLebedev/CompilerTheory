@@ -1,15 +1,16 @@
 #pragma once
 
 #include <memory>
-
+#include "IdExpression.h"
 
 namespace FirstTask {
-	class CClassDeclaration {
+	class CType {
 	public:
-		CClassDeclaration();
-		virtual ~CClassDeclaration();
+		CType( std::shared_ptr<CIdExpression> theIdExpression );
+		virtual ~CType();
 
 		//		virtual void Accept(IVisitor*) override;
 	private:
+		std::shared_ptr<CIdExpression> idExpression;
 	};
 }
