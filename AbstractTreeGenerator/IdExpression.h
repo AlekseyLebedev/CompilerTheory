@@ -6,7 +6,7 @@ namespace FirstTask {
 	class CIdExpression : public IExpression
 	{
 	public:
-		CIdExpression(std::string _name);
+		CIdExpression(std::string theName);
 		virtual ~CIdExpression();
 		virtual void Accept(IVisitor*) override;
 

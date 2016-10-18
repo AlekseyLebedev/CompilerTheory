@@ -1,18 +1,11 @@
-#include "MainClass.h"
+#include "IndexExpression.h"
 
-FirstTask::CMainClass::CMainClass( std::shared_ptr<CIdExpression> theClassName,
-	std::shared_ptr<CIdExpression> theArgv,
-	std::shared_ptr<IStatement> theStatement ) : className( theClassName ), argv( theArgv ), statement( theStatement )
+FirstTask::CIndexExpression::CIndexExpression( std::shared_ptr<IExpression> theExpressionFirst,
+	std::shared_ptr<IExpression> theExpressionSecond ) : 
+	epressionFirst( theExpressionFirst ), expressionSecond( theExpressionSecond )
 {
-
 }
 
-FirstTask::CMainClass::~CMainClass()
+FirstTask::CIndexExpression::~CIndexExpression()
 {
-
-}
-
-std::shared_ptr<FirstTask::CIdExpression> FirstTask::CMainClass::GetName() const
-{
-	return className;
 }

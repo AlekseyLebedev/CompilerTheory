@@ -1,15 +1,16 @@
 #pragma once
 
 #include <memory>
-
+#include "IExpression.h"
 
 namespace FirstTask {
-	class CClassDeclaration {
+	class CNegationExpression {
 	public:
-		CClassDeclaration();
-		virtual ~CClassDeclaration();
+		CNegationExpression( std::shared_ptr<IExpression> theExpression );
+		virtual ~CNegationExpression();
 
 		//		virtual void Accept(IVisitor*) override;
 	private:
+		std::shared_ptr<IExpression> expression;
 	};
 }
