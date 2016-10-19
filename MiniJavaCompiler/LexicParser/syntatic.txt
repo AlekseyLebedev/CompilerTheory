@@ -21,23 +21,23 @@ void DebugOutput(const std::string& s){
 
 %union{
 	int int_val;
-	string str_val;
-	shared_ptr<CProgram> program;
-	shared_ptr<CMainClass> mainClass;
-	shared_ptr<CClassDeclarationList> classDeclarationList;
-	shared_ptr<CClassDeclaration> classDeclaration;
-	shared_ptr<CClassExtend> classExtend;
-	shared_ptr<CVarDeclarationList> varDeclarationList;
-	shared_ptr<CVarDeclaration> varDeclaration;
-	shared_ptr<CMethodDeclarationList> methodDeclarationList;
-	shared_ptr<CMethodDeclaration> methodDeclaration;
-	shared_ptr<CType> type;
-	shared_ptr<CExpressionList> expressionList;
-	shared_ptr<IExpression> expression;
-	shared_ptr<CStatementList> statementList;
-	shared_ptr<IStatement> statement;
-	shared_ptr<CArgumentList> argumentList;
-	shared_ptr<CArgument> argument;
+	std::string str_val;
+	std::shared_ptr<CProgram> program;
+	std::shared_ptr<CMainClass> mainClass;
+	std::shared_ptr<CClassDeclarationList> classDeclarationList;
+	std::shared_ptr<CClassDeclaration> classDeclaration;
+	std::shared_ptr<CClassExtend> classExtend;
+	std::shared_ptr<CVarDeclarationList> varDeclarationList;
+	std::shared_ptr<CVarDeclaration> varDeclaration;
+	std::shared_ptr<CMethodDeclarationList> methodDeclarationList;
+	std::shared_ptr<CMethodDeclaration> methodDeclaration;
+	std::shared_ptr<CType> type;
+	std::shared_ptr<CExpressionList> expressionList;
+	std::shared_ptr<IExpression> expression;
+	std::shared_ptr<CStatementList> statementList;
+	std::shared_ptr<IStatement> statement;
+	std::shared_ptr<CArgumentList> argumentList;
+	std::shared_ptr<CArgument> argument;
 }
 
 %start	input 
