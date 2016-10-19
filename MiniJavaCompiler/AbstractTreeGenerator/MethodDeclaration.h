@@ -15,6 +15,7 @@ namespace AbstractTreeGenerator {
 			std::shared_ptr<CIdExpression> theIdExpression,
 			std::shared_ptr<CArgumentList> theArgumentList,
 			std::shared_ptr<CVarDeclarationList>  theVarDeclarationList,
+			std::shared_ptr<CStatementList>  theStatementList,
 			std::shared_ptr<IExpression> theExpression );
 		virtual ~CMethodDeclaration();
 
@@ -24,6 +25,7 @@ namespace AbstractTreeGenerator {
 		std::shared_ptr<CIdExpression> idExpression;
 		std::shared_ptr<CArgumentList> argumentList;
 		std::shared_ptr<CVarDeclarationList>  varDeclarationList;
+		std::shared_ptr<CStatementList>  statementList;
 		std::shared_ptr<IExpression> expression;
 	};
 }
