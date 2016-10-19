@@ -31,7 +31,7 @@ void DebugOutput(const std::string& s){
 	std::shared_ptr<CStatementList> statementList;
 	std::shared_ptr<IStatement> statement;
 	std::shared_ptr<CArgumentList> argumentList;
-	std::shared_ptr<CArgument> argument;  
+	std::shared_ptr<CArgument> argument;
 }
 
 %start	input 
@@ -39,7 +39,7 @@ void DebugOutput(const std::string& s){
 %token<int_val> T_NUM
 %token<str_val> T_ID
 %token T_class, T_public, T_private, T_static, T_main,  T_extends, T_return, T_new
-%token T_void, T_int, T_boolean, T_string
+%token T_void, T_int, T_boolean, T_string, T_dot, T_else, T_star
 %token T_lparen, T_rparen, T_lbrace, T_rbrace, T_lbracket, T_rbracket
 %token T_if, T_while, T_sop, T_length, T_true, T_false, T_this
 %token T_equal,  T_and, T_less, T_plus, T_minus, T_times, T_divide, T_mod, T_or
@@ -55,61 +55,61 @@ void DebugOutput(const std::string& s){
 %type<methodDeclarationList> MethodDeclarationList
 %type<methodDeclaration> MethodDeclaration
 %type<argumentList> ArgumentList
-%type<argument> Argument 
+%type<argument> Argument
 %type<type> Type
 %type<statementList> StatementList
 %type<statement> Statement
 %type<expressionList> ExpressionList
-%type<expression> Expression, Identifier 
+%type<expression> Expression, Identifier
 
 %%
 
-input: MainProgram 	
+input: MainProgram
 
 MainProgram: MainClass ClassDeclarationList {
 	$$ = std::make_shared<CProgram>(new CProgram($1, $2));
 	//CProgram(MainClass, ClassDeclarationList)
 }
 
-MainClass: T_class Identifier T_lbrace 
+MainClass: T_class Identifier T_lbrace
 	T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace
 		Statement T_rbrace
 	T_rbrace {
 		$$ = std::make_shared<CMainClass>(new  CMainClass($2, $12, $15));
 		// IClass(Identifier, Identifier, Statement)
-		} 
+		}
 
-ClassDeclarationList:  
+ClassDeclarationList:
 	| ClassDeclaration ClassDeclarationList {
 		$$ = std::make_shared<CClassDeclarationList>(new CClassDeclarationList($1, $2));
 		//ClassDeclarationList(ClassDeclaration, ClassDeclarationList)
 	}
 
-ClassDeclaration: T_class Identifier ClassExtend T_lbrace 
-		VarDecList
-		MethodDecList
+ClassDeclaration: T_class Identifier ClassExtend T_lbrace
+		VarDeclarationList
+		MethodDeclarationList
 	T_rbrace {
 		$$ = std::make_shared<CClassDeclaration>(new CClassDeclaration($2, $3, $5, $6));
-		//ClassDeclaration(Identifier, ClassExtend, VarDecList, MethodList)
-	} 	
+		//ClassDeclaration(Identifier, ClassExtend, VarDeclarationList, MethodList)
+	}
 
-ClassExtend: 
-	| T_lparen T_extends Identifier T_rparen { 
-		$$ = std::make_shared<CClassExtend>(new CClassExtend($3)); 
+ClassExtend:
+	| T_lparen T_extends Identifier T_rparen {
+		$$ = std::make_shared<CClassExtend>(new CClassExtend($3));
 		//ClassExtend(Identifier)
-	}				
-	
-VarDeclarationList: 
+	}
+
+VarDeclarationList:
 	| VarDeclaration VarDeclarationList {
 		$$ = std::make_shared<CVarDeclarationList>(new CVarDeclarationList($1, $2));
 		//VarDeclarationList(VarDeclaration,VarDeclarationList)
-	}	
-	
+	}
+
 VarDeclaration : Type Identifier T_semi {
 		$$ = std::make_shared<CVarDeclaration>(new CVarDeclaration($1, $2));
 		//VarDeclaration(Type, Identifier)
-	}	
-	
+	}
+
 MethodDeclarationList:
 	| MethodDeclaration MethodDeclarationList {
 		$$ = std::make_shared<CMethodDeclarationList>(new CMethodDeclarationList($1, $2));
@@ -120,8 +120,8 @@ MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbr
 	VarDeclarationList StatementList T_return Expression T_semi T_rbrace {
 		$$ = std::make_shared<CMethodDeclaration>(new CMethodDeclaration($2, $3, $5, $8, $9, $11));
 		//MethodDeclaration(Type, Identifier, ArgumentList, VarDeclarationList, StatementList, Expression)
-	}		
-	
+	}
+
 ArgumentList:
 	| Argument {
 		$$ = std::make_shared<CArgumentList>(CArgumentList($1, nullptr));
@@ -151,7 +151,7 @@ Type: T_int T_lbracket T_rbracket {
 		//Type(Identifier)
 	}
 
-StatementList: 
+StatementList:
 	| Statement StatementList {
 		$$ = std::make_shared<CStatementList>(new CStatementList($1, $2));
 		//StatementList(Statement, StatementList)
@@ -161,11 +161,11 @@ Statement: T_lbrace StatementList T_rbrace {
 		$$ = std::make_shared<IStatement>(new CCompoundStatement($2));
 		//CompoundStatement(StatementList)
 	}
-	| T_if T_lparen Expression T_rparen Statemet T_else Statement {
+	| T_if T_lparen Expression T_rparen Statement T_else Statement {
 		$$ = std::make_shared<IStatement>(new CConditionStatement($3, $5, $7));
 		//CondtitionStatement(Expression, Statement, Statement)
 	}
-	| T_while T_lparen Expression T_rparen Statemet {
+	| T_while T_lparen Expression T_rparen Statement {
 		$$ = std::make_shared<IStatement>(new CPreconditionStatement($3, $5));
 		//PreconditionStatement(Expression, Statement)
 	}
@@ -184,35 +184,35 @@ Statement: T_lbrace StatementList T_rbrace {
 
 Expression: Expression T_and Expression {
 		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::And));
-		//OperationExpression(Expression, Expression, And) 
+		//OperationExpression(Expression, Expression, And)
 	}
 	|  Expression T_less Expression {
 		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Less));
-		//OperationExpression(Expression, Expression, Less) 
+		//OperationExpression(Expression, Expression, Less)
 	}
 	|  Expression T_plus Expression {
 		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Plus));
-		//OperationExpression(Expression, Expression, Plus) 
+		//OperationExpression(Expression, Expression, Plus)
 	}
 	|  Expression T_minus Expression {
 		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Minus));
-		//OperationExpression(Expression, Expression, Minus) 
+		//OperationExpression(Expression, Expression, Minus)
 	}
 	|  Expression T_star Expression {
 		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Times));
-		//OperationExpression(Expression, Expression, Times) 
+		//OperationExpression(Expression, Expression, Times)
 	}
 	|  Expression T_divide Expression {
 		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Devide));
-		//OperationExpression(Expression, Expression, Devide) 
+		//OperationExpression(Expression, Expression, Devide)
 	}
 	|  Expression T_mod Expression {
 		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Mod));
-		//OperationExpression(Expression, Expression, Mod) 
+		//OperationExpression(Expression, Expression, Mod)
 	}
 	|  Expression T_or Expression {
 		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Or));
-		//OperationExpression(Expression, Expression, Or) 
+		//OperationExpression(Expression, Expression, Or)
 	}
 	| Expression T_lbracket Expression T_rbracket {
 		$$ = std::make_shared<IExpression>(new CIndexExpression($1, $3));
@@ -226,13 +226,13 @@ Expression: Expression T_and Expression {
 		$$ = std::make_shared<IExpression>(new CGetFieldExpression($1, $3, $5));
 		//GetFieldExpression(Expression, Identifier, ExpressionList)
 	}
-	| T_NUM { 
+	| T_NUM {
 		$$ = std::make_shared<IExpression>(new CNumExpression($2));
 		//NumExpression(int)
 	}
 	| T_true {
 		$$ = std::make_shared<IExpression>(new CTrueExpression());
-	} 
+	}
 	| T_false {
 		$$ = std::make_shared<IExpression>(new CFalseExpression());
 	}
@@ -246,7 +246,7 @@ Expression: Expression T_and Expression {
 	}
 	| T_new T_int T_lbracket Expression T_rbracket {
 		$$ = std::make_shared<IExpression>(new CListConstructorExpression($4));
-		//ListConstructorExpression(Expression) 
+		//ListConstructorExpression(Expression)
 	}
 	| T_new Identifier T_lparen T_rparen {
 		$$ = std::make_shared<IExpression>(new CConstructorExpression($2));
@@ -261,16 +261,16 @@ Expression: Expression T_and Expression {
 		//ParenExpression(Expression)
 	}
 
-ExpressionList: 
-	| Expression T_comma ExpressionList { 
+ExpressionList:
+	| Expression T_comma ExpressionList {
 		$$ = std::make_shared<CExpressionList>(new CExpressionList($1, $3));
 		//ExpressionList(Expression, ExpressionList)
-	}	
+	}
 	| Expression {
 		$$ = std::make_shared<CExpressionList>(new CExpressionList($1, nullptr));
 		//ExpressionList(Expression, nullptr)
 	}
-	
+
 Identifier: T_ID {
 		$$ = std::make_shared<IExpression>(new CIdExpression($2));
 		//IdExpression(string);
