@@ -6,7 +6,7 @@
 #include <memory>
 
 namespace AbstractTreeGenerator {
-	class CClassDeclaration {
+	class CClassDeclaration : public INode {
 	public:
 		CClassDeclaration( std::shared_ptr<CIdExpression> theIdExpression,
 			std::shared_ptr<CClassExtend> theClassExtend, 

@@ -5,7 +5,7 @@
 
 
 namespace AbstractTreeGenerator {
-	class CMainClass
+	class CMainClass : public INode
 	{
 	public:
 		CMainClass( std::shared_ptr<CIdExpression> theClassName,

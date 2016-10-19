@@ -5,7 +5,7 @@
 #include "INode.h"
 
 namespace AbstractTreeGenerator {
-	class CType : INode {
+	class CType : public INode {
 	public:
 		CType( std::shared_ptr<CIdExpression> theIdExpression );
 		virtual ~CType();

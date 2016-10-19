@@ -5,7 +5,7 @@
 #include "ClassDeclarationList.h"
 
 namespace AbstractTreeGenerator {
-	class CProgram {
+	class CProgram : public INode {
 	public:
 	    CProgram( std::shared_ptr<CMainClass> theMainClass, std::shared_ptr<CClassDeclarationList> theClassDeclarationList );
 		virtual ~CProgram();

@@ -4,7 +4,7 @@
 #include "Argument.h"
 
 namespace AbstractTreeGenerator {
-	class CArgumentList {
+	class CArgumentList : public INode {
 	public:
 		CArgumentList( std::shared_ptr<CArgument> theArgument,
 			std::shared_ptr<CArgumentList> theArgumentList = nullptr );

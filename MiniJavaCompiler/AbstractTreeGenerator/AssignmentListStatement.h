@@ -5,7 +5,7 @@
 
 
 namespace AbstractTreeGenerator {
-	class CAssignmentListStatement
+	class CAssignmentListStatement : public INode
 	{
 	public:
 		CAssignmentListStatement( std::shared_ptr<CIdExpression> theIdExpression,

@@ -38,7 +38,6 @@ namespace AbstractTreeGenerator {
 	class CType;
 	class CVarDeclaration;
 	class CVarDeclarationList;
-	class CVariablesTable;
 
 	class IVisitor {
 	public:
@@ -89,6 +88,5 @@ namespace AbstractTreeGenerator {
 		virtual void visit( CType* ) = 0;
 		virtual void visit( CVarDeclaration* ) = 0;
 		virtual void visit( CVarDeclarationList* ) = 0;
-		virtual void visit( CVariablesTable* ) = 0;
 	};
 }

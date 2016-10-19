@@ -5,7 +5,7 @@
 #include "IdExpression.h"
 
 namespace AbstractTreeGenerator {
-	class CVarDeclaration {
+	class CVarDeclaration : public INode {
 	public:
 		CVarDeclaration( std::shared_ptr<CType> theType,
 			std::shared_ptr<CIdExpression> theIdExpression );

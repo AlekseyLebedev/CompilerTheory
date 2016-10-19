@@ -3,7 +3,7 @@
 #include "INode.h"
 
 namespace AbstractTreeGenerator {
-	class CINTEGER_LITERAL  : INode
+	class CINTEGER_LITERAL : public INode
 	{
 	public:
 		CINTEGER_LITERAL(int theValue);

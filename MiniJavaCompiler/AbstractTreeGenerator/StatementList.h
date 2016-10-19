@@ -4,7 +4,7 @@
 #include "IStatement.h"
 
 namespace AbstractTreeGenerator {
-	class CStatementList {
+	class CStatementList : public INode {
 	public:
 		CStatementList( std::shared_ptr<IStatement> theStatement,
 			std::shared_ptr<CStatementList> theStatementList = nullptr );

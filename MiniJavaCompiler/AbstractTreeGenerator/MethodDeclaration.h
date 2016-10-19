@@ -9,16 +9,16 @@
 #include "IExpression.h"
 
 namespace AbstractTreeGenerator {
-	class CMethodDeclaration {
+	class CMethodDeclaration : public INode {
 	public:
-		CMethodDeclaration( std::shared_ptr<CType> theType, 
-			std::shared_ptr<CIdExpression> theIdExpression, 
-			std::shared_ptr<CArgumentList> theArgumentList, 
+		CMethodDeclaration( std::shared_ptr<CType> theType,
+			std::shared_ptr<CIdExpression> theIdExpression,
+			std::shared_ptr<CArgumentList> theArgumentList,
 			std::shared_ptr<CVarDeclarationList>  theVarDeclarationList,
 			std::shared_ptr<IExpression> theExpression );
 		virtual ~CMethodDeclaration();
 
-		virtual void Accept(IVisitor*v) override;
+		virtual void Accept( IVisitor*v ) override;
 	private:
 		std::shared_ptr<CType> type;
 		std::shared_ptr<CIdExpression> idExpression;

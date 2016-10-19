@@ -4,7 +4,7 @@
 #include "MethodDeclaration.h"
 
 namespace AbstractTreeGenerator {
-	class CMethodDeclarationList {
+	class CMethodDeclarationList : public INode {
 	public:
 		CMethodDeclarationList( std::shared_ptr<CMethodDeclaration> theMethodDeclaration,
 			std::shared_ptr<CMethodDeclarationList> theMethodDeclarationList = nullptr );

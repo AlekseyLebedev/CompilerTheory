@@ -4,7 +4,7 @@
 #include "VarDeclaration.h"
 
 namespace AbstractTreeGenerator {
-	class CVarDeclarationList {
+	class CVarDeclarationList : public INode {
 	public:
 		CVarDeclarationList( std::shared_ptr<CVarDeclaration> theVarDeclaration,
 			std::shared_ptr<CVarDeclarationList> theVarDeclarationList = nullptr );
