@@ -168,6 +168,8 @@
     <ClInclude Include="AbstractTreeGenerator\ConstructorExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\DotOutputVisitor.h" />
     <ClInclude Include="AbstractTreeGenerator\ExpressionList.h" />
+    <ClInclude Include="AbstractTreeGenerator\FalseExpression.h" />
+    <ClInclude Include="AbstractTreeGenerator\GetFieldExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\GraphvizLauncher.h" />
     <ClInclude Include="AbstractTreeGenerator\IdExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\IExpression.h" />
@@ -189,6 +191,8 @@
     <ClInclude Include="AbstractTreeGenerator\PrintStatement.h" />
     <ClInclude Include="AbstractTreeGenerator\Program.h" />
     <ClInclude Include="AbstractTreeGenerator\StatementList.h" />
+    <ClInclude Include="AbstractTreeGenerator\ThisExpression.h" />
+    <ClInclude Include="AbstractTreeGenerator\TrueExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\Type.h" />
     <ClInclude Include="AbstractTreeGenerator\VarDeclaration.h" />
     <ClInclude Include="AbstractTreeGenerator\VarDeclarationList.h" />
@@ -211,6 +215,8 @@
     <ClCompile Include="AbstractTreeGenerator\ConstructorExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\DotOutputVisitor.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ExpressionList.cpp" />
+    <ClCompile Include="AbstractTreeGenerator\FalseExpression.cpp" />
+    <ClCompile Include="AbstractTreeGenerator\GetFieldExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\GraphvizLauncher.cpp" />
     <ClCompile Include="AbstractTreeGenerator\IdExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\IndexExpression.cpp" />
@@ -228,6 +234,8 @@
     <ClCompile Include="AbstractTreeGenerator\PrintStatement.cpp" />
     <ClCompile Include="AbstractTreeGenerator\Program.cpp" />
     <ClCompile Include="AbstractTreeGenerator\StatementList.cpp" />
+    <ClCompile Include="AbstractTreeGenerator\ThisExpression.cpp" />
+    <ClCompile Include="AbstractTreeGenerator\TrueExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\Type.cpp" />
     <ClCompile Include="AbstractTreeGenerator\VarDeclaration.cpp" />
     <ClCompile Include="AbstractTreeGenerator\VarDeclarationList.cpp" />
