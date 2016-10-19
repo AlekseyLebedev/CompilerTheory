@@ -8,3 +8,8 @@ AbstractTreeGenerator::CListConstructorExpression::CListConstructorExpression( s
 AbstractTreeGenerator::CListConstructorExpression::~CListConstructorExpression()
 {
 }
+
+void AbstractTreeGenerator::CListConstructorExpression::Accept( IVisitor * v )
+{
+	v->visit( this );
+}

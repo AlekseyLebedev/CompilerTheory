@@ -9,3 +9,8 @@ AbstractTreeGenerator::CIndexExpression::CIndexExpression( std::shared_ptr<IExpr
 AbstractTreeGenerator::CIndexExpression::~CIndexExpression()
 {
 }
+
+void AbstractTreeGenerator::CIndexExpression::Accept( IVisitor * v)
+{
+	v->visit( this );
+}

@@ -8,3 +8,8 @@ AbstractTreeGenerator::CClassExtend::CClassExtend( std::shared_ptr<CIdExpression
 AbstractTreeGenerator::CClassExtend::~CClassExtend()
 {
 }
+
+void AbstractTreeGenerator::CClassExtend::Accept( IVisitor * V )
+{
+	v->visit( this );
+}

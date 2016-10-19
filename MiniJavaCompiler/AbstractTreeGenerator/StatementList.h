@@ -10,7 +10,7 @@ namespace AbstractTreeGenerator {
 			std::shared_ptr<CStatementList> theStatementList = nullptr );
 		virtual ~CStatementList();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*) override;
 	private:
 		std::shared_ptr<IStatement> statement;
 		std::shared_ptr<CStatementList> statementList;

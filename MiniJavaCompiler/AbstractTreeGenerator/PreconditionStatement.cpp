@@ -9,3 +9,8 @@ AbstractTreeGenerator::CPreconditionStatement::CPreconditionStatement( std::shar
 AbstractTreeGenerator::CPreconditionStatement::~CPreconditionStatement()
 {
 }
+
+void AbstractTreeGenerator::CPreconditionStatement::Accept( IVisitor * v )
+{
+	v->Visit( this );
+}

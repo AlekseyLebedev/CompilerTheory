@@ -12,3 +12,8 @@ AbstractTreeGenerator::CClassDeclaration::CClassDeclaration( std::shared_ptr<CId
 AbstractTreeGenerator::CClassDeclaration::~CClassDeclaration()
 {
 }
+
+void AbstractTreeGenerator::CClassDeclaration::Accept( IVisitor * v )
+{
+	v->visit( this );
+}

@@ -2,14 +2,15 @@
 
 #include <memory>
 #include "IdExpression.h"
+#include "INode.h"
 
 namespace AbstractTreeGenerator {
-	class CType {
+	class CType : INode {
 	public:
 		CType( std::shared_ptr<CIdExpression> theIdExpression );
 		virtual ~CType();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor* v) override;
 	private:
 		std::shared_ptr<CIdExpression> idExpression;
 	};

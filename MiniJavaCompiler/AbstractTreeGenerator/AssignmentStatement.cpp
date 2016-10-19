@@ -9,3 +9,8 @@ AbstractTreeGenerator::CAssignmentStatement::CAssignmentStatement( std::shared_p
 AbstractTreeGenerator::CAssignmentStatement::~CAssignmentStatement()
 {
 }
+
+void AbstractTreeGenerator::CAssignmentStatement::Accept( IVisitor * v )
+{
+	v->visit( this );
+}

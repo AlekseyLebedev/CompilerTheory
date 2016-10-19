@@ -8,3 +8,8 @@ AbstractTreeGenerator::CLogicExpression::CLogicExpression(std::shared_ptr<CBOOL_
 AbstractTreeGenerator::CLogicExpression::~CLogicExpression()
 {
 }
+
+void AbstractTreeGenerator::CLogicExpression::Accept( IVisitor * v)
+{
+	v->visit( this );
+}

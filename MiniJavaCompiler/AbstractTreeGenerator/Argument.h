@@ -11,7 +11,7 @@ namespace AbstractTreeGenerator {
 			std::shared_ptr<CIdExpression> theIdExpression );
 		virtual ~CArgument();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*v) override;
 	private:
 		std::shared_ptr<CType> type;
 		std::shared_ptr<CIdExpression> idExpression;

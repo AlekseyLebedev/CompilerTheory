@@ -12,7 +12,7 @@ namespace AbstractTreeGenerator {
 			std::shared_ptr<IStatement> theStatementSecond );
 		virtual ~CondtitionStatement();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*V) override;
 	private:
 		std::shared_ptr<CIdExpression> idExpression;
 		std::shared_ptr<IStatement> statementFirst;

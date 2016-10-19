@@ -21,3 +21,9 @@ AbstractTreeGenerator::CBOOL_LITERAL::~CBOOL_LITERAL()
 {
 
 }
+
+void AbstractTreeGenerator::CBOOL_LITERAL::Accept( IVisitor * v)
+{
+	v->visit( this );
+
+}

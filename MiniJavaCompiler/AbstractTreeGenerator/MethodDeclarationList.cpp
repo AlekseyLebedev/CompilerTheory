@@ -9,3 +9,8 @@ AbstractTreeGenerator::CMethodDeclarationList::CMethodDeclarationList( std::shar
 AbstractTreeGenerator::CMethodDeclarationList::~CMethodDeclarationList()
 {
 }
+
+void AbstractTreeGenerator::CMethodDeclarationList::Accept( IVisitor * v )
+{
+	v->visit( this );
+}

@@ -14,7 +14,7 @@ namespace AbstractTreeGenerator {
 			std::shared_ptr<CMethodDeclarationList> theMethodDeclarationList );
 		virtual ~CClassDeclaration();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*v) override;
 	private:
 		std::shared_ptr<CIdExpression> idExpression;
 		std::shared_ptr<CClassExtend> classExtend;

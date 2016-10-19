@@ -9,3 +9,8 @@ AbstractTreeGenerator::CArgument::CArgument( std::shared_ptr<CType> theType,
 AbstractTreeGenerator::CArgument::~CArgument()
 {
 }
+
+void AbstractTreeGenerator::CArgument::Accept( IVisitor * v )
+{
+	v->Visit( this );
+}

@@ -8,3 +8,8 @@ AbstractTreeGenerator::CExpressionList::CExpressionList( std::shared_ptr<IExpres
 AbstractTreeGenerator::CExpressionList::~CExpressionList()
 {
 }
+
+void AbstractTreeGenerator::CExpressionList::Accept( IVisitor * v )
+{
+	v->visit( this );
+}

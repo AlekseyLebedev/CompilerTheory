@@ -18,7 +18,7 @@ namespace AbstractTreeGenerator {
 			std::shared_ptr<IExpression> theExpression );
 		virtual ~CMethodDeclaration();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*v) override;
 	private:
 		std::shared_ptr<CType> type;
 		std::shared_ptr<CIdExpression> idExpression;

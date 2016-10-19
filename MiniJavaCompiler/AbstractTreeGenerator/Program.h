@@ -7,10 +7,10 @@
 namespace AbstractTreeGenerator {
 	class CProgram {
 	public:
-		CProgram( std::shared_ptr<CMainClass> theMainClass, std::shared_ptr<CClassDeclarationList> theClassDeclarationList );
+	    CProgram( std::shared_ptr<CMainClass> theMainClass, std::shared_ptr<CClassDeclarationList> theClassDeclarationList );
 		virtual ~CProgram();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor* ì) override;
 
 	private:
 		std::shared_ptr<CMainClass> mainClass;

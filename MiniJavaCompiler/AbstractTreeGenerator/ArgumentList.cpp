@@ -9,3 +9,8 @@ AbstractTreeGenerator::CArgumentList::CArgumentList( std::shared_ptr<CArgument> 
 AbstractTreeGenerator::CArgumentList::~CArgumentList()
 {
 }
+
+void AbstractTreeGenerator::CArgumentList::Accept( IVisitor * v )
+{
+	v->Visit( this );
+}

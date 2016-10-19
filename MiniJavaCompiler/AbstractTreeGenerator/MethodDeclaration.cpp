@@ -13,3 +13,8 @@ AbstractTreeGenerator::CMethodDeclaration::CMethodDeclaration( std::shared_ptr<C
 AbstractTreeGenerator::CMethodDeclaration::~CMethodDeclaration()
 {
 }
+
+void AbstractTreeGenerator::CMethodDeclaration::Accept( IVisitor * v )
+{
+	v->visit( this );
+}

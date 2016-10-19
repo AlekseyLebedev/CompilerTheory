@@ -13,7 +13,7 @@ namespace AbstractTreeGenerator {
 			std::shared_ptr<IStatement> theStatement );
 		virtual ~CMainClass();
 
-//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*) override;
 
 		std::shared_ptr<CIdExpression> GetName() const;
 	private:

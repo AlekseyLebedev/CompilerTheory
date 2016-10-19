@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
+#include "INode.h"
 
 namespace AbstractTreeGenerator {
-	class CINTEGER_LITERAL
+	class CINTEGER_LITERAL  : INode
 	{
 	public:
 		CINTEGER_LITERAL(int theValue);
@@ -10,8 +11,10 @@ namespace AbstractTreeGenerator {
 		virtual ~CINTEGER_LITERAL();
 		int GetValue() const;
 		std::string GetStringValue() const;
+		virtual void Accept( IVisitor * ) override;
 	private:
 		int value;
 		std::string stringValue;
+
 	};
 }

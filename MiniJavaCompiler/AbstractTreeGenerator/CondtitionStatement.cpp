@@ -9,3 +9,8 @@ AbstractTreeGenerator::CondtitionStatement::CondtitionStatement( std::shared_ptr
 AbstractTreeGenerator::CondtitionStatement::~CondtitionStatement()
 {
 }
+
+void AbstractTreeGenerator::CondtitionStatement::Accept( IVisitor * V )
+{
+	v->visit( this );
+}

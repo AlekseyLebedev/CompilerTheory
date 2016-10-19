@@ -8,3 +8,8 @@ AbstractTreeGenerator::CParenExpression::CParenExpression( std::shared_ptr<IExpr
 AbstractTreeGenerator::CParenExpression::~CParenExpression()
 {
 }
+
+void AbstractTreeGenerator::CParenExpression::Accept( IVisitor * v )
+{
+	v->Visit( this );
+}

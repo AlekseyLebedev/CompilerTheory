@@ -9,7 +9,7 @@ namespace AbstractTreeGenerator {
 		CListConstructorExpression( std::shared_ptr<IExpression> theExpression );
 		virtual ~CListConstructorExpression();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*v) override;
 	private:
 		std::shared_ptr<IExpression> expression;
 	};

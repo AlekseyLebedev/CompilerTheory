@@ -4,12 +4,12 @@
 #include "IdExpression.h"
 
 namespace AbstractTreeGenerator {
-	class CClassExtend {
+	class CClassExtend : INode {
 	public:
 		CClassExtend( std::shared_ptr<CIdExpression> theIdExpression );
 		virtual ~CClassExtend();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*V) override;
 	private:
 		std::shared_ptr<CIdExpression> idExpression;
 	};

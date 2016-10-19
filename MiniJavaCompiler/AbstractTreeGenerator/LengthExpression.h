@@ -9,7 +9,7 @@ namespace AbstractTreeGenerator {
 		CLengthExpression( std::shared_ptr<IExpression> theExpression );
 		virtual ~CLengthExpression();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*v) override;
 	private:
 		std::shared_ptr<IExpression> expression;
 	};

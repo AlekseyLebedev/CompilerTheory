@@ -8,3 +8,8 @@ AbstractTreeGenerator::CType::CType( std::shared_ptr<CIdExpression> theIdExpress
 AbstractTreeGenerator::CType::~CType()
 {
 }
+
+void AbstractTreeGenerator::CType::Accept( IVisitor * v )
+{
+	v->Visit( this );
+}

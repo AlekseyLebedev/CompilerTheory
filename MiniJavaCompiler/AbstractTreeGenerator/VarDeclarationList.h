@@ -10,7 +10,7 @@ namespace AbstractTreeGenerator {
 			std::shared_ptr<CVarDeclarationList> theVarDeclarationList = nullptr );
 		virtual ~CVarDeclarationList();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*v) override;
 	private:
 		std::shared_ptr<CVarDeclaration> varDeclaration;
 		std::shared_ptr<CVarDeclarationList> varDeclarationList;

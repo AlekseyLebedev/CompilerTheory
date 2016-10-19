@@ -20,3 +20,8 @@ int AbstractTreeGenerator::CINTEGER_LITERAL::GetValue() const {
 std::string AbstractTreeGenerator::CINTEGER_LITERAL::GetStringValue() const {
 	return stringValue;
 }
+
+void AbstractTreeGenerator::CINTEGER_LITERAL::Accept( IVisitor * v)
+{
+	v->visit( this );
+}

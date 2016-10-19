@@ -8,3 +8,8 @@ AbstractTreeGenerator::CLengthExpression::CLengthExpression( std::shared_ptr<IEx
 AbstractTreeGenerator::CLengthExpression::~CLengthExpression()
 {
 }
+
+void AbstractTreeGenerator::CLengthExpression::Accept( IVisitor * v )
+{
+	v->visit( this );
+}

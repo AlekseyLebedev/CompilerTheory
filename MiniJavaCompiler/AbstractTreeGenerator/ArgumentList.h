@@ -6,11 +6,11 @@
 namespace AbstractTreeGenerator {
 	class CArgumentList {
 	public:
-		CArgumentList( std::shared_ptr<CArgument> theArgument, 
+		CArgumentList( std::shared_ptr<CArgument> theArgument,
 			std::shared_ptr<CArgumentList> theArgumentList = nullptr );
 		virtual ~CArgumentList();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept( IVisitor*v ) override;
 	private:
 		std::shared_ptr<CArgument> argument;
 		std::shared_ptr<CArgumentList> argumentList;

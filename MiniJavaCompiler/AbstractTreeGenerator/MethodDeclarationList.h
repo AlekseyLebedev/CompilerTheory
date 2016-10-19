@@ -10,7 +10,7 @@ namespace AbstractTreeGenerator {
 			std::shared_ptr<CMethodDeclarationList> theMethodDeclarationList = nullptr );
 		virtual ~CMethodDeclarationList();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*v) override;
 	private:
 		std::shared_ptr<CMethodDeclaration> methodDeclaration;
 		std::shared_ptr<CMethodDeclarationList> methodDeclarationList;

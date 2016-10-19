@@ -9,3 +9,8 @@ AbstractTreeGenerator::CStatementList::CStatementList( std::shared_ptr<IStatemen
 AbstractTreeGenerator::CStatementList::~CStatementList()
 {
 }
+
+void AbstractTreeGenerator::CStatementList::Accept( IVisitor * v)
+{
+	v->Visit( this );
+}

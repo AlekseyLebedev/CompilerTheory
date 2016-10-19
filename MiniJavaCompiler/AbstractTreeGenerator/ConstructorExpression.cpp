@@ -8,3 +8,8 @@ AbstractTreeGenerator::CConstructorExpression::CConstructorExpression( std::shar
 AbstractTreeGenerator::CConstructorExpression::~CConstructorExpression()
 {
 }
+
+void AbstractTreeGenerator::CConstructorExpression::Accept( IVisitor * v )
+{
+	v->visit( this );
+}

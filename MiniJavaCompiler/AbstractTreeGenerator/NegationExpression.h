@@ -9,7 +9,7 @@ namespace AbstractTreeGenerator {
 		CNegationExpression( std::shared_ptr<IExpression> theExpression );
 		virtual ~CNegationExpression();
 
-		//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor* v) override;
 	private:
 		std::shared_ptr<IExpression> expression;
 	};

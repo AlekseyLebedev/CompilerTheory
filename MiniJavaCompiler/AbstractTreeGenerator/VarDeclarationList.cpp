@@ -9,3 +9,8 @@ AbstractTreeGenerator::CVarDeclarationList::CVarDeclarationList( std::shared_ptr
 AbstractTreeGenerator::CVarDeclarationList::~CVarDeclarationList()
 {
 }
+
+void AbstractTreeGenerator::CVarDeclarationList::Accept( IVisitor * v )
+{
+	v->visit( this );
+}

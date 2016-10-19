@@ -13,7 +13,7 @@ namespace AbstractTreeGenerator {
 			std::shared_ptr<IExpression> theExpressionSecond );
 		virtual ~CAssignmentListStatement();
 
-//		virtual void Accept(IVisitor*) override;
+		virtual void Accept(IVisitor*) override;
 	private:
 		std::shared_ptr<CIdExpression> idExpression;
 		std::shared_ptr<IExpression> expressionFirst;
