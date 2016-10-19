@@ -167,6 +167,18 @@
     <ClInclude Include="AbstractTreeGenerator\AllNodes.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\ThisExpression.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\FalseExpression.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\TrueExpression.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\GetFieldExpression.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -281,6 +293,18 @@
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\ArgumentList.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\ThisExpression.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\FalseExpression.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\TrueExpression.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\GetFieldExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
   </ItemGroup>
