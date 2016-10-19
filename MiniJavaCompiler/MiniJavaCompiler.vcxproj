@@ -159,7 +159,6 @@
     <ClInclude Include="AbstractTreeGenerator\AssignmentListStatement.h" />
     <ClInclude Include="AbstractTreeGenerator\AssignmentStatement.h" />
     <ClInclude Include="AbstractTreeGenerator\AssignStatement.h" />
-    <ClInclude Include="AbstractTreeGenerator\BOOL_LITERAL.h" />
     <ClInclude Include="AbstractTreeGenerator\CExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\ClassDeclaration.h" />
     <ClInclude Include="AbstractTreeGenerator\ClassDeclarationList.h" />
@@ -174,13 +173,11 @@
     <ClInclude Include="AbstractTreeGenerator\IExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\IndexExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\INode.h" />
-    <ClInclude Include="AbstractTreeGenerator\INTEGER_LITERAL.h" />
     <ClInclude Include="AbstractTreeGenerator\IStatement.h" />
     <ClInclude Include="AbstractTreeGenerator\IVisitor.h" />
     <ClInclude Include="AbstractTreeGenerator\LastExpressionList.h" />
     <ClInclude Include="AbstractTreeGenerator\LengthExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\ListConstructorExpression.h" />
-    <ClInclude Include="AbstractTreeGenerator\LogicExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\MainClass.h" />
     <ClInclude Include="AbstractTreeGenerator\MethodDeclaration.h" />
     <ClInclude Include="AbstractTreeGenerator\MethodDeclarationList.h" />
@@ -205,7 +202,6 @@
     <ClCompile Include="AbstractTreeGenerator\AssignmentListStatement.cpp" />
     <ClCompile Include="AbstractTreeGenerator\AssignmentStatement.cpp" />
     <ClCompile Include="AbstractTreeGenerator\AssignStatement.cpp" />
-    <ClCompile Include="AbstractTreeGenerator\BOOL_LITERAL.cpp" />
     <ClCompile Include="AbstractTreeGenerator\CExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ClassDeclaration.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ClassDeclarationList.cpp" />
@@ -218,11 +214,9 @@
     <ClCompile Include="AbstractTreeGenerator\GraphvizLauncher.cpp" />
     <ClCompile Include="AbstractTreeGenerator\IdExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\IndexExpression.cpp" />
-    <ClCompile Include="AbstractTreeGenerator\INTEGER_LITERAL.cpp" />
     <ClCompile Include="AbstractTreeGenerator\LastExpressionList.cpp" />
     <ClCompile Include="AbstractTreeGenerator\LengthExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ListConstructorExpression.cpp" />
-    <ClCompile Include="AbstractTreeGenerator\LogicExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\MainClass.cpp" />
     <ClCompile Include="AbstractTreeGenerator\MethodDeclaration.cpp" />
     <ClCompile Include="AbstractTreeGenerator\MethodDeclarationList.cpp" />
