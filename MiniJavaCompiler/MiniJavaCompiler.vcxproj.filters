@@ -47,115 +47,136 @@
     <ClInclude Include="resource.h">
       <Filter>Global h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\CompoundStatement.h">
+    <ClInclude Include="AbstractTreeGenerator\Type.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\DotOutputVisitor.h">
+    <ClInclude Include="AbstractTreeGenerator\StatementList.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\GraphvizLauncher.h">
+    <ClInclude Include="AbstractTreeGenerator\Program.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\IdExpression.h">
+    <ClInclude Include="AbstractTreeGenerator\PrintStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\IExpression.h">
+    <ClInclude Include="AbstractTreeGenerator\PreconditionStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\INode.h">
+    <ClInclude Include="AbstractTreeGenerator\ParenExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\IVisitor.h">
+    <ClInclude Include="AbstractTreeGenerator\OperationExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\LastExpressionList.h">
+    <ClInclude Include="AbstractTreeGenerator\NumExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\NumExpression.h">
+    <ClInclude Include="AbstractTreeGenerator\NegationExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\OperationExpression.h">
+    <ClInclude Include="AbstractTreeGenerator\MethodDeclarationList.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\PrintStatement.h">
+    <ClInclude Include="AbstractTreeGenerator\MethodDeclaration.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\VariablesTable.h">
+    <ClInclude Include="AbstractTreeGenerator\MainClass.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\MainClass.h">
+    <ClInclude Include="AbstractTreeGenerator\ListConstructorExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\IStatement.h">
+    <ClInclude Include="AbstractTreeGenerator\LengthExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\Program.h">
+    <ClInclude Include="AbstractTreeGenerator\LastExpressionList.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\ClassDeclarationList.h">
+    <ClInclude Include="AbstractTreeGenerator\IStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\ClassDeclaration.h">
+    <ClInclude Include="AbstractTreeGenerator\IndexExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\Argument.h">
+    <ClInclude Include="AbstractTreeGenerator\IdExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\ArgumentList.h">
+    <ClInclude Include="AbstractTreeGenerator\ExpressionList.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\ClassExtend.h">
+    <ClInclude Include="AbstractTreeGenerator\DotOutputVisitor.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\ConstructorExpression.h">
+    <ClInclude Include="AbstractTreeGenerator\ConstructorExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\ListConstructorExpression.h">
+    <ClInclude Include="AbstractTreeGenerator\CondtitionStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\MethodDeclaration.h">
+    <ClInclude Include="AbstractTreeGenerator\CompoundStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\MethodDeclarationList.h">
+    <ClInclude Include="AbstractTreeGenerator\ClassExtend.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\NegationExpression.h">
+    <ClInclude Include="AbstractTreeGenerator\ClassDeclarationList.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\ParenExpression.h">
+    <ClInclude Include="AbstractTreeGenerator\ClassDeclaration.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\StatementList.h">
+    <ClInclude Include="AbstractTreeGenerator\CExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\Type.h">
+    <ClInclude Include="AbstractTreeGenerator\AssignStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\VarDeclaration.h">
+    <ClInclude Include="AbstractTreeGenerator\AssignmentStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\VarDeclarationList.h">
+    <ClInclude Include="AbstractTreeGenerator\AssignmentListStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\AssignmentListStatement.h">
+    <ClInclude Include="AbstractTreeGenerator\ArgumentList.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\AssignmentStatement.h">
+    <ClInclude Include="AbstractTreeGenerator\Argument.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\CondtitionStatement.h">
+    <ClInclude Include="AbstractTreeGenerator\VariablesTable.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\ExpressionList.h">
+    <ClInclude Include="AbstractTreeGenerator\IVisitor.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\IndexExpression.h">
+    <ClInclude Include="AbstractTreeGenerator\INode.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\LengthExpression.h">
+    <ClInclude Include="AbstractTreeGenerator\IExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="..\AbstractTreeGenerator\PreconditionStatement.h">
+    <ClInclude Include="AbstractTreeGenerator\GraphvizLauncher.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\VarDeclarationList.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\VarDeclaration.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\AllNodes.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\ThisExpression.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\FalseExpression.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\TrueExpression.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\GetFieldExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
   </ItemGroup>
@@ -169,106 +190,121 @@
     <ClCompile Include="LexicParser\syntatic.cpp">
       <Filter>LexicParser\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\CompilerTheory.cpp">
+    <ClCompile Include="AbstractTreeGenerator\Argument.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\CompoundStatement.cpp">
+    <ClCompile Include="AbstractTreeGenerator\VariablesTable.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\DotOutputVisitor.cpp">
+    <ClCompile Include="AbstractTreeGenerator\VarDeclarationList.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\GraphvizLauncher.cpp">
+    <ClCompile Include="AbstractTreeGenerator\VarDeclaration.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\IdExpression.cpp">
+    <ClCompile Include="AbstractTreeGenerator\Type.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\LastExpressionList.cpp">
+    <ClCompile Include="AbstractTreeGenerator\StatementList.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\NumExpression.cpp">
+    <ClCompile Include="AbstractTreeGenerator\Program.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\OperationExpression.cpp">
+    <ClCompile Include="AbstractTreeGenerator\PrintStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\PrintStatement.cpp">
+    <ClCompile Include="AbstractTreeGenerator\PreconditionStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\VariablesTable.cpp">
+    <ClCompile Include="AbstractTreeGenerator\ParenExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\MainClass.cpp">
+    <ClCompile Include="AbstractTreeGenerator\OperationExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\Program.cpp">
+    <ClCompile Include="AbstractTreeGenerator\NumExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\ClassDeclarationList.cpp">
+    <ClCompile Include="AbstractTreeGenerator\NegationExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\ClassDeclaration.cpp">
+    <ClCompile Include="AbstractTreeGenerator\MethodDeclarationList.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\Argument.cpp">
+    <ClCompile Include="AbstractTreeGenerator\MethodDeclaration.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\ArgumentList.cpp">
+    <ClCompile Include="AbstractTreeGenerator\MainClass.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\ClassExtend.cpp">
+    <ClCompile Include="AbstractTreeGenerator\ListConstructorExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\ConstructorExpression.cpp">
+    <ClCompile Include="AbstractTreeGenerator\LengthExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\ListConstructorExpression.cpp">
+    <ClCompile Include="AbstractTreeGenerator\LastExpressionList.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\MethodDeclaration.cpp">
+    <ClCompile Include="AbstractTreeGenerator\IndexExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\MethodDeclarationList.cpp">
+    <ClCompile Include="AbstractTreeGenerator\IdExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\NegationExpression.cpp">
+    <ClCompile Include="AbstractTreeGenerator\GraphvizLauncher.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\ParenExpression.cpp">
+    <ClCompile Include="AbstractTreeGenerator\ExpressionList.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\StatementList.cpp">
+    <ClCompile Include="AbstractTreeGenerator\DotOutputVisitor.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\Type.cpp">
+    <ClCompile Include="AbstractTreeGenerator\ConstructorExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\VarDeclaration.cpp">
+    <ClCompile Include="AbstractTreeGenerator\CondtitionStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\VarDeclarationList.cpp">
+    <ClCompile Include="AbstractTreeGenerator\CompoundStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\AssignmentListStatement.cpp">
+    <ClCompile Include="AbstractTreeGenerator\ClassExtend.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\AssignmentStatement.cpp">
+    <ClCompile Include="AbstractTreeGenerator\ClassDeclarationList.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\CondtitionStatement.cpp">
+    <ClCompile Include="AbstractTreeGenerator\ClassDeclaration.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\ExpressionList.cpp">
+    <ClCompile Include="AbstractTreeGenerator\CExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\IndexExpression.cpp">
+    <ClCompile Include="AbstractTreeGenerator\AssignStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\LengthExpression.cpp">
+    <ClCompile Include="AbstractTreeGenerator\AssignmentStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\AbstractTreeGenerator\PreconditionStatement.cpp">
+    <ClCompile Include="AbstractTreeGenerator\AssignmentListStatement.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\ArgumentList.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\ThisExpression.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\FalseExpression.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\TrueExpression.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\GetFieldExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
   </ItemGroup>

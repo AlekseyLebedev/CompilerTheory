@@ -1,20 +1,26 @@
-/* Mini Calculator *
-/* calc.y */
-
-%{
-#include  <iostream>
-#include <string>
+%code requires {
 #include <memory>
+#include <iostream>
+#include <string>
+#include "..\AbstractTreeGenerator\AllNodes.h"
+
 int yyerror(char *s);
 int yylex(void);
+
+
+
+
+using namespace AbstractTreeGenerator;
+//using namespace std;
+
 
 void DebugOutput(const std::string& s){
 	std::cout << s << std::endl;
 }
-%}
+}
 
 %union{
-	int		int_val;
+	int int_val;
 	std::string str_val;
 	std::shared_ptr<CProgram> program;
 	std::shared_ptr<CMainClass> mainClass;
@@ -67,7 +73,7 @@ void DebugOutput(const std::string& s){
 input: MainProgram
 
 MainProgram: MainClass ClassDeclarationList {
-	$$ = std::make_shared<CProgram>(new CProgram($1, $2));
+	$$ = std::shared_ptr<CProgram>(new CProgram($1, $2));
 	//CProgram(MainClass, ClassDeclarationList)
 }
 
@@ -75,13 +81,16 @@ MainClass: T_class Identifier T_lbrace
 	T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace
 		Statement T_rbrace
 	T_rbrace {
-		$$ = std::make_shared<CMainClass>(new  CMainClass($2, $12, $15));
+		$$ = std::shared_ptr<CMainClass>(new  CMainClass(
+			std::dynamic_pointer_cast<CIdExpression>($2), 
+			std::dynamic_pointer_cast<CIdExpression>($12), 
+			$15));
 		// IClass(Identifier, Identifier, Statement)
 		}
 
 ClassDeclarationList:
 	| ClassDeclaration ClassDeclarationList {
-		$$ = std::make_shared<CClassDeclarationList>(new CClassDeclarationList($1, $2));
+		$$ = std::shared_ptr<CClassDeclarationList>(new CClassDeclarationList($1, $2));
 		//ClassDeclarationList(ClassDeclaration, ClassDeclarationList)
 	}
 
@@ -89,51 +98,58 @@ ClassDeclaration: T_class Identifier ClassExtend T_lbrace
 		VarDeclarationList
 		MethodDeclarationList
 	T_rbrace {
-		$$ = std::make_shared<CClassDeclaration>(new CClassDeclaration($2, $3, $5, $6));
+		$$ = std::shared_ptr<CClassDeclaration>(new CClassDeclaration(
+			std::dynamic_pointer_cast<CIdExpression>($2), $3, $5, $6));
 		//ClassDeclaration(Identifier, ClassExtend, VarDeclarationList, MethodList)
 	}
 
 ClassExtend:
 	| T_lparen T_extends Identifier T_rparen {
-		$$ = std::make_shared<CClassExtend>(new CClassExtend($3));
+		$$ = std::shared_ptr<CClassExtend>(new CClassExtend(
+		std::dynamic_pointer_cast<CIdExpression>($3)));
 		//ClassExtend(Identifier)
 	}
 
 VarDeclarationList:
 	| VarDeclaration VarDeclarationList {
-		$$ = std::make_shared<CVarDeclarationList>(new CVarDeclarationList($1, $2));
+		$$ = std::shared_ptr<CVarDeclarationList>(new CVarDeclarationList($1, $2));
 		//VarDeclarationList(VarDeclaration,VarDeclarationList)
 	}
 
 VarDeclaration : Type Identifier T_semi {
-		$$ = std::make_shared<CVarDeclaration>(new CVarDeclaration($1, $2));
+		$$ = std::shared_ptr<CVarDeclaration>(new CVarDeclaration(
+			$1, 
+			std::dynamic_pointer_cast<CIdExpression>($2)));
 		//VarDeclaration(Type, Identifier)
 	}
 
 MethodDeclarationList:
 	| MethodDeclaration MethodDeclarationList {
-		$$ = std::make_shared<CMethodDeclarationList>(new CMethodDeclarationList($1, $2));
+		$$ = std::shared_ptr<CMethodDeclarationList>(new CMethodDeclarationList($1, $2));
 		//MethodDeclarationList(MethodDeclaration, MethodDeclarationList)
 	}
 
 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace
 	VarDeclarationList StatementList T_return Expression T_semi T_rbrace {
-		$$ = std::make_shared<CMethodDeclaration>(new CMethodDeclaration($2, $3, $5, $8, $9, $11));
+		$$ = std::shared_ptr<CMethodDeclaration>(new CMethodDeclaration($2, 
+		std::dynamic_pointer_cast<CIdExpression>($3), $5, $8, $9, $11));
 		//MethodDeclaration(Type, Identifier, ArgumentList, VarDeclarationList, StatementList, Expression)
 	}
 
 ArgumentList:
 	| Argument {
-		$$ = std::make_shared<CArgumentList>(CArgumentList($1, nullptr));
+		$$ = std::shared_ptr<CArgumentList>(CArgumentList($1, nullptr));
 		//ArgumentList(Argument, nullptr)
 	}
 	| Argument T_comma ArgumentList {
-		$$ = std::make_shared<CArgumentList>(new CArgumentList($1, $3));
+		$$ = std::shared_ptr<CArgumentList>(new CArgumentList($1, $3));
 		//ArgumentList(Argument, ArgumentList)
 	 }
 
 Argument: Type Identifier {
-		$$ = std::make_shared<CArgument>(new CArgument($1, $2));
+		$$ = std::shared_ptr<CArgument>(new CArgument(
+			$1, 
+			std::dynamic_pointer_cast<CIdExpression>($2)));
 		//Argument(Type, Identifier)
 	}
 
@@ -141,138 +157,149 @@ Type: T_int T_lbracket T_rbracket {
 		$$ = std::shared_ptr<CType>(new CType("INTLIST"));
 	}
 	| T_boolean {
-		$$ = std::make_shared<CType>(new CType("BOOL"));
+		$$ = std::shared_ptr<CType>(new CType("BOOL"));
 	}
 	| T_int {
 		$$ = std::shared_ptr<CType>(new CType("INT"));
 	}
 	| Identifier {
-		$$ = std::shared_ptr<CType>(new CType($1));
+		$$ = std::shared_ptr<CType>(new CType(std::dynamic_pointer_cast<CIdExpression>($1)));
 		//Type(Identifier)
 	}
 
 StatementList:
 	| Statement StatementList {
-		$$ = std::make_shared<CStatementList>(new CStatementList($1, $2));
+		$$ = std::shared_ptr<CStatementList>(new CStatementList($1, $2));
 		//StatementList(Statement, StatementList)
 	}
 
 Statement: T_lbrace StatementList T_rbrace {
-		$$ = std::make_shared<IStatement>(new CCompoundStatement($2));
+		$$ = std::shared_ptr<IStatement>(new CCompoundStatement($2));
 		//CompoundStatement(StatementList)
 	}
 	| T_if T_lparen Expression T_rparen Statement T_else Statement {
-		$$ = std::make_shared<IStatement>(new CConditionStatement($3, $5, $7));
+		$$ = std::shared_ptr<IStatement>(new CConditionStatement($3, $5, $7));
 		//CondtitionStatement(Expression, Statement, Statement)
 	}
 	| T_while T_lparen Expression T_rparen Statement {
-		$$ = std::make_shared<IStatement>(new CPreconditionStatement($3, $5));
+		$$ = std::shared_ptr<IStatement>(new CPreconditionStatement(
+			std::dynamic_pointer_cast<CIdExpression>($3), 
+			$5));
 		//PreconditionStatement(Expression, Statement)
 	}
 	| T_sop  T_lparen Expression T_rparen T_semi {
-		$$ = std::make_shared<IStatement>(new CPrintStatement($3));
+		$$ = std::shared_ptr<IStatement>(new CPrintStatement($3));
 		//PrintStatement(Expression)
 	}
 	| Identifier T_equal Expression T_semi {
-		$$ = std::make_shared<IStatement>(new CAssignmentStatement($1, $3));
+		$$ = std::shared_ptr<IStatement>(new CAssignmentStatement(
+			std::dynamic_pointer_cast<CIdExpression>($1), 
+			$3));
 		//AssignmentStatement(Identifier, Expression)
 	}
 	| Identifier T_lbracket Expression T_rbracket T_equal Expression T_semi {
-		$$ = std::make_shared<IStatement>(AssignmentListStatement($1, $3, $6));
+		$$ = std::shared_ptr<IStatement>(AssignmentListStatement(
+			std::dynamic_pointer_cast<CIdExpression>($1), 
+			$3, 
+			$6));
 		//AssignmentListStatement(Identifier, Expression, Expression)
 	}
 
 Expression: Expression T_and Expression {
-		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::And));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::And));
 		//OperationExpression(Expression, Expression, And)
 	}
 	|  Expression T_less Expression {
-		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Less));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Less));
 		//OperationExpression(Expression, Expression, Less)
 	}
 	|  Expression T_plus Expression {
-		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Plus));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Plus));
 		//OperationExpression(Expression, Expression, Plus)
 	}
 	|  Expression T_minus Expression {
-		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Minus));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Minus));
 		//OperationExpression(Expression, Expression, Minus)
 	}
 	|  Expression T_star Expression {
-		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Times));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Times));
 		//OperationExpression(Expression, Expression, Times)
 	}
 	|  Expression T_divide Expression {
-		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Devide));
-		//OperationExpression(Expression, Expression, Devide)
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Divide));
+		//OperationExpression(Expression, Expression, Divide)
 	}
 	|  Expression T_mod Expression {
-		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Mod));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Mod));
 		//OperationExpression(Expression, Expression, Mod)
 	}
 	|  Expression T_or Expression {
-		$$ = std::make_shared<IExpression>(new COperationExpression($1, $3, OperationExpression::OperationType::Or));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Or));
 		//OperationExpression(Expression, Expression, Or)
 	}
 	| Expression T_lbracket Expression T_rbracket {
-		$$ = std::make_shared<IExpression>(new CIndexExpression($1, $3));
+		$$ = std::shared_ptr<IExpression>(new CIndexExpression($1, $3));
 		//IndexExpression(Expression,Expression)
 	}
 	| Expression T_dot T_length {
-		$$ = std::make_shared<IExpression>(new CLengthExpression($1));
+		$$ = std::shared_ptr<IExpression>(new CLengthExpression($1));
 		//LengthExpression(Expression)
 	}
 	| Expression T_dot Identifier T_lparen ExpressionList T_rparen {
-		$$ = std::make_shared<IExpression>(new CGetFieldExpression($1, $3, $5));
+		$$ = std::shared_ptr<IExpression>(new CGetFieldExpression(
+			$1, 
+			std::dynamic_pointer_cast<CIdExpression>($3),
+			$5));
 		//GetFieldExpression(Expression, Identifier, ExpressionList)
 	}
 	| T_NUM {
-		$$ = std::make_shared<IExpression>(new CNumExpression($2));
+		$$ = std::shared_ptr<IExpression>(new CNumExpression($1));
 		//NumExpression(int)
 	}
 	| T_true {
-		$$ = std::make_shared<IExpression>(new CTrueExpression());
+		$$ = std::shared_ptr<IExpression>(new CTrueExpression());
 	}
 	| T_false {
-		$$ = std::make_shared<IExpression>(new CFalseExpression());
+		$$ = std::shared_ptr<IExpression>(new CFalseExpression());
 	}
 	| Identifier {
-		$$ = std::make_shared<IExpression>(new CIdExpression($1));
+		$$ = std::shared_ptr<IExpression>(new CIdExpression($1));
 		//IdExpression(Identifier)
 	}
 	| T_this {
-		$$ = std::make_shared<IExpression>(new CThisExpression());
+		$$ = std::shared_ptr<IExpression>(new CThisExpression());
 		//ThisExpression()
 	}
 	| T_new T_int T_lbracket Expression T_rbracket {
-		$$ = std::make_shared<IExpression>(new CListConstructorExpression($4));
+		$$ = std::shared_ptr<IExpression>(new CListConstructorExpression($4));
 		//ListConstructorExpression(Expression)
 	}
 	| T_new Identifier T_lparen T_rparen {
-		$$ = std::make_shared<IExpression>(new CConstructorExpression($2));
+		$$ = std::shared_ptr<IExpression>(new CConstructorExpression(
+			std::dynamic_pointer_cast<CIdExpression>($2)));
 		//ConstructorExpression(Identifier)
 	}
 	| T_not Expression {
-		$$ = std::make_shared_ptr<IExpression>(new CNegationExpression($2));
+		$$ = std::shared_ptr<IExpression>(new CNegationExpression($2));
 		//NegationExpression(Expression)
 	}
 	| T_lparen Expression T_rparen {
-		$$ = std::make_shared<IExpression>(new CParenExpression($2));
+		$$ = std::shared_ptr<IExpression>(new CParenExpression($2));
 		//ParenExpression(Expression)
 	}
 
 ExpressionList:
 	| Expression T_comma ExpressionList {
-		$$ = std::make_shared<CExpressionList>(new CExpressionList($1, $3));
+		$$ = std::shared_ptr<CExpressionList>(new CExpressionList($1, $3));
 		//ExpressionList(Expression, ExpressionList)
 	}
 	| Expression {
-		$$ = std::make_shared<CExpressionList>(new CExpressionList($1, nullptr));
+		$$ = std::shared_ptr<CExpressionList>(new CExpressionList($1, nullptr));
 		//ExpressionList(Expression, nullptr)
 	}
 
 Identifier: T_ID {
-		$$ = std::make_shared<IExpression>(new CIdExpression($2));
+		$$ = std::shared_ptr<IExpression>(new CIdExpression($1));
 		//IdExpression(string);
 	}
 
