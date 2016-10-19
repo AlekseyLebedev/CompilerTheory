@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "DotOutputVisitor.h"
 
 #include "INode.h"
@@ -9,6 +8,8 @@
 #include "PrintStatement.h"
 #include "LastExpressionList.h"
 #include "IdExpression.h"
+
+#include <string>
 
 namespace GraphvizOutput {
 
@@ -80,7 +81,9 @@ namespace GraphvizOutput {
 	void CDotOutputVisitor::Visit(FirstTask::CNumExpression *numExpression)
 	{
 		size_t current = enterNode("NumExpression");
-		addSubNode(current, numExpression->GetValue());
+		//addSubNode(current, numExpression->GetValue()->GetStringValue());
+		//// TODO: возможно было бы логично получать не строку а интовое значение?
+		//addSubNode(current, numExpression->GetValue()->GetValue());
 	}
 
 	void CDotOutputVisitor::Visit(FirstTask::CIdExpression *idExpression)

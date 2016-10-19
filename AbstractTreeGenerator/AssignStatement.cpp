@@ -1,24 +1,11 @@
-#include "stdafx.h"
-#include "AssignStatement.h"
+#include "AssignmentStatement.h"
 
-FirstTask::CAssignStatement::CAssignStatement(const std::string name, std::shared_ptr<IExpression> operation) : 
-	variableName(name), expression(operation)
-{	
-}
-
-FirstTask::CAssignStatement::~CAssignStatement()
+FirstTask::CAssignmentStatement::CAssignmentStatement( std::shared_ptr<CIdExpression> theIdExpression,
+	std::shared_ptr<IExpression> theExpression ) :
+	idExpression( theIdExpression), expression( theExpression )
 {
 }
 
-std::string FirstTask::CAssignStatement::GetVariableName() const {
-	return variableName;
-}
-
-std::shared_ptr<FirstTask::IExpression> FirstTask::CAssignStatement::GetExpression() const
+FirstTask::CAssignmentStatement::~CAssignmentStatement()
 {
-	return expression;
-}
-
-void FirstTask::CAssignStatement::Accept(IVisitor* v) {
-	v->Visit(this);
 }

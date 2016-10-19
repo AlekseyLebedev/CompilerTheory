@@ -153,47 +153,84 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\AbstractTreeGenerator\AssignStatement.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\Argument.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\ArgumentList.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\AssignmentListStatement.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\AssignmentStatement.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\ClassDeclaration.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\ClassDeclarationList.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\ClassExtend.h" />
     <ClInclude Include="..\AbstractTreeGenerator\CompoundStatement.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\CondtitionStatement.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\ConstructorExpression.h" />
     <ClInclude Include="..\AbstractTreeGenerator\DotOutputVisitor.h" />
-    <ClInclude Include="..\AbstractTreeGenerator\FirstTaskMain.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\ExpressionList.h" />
     <ClInclude Include="..\AbstractTreeGenerator\GraphvizLauncher.h" />
     <ClInclude Include="..\AbstractTreeGenerator\IdExpression.h" />
     <ClInclude Include="..\AbstractTreeGenerator\IExpression.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\IndexExpression.h" />
     <ClInclude Include="..\AbstractTreeGenerator\INode.h" />
-    <ClInclude Include="..\AbstractTreeGenerator\IStatemnet.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\IStatement.h" />
     <ClInclude Include="..\AbstractTreeGenerator\IVisitor.h" />
     <ClInclude Include="..\AbstractTreeGenerator\LastExpressionList.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\LengthExpression.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\ListConstructorExpression.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\MainClass.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\MethodDeclaration.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\MethodDeclarationList.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\NegationExpression.h" />
     <ClInclude Include="..\AbstractTreeGenerator\NumExpression.h" />
     <ClInclude Include="..\AbstractTreeGenerator\OperationExpression.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\ParenExpression.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\PreconditionStatement.h" />
     <ClInclude Include="..\AbstractTreeGenerator\PrintStatement.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\Program.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\StatementList.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\Type.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\VarDeclaration.h" />
+    <ClInclude Include="..\AbstractTreeGenerator\VarDeclarationList.h" />
     <ClInclude Include="..\AbstractTreeGenerator\VariablesTable.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\AbstractTreeGenerator\AssignStatement.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\Argument.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\ArgumentList.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\AssignmentListStatement.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\AssignmentStatement.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\ClassDeclaration.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\ClassDeclarationList.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\ClassExtend.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\CompilerTheory.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\CompoundStatement.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\CondtitionStatement.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\ConstructorExpression.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\DotOutputVisitor.cpp" />
-    <ClCompile Include="..\AbstractTreeGenerator\FirstTaskMain.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\ExpressionList.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\GraphvizLauncher.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\IdExpression.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\IndexExpression.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\LastExpressionList.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\LengthExpression.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\ListConstructorExpression.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\MainClass.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\MethodDeclaration.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\MethodDeclarationList.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\NegationExpression.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\NumExpression.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\OperationExpression.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\ParenExpression.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\PreconditionStatement.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\PrintStatement.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\Program.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\StatementList.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\Type.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\VarDeclaration.cpp" />
+    <ClCompile Include="..\AbstractTreeGenerator\VarDeclarationList.cpp" />
     <ClCompile Include="..\AbstractTreeGenerator\VariablesTable.cpp" />
     <ClCompile Include="LexicParser\lexer.cpp" />
     <ClCompile Include="LexicParser\syntatic.cpp" />
     <ClCompile Include="MiniJavaCompiler.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MiniJavaCompiler.rc" />

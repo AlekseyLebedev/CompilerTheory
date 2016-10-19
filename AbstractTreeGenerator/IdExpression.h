@@ -1,12 +1,12 @@
 #pragma once
-#include "stdafx.h"
+#include <string>
 #include "IExpression.h"
 
 namespace FirstTask {
 	class CIdExpression : public IExpression
 	{
 	public:
-		CIdExpression(std::string _name);
+		CIdExpression(std::string theName);
 		virtual ~CIdExpression();
 		virtual void Accept(IVisitor*) override;
 
