@@ -259,7 +259,7 @@ Expression: Expression T_and Expression {
 		//ConstructorExpression(Identifier)
 	}
 	| T_not Expression {
-		$$ = std::shared_ptr_ptr<IExpression>(new CNegationExpression($2));
+		$$ = std::shared_ptr<IExpression>(new CNegationExpression($2));
 		//NegationExpression(Expression)
 	}
 	| T_lparen Expression T_rparen {
