@@ -39,7 +39,7 @@ void DebugOutput(const std::string& s){
 %token<int_val> T_NUM
 %token<str_val> T_ID
 %token T_class, T_public, T_private, T_static, T_main,  T_extends, T_return, T_new
-%token T_void, T_int, T_boolean, T_string
+%token T_void, T_int, T_boolean, T_string, T_dot, T_else, T_star
 %token T_lparen, T_rparen, T_lbrace, T_rbrace, T_lbracket, T_rbracket
 %token T_if, T_while, T_sop, T_length, T_true, T_false, T_this
 %token T_equal,  T_and, T_less, T_plus, T_minus, T_times, T_divide, T_mod, T_or
@@ -86,11 +86,11 @@ ClassDeclarationList:
 	}
 
 ClassDeclaration: T_class Identifier ClassExtend T_lbrace
-		VarDecList
-		MethodDecList
+		VarDeclarationList
+		MethodDeclarationList
 	T_rbrace {
 		$$ = std::make_shared<CClassDeclaration>(new CClassDeclaration($2, $3, $5, $6));
-		//ClassDeclaration(Identifier, ClassExtend, VarDecList, MethodList)
+		//ClassDeclaration(Identifier, ClassExtend, VarDeclarationList, MethodList)
 	}
 
 ClassExtend:
@@ -161,11 +161,11 @@ Statement: T_lbrace StatementList T_rbrace {
 		$$ = std::make_shared<IStatement>(new CCompoundStatement($2));
 		//CompoundStatement(StatementList)
 	}
-	| T_if T_lparen Expression T_rparen Statemet T_else Statement {
+	| T_if T_lparen Expression T_rparen Statement T_else Statement {
 		$$ = std::make_shared<IStatement>(new CConditionStatement($3, $5, $7));
 		//CondtitionStatement(Expression, Statement, Statement)
 	}
-	| T_while T_lparen Expression T_rparen Statemet {
+	| T_while T_lparen Expression T_rparen Statement {
 		$$ = std::make_shared<IStatement>(new CPreconditionStatement($3, $5));
 		//PreconditionStatement(Expression, Statement)
 	}
