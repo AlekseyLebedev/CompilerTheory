@@ -3,6 +3,7 @@
 
 #pragma once
 #include <string>
+#include "INode.h"
 
 namespace AbstractTreeGenerator {
 	class CBOOL_LITERAL : public INode {

@@ -12,7 +12,7 @@ AbstractTreeGenerator::CProgram::~CProgram()
 
 }
 
-void AbstractTreeGenerator::CProgram::Accept( IVisitor * ì )
+void AbstractTreeGenerator::CProgram::Accept( IVisitor * v )
 {
 	v->Visit( this );
 }

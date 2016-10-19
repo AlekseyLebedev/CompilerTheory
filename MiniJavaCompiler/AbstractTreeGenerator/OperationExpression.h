@@ -10,7 +10,11 @@ namespace AbstractTreeGenerator {
 			Plus,
 			Minus,
 			Times,
-			Divide
+			Divide,
+			And,
+			Less,
+			Mod,
+			Or
 		};
 
 		COperationExpression(std::shared_ptr<IExpression> left, std::shared_ptr<IExpression> right, TOperationType type);
