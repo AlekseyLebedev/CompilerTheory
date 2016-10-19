@@ -11,5 +11,5 @@ AbstractTreeGenerator::CType::~CType()
 
 void AbstractTreeGenerator::CType::Accept( IVisitor * v )
 {
-	v->Visit( this );
+	v->visit( this );
 }

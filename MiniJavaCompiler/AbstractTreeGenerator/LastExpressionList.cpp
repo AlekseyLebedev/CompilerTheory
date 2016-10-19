@@ -16,5 +16,5 @@ std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CLast
 }
 
 void AbstractTreeGenerator::CLastExpressionList::Accept(AbstractTreeGenerator::IVisitor* v) {
-	v->Visit(this);
+	v->visit(this);
 }

@@ -1,6 +1,6 @@
-#line 2 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 2 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
-#line 4 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 4 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -580,8 +580,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
-#line 4 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 1 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 4 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 #include <iostream>
 #include <cstring>
 #include "syntatic.h"
@@ -606,7 +606,7 @@ void newLine(){
 void debugOutput(const char* text){
 	std::cout << text;
 }
-#line 610 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 610 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 #define INITIAL 0
 
@@ -785,11 +785,11 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 33 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 33 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 
 
 
-#line 793 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 793 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -874,7 +874,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 36 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 36 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cout << "STR(" << yytext << ")";	
 	updateLocation();
@@ -883,7 +883,7 @@ YY_RULE_SETUP
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 40 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 40 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	// Comment: /**/
 
@@ -902,7 +902,7 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 54 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 54 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	// Comment: //
 	newLine();
@@ -910,7 +910,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 58 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 58 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("CLASS");
 	updateLocation();	
@@ -919,7 +919,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 63 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 63 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("EXTENDS");
 	updateLocation();
@@ -927,7 +927,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 67 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 67 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("PUBLIC");
 	updateLocation();
@@ -935,7 +935,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 71 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 71 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("PROTECTED");
 	updateLocation();
@@ -943,7 +943,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 75 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 75 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("PRIVATE");
 	updateLocation();
@@ -951,7 +951,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 79 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 79 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("STATIC");
 	updateLocation();
@@ -959,7 +959,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 83 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 83 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("VOID");
 	updateLocation();
@@ -967,7 +967,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 87 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 87 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("MAIN");
 	updateLocation();
@@ -975,7 +975,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 91 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 91 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("INT");
 	updateLocation();
@@ -983,7 +983,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 95 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 95 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("CHAR");
 	updateLocation();
@@ -991,7 +991,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 99 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 99 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("BOOLEAN");
 	updateLocation();
@@ -999,7 +999,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 103 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 103 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("STRING");
 	updateLocation();
@@ -1007,7 +1007,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 107 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 107 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("IF");
 	updateLocation();
@@ -1015,7 +1015,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 111 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 111 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("ELSE");
 	updateLocation();
@@ -1023,7 +1023,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 115 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 115 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("WHILE");
 	updateLocation();
@@ -1031,7 +1031,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 119 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 119 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("RETURN");
 	updateLocation();
@@ -1039,7 +1039,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 123 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 123 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("THIS");
 	updateLocation();
@@ -1047,7 +1047,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 127 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 127 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("NEW");
 	updateLocation();
@@ -1055,7 +1055,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 131 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 131 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("SOP");
 	updateLocation();
@@ -1063,7 +1063,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 135 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 135 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("LENGTH");
 	updateLocation();
@@ -1071,7 +1071,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 139 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 139 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("TRUE");
 	updateLocation();
@@ -1079,7 +1079,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 143 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 143 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("TRUE");
 	updateLocation();
@@ -1087,7 +1087,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 147 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 147 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("SEMI");
 	updateLocation();
@@ -1095,7 +1095,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 151 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 151 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("ID(");
 	debugOutput(yytext);
@@ -1105,7 +1105,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 157 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 157 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("LPAREN");	
 	updateLocation();
@@ -1113,7 +1113,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 161 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 161 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("RPAREN");	
 	updateLocation();
@@ -1121,7 +1121,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 165 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 165 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("LBRACKET");	
 	updateLocation();
@@ -1129,7 +1129,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 169 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 169 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("RBRACKET");	
 	updateLocation();
@@ -1137,7 +1137,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 173 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 173 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("LBRACE");	
 	updateLocation();
@@ -1145,7 +1145,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 177 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 177 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("RBRACE");	
 	updateLocation();
@@ -1153,7 +1153,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 181 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 181 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("STAR");	
 	updateLocation();
@@ -1161,7 +1161,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 185 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 185 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("%");
 	updateLocation();
@@ -1170,14 +1170,14 @@ YY_RULE_SETUP
 case 36:
 /* rule 36 can match eol */
 YY_RULE_SETUP
-#line 189 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 189 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	newLine();
 }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 192 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 192 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("BANG");	
 	updateLocation();
@@ -1185,7 +1185,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 196 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 196 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("LESS");	
 	updateLocation();
@@ -1193,7 +1193,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 200 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 200 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("EQUAL");	
 	updateLocation();
@@ -1201,7 +1201,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 204 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 204 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("PLUS");	
 	updateLocation();
@@ -1209,7 +1209,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 208 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 208 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("MINUS");	
 	updateLocation();
@@ -1217,7 +1217,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 212 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 212 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("&&");	
 	updateLocation();
@@ -1225,7 +1225,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 216 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 216 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("||");	
 	updateLocation();
@@ -1233,7 +1233,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 220 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 220 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("COMMA");	
 	updateLocation();
@@ -1241,7 +1241,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 224 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 224 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput(".");	
 	updateLocation();
@@ -1249,7 +1249,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 228 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 228 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput(yytext);
 	updateLocation(false);
@@ -1257,7 +1257,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 232 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 232 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput(yytext);
 	updateLocation(false);
@@ -1265,7 +1265,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 236 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 236 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput(yytext);
 	updateLocation(false);
@@ -1273,7 +1273,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 240 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 240 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	debugOutput("NUM(");
 	debugOutput(yytext);
@@ -1283,17 +1283,17 @@ YY_RULE_SETUP
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 246 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 246 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 {
 	std::cerr<<"ERROR IN FLEX:"<<yytext[0]<<std::endl;
   }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 249 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 249 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 ECHO;
 	YY_BREAK
-#line 1297 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
+#line 1297 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2287,7 +2287,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 248 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
+#line 248 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\grammar.l"
 
 
 //Empty

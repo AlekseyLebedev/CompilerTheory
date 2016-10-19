@@ -11,5 +11,5 @@ AbstractTreeGenerator::CParenExpression::~CParenExpression()
 
 void AbstractTreeGenerator::CParenExpression::Accept( IVisitor * v )
 {
-	v->Visit( this );
+	v->visit( this );
 }

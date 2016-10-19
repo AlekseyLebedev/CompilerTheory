@@ -11,5 +11,5 @@ AbstractTreeGenerator::CNegationExpression::~CNegationExpression()
 
 void AbstractTreeGenerator::CNegationExpression::Accept( IVisitor * v )
 {
-	v->Visit( this );
+	v->visit( this );
 }

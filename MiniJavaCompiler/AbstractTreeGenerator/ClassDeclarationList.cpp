@@ -12,7 +12,7 @@ AbstractTreeGenerator::CClassDeclarationList::~CClassDeclarationList()
 
 }
 
-void AbstractTreeGenerator::CClassDeclarationList::Accept( IVisitor * V )
+void AbstractTreeGenerator::CClassDeclarationList::Accept( IVisitor * v )
 {
 	v->visit( this );
 

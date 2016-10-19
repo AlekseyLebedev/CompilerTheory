@@ -63,7 +63,7 @@
 
 /* Copy the first part of user declarations.  */
 /* Line 371 of yacc.c  */
-#line 1 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 1 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
 #include <memory>
 #include  <iostream>
@@ -85,7 +85,7 @@ void DebugOutput(const std::string& s){
 }
 
 /* Line 371 of yacc.c  */
-#line 89 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 89 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -105,8 +105,8 @@ void DebugOutput(const std::string& s){
 
 /* In a future release of Bison, this section will be replaced
    by #include "syntatic.h".  */
-#ifndef YY_YY_C_USERS_USER_SOURCE_REPOS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
-# define YY_YY_C_USERS_USER_SOURCE_REPOS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
+#ifndef YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
+# define YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED
 /* Enabling traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -171,7 +171,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 22 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 22 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
 	int int_val;
 	string str_val;
@@ -194,7 +194,7 @@ typedef union YYSTYPE
 
 
 /* Line 387 of yacc.c  */
-#line 198 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 198 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -217,12 +217,12 @@ int yyparse ();
 #endif
 #endif /* ! YYPARSE_PARAM */
 
-#endif /* !YY_YY_C_USERS_USER_SOURCE_REPOS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED  */
+#endif /* !YY_YY_C_PROJECTS_COMPILERTHEORY_MINIJAVACOMPILER_LEXICPARSER_SYNTATIC_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 226 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 226 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 
 #ifdef short
 # undef short
@@ -1568,7 +1568,7 @@ yyreduce:
     {
         case 3:
 /* Line 1792 of yacc.c  */
-#line 75 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 75 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 	(yyval.program) = std::shared_ptr<CProgram>(new CProgram((yyvsp[(1) - (2)].mainClass), (yyvsp[(2) - (2)].classDeclarationList)));
 	//CProgram(MainClass, ClassDeclarationList)
@@ -1577,7 +1577,7 @@ yyreduce:
 
   case 4:
 /* Line 1792 of yacc.c  */
-#line 83 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 83 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.mainClass) = std::shared_ptr<CMainClass>(new  CMainClass((yyvsp[(2) - (17)].expression), (yyvsp[(12) - (17)].expression), (yyvsp[(15) - (17)].statement)));
 		// IClass(Identifier, Identifier, Statement)
@@ -1586,7 +1586,7 @@ yyreduce:
 
   case 6:
 /* Line 1792 of yacc.c  */
-#line 89 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 89 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.classDeclarationList) = std::shared_ptr<CClassDeclarationList>(new CClassDeclarationList((yyvsp[(1) - (2)].classDeclaration), (yyvsp[(2) - (2)].classDeclarationList)));
 		//ClassDeclarationList(ClassDeclaration, ClassDeclarationList)
@@ -1595,7 +1595,7 @@ yyreduce:
 
   case 7:
 /* Line 1792 of yacc.c  */
-#line 97 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 97 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.classDeclaration) = std::shared_ptr<CClassDeclaration>(new CClassDeclaration((yyvsp[(2) - (7)].expression), (yyvsp[(3) - (7)].classExtend), (yyvsp[(5) - (7)].varDeclarationList), (yyvsp[(6) - (7)].methodDeclarationList)));
 		//ClassDeclaration(Identifier, ClassExtend, VarDeclarationList, MethodList)
@@ -1604,7 +1604,7 @@ yyreduce:
 
   case 9:
 /* Line 1792 of yacc.c  */
-#line 103 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 103 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.classExtend) = std::shared_ptr<CClassExtend>(new CClassExtend((yyvsp[(3) - (4)].expression)));
 		//ClassExtend(Identifier)
@@ -1613,7 +1613,7 @@ yyreduce:
 
   case 11:
 /* Line 1792 of yacc.c  */
-#line 109 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 109 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.varDeclarationList) = std::shared_ptr<CVarDeclarationList>(new CVarDeclarationList((yyvsp[(1) - (2)].varDeclaration), (yyvsp[(2) - (2)].varDeclarationList)));
 		//VarDeclarationList(VarDeclaration,VarDeclarationList)
@@ -1622,7 +1622,7 @@ yyreduce:
 
   case 12:
 /* Line 1792 of yacc.c  */
-#line 114 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 114 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.varDeclaration) = std::shared_ptr<CVarDeclaration>(new CVarDeclaration((yyvsp[(1) - (3)].type), (yyvsp[(2) - (3)].expression)));
 		//VarDeclaration(Type, Identifier)
@@ -1631,7 +1631,7 @@ yyreduce:
 
   case 14:
 /* Line 1792 of yacc.c  */
-#line 120 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 120 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.methodDeclarationList) = std::shared_ptr<CMethodDeclarationList>(new CMethodDeclarationList((yyvsp[(1) - (2)].methodDeclaration), (yyvsp[(2) - (2)].methodDeclarationList)));
 		//MethodDeclarationList(MethodDeclaration, MethodDeclarationList)
@@ -1640,7 +1640,7 @@ yyreduce:
 
   case 15:
 /* Line 1792 of yacc.c  */
-#line 126 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 126 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.methodDeclaration) = std::shared_ptr<CMethodDeclaration>(new CMethodDeclaration((yyvsp[(2) - (13)].type), (yyvsp[(3) - (13)].expression), (yyvsp[(5) - (13)].argumentList), (yyvsp[(8) - (13)].varDeclarationList), (yyvsp[(9) - (13)].statementList), (yyvsp[(11) - (13)].expression)));
 		//MethodDeclaration(Type, Identifier, ArgumentList, VarDeclarationList, StatementList, Expression)
@@ -1649,7 +1649,7 @@ yyreduce:
 
   case 17:
 /* Line 1792 of yacc.c  */
-#line 132 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 132 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.argumentList) = std::shared_ptr<CArgumentList>(CArgumentList((yyvsp[(1) - (1)].argument), nullptr));
 		//ArgumentList(Argument, nullptr)
@@ -1658,7 +1658,7 @@ yyreduce:
 
   case 18:
 /* Line 1792 of yacc.c  */
-#line 136 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 136 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.argumentList) = std::shared_ptr<CArgumentList>(new CArgumentList((yyvsp[(1) - (3)].argument), (yyvsp[(3) - (3)].argumentList)));
 		//ArgumentList(Argument, ArgumentList)
@@ -1667,7 +1667,7 @@ yyreduce:
 
   case 19:
 /* Line 1792 of yacc.c  */
-#line 141 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 141 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.argument) = std::shared_ptr<CArgument>(new CArgument((yyvsp[(1) - (2)].type), (yyvsp[(2) - (2)].expression)));
 		//Argument(Type, Identifier)
@@ -1676,7 +1676,7 @@ yyreduce:
 
   case 20:
 /* Line 1792 of yacc.c  */
-#line 146 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 146 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.type) = std::shared_ptr<CType>(new CType("INTLIST"));
 	}
@@ -1684,7 +1684,7 @@ yyreduce:
 
   case 21:
 /* Line 1792 of yacc.c  */
-#line 149 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 149 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.type) = std::shared_ptr<CType>(new CType("BOOL"));
 	}
@@ -1692,7 +1692,7 @@ yyreduce:
 
   case 22:
 /* Line 1792 of yacc.c  */
-#line 152 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 152 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.type) = std::shared_ptr<CType>(new CType("INT"));
 	}
@@ -1700,7 +1700,7 @@ yyreduce:
 
   case 23:
 /* Line 1792 of yacc.c  */
-#line 155 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 155 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.type) = std::shared_ptr<CType>(new CType((yyvsp[(1) - (1)].expression)));
 		//Type(Identifier)
@@ -1709,7 +1709,7 @@ yyreduce:
 
   case 25:
 /* Line 1792 of yacc.c  */
-#line 161 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 161 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.statementList) = std::shared_ptr<CStatementList>(new CStatementList((yyvsp[(1) - (2)].statement), (yyvsp[(2) - (2)].statementList)));
 		//StatementList(Statement, StatementList)
@@ -1718,7 +1718,7 @@ yyreduce:
 
   case 26:
 /* Line 1792 of yacc.c  */
-#line 166 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 166 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.statement) = std::shared_ptr<IStatement>(new CCompoundStatement((yyvsp[(2) - (3)].statementList)));
 		//CompoundStatement(StatementList)
@@ -1727,7 +1727,7 @@ yyreduce:
 
   case 27:
 /* Line 1792 of yacc.c  */
-#line 170 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 170 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.statement) = std::shared_ptr<IStatement>(new CConditionStatement((yyvsp[(3) - (7)].expression), (yyvsp[(5) - (7)].statement), (yyvsp[(7) - (7)].statement)));
 		//CondtitionStatement(Expression, Statement, Statement)
@@ -1736,7 +1736,7 @@ yyreduce:
 
   case 28:
 /* Line 1792 of yacc.c  */
-#line 174 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 174 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.statement) = std::shared_ptr<IStatement>(new CPreconditionStatement((yyvsp[(3) - (5)].expression), (yyvsp[(5) - (5)].statement)));
 		//PreconditionStatement(Expression, Statement)
@@ -1745,7 +1745,7 @@ yyreduce:
 
   case 29:
 /* Line 1792 of yacc.c  */
-#line 178 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 178 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.statement) = std::shared_ptr<IStatement>(new CPrintStatement((yyvsp[(3) - (5)].expression)));
 		//PrintStatement(Expression)
@@ -1754,7 +1754,7 @@ yyreduce:
 
   case 30:
 /* Line 1792 of yacc.c  */
-#line 182 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 182 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.statement) = std::shared_ptr<IStatement>(new CAssignmentStatement((yyvsp[(1) - (4)].expression), (yyvsp[(3) - (4)].expression)));
 		//AssignmentStatement(Identifier, Expression)
@@ -1763,7 +1763,7 @@ yyreduce:
 
   case 31:
 /* Line 1792 of yacc.c  */
-#line 186 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 186 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.statement) = std::shared_ptr<IStatement>(AssignmentListStatement((yyvsp[(1) - (7)].expression), (yyvsp[(3) - (7)].expression), (yyvsp[(6) - (7)].expression)));
 		//AssignmentListStatement(Identifier, Expression, Expression)
@@ -1772,79 +1772,79 @@ yyreduce:
 
   case 32:
 /* Line 1792 of yacc.c  */
-#line 191 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 191 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::OperationType::And));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::And));
 		//OperationExpression(Expression, Expression, And)
 	}
     break;
 
   case 33:
 /* Line 1792 of yacc.c  */
-#line 195 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 195 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::OperationType::Less));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Less));
 		//OperationExpression(Expression, Expression, Less)
 	}
     break;
 
   case 34:
 /* Line 1792 of yacc.c  */
-#line 199 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 199 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::OperationType::Plus));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Plus));
 		//OperationExpression(Expression, Expression, Plus)
 	}
     break;
 
   case 35:
 /* Line 1792 of yacc.c  */
-#line 203 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 203 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::OperationType::Minus));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Minus));
 		//OperationExpression(Expression, Expression, Minus)
 	}
     break;
 
   case 36:
 /* Line 1792 of yacc.c  */
-#line 207 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 207 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::OperationType::Times));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Times));
 		//OperationExpression(Expression, Expression, Times)
 	}
     break;
 
   case 37:
 /* Line 1792 of yacc.c  */
-#line 211 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 211 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::OperationType::Devide));
-		//OperationExpression(Expression, Expression, Devide)
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Divide));
+		//OperationExpression(Expression, Expression, Divide)
 	}
     break;
 
   case 38:
 /* Line 1792 of yacc.c  */
-#line 215 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 215 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::OperationType::Mod));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Mod));
 		//OperationExpression(Expression, Expression, Mod)
 	}
     break;
 
   case 39:
 /* Line 1792 of yacc.c  */
-#line 219 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 219 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::OperationType::Or));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Or));
 		//OperationExpression(Expression, Expression, Or)
 	}
     break;
 
   case 40:
 /* Line 1792 of yacc.c  */
-#line 223 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 223 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CIndexExpression((yyvsp[(1) - (4)].expression), (yyvsp[(3) - (4)].expression)));
 		//IndexExpression(Expression,Expression)
@@ -1853,7 +1853,7 @@ yyreduce:
 
   case 41:
 /* Line 1792 of yacc.c  */
-#line 227 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 227 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CLengthExpression((yyvsp[(1) - (3)].expression)));
 		//LengthExpression(Expression)
@@ -1862,7 +1862,7 @@ yyreduce:
 
   case 42:
 /* Line 1792 of yacc.c  */
-#line 231 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 231 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CGetFieldExpression((yyvsp[(1) - (6)].expression), (yyvsp[(3) - (6)].expression), (yyvsp[(5) - (6)].expressionList)));
 		//GetFieldExpression(Expression, Identifier, ExpressionList)
@@ -1871,7 +1871,7 @@ yyreduce:
 
   case 43:
 /* Line 1792 of yacc.c  */
-#line 235 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 235 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CNumExpression((yyvsp[(1) - (1)].int_val)));
 		//NumExpression(int)
@@ -1880,7 +1880,7 @@ yyreduce:
 
   case 44:
 /* Line 1792 of yacc.c  */
-#line 239 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 239 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CTrueExpression());
 	}
@@ -1888,7 +1888,7 @@ yyreduce:
 
   case 45:
 /* Line 1792 of yacc.c  */
-#line 242 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 242 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CFalseExpression());
 	}
@@ -1896,7 +1896,7 @@ yyreduce:
 
   case 46:
 /* Line 1792 of yacc.c  */
-#line 245 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 245 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CIdExpression((yyvsp[(1) - (1)].expression)));
 		//IdExpression(Identifier)
@@ -1905,7 +1905,7 @@ yyreduce:
 
   case 47:
 /* Line 1792 of yacc.c  */
-#line 249 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 249 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CThisExpression());
 		//ThisExpression()
@@ -1914,7 +1914,7 @@ yyreduce:
 
   case 48:
 /* Line 1792 of yacc.c  */
-#line 253 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 253 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CListConstructorExpression((yyvsp[(4) - (5)].expression)));
 		//ListConstructorExpression(Expression)
@@ -1923,7 +1923,7 @@ yyreduce:
 
   case 49:
 /* Line 1792 of yacc.c  */
-#line 257 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 257 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CConstructorExpression((yyvsp[(2) - (4)].expression)));
 		//ConstructorExpression(Identifier)
@@ -1932,7 +1932,7 @@ yyreduce:
 
   case 50:
 /* Line 1792 of yacc.c  */
-#line 261 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 261 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr_ptr<IExpression>(new CNegationExpression((yyvsp[(2) - (2)].expression)));
 		//NegationExpression(Expression)
@@ -1941,7 +1941,7 @@ yyreduce:
 
   case 51:
 /* Line 1792 of yacc.c  */
-#line 265 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 265 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CParenExpression((yyvsp[(2) - (3)].expression)));
 		//ParenExpression(Expression)
@@ -1950,7 +1950,7 @@ yyreduce:
 
   case 53:
 /* Line 1792 of yacc.c  */
-#line 271 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 271 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expressionList) = std::shared_ptr<CExpressionList>(new CExpressionList((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expressionList)));
 		//ExpressionList(Expression, ExpressionList)
@@ -1959,7 +1959,7 @@ yyreduce:
 
   case 54:
 /* Line 1792 of yacc.c  */
-#line 275 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 275 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expressionList) = std::shared_ptr<CExpressionList>(new CExpressionList((yyvsp[(1) - (1)].expression), nullptr));
 		//ExpressionList(Expression, nullptr)
@@ -1968,7 +1968,7 @@ yyreduce:
 
   case 55:
 /* Line 1792 of yacc.c  */
-#line 280 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 280 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
 		(yyval.expression) = std::shared_ptr<IExpression>(new CIdExpression((yyvsp[(1) - (1)].str_val)));
 		//IdExpression(string);
@@ -1977,7 +1977,7 @@ yyreduce:
 
 
 /* Line 1792 of yacc.c  */
-#line 1981 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 1981 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2209,7 +2209,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 286 "C:\\Users\\user\\Source\\Repos\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+#line 286 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
 
 int yyerror(std::string s) {
