@@ -109,7 +109,7 @@ int yylex(void);
 
 
 using namespace AbstractTreeGenerator;
-using namespace std;
+//using namespace std;
 
 
 void DebugOutput(const std::string& s){
@@ -1779,7 +1779,7 @@ yyreduce:
 /* Line 1792 of yacc.c  */
 #line 191 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::And));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), COperationExpression::TOperationType::And));
 		//OperationExpression(Expression, Expression, And)
 	}
     break;
@@ -1788,7 +1788,7 @@ yyreduce:
 /* Line 1792 of yacc.c  */
 #line 195 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Less));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), COperationExpression::TOperationType::Less));
 		//OperationExpression(Expression, Expression, Less)
 	}
     break;
@@ -1797,7 +1797,7 @@ yyreduce:
 /* Line 1792 of yacc.c  */
 #line 199 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Plus));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), COperationExpression::TOperationType::Plus));
 		//OperationExpression(Expression, Expression, Plus)
 	}
     break;
@@ -1806,7 +1806,7 @@ yyreduce:
 /* Line 1792 of yacc.c  */
 #line 203 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Minus));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), COperationExpression::TOperationType::Minus));
 		//OperationExpression(Expression, Expression, Minus)
 	}
     break;
@@ -1815,7 +1815,7 @@ yyreduce:
 /* Line 1792 of yacc.c  */
 #line 207 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Times));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), COperationExpression::TOperationType::Times));
 		//OperationExpression(Expression, Expression, Times)
 	}
     break;
@@ -1824,7 +1824,7 @@ yyreduce:
 /* Line 1792 of yacc.c  */
 #line 211 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Divide));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), COperationExpression::TOperationType::Divide));
 		//OperationExpression(Expression, Expression, Divide)
 	}
     break;
@@ -1833,7 +1833,7 @@ yyreduce:
 /* Line 1792 of yacc.c  */
 #line 215 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Mod));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), COperationExpression::TOperationType::Mod));
 		//OperationExpression(Expression, Expression, Mod)
 	}
     break;
@@ -1842,7 +1842,7 @@ yyreduce:
 /* Line 1792 of yacc.c  */
 #line 219 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
     {
-		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), OperationExpression::TOperationType::Or));
+		(yyval.expression) = std::shared_ptr<IExpression>(new COperationExpression((yyvsp[(1) - (3)].expression), (yyvsp[(3) - (3)].expression), COperationExpression::TOperationType::Or));
 		//OperationExpression(Expression, Expression, Or)
 	}
     break;

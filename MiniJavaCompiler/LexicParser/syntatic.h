@@ -55,7 +55,7 @@ int yylex(void);
 
 
 using namespace AbstractTreeGenerator;
-using namespace std;
+//using namespace std;
 
 
 void DebugOutput(const std::string& s){

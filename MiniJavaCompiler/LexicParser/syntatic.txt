@@ -189,35 +189,35 @@ Statement: T_lbrace StatementList T_rbrace {
 	}
 
 Expression: Expression T_and Expression {
-		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, OperationExpression::TOperationType::And));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::And));
 		//OperationExpression(Expression, Expression, And)
 	}
 	|  Expression T_less Expression {
-		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, OperationExpression::TOperationType::Less));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Less));
 		//OperationExpression(Expression, Expression, Less)
 	}
 	|  Expression T_plus Expression {
-		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, OperationExpression::TOperationType::Plus));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Plus));
 		//OperationExpression(Expression, Expression, Plus)
 	}
 	|  Expression T_minus Expression {
-		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, OperationExpression::TOperationType::Minus));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Minus));
 		//OperationExpression(Expression, Expression, Minus)
 	}
 	|  Expression T_star Expression {
-		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, OperationExpression::TOperationType::Times));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Times));
 		//OperationExpression(Expression, Expression, Times)
 	}
 	|  Expression T_divide Expression {
-		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, OperationExpression::TOperationType::Divide));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Divide));
 		//OperationExpression(Expression, Expression, Divide)
 	}
 	|  Expression T_mod Expression {
-		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, OperationExpression::TOperationType::Mod));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Mod));
 		//OperationExpression(Expression, Expression, Mod)
 	}
 	|  Expression T_or Expression {
-		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, OperationExpression::TOperationType::Or));
+		$$ = std::shared_ptr<IExpression>(new COperationExpression($1, $3, COperationExpression::TOperationType::Or));
 		//OperationExpression(Expression, Expression, Or)
 	}
 	| Expression T_lbracket Expression T_rbracket {
