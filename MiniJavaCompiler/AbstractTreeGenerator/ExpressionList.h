@@ -1,9 +1,10 @@
 #pragma once
 #include "IExpression.h"
 #include <memory>
+#include "INode.h"
 
 namespace AbstractTreeGenerator {
-	class CExpressionList
+	class CExpressionList  : public INode
 	{
 	public:
 		CExpressionList( std::shared_ptr<IExpression> theExpression );

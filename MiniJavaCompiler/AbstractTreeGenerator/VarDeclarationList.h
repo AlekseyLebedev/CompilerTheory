@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "VarDeclaration.h"
+#include "INode.h"
 
 namespace AbstractTreeGenerator {
 	class CVarDeclarationList : public INode {
