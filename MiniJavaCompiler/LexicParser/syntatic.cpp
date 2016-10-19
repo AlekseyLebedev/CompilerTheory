@@ -62,30 +62,9 @@
 
 
 /* Copy the first part of user declarations.  */
-/* Line 371 of yacc.c  */
-#line 1 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
-
-#include <memory>
-#include  <iostream>
-#include <string>
-
-int yyerror(char *s);
-int yylex(void);
-
-
-
-#include "..\AbstractTreeGenerator\AllNodes.h"
-
-using namespace AbstractTreeGenerator;
-using namespace std;
-
-
-void DebugOutput(const std::string& s){
-	std::cout << s << std::endl;
-}
 
 /* Line 371 of yacc.c  */
-#line 89 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 68 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -114,6 +93,32 @@ void DebugOutput(const std::string& s){
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+/* Line 387 of yacc.c  */
+#line 1 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+
+#include <memory>
+#include <iostream>
+#include <string>
+#include "..\AbstractTreeGenerator\AllNodes.h"
+
+int yyerror(char *s);
+int yylex(void);
+
+
+
+
+using namespace AbstractTreeGenerator;
+using namespace std;
+
+
+void DebugOutput(const std::string& s){
+	std::cout << s << std::endl;
+}
+
+
+/* Line 387 of yacc.c  */
+#line 122 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -174,27 +179,27 @@ typedef union YYSTYPE
 #line 22 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
 
 	int int_val;
-	string str_val;
-	shared_ptr<CProgram> program;
-	shared_ptr<CMainClass> mainClass;
-	shared_ptr<CClassDeclarationList> classDeclarationList;
-	shared_ptr<CClassDeclaration> classDeclaration;
-	shared_ptr<CClassExtend> classExtend;
-	shared_ptr<CVarDeclarationList> varDeclarationList;
-	shared_ptr<CVarDeclaration> varDeclaration;
-	shared_ptr<CMethodDeclarationList> methodDeclarationList;
-	shared_ptr<CMethodDeclaration> methodDeclaration;
-	shared_ptr<CType> type;
-	shared_ptr<CExpressionList> expressionList;
-	shared_ptr<IExpression> expression;
-	shared_ptr<CStatementList> statementList;
-	shared_ptr<IStatement> statement;
-	shared_ptr<CArgumentList> argumentList;
-	shared_ptr<CArgument> argument;
+	std::string str_val;
+	std::shared_ptr<CProgram> program;
+	std::shared_ptr<CMainClass> mainClass;
+	std::shared_ptr<CClassDeclarationList> classDeclarationList;
+	std::shared_ptr<CClassDeclaration> classDeclaration;
+	std::shared_ptr<CClassExtend> classExtend;
+	std::shared_ptr<CVarDeclarationList> varDeclarationList;
+	std::shared_ptr<CVarDeclaration> varDeclaration;
+	std::shared_ptr<CMethodDeclarationList> methodDeclarationList;
+	std::shared_ptr<CMethodDeclaration> methodDeclaration;
+	std::shared_ptr<CType> type;
+	std::shared_ptr<CExpressionList> expressionList;
+	std::shared_ptr<IExpression> expression;
+	std::shared_ptr<CStatementList> statementList;
+	std::shared_ptr<IStatement> statement;
+	std::shared_ptr<CArgumentList> argumentList;
+	std::shared_ptr<CArgument> argument;
 
 
 /* Line 387 of yacc.c  */
-#line 198 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 203 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -222,7 +227,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 226 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 231 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
 
 #ifdef short
 # undef short
@@ -1977,7 +1982,7 @@ yyreduce:
 
 
 /* Line 1792 of yacc.c  */
-#line 1981 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
+#line 1986 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

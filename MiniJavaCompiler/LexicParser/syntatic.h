@@ -39,6 +39,32 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+/* Line 2058 of yacc.c  */
+#line 1 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.txt"
+
+#include <memory>
+#include <iostream>
+#include <string>
+#include "..\AbstractTreeGenerator\AllNodes.h"
+
+int yyerror(char *s);
+int yylex(void);
+
+
+
+
+using namespace AbstractTreeGenerator;
+using namespace std;
+
+
+void DebugOutput(const std::string& s){
+	std::cout << s << std::endl;
+}
+
+
+/* Line 2058 of yacc.c  */
+#line 68 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.h"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -119,7 +145,7 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 123 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.h"
+#line 149 "C:\\Projects\\CompilerTheory\\MiniJavaCompiler\\LexicParser\\syntatic.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
