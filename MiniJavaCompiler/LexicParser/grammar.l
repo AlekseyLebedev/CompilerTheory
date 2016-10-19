@@ -63,90 +63,112 @@ class {
 extends {
 	debugOutput("EXTENDS");
 	updateLocation();
+	return T_extends;
 }
 public {
 	debugOutput("PUBLIC");
 	updateLocation();
+	return T_public;
 }
 protected {
 	debugOutput("PROTECTED");
 	updateLocation();
+	return T_protected;
 }
 private {
 	debugOutput("PRIVATE");
 	updateLocation();
+	return T_private;
 }
 static {
 	debugOutput("STATIC");
 	updateLocation();
+	return T_static;
 }
 void {
 	debugOutput("VOID");
 	updateLocation();
+	return T_void;
 }
 main {
 	debugOutput("MAIN");
 	updateLocation();
+	return T_main;
 }
 int {
 	debugOutput("INT");
 	updateLocation();
+	return T_int;
 }
 char {
 	debugOutput("CHAR");
 	updateLocation();
+	return T_char;
 }
 boolean {
 	debugOutput("BOOLEAN");
 	updateLocation();
+	return T_boolean;
 }
 String {
 	debugOutput("STRING");
 	updateLocation();
+	return T_string;
 }
 if {
 	debugOutput("IF");
 	updateLocation();
+	return T_if;
 }
 else {
 	debugOutput("ELSE");
 	updateLocation();
+	return T_else;
 }
 while {
 	debugOutput("WHILE");
 	updateLocation();
+	return T_while;
 }
 return {
 	debugOutput("RETURN");
 	updateLocation();
+	return T_return;
 }
 this {
 	debugOutput("THIS");
 	updateLocation();
+	return T_this;
 }
 new {
 	debugOutput("NEW");
 	updateLocation();
+	return T_new;
 }
 System.out.println {
 	debugOutput("SOP");
 	updateLocation();
+	return T_sop;
 }
 length {
 	debugOutput("LENGTH");
 	updateLocation();
+	return T_length;
 }
 true {
 	debugOutput("TRUE");
 	updateLocation();
+	return T_true;
 }
 false {
-	debugOutput("TRUE");
+	debugOutput("FALSE");
 	updateLocation();
+	return T_false;
 }
 ";" {
 	debugOutput("SEMI");
 	updateLocation();
+	return T_semi;
 }
 {LETTER}({DIGIT}|{LETTER})* {
 	debugOutput("ID(");
@@ -157,73 +179,90 @@ false {
 "(" {
 	debugOutput("LPAREN");	
 	updateLocation();
+	return T_lparen;
 }
 ")" {
 	debugOutput("RPAREN");	
 	updateLocation();
+	return T_rparen;
 }
 "[" {
 	debugOutput("LBRACKET");	
 	updateLocation();
+	return T_lbracket;
 }
 "]" {
 	debugOutput("RBRACKET");	
 	updateLocation();
+	return T_rbracket;
 }
 "{" {
 	debugOutput("LBRACE");	
 	updateLocation();
+	return T_lbrace;
 }
 "}" {
 	debugOutput("RBRACE");	
 	updateLocation();
+	return T_rbrace;
 }
 "*" {
 	debugOutput("STAR");	
 	updateLocation();
+	return T_star;
 }
 "%" {
 	debugOutput("%");
 	updateLocation();
+	return T_mod;
 }
 "\n" {
 	newLine();
 }
 "!" {
-	debugOutput("BANG");	
+	debugOutput("NOT");	
 	updateLocation();
+	return T_not;
 }
 "<" {
 	debugOutput("LESS");	
 	updateLocation();
+	return T_less;
 }
 "=" {
 	debugOutput("EQUAL");	
 	updateLocation();
+	return T_equal;
 }
 "+" {
 	debugOutput("PLUS");	
 	updateLocation();
+	return T_plus;
 }
 "-" {
 	debugOutput("MINUS");	
 	updateLocation();
+	return T_minus;
 }
 "&&" {
 	debugOutput("&&");	
 	updateLocation();
+	return T_and;
 }
 "||" {
 	debugOutput("||");	
 	updateLocation();
+	return T_or;
 }
 "," {
 	debugOutput("COMMA");	
 	updateLocation();
+	return T_comma;
 }
 "." {
 	debugOutput(".");	
 	updateLocation();
+	return T_dot;
 }
 (" ")* {
 	debugOutput(yytext);
