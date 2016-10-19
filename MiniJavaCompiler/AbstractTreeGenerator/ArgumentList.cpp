@@ -12,5 +12,5 @@ AbstractTreeGenerator::CArgumentList::~CArgumentList()
 
 void AbstractTreeGenerator::CArgumentList::Accept( IVisitor * v )
 {
-	v->Visit( this );
+	v->visit( this );
 }

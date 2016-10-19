@@ -10,7 +10,7 @@ AbstractTreeGenerator::CondtitionStatement::~CondtitionStatement()
 {
 }
 
-void AbstractTreeGenerator::CondtitionStatement::Accept( IVisitor * V )
+void AbstractTreeGenerator::CondtitionStatement::Accept( IVisitor * v )
 {
 	v->visit( this );
 }

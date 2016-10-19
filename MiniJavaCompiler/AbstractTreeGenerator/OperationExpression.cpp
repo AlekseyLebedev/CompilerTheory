@@ -26,5 +26,5 @@ AbstractTreeGenerator::COperationExpression::TOperationType AbstractTreeGenerato
 }
 
 void AbstractTreeGenerator::COperationExpression::Accept(IVisitor* v) {
-	v->Visit(this);
+	v->visit(this);
 }

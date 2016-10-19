@@ -10,5 +10,5 @@ AbstractTreeGenerator::CNumExpression::~CNumExpression()
 
 void AbstractTreeGenerator::CNumExpression::Accept( IVisitor* v )
 {
-	v->Visit( this );
+	v->visit( this );
 }

@@ -9,7 +9,7 @@ AbstractTreeGenerator::CClassExtend::~CClassExtend()
 {
 }
 
-void AbstractTreeGenerator::CClassExtend::Accept( IVisitor * V )
+void AbstractTreeGenerator::CClassExtend::Accept( IVisitor * v )
 {
 	v->visit( this );
 }

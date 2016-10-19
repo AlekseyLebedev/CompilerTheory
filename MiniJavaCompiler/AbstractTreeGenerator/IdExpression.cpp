@@ -14,7 +14,7 @@ std::string AbstractTreeGenerator::CIdExpression::GetName() const {
 }
 
 void AbstractTreeGenerator::CIdExpression::Accept(IVisitor* v) {
-	v->Visit(this);
+	v->visit(this);
 }
 
 

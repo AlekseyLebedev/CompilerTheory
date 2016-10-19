@@ -12,5 +12,5 @@ AbstractTreeGenerator::CStatementList::~CStatementList()
 
 void AbstractTreeGenerator::CStatementList::Accept( IVisitor * v)
 {
-	v->Visit( this );
+	v->visit( this );
 }

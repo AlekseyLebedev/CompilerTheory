@@ -26,6 +26,6 @@ std::shared_ptr<AbstractTreeGenerator::INode> AbstractTreeGenerator::CCompoundSt
 }
 
 void AbstractTreeGenerator::CCompoundStatement::Accept(IVisitor* v) {
-	v->Visit(this);
+	v->visit(this);
 }
 

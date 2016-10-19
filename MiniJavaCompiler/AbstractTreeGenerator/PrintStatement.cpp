@@ -15,5 +15,5 @@ std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CPrin
 }
 
 void AbstractTreeGenerator::CPrintStatement::Accept(IVisitor* v) {
-	v->Visit(this);
+	v->visit(this);
 }

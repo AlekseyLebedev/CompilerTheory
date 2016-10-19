@@ -13,7 +13,7 @@ AbstractTreeGenerator::CAssignmentListStatement::~CAssignmentListStatement()
 
 }
 
-void AbstractTreeGenerator::CAssignmentListStatement::Accept( IVisitor * )
+void AbstractTreeGenerator::CAssignmentListStatement::Accept( IVisitor * v )
 {
 	v->visit( this );
 }
