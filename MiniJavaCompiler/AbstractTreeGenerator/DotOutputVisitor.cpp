@@ -136,7 +136,7 @@ namespace GraphvizOutput {
 	{
 	}
 
-	void CDotOutputVisitor::visit(AbstractTreeGenerator::CNumberExpression *const numExpression)
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CNumberExpr * const )
 	{
 		size_t current = enterNode("NumExpression");
 		//addSubNode(current, numExpression->GetValue()->GetStringValue());

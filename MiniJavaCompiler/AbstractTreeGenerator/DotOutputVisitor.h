@@ -46,7 +46,7 @@ namespace GraphvizOutput {
 		virtual void visit( AbstractTreeGenerator::CMethodDeclaration * const ) override;
 		virtual void visit( AbstractTreeGenerator::CMethodDeclarationList * const ) override;
 		virtual void visit( AbstractTreeGenerator::CNegationExpression * const ) override;
-		virtual void visit( AbstractTreeGenerator::CNumberExpression * const ) override;
+		virtual void visit( AbstractTreeGenerator::CNumberExpr * const ) override;
 		virtual void visit( AbstractTreeGenerator::COperationExpression * const ) override;
 		virtual void visit( AbstractTreeGenerator::CParenExpression * const ) override;
 		virtual void visit( AbstractTreeGenerator::CPreconditionStatement * const ) override;

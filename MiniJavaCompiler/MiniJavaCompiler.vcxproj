@@ -182,7 +182,7 @@
     <ClInclude Include="AbstractTreeGenerator\MethodDeclaration.h" />
     <ClInclude Include="AbstractTreeGenerator\MethodDeclarationList.h" />
     <ClInclude Include="AbstractTreeGenerator\NegationExpression.h" />
-    <ClInclude Include="AbstractTreeGenerator\NumberExpression.h" />
+    <ClInclude Include="AbstractTreeGenerator\NumberExpr.h" />
     <ClInclude Include="AbstractTreeGenerator\OperationExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\ParenExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\PreconditionStatement.h" />
@@ -221,7 +221,7 @@
     <ClCompile Include="AbstractTreeGenerator\MethodDeclaration.cpp" />
     <ClCompile Include="AbstractTreeGenerator\MethodDeclarationList.cpp" />
     <ClCompile Include="AbstractTreeGenerator\NegationExpression.cpp" />
-    <ClCompile Include="AbstractTreeGenerator\NumberExpression.cpp" />
+    <ClCompile Include="AbstractTreeGenerator\NumberExpr.cpp" />
     <ClCompile Include="AbstractTreeGenerator\OperationExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ParenExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\PreconditionStatement.cpp" />

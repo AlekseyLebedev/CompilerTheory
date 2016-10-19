@@ -235,7 +235,7 @@ Expression: Expression T_and Expression {
 	}
 	| T_NUM {
 		//$$ = std::shared_ptr<IExpression>(0);
-		$$ = std::shared_ptr<IExpression>(new CNumberExpression($1));
+		$$ = std::shared_ptr<IExpression>(new CNumberExpr($1));
 		//NumExpression(int)
 	}
 	| T_true {

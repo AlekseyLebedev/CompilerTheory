@@ -164,7 +164,7 @@
     <ClInclude Include="AbstractTreeGenerator\AllNodes.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractTreeGenerator\NumberExpression.h">
+    <ClInclude Include="AbstractTreeGenerator\NumberExpr.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
   </ItemGroup>
@@ -280,7 +280,7 @@
     <ClCompile Include="AbstractTreeGenerator\ArgumentList.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractTreeGenerator\NumberExpression.cpp">
+    <ClCompile Include="AbstractTreeGenerator\NumberExpr.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
   </ItemGroup>

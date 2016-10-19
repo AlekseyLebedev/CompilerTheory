@@ -25,7 +25,7 @@
 #include "MethodDeclaration.h"
 #include "MethodDeclarationList.h"
 #include "NegationExpression.h"
-#include "NumberExpression.h"
+#include "NumberExpr.h"
 #include "OperationExpression.h"
 #include "ParenExpression.h"
 #include "PreconditionStatement.h"
