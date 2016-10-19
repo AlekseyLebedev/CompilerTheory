@@ -125,9 +125,6 @@
     <ClInclude Include="AbstractTreeGenerator\ClassDeclaration.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractTreeGenerator\CExpression.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\AssignStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
