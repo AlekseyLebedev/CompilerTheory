@@ -6,7 +6,6 @@ namespace AbstractTreeGenerator {
 	class CAssignStatement;
 	class CAssignmentListStatement;
 	class CAssignmentStatement;
-	class CBOOL_LITERAL;
 	class CCExpression;
 	class CClassDeclaration;
 	class CClassDeclarationList;
@@ -17,13 +16,11 @@ namespace AbstractTreeGenerator {
 	class CDotOutputVisitor;
 	class CExpressionList;
 	class CGraphvizLauncher;
-	class CINTEGER_LITERAL;
 	class CIdExpression;
 	class CIndexExpression;
 	class CLastExpressionList;
 	class CLengthExpression;
 	class CListConstructorExpression;
-	class CLogicExpression;
 	class CMainClass;
 	class CMethodDeclaration;
 	class CMethodDeclarationList;
@@ -56,7 +53,6 @@ namespace AbstractTreeGenerator {
 		virtual void visit( CAssignStatement* ) = 0;
 		virtual void visit( CAssignmentListStatement* ) = 0;
 		virtual void visit( CAssignmentStatement* ) = 0;
-		virtual void visit( CBOOL_LITERAL* ) = 0;
 		virtual void visit( CCExpression* ) = 0;
 		virtual void visit( CClassDeclaration* ) = 0;
 		virtual void visit( CClassDeclarationList* ) = 0;
@@ -67,13 +63,11 @@ namespace AbstractTreeGenerator {
 		virtual void visit( CDotOutputVisitor* ) = 0;
 		virtual void visit( CExpressionList* ) = 0;
 		virtual void visit( CGraphvizLauncher* ) = 0;
-		virtual void visit( CINTEGER_LITERAL* ) = 0;
 		virtual void visit( CIdExpression* ) = 0;
 		virtual void visit( CIndexExpression* ) = 0;
 		virtual void visit( CLastExpressionList* ) = 0;
 		virtual void visit( CLengthExpression* ) = 0;
 		virtual void visit( CListConstructorExpression* ) = 0;
-		virtual void visit( CLogicExpression* ) = 0;
 		virtual void visit( CMainClass* ) = 0;
 		virtual void visit( CMethodDeclaration* ) = 0;
 		virtual void visit( CMethodDeclarationList* ) = 0;
