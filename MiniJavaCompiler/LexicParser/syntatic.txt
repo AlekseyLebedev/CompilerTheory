@@ -32,6 +32,7 @@ void DebugOutput(const std::string& s){
 	std::shared_ptr<CMethodDeclarationList> methodDeclarationList;
 	std::shared_ptr<CMethodDeclaration> methodDeclaration;
 	std::shared_ptr<CType> type;
+	std::shared_ptr<CNumberExpression> numExpression;
 	std::shared_ptr<CExpressionList> expressionList;
 	std::shared_ptr<IExpression> expression;
 	std::shared_ptr<CStatementList> statementList;
@@ -233,7 +234,8 @@ Expression: Expression T_and Expression {
 		//GetFieldExpression(Expression, Identifier, ExpressionList)
 	}
 	| T_NUM {
-		$$ = std::shared_ptr<IExpression>(new CNumExpression($1));
+		//$$ = std::shared_ptr<IExpression>(0);
+		$$ = std::shared_ptr<IExpression>(new CNumberExpression($1));
 		//NumExpression(int)
 	}
 	| T_true {

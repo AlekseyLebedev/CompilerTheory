@@ -1,6 +1,9 @@
 #pragma once
+#ifndef NUMEXPINCLUDE
+#define NUMEXPINCLUDE
 
 #include "IExpression.h"
+#include <memory>
 
 namespace AbstractTreeGenerator {
 	class CNumberExpression : public IExpression {
@@ -12,3 +15,4 @@ namespace AbstractTreeGenerator {
 		int value;
 	};
 }
+#endif // NUMEXPINCLUDE

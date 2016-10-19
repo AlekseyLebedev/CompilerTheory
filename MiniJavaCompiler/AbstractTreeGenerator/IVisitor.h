@@ -23,7 +23,7 @@ namespace AbstractTreeGenerator {
 	class CMethodDeclaration;
 	class CMethodDeclarationList;
 	class CNegationExpression;
-	class CNumExpression;
+	class CNumberExpression;
 	class COperationExpression;
 	class CParenExpression;
 	class CPreconditionStatement;
@@ -57,7 +57,7 @@ namespace AbstractTreeGenerator {
 		virtual void visit( CMethodDeclaration* const ) = 0;
 		virtual void visit( CMethodDeclarationList* const ) = 0;
 		virtual void visit( CNegationExpression* const ) = 0;
-		virtual void visit( CNumExpression* const ) = 0;
+		virtual void visit( CNumberExpression* const ) = 0;
 		virtual void visit( COperationExpression* const ) = 0;
 		virtual void visit( CParenExpression* const ) = 0;
 		virtual void visit( CPreconditionStatement* const ) = 0;
