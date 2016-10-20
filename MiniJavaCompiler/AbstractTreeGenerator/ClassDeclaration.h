@@ -9,12 +9,12 @@ namespace AbstractTreeGenerator {
 	class CClassDeclaration : public INode {
 	public:
 		CClassDeclaration( CIdExpression* theIdExpression,
-			CClassExtend* theClassExtend, 
+			CClassExtend* theClassExtend,
 			CVarDeclarationList* theVarDeclarationList,
 			CMethodDeclarationList* theMethodDeclarationList );
 		virtual ~CClassDeclaration();
 
-		virtual void Accept(IVisitor*v) override;
+		virtual void Accept( IVisitor*v ) override;
 		const std::shared_ptr<CIdExpression> GetIdExpression() const;
 		const std::shared_ptr<CClassExtend> GetClassExtend() const;
 		const std::shared_ptr<CVarDeclarationList> GetVarDeclarationList() const;
