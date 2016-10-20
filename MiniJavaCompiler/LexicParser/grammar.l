@@ -171,10 +171,12 @@ false {
 	return T_semi;
 }
 {LETTER}({DIGIT}|{LETTER})* {
+	yylval.str_val = yytext;	
 	debugOutput("ID(");
 	debugOutput(yytext);
 	debugOutput(")");	
 	updateLocation();
+	return T_ID;
 }
 "(" {
 	debugOutput("LPAREN");	
@@ -277,10 +279,12 @@ false {
 	updateLocation(false);
 }
 ({DIGIT}|"-"{DIGIT})({DIGIT})* {
+	yylval.int_val = atoi(yytext);
 	debugOutput("NUM(");
 	debugOutput(yytext);
 	debugOutput(")");	
 	updateLocation();
+	return T_NUM;
 }
 . {
 	std::cerr<<"ERROR IN FLEX:"<<yytext[0]<<std::endl;
