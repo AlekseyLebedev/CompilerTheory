@@ -68,9 +68,6 @@
     <ClInclude Include="AbstractTreeGenerator\OperationExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractTreeGenerator\NumExpression.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\NegationExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
@@ -179,6 +176,9 @@
     <ClInclude Include="AbstractTreeGenerator\GetFieldExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
+	    <ClInclude Include="AbstractTreeGenerator\NumberExpr.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -221,9 +221,6 @@
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\OperationExpression.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="AbstractTreeGenerator\NumExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\NegationExpression.cpp">
@@ -305,6 +302,9 @@
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\GetFieldExpression.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+	<ClCompile Include="AbstractTreeGenerator\NumberExpr.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
   </ItemGroup>
