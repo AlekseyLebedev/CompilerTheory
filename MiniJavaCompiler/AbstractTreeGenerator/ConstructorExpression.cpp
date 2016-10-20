@@ -1,6 +1,6 @@
 #include "ConstructorExpression.h"
 
-AbstractTreeGenerator::CConstructorExpression::CConstructorExpression( std::shared_ptr<CIdExpression> theIdExpression ) :
+AbstractTreeGenerator::CConstructorExpression::CConstructorExpression( CIdExpression* theIdExpression ) :
 	idExpression( theIdExpression )
 {
 }
@@ -18,3 +18,8 @@ const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerato
 {
 	return idExpression;
 }
+const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CConstructorExpression::GetIdExpression() const
+{
+	 return idExpression;
+}
+

@@ -7,8 +7,8 @@
 namespace AbstractTreeGenerator {
 	class CAssignmentStatement : public IStatement {
 	public:
-		CAssignmentStatement( std::shared_ptr<CIdExpression> theIdExpression,
-			std::shared_ptr<IExpression> theExpression );
+		CAssignmentStatement( CIdExpression* theIdExpression,
+			IExpression* theExpression );
 		virtual ~CAssignmentStatement();
 
 		virtual void Accept( IVisitor* v ) override;
@@ -16,6 +16,10 @@ namespace AbstractTreeGenerator {
 		const std::shared_ptr<CIdExpression> GetIdExpression() const;
 		const std::shared_ptr<IExpression> GetExpression() const;
 
+		const std::shared_ptr<CIdExpression> GetIdExpression() const;
+		const std::shared_ptr<IExpression> GetExpression() const;
+		const std::shared_ptr<CIdExpression> GetIdExpression() const;
+		const std::shared_ptr<IExpression> GetExpression() const;
 	private:
 		std::shared_ptr<CIdExpression> idExpression;
 		std::shared_ptr<IExpression> expression;

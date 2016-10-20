@@ -18,3 +18,8 @@ void AbstractTreeGenerator::CIdExpression::Accept(IVisitor* v) {
 }
 
 
+const std::string AbstractTreeGenerator::CIdExpression::GetName() const
+{
+	 return name;
+}
+

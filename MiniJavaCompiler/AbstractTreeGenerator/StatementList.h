@@ -6,11 +6,13 @@
 namespace AbstractTreeGenerator {
 	class CStatementList : public INode {
 	public:
-		CStatementList( std::shared_ptr<IStatement> theStatement,
-			std::shared_ptr<CStatementList> theStatementList = nullptr );
+		CStatementList( IStatement* theStatement,
+			CStatementList* theStatementList = nullptr );
 		virtual ~CStatementList();
 
 		virtual void Accept(IVisitor*) override;
+		const std::shared_ptr<IStatement> GetStatement() const;
+		const std::shared_ptr<CStatementList> GetStatementList() const;
 	private:
 		std::shared_ptr<IStatement> statement;
 		std::shared_ptr<CStatementList> statementList;

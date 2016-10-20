@@ -27,6 +27,5 @@ namespace AbstractTreeGenerator {
 	private:
 		std::shared_ptr<IExpression> leftOperand, rightOperand;
 		TOperationType operation;
-
 	};
 }

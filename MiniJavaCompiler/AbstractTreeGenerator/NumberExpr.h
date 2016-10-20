@@ -6,6 +6,7 @@ namespace AbstractTreeGenerator {
 		CNumberExpr(int val);
 		~CNumberExpr();
 		virtual void Accept( IVisitor*v ) override;
+		const int GetValue() const;
 	private:
 		int value;
 	};

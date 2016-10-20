@@ -7,11 +7,13 @@
 namespace AbstractTreeGenerator {
 	class CVarDeclarationList : public INode {
 	public:
-		CVarDeclarationList( std::shared_ptr<CVarDeclaration> theVarDeclaration,
-			std::shared_ptr<CVarDeclarationList> theVarDeclarationList = nullptr );
+		CVarDeclarationList( CVarDeclaration* theVarDeclaration,
+			CVarDeclarationList* theVarDeclarationList = nullptr );
 		virtual ~CVarDeclarationList();
 
 		virtual void Accept(IVisitor*v) override;
+		const std::shared_ptr<CVarDeclaration> GetVarDeclaration() const;
+		const std::shared_ptr<CVarDeclarationList> GetVarDeclarationList() const;
 	private:
 		std::shared_ptr<CVarDeclaration> varDeclaration;
 		std::shared_ptr<CVarDeclarationList> varDeclarationList;

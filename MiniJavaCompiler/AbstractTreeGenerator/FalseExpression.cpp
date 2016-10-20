@@ -12,3 +12,8 @@ void AbstractTreeGenerator::CFalseExpression::Accept( IVisitor * v )
 {
 	v->visit( this );
 }
+const const AbstractTreeGenerator::CFalseExpression::GetBool() const
+{
+	 return bool;
+}
+

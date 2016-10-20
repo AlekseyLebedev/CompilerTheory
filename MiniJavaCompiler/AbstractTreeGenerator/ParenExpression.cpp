@@ -1,6 +1,6 @@
 #include "ParenExpression.h"
 
-AbstractTreeGenerator::CParenExpression::CParenExpression( std::shared_ptr<IExpression> theExpression ) :
+AbstractTreeGenerator::CParenExpression::CParenExpression( IExpression* theExpression ) :
 	expression( theExpression )
 {
 }
@@ -13,3 +13,8 @@ void AbstractTreeGenerator::CParenExpression::Accept( IVisitor * v )
 {
 	v->visit( this );
 }
+const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CParenExpression::GetExpression() const
+{
+	 return expression;
+}
+

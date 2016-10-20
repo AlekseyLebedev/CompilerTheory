@@ -1,7 +1,7 @@
 #include "OperationExpression.h"
 #include <memory>
 
-AbstractTreeGenerator::COperationExpression::COperationExpression(std::shared_ptr<IExpression> left, std::shared_ptr<IExpression> right, TOperationType type) :
+AbstractTreeGenerator::COperationExpression::COperationExpression(IExpression* left, IExpression* right, TOperationType type) :
 	leftOperand(left), rightOperand(right), operation(type)
 {
 }
@@ -28,3 +28,5 @@ AbstractTreeGenerator::COperationExpression::TOperationType AbstractTreeGenerato
 void AbstractTreeGenerator::COperationExpression::Accept(IVisitor* v) {
 	v->visit(this);
 }
+
+

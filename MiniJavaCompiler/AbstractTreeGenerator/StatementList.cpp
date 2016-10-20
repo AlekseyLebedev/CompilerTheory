@@ -1,7 +1,7 @@
 #include "StatementList.h"
 
-AbstractTreeGenerator::CStatementList::CStatementList( std::shared_ptr<IStatement> theStatement,
-	std::shared_ptr<CStatementList> theStatementList ) :
+AbstractTreeGenerator::CStatementList::CStatementList( IStatement* theStatement,
+	CStatementList* theStatementList ) :
 	statement ( theStatement ), statementList( theStatementList )
 {
 }
@@ -14,3 +14,13 @@ void AbstractTreeGenerator::CStatementList::Accept( IVisitor * v)
 {
 	v->visit( this );
 }
+const std::shared_ptr<AbstractTreeGenerator::IStatement> AbstractTreeGenerator::CStatementList::GetStatement() const
+{
+	 return statement;
+}
+
+const std::shared_ptr<AbstractTreeGenerator::CStatementList> AbstractTreeGenerator::CStatementList::GetStatementList() const
+{
+	 return statementList;
+}
+

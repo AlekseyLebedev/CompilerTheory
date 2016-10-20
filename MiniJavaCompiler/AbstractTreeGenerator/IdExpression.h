@@ -11,6 +11,7 @@ namespace AbstractTreeGenerator {
 		virtual void Accept(IVisitor*) override;
 
 		std::string GetName() const;
+		const std::string GetName() const;
 	private:
 		std::string name;
 	};

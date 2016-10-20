@@ -1,7 +1,7 @@
 #include "AssignmentStatement.h"
 
-AbstractTreeGenerator::CAssignmentStatement::CAssignmentStatement( std::shared_ptr<CIdExpression> theIdExpression,
-	std::shared_ptr<IExpression> theExpression ) :
+AbstractTreeGenerator::CAssignmentStatement::CAssignmentStatement( CIdExpression* theIdExpression,
+	IExpression* theExpression ) :
 	idExpression( theIdExpression ), expression( theExpression )
 {
 }
@@ -24,3 +24,23 @@ const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator:
 {
 	return expression;
 }
+const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CAssignmentStatement::GetIdExpression() const
+{
+	 return idExpression;
+}
+
+const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CAssignmentStatement::GetExpression() const
+{
+	 return expression;
+}
+
+const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CAssignmentStatement::GetIdExpression() const
+{
+	 return idExpression;
+}
+
+const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CAssignmentStatement::GetExpression() const
+{
+	 return expression;
+}
+

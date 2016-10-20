@@ -1,8 +1,8 @@
 #include "MainClass.h"
 
-AbstractTreeGenerator::CMainClass::CMainClass( std::shared_ptr<CIdExpression> theClassName,
-	std::shared_ptr<CIdExpression> theArgv,
-	std::shared_ptr<IStatement> theStatement ) : className( theClassName ), argv( theArgv ), statement( theStatement )
+AbstractTreeGenerator::CMainClass::CMainClass( CIdExpression* theClassName,
+	CIdExpression* theArgv,
+	IStatement* theStatement ) : className( theClassName ), argv( theArgv ), statement( theStatement )
 {
 
 }
@@ -21,3 +21,18 @@ std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CMa
 {
 	return className;
 }
+const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CMainClass::GetClassName() const
+{
+	 return className;
+}
+
+const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CMainClass::GetArgv() const
+{
+	 return argv;
+}
+
+const std::shared_ptr<AbstractTreeGenerator::IStatement> AbstractTreeGenerator::CMainClass::GetStatement() const
+{
+	 return statement;
+}
+

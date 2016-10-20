@@ -11,15 +11,21 @@
 namespace AbstractTreeGenerator {
 	class CMethodDeclaration : public INode {
 	public:
-		CMethodDeclaration( std::shared_ptr<CType> theType,
-			std::shared_ptr<CIdExpression> theIdExpression,
-			std::shared_ptr<CArgumentList> theArgumentList,
-			std::shared_ptr<CVarDeclarationList>  theVarDeclarationList,
-			std::shared_ptr<CStatementList>  theStatementList,
-			std::shared_ptr<IExpression> theExpression );
+		CMethodDeclaration( CType* theType,
+			CIdExpression* theIdExpression,
+			CArgumentList* theArgumentList,
+			CVarDeclarationList*  theVarDeclarationList,
+			CStatementList*  theStatementList,
+			IExpression* theExpression );
 		virtual ~CMethodDeclaration();
 
 		virtual void Accept( IVisitor*v ) override;
+		const std::shared_ptr<CType> GetType() const;
+		const std::shared_ptr<CIdExpression> GetIdExpression() const;
+		const std::shared_ptr<CArgumentList> GetArgumentList() const;
+		const std::shared_ptr<CVarDeclarationList> GetVarDeclarationList() const;
+		const std::shared_ptr<CStatementList> GetStatementList() const;
+		const std::shared_ptr<IExpression> GetExpression() const;
 	private:
 		std::shared_ptr<CType> type;
 		std::shared_ptr<CIdExpression> idExpression;

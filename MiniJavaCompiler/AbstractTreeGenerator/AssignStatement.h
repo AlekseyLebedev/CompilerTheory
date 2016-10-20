@@ -8,7 +8,7 @@ namespace AbstractTreeGenerator {
 	class CAssignStatement : public IStatement
 	{
 	public:
-		CAssignStatement(const std::string name, std::shared_ptr<IExpression> operation);
+		CAssignStatement(const std::string name, IExpression* operation);
 		virtual ~CAssignStatement();
 		virtual void Accept(IVisitor* v) override;
 

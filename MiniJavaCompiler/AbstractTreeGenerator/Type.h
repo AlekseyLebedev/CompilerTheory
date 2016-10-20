@@ -11,6 +11,7 @@ namespace AbstractTreeGenerator {
 		virtual ~CType();
 
 		virtual void Accept(IVisitor* v) override;
+		const const GetChar*() const;
 	private:
 		const char* idExpression;
 	};

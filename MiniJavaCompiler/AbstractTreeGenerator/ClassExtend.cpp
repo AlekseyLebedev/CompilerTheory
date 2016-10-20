@@ -1,6 +1,6 @@
 #include "ClassExtend.h"
 
-AbstractTreeGenerator::CClassExtend::CClassExtend( std::shared_ptr<CIdExpression> theIdExpression ) :
+AbstractTreeGenerator::CClassExtend::CClassExtend( CIdExpression* theIdExpression ) :
 	idExpression( theIdExpression )
 {
 }
@@ -13,3 +13,8 @@ void AbstractTreeGenerator::CClassExtend::Accept( IVisitor * v )
 {
 	v->visit( this );
 }
+const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CClassExtend::GetIdExpression() const
+{
+	 return idExpression;
+}
+

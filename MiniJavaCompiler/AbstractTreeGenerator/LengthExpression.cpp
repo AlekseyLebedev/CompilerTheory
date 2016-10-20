@@ -1,6 +1,6 @@
 #include "LengthExpression.h"
 
-AbstractTreeGenerator::CLengthExpression::CLengthExpression( std::shared_ptr<IExpression> theExpression ) :
+AbstractTreeGenerator::CLengthExpression::CLengthExpression( IExpression* theExpression ) :
 	expression( theExpression )
 {
 }
@@ -13,3 +13,8 @@ void AbstractTreeGenerator::CLengthExpression::Accept( IVisitor * v )
 {
 	v->visit( this );
 }
+const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CLengthExpression::GetExpression() const
+{
+	 return expression;
+}
+

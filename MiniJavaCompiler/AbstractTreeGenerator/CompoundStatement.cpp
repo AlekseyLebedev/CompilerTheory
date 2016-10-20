@@ -1,8 +1,8 @@
 #include "CompoundStatement.h"
 #include <memory>
 
-AbstractTreeGenerator::CCompoundStatement::CCompoundStatement(std::shared_ptr<INode> left, 
-	std::shared_ptr<INode> right) : leftChild(left), rightChild(right)
+AbstractTreeGenerator::CCompoundStatement::CCompoundStatement(INode* left, 
+	INode* right) : leftChild(left), rightChild(right)
 {	
 }
 
@@ -27,5 +27,15 @@ std::shared_ptr<AbstractTreeGenerator::INode> AbstractTreeGenerator::CCompoundSt
 
 void AbstractTreeGenerator::CCompoundStatement::Accept(IVisitor* v) {
 	v->visit(this);
+}
+
+const std::shared_ptr<AbstractTreeGenerator::INode> AbstractTreeGenerator::CCompoundStatement::GetLeftChild,() const
+{
+	 return leftChild,;
+}
+
+const std::shared_ptr<AbstractTreeGenerator::CStatementList> AbstractTreeGenerator::CCompoundStatement::GetStatementList() const
+{
+	 return statementList;
 }
 

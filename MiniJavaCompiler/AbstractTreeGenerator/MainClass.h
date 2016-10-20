@@ -8,14 +8,17 @@ namespace AbstractTreeGenerator {
 	class CMainClass : public INode
 	{
 	public:
-		CMainClass( std::shared_ptr<CIdExpression> theClassName,
-			std::shared_ptr<CIdExpression> theArgv,
-			std::shared_ptr<IStatement> theStatement );
+		CMainClass( CIdExpression* theClassName,
+			CIdExpression* theArgv,
+			IStatement* theStatement );
 		virtual ~CMainClass();
 
 		virtual void Accept(IVisitor*) override;
 
 		std::shared_ptr<CIdExpression> GetName() const;
+		const std::shared_ptr<CIdExpression> GetClassName() const;
+		const std::shared_ptr<CIdExpression> GetArgv() const;
+		const std::shared_ptr<IStatement> GetStatement() const;
 	private:
 		std::shared_ptr<CIdExpression> className;
 		std::shared_ptr<CIdExpression> argv;
