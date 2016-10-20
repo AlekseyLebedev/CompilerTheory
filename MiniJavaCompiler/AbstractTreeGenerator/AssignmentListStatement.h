@@ -8,12 +8,17 @@ namespace AbstractTreeGenerator {
 	class CAssignmentListStatement : public INode
 	{
 	public:
-		CAssignmentListStatement( std::shared_ptr<CIdExpression> theIdExpression,
-			std::shared_ptr<IExpression> theExpressionFirst,
-			std::shared_ptr<IExpression> theExpressionSecond );
+		CAssignmentListStatement( CIdExpression* theIdExpression,
+			IExpression* theExpressionFirst,
+			IExpression* theExpressionSecond );
 		virtual ~CAssignmentListStatement();
 
-		virtual void Accept(IVisitor*) override;
+		virtual void Accept( IVisitor * v ) override;
+		const std::shared_ptr<CIdExpression> GetIdExpression() const;
+		const std::shared_ptr<IExpression> GetExpressionFirst() const;
+		const std::shared_ptr<IExpression> GetExpressionSecond() const;
+
+		
 	private:
 		std::shared_ptr<CIdExpression> idExpression;
 		std::shared_ptr<IExpression> expressionFirst;

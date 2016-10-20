@@ -1,13 +1,22 @@
 #include "Argument.h"
 
-AbstractTreeGenerator::CArgument::CArgument( std::shared_ptr<CType> theType,
-	std::shared_ptr<CIdExpression> theIdExpression ) :
+AbstractTreeGenerator::CArgument::CArgument( CType * theType, CIdExpression * theIdExpression ) :
 	type( theType ), idExpression( theIdExpression )
 {
 }
 
 AbstractTreeGenerator::CArgument::~CArgument()
 {
+}
+
+const std::shared_ptr<AbstractTreeGenerator::CType> AbstractTreeGenerator::CArgument::GetType() const
+{
+	return type;
+}
+
+const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CArgument::GetIdExpression() const
+{
+	return idExpression;
 }
 
 void AbstractTreeGenerator::CArgument::Accept( IVisitor * v )

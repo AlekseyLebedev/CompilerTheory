@@ -7,9 +7,11 @@
 namespace AbstractTreeGenerator {
 	class CArgument : public INode {
 	public:
-		CArgument( std::shared_ptr<CType> theType,
-			std::shared_ptr<CIdExpression> theIdExpression );
+		CArgument( CType* theType, CIdExpression* theIdExpression );
 		virtual ~CArgument();
+
+		const std::shared_ptr<CType> GetType() const;
+		const std::shared_ptr<CIdExpression> GetIdExpression() const;
 
 		virtual void Accept( IVisitor*v ) override;
 	private:
