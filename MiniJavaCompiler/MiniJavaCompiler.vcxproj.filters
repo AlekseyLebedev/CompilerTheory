@@ -107,9 +107,6 @@
     <ClInclude Include="AbstractTreeGenerator\ConstructorExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractTreeGenerator\CondtitionStatement.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\CompoundStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
@@ -174,6 +171,9 @@
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\NumberExpr.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\ConditionStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
   </ItemGroup>
@@ -259,9 +259,6 @@
     <ClCompile Include="AbstractTreeGenerator\ConstructorExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractTreeGenerator\CondtitionStatement.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\CompoundStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
@@ -299,6 +296,9 @@
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\NumberExpr.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\ConditionStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
   </ItemGroup>

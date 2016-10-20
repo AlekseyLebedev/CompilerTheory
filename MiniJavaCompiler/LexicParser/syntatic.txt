@@ -175,7 +175,7 @@ Type: T_int T_lbracket T_rbracket {
 		$$ = std::shared_ptr<CType>(new CType("INT"));
 	}
 	| Identifier {
-		$$ = std::shared_ptr<CType>(new CType(std::dynamic_pointer_cast<CIdExpression)>($1)->GetName().c_str()));
+		$$ = std::shared_ptr<CType>(new CType(std::dynamic_pointer_cast<CIdExpression>($1)->GetName().c_str()));
 		//Type(Identifier)
 	}
 
@@ -276,7 +276,7 @@ Expression: Expression T_and Expression {
 		$$ = std::shared_ptr<IExpression>(new CFalseExpression());
 	}
 	| Identifier {
-		$$ = std::shared_ptr<IExpression>(new CIdExpression($1));
+		$$ = std::shared_ptr<IExpression>(new CIdExpression(std::dynamic_pointer_cast<CIdExpression>($1)->GetName().c_str()));
 		//IdExpression(Identifier)
 	}
 	| T_this {

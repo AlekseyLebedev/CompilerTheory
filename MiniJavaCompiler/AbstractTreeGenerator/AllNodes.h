@@ -9,7 +9,7 @@
 #include "ClassDeclarationList.h"
 #include "ClassExtend.h"
 #include "CompoundStatement.h"
-#include "CondtitionStatement.h"
+#include "ConditionStatement.h"
 #include "ConstructorExpression.h"
 #include "DotOutputVisitor.h"
 #include "ExpressionList.h"
