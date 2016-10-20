@@ -95,6 +95,28 @@ namespace GraphvizOutput {
 	{
 	}
 
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CTrueExpression * const )
+	{
+	}
+
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CFalseExpression * const )
+	{
+	}
+
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CGetFieldExpression * const )
+	{
+	}
+
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CCondtitionStatement * const )
+	{
+	}
+
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CThisExpression * const )
+	{
+	}
+
+
+
 	void CDotOutputVisitor::visit(AbstractTreeGenerator::COperationExpression *const operationExpression)
 	{
 		size_t current = enterNode("OperationExpression");

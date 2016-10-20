@@ -5,12 +5,12 @@
 
 
 namespace AbstractTreeGenerator {
-	class CondtitionStatement : public IStatement {
+	class CCondtitionStatement : public IStatement {
 	public:
-		CondtitionStatement( std::shared_ptr<CIdExpression> theIdExpression,
+		CCondtitionStatement( std::shared_ptr<CIdExpression> theIdExpression,
 			std::shared_ptr<IStatement> theStatementFirst,
 			std::shared_ptr<IStatement> theStatementSecond );
-		virtual ~CondtitionStatement();
+		virtual ~CCondtitionStatement();
 
 		virtual void Accept(IVisitor*V) override;
 	private:

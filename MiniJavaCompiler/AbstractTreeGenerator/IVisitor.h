@@ -33,6 +33,11 @@ namespace AbstractTreeGenerator {
 	class CType;
 	class CVarDeclaration;
 	class CVarDeclarationList;
+	class CTrueExpression;
+	class CFalseExpression;
+	class CGetFieldExpression;
+	class CCondtitionStatement;
+	class CThisExpression;
 
 	class IVisitor {
 	public:
@@ -67,5 +72,10 @@ namespace AbstractTreeGenerator {
 		virtual void visit( CType* const ) = 0;
 		virtual void visit( CVarDeclaration* const ) = 0;
 		virtual void visit( CVarDeclarationList* const ) = 0;
+		virtual void visit( CTrueExpression* const ) = 0;
+		virtual void visit( CFalseExpression* const ) = 0;
+		virtual void visit( CGetFieldExpression* const ) = 0;
+		virtual void visit( CCondtitionStatement* const ) = 0;;
+		virtual void visit( CThisExpression* const ) = 0;
 	};
 }

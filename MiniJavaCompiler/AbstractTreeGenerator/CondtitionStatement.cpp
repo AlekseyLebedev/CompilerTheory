@@ -1,16 +1,16 @@
 #include "CondtitionStatement.h"
 
-AbstractTreeGenerator::CondtitionStatement::CondtitionStatement( std::shared_ptr<CIdExpression> theIdExpression,
+AbstractTreeGenerator::CCondtitionStatement::CCondtitionStatement( std::shared_ptr<CIdExpression> theIdExpression,
 	std::shared_ptr<IStatement> theStatementFirst, std::shared_ptr<IStatement> theStatementSecond ) :
 	idExpression( theIdExpression ), statementFirst( theStatementFirst ), statementSecond( theStatementSecond )
 {
 }
 
-AbstractTreeGenerator::CondtitionStatement::~CondtitionStatement()
+AbstractTreeGenerator::CCondtitionStatement::~CCondtitionStatement()
 {
 }
 
-void AbstractTreeGenerator::CondtitionStatement::Accept( IVisitor * v )
+void AbstractTreeGenerator::CCondtitionStatement::Accept( IVisitor * v )
 {
 	v->visit( this );
 }

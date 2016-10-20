@@ -7,11 +7,11 @@
 namespace AbstractTreeGenerator {
 	class CType : public INode {
 	public:
-		CType( std::shared_ptr<CIdExpression> theIdExpression );
+		CType( const char* theIdExpression );
 		virtual ~CType();
 
 		virtual void Accept(IVisitor* v) override;
 	private:
-		std::shared_ptr<CIdExpression> idExpression;
+		const char* idExpression;
 	};
 }
