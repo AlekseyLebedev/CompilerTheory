@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="global cpp">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="LexicParser">
       <UniqueIdentifier>{4aac5cc6-05ff-48a9-b6b6-910dc77f3139}</UniqueIdentifier>
     </Filter>
@@ -34,6 +30,10 @@
     </Filter>
     <Filter Include="AbstractTreeGenerator\cpp">
       <UniqueIdentifier>{0241eb7e-ec2f-4e58-a56b-21fa82f5fabb}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="AbstractTreeGenerator\global cpp">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
   </ItemGroup>
@@ -179,7 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
-      <Filter>global cpp</Filter>
+      <Filter>AbstractTreeGenerator\global cpp</Filter>
     </ClCompile>
     <ClCompile Include="LexicParser\lexer.cpp">
       <Filter>LexicParser\cpp</Filter>
