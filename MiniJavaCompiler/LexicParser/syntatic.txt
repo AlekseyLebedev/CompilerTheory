@@ -43,7 +43,7 @@ void DebugOutput(const std::string& s){
 	std::shared_ptr<CMethodDeclarationList> methodDeclarationList;
 	std::shared_ptr<CMethodDeclaration> methodDeclaration;
 	std::shared_ptr<CType> type;
-//	std::shared_ptr<CNumberExpression> numExpression;
+	std::shared_ptr<CNumberExpr> numExpression;
 	std::shared_ptr<CExpressionList> expressionList;
 	std::shared_ptr<IExpression> expression;
 	std::shared_ptr<CStatementList> statementList;

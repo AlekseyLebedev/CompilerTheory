@@ -10,6 +10,8 @@ namespace AbstractTreeGenerator {
 		virtual ~CConstructorExpression();
 
 		virtual void Accept(IVisitor*v) override;
+
+		const std::shared_ptr<CIdExpression> GetIdExpression() const;
 	private:
 		std::shared_ptr<CIdExpression> idExpression;
 	};
