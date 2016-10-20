@@ -163,7 +163,7 @@
     <ClInclude Include="AbstractTreeGenerator\ClassDeclarationList.h" />
     <ClInclude Include="AbstractTreeGenerator\ClassExtend.h" />
     <ClInclude Include="AbstractTreeGenerator\CompoundStatement.h" />
-    <ClInclude Include="AbstractTreeGenerator\CondtitionStatement.h" />
+    <ClInclude Include="AbstractTreeGenerator\ConditionStatement.h" />
     <ClInclude Include="AbstractTreeGenerator\ConstructorExpression.h" />
     <ClInclude Include="AbstractTreeGenerator\DotOutputVisitor.h" />
     <ClInclude Include="AbstractTreeGenerator\ExpressionList.h" />
@@ -210,7 +210,7 @@
     <ClCompile Include="AbstractTreeGenerator\ClassDeclarationList.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ClassExtend.cpp" />
     <ClCompile Include="AbstractTreeGenerator\CompoundStatement.cpp" />
-    <ClCompile Include="AbstractTreeGenerator\CondtitionStatement.cpp" />
+    <ClCompile Include="AbstractTreeGenerator\ConditionStatement.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ConstructorExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\DotOutputVisitor.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ExpressionList.cpp" />
