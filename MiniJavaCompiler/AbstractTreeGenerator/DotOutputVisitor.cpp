@@ -41,10 +41,6 @@ namespace GraphvizOutput {
 
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CCExpression * const )
-	{
-	}
-
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CClassDeclaration * const )
 	{
 	}

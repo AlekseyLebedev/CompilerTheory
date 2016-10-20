@@ -30,7 +30,6 @@ namespace GraphvizOutput {
 		virtual void visit( AbstractTreeGenerator::CAssignStatement * const ) override;
 		virtual void visit( AbstractTreeGenerator::CAssignmentListStatement * const ) override;
 		virtual void visit( AbstractTreeGenerator::CAssignmentStatement * const ) override;
-		virtual void visit( AbstractTreeGenerator::CCExpression * const ) override;
 		virtual void visit( AbstractTreeGenerator::CClassDeclaration * const ) override;
 		virtual void visit( AbstractTreeGenerator::CClassDeclarationList * const ) override;
 		virtual void visit( AbstractTreeGenerator::CClassExtend * const ) override;

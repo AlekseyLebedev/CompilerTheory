@@ -205,7 +205,6 @@
     <ClCompile Include="AbstractTreeGenerator\AssignmentListStatement.cpp" />
     <ClCompile Include="AbstractTreeGenerator\AssignmentStatement.cpp" />
     <ClCompile Include="AbstractTreeGenerator\AssignStatement.cpp" />
-    <ClCompile Include="AbstractTreeGenerator\CExpression.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ClassDeclaration.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ClassDeclarationList.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ClassExtend.cpp" />
