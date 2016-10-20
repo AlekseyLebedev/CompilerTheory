@@ -73,7 +73,7 @@ public {
 protected {
 	debugOutput("PROTECTED");
 	updateLocation();
-	return T_protected;
+	//return T_protected;
 }
 private {
 	debugOutput("PRIVATE");
@@ -103,7 +103,7 @@ int {
 char {
 	debugOutput("CHAR");
 	updateLocation();
-	return T_char;
+	//return T_char;
 }
 boolean {
 	debugOutput("BOOLEAN");
