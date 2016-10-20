@@ -58,7 +58,7 @@ namespace GraphvizOutput {
 		virtual void visit( AbstractTreeGenerator::CTrueExpression * const ) override;
 		virtual void visit( AbstractTreeGenerator::CFalseExpression * const ) override;
 		virtual void visit( AbstractTreeGenerator::CGetFieldExpression * const ) override;
-		virtual void visit( AbstractTreeGenerator::CCondtitionStatement * const ) override;
+		virtual void visit( AbstractTreeGenerator::CConditionStatement * const ) override;
 		virtual void visit( AbstractTreeGenerator::CThisExpression * const ) override;
 	};
 }

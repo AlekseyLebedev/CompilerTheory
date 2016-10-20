@@ -190,7 +190,10 @@ Statement: T_lbrace StatementList T_rbrace {
 		//CompoundStatement(StatementList)
 	}
 	| T_if T_lparen Expression T_rparen Statement T_else Statement {
-		$$ = std::shared_ptr<IStatement>(new CConditionStatement($3, $5, $7));
+		$$ = std::shared_ptr<IStatement>(new CConditionStatement(	
+			std::dynamic_pointer_cast<CIdExpression>($3), 
+			$5, 
+			$7));		
 		//CondtitionStatement(Expression, Statement, Statement)
 	}
 	| T_while T_lparen Expression T_rparen Statement {

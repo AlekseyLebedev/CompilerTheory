@@ -115,7 +115,7 @@ namespace GraphvizOutput {
 	{
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CCondtitionStatement * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CConditionStatement * const )
 	{
 	}
 

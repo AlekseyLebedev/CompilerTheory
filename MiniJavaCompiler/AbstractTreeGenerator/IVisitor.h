@@ -35,7 +35,7 @@ namespace AbstractTreeGenerator {
 	class CTrueExpression;
 	class CFalseExpression;
 	class CGetFieldExpression;
-	class CCondtitionStatement;
+	class CConditionStatement;
 	class CThisExpression;
 
 	class IVisitor {
@@ -73,7 +73,7 @@ namespace AbstractTreeGenerator {
 		virtual void visit( CTrueExpression* const ) = 0;
 		virtual void visit( CFalseExpression* const ) = 0;
 		virtual void visit( CGetFieldExpression* const ) = 0;
-		virtual void visit( CCondtitionStatement* const ) = 0;;
+		virtual void visit( CConditionStatement* const ) = 0;;
 		virtual void visit( CThisExpression* const ) = 0;
 	};
 }
