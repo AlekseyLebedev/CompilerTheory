@@ -11,9 +11,8 @@ namespace AbstractTreeGenerator {
 		virtual ~CCompoundStatement();
 		virtual void Accept( IVisitor* ) override;
 
-		std::shared_ptr<INode> GetLeftChild() const;
-		std::shared_ptr<INode> GetRightChild() const;
-		const std::shared_ptr<INode> GetLeftChild,() const;
+		const std::shared_ptr<INode> GetLeftChild() const;
+		const std::shared_ptr<INode> GetRightChild() const;
 		const std::shared_ptr<CStatementList> GetStatementList() const;
 	private:
 		std::shared_ptr<INode> leftChild, rightChild;

@@ -15,11 +15,6 @@ namespace AbstractTreeGenerator {
 
 		const std::shared_ptr<CIdExpression> GetIdExpression() const;
 		const std::shared_ptr<IExpression> GetExpression() const;
-
-		const std::shared_ptr<CIdExpression> GetIdExpression() const;
-		const std::shared_ptr<IExpression> GetExpression() const;
-		const std::shared_ptr<CIdExpression> GetIdExpression() const;
-		const std::shared_ptr<IExpression> GetExpression() const;
 	private:
 		std::shared_ptr<CIdExpression> idExpression;
 		std::shared_ptr<IExpression> expression;

@@ -119,9 +119,6 @@
     <ClInclude Include="AbstractTreeGenerator\ClassDeclaration.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractTreeGenerator\AssignStatement.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\AssignmentStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
@@ -269,9 +266,6 @@
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\ClassDeclaration.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="AbstractTreeGenerator\AssignStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\AssignmentStatement.cpp">

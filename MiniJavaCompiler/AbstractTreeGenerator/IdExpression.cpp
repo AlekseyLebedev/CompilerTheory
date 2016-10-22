@@ -9,10 +9,6 @@ AbstractTreeGenerator::CIdExpression::~CIdExpression()
 {
 }
 
-std::string AbstractTreeGenerator::CIdExpression::GetName() const {
-	return name;
-}
-
 void AbstractTreeGenerator::CIdExpression::Accept(IVisitor* v) {
 	v->visit(this);
 }

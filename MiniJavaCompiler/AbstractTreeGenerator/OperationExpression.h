@@ -17,7 +17,7 @@ namespace AbstractTreeGenerator {
 			Or
 		};
 
-		COperationExpression(std::shared_ptr<IExpression> left, std::shared_ptr<IExpression> right, TOperationType type);
+		COperationExpression(IExpression* left, IExpression* right, TOperationType type);
 		virtual ~COperationExpression();
 		virtual void Accept(IVisitor*) override;
 		std::shared_ptr<IExpression> GetLeftOperand() const;

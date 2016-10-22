@@ -10,7 +10,10 @@ namespace AbstractTreeGenerator {
 		virtual ~CTrueExpression();
 
 		virtual void Accept(IVisitor*) override;
-		const const GetBool() const;
+		// возвращает значение, в данном случае true
+		const bool GetBool() const;
+		// возвращает значение, в данном случае true
+		const bool GetValue() const;
 	private:
 		const bool value = true;
 	};

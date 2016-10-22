@@ -10,10 +10,6 @@ AbstractTreeGenerator::CPrintStatement::~CPrintStatement()
 {
 }
 
-std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CPrintStatement::GetExpression() const {
-	return expression;
-}
-
 void AbstractTreeGenerator::CPrintStatement::Accept(IVisitor* v) {
 	v->visit(this);
 }

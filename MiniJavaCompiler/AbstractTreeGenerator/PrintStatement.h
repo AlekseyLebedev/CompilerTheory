@@ -12,7 +12,6 @@ namespace AbstractTreeGenerator {
 		virtual ~CPrintStatement();
 		virtual void Accept(IVisitor*) override;
 
-		std::shared_ptr<IExpression> GetExpression() const;
 		const std::shared_ptr<IExpression> GetExpression() const;
 	private:
 		std::shared_ptr<IExpression> expression;

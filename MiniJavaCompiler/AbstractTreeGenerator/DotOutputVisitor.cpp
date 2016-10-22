@@ -214,11 +214,11 @@ namespace GraphvizOutput {
 	{
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CAssignStatement *const assignStatement )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CAssignmentStatement *const assignmentStatement )
 	{
 		size_t current = enterNode( "AssignStatement" );
-		addSubNode( current, assignStatement->GetVariableName() );
-		assignStatement->GetExpression()->Accept( this );
+		addSubNode( current, assignmentStatement->GetVariableName() );
+		assignmentStatement->GetExpression()->Accept( this );
 		addArrrow( current, current + 1 );
 	}
 

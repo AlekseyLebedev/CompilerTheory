@@ -24,23 +24,3 @@ const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator:
 {
 	return expression;
 }
-const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CAssignmentStatement::GetIdExpression() const
-{
-	 return idExpression;
-}
-
-const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CAssignmentStatement::GetExpression() const
-{
-	 return expression;
-}
-
-const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CAssignmentStatement::GetIdExpression() const
-{
-	 return idExpression;
-}
-
-const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CAssignmentStatement::GetExpression() const
-{
-	 return expression;
-}
-

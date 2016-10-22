@@ -18,8 +18,4 @@ const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerato
 {
 	return idExpression;
 }
-const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CConstructorExpression::GetIdExpression() const
-{
-	 return idExpression;
-}
 

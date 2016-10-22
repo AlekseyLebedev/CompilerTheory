@@ -158,7 +158,6 @@
     <ClInclude Include="AbstractTreeGenerator\ArgumentList.h" />
     <ClInclude Include="AbstractTreeGenerator\AssignmentListStatement.h" />
     <ClInclude Include="AbstractTreeGenerator\AssignmentStatement.h" />
-    <ClInclude Include="AbstractTreeGenerator\AssignStatement.h" />
     <ClInclude Include="AbstractTreeGenerator\ClassDeclaration.h" />
     <ClInclude Include="AbstractTreeGenerator\ClassDeclarationList.h" />
     <ClInclude Include="AbstractTreeGenerator\ClassExtend.h" />
@@ -204,7 +203,6 @@
     <ClCompile Include="AbstractTreeGenerator\ArgumentList.cpp" />
     <ClCompile Include="AbstractTreeGenerator\AssignmentListStatement.cpp" />
     <ClCompile Include="AbstractTreeGenerator\AssignmentStatement.cpp" />
-    <ClCompile Include="AbstractTreeGenerator\AssignStatement.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ClassDeclaration.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ClassDeclarationList.cpp" />
     <ClCompile Include="AbstractTreeGenerator\ClassExtend.cpp" />
