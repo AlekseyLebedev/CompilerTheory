@@ -252,12 +252,6 @@ namespace GraphvizOutput {
 
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CAssignmentStatement *const assignmentStatement )
-	{
-		visitBinaryNode( "AssignStatement", assignmentStatement->GetIdExpression().get(),
-			assignmentStatement->GetExpression().get() );
-	}
-
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CAssignmentListStatement * const assigment )
 	{
 		visitTripleNode( "AssignmentListStatement", assigment->GetIdExpression().get(),
