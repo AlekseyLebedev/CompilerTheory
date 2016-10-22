@@ -33,43 +33,25 @@ namespace GraphvizOutput {
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CAssignmentStatement * const assignmentStatement )
 	{
-		size_t current = enterNode( "AssignmentStatement" );
-		assignmentStatement->GetIdExpression()->Accept( this );
-		addArrrow( current, current + 1 );
-		size_t rightId = nextId();
-		assignmentStatement->GetExpression()->Accept( this );
-		addArrrow( current, rightId );
+		visitBinaryNode( "AssignmentStatement", assignmentStatement->GetIdExpression().get(),
+			assignmentStatement->GetExpression().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CClassDeclaration * const classDeclaration )
 	{
-		size_t current = enterNode( "ClassDeclaration" );
-		classDeclaration->GetIdExpression()->Accept( this );
-		addArrrow( current, current + 1 );
-		size_t rightId = nextId();
-		classDeclaration->GetClassExtend()->Accept( this );
-		addArrrow( current, current + 1 );
-		auto list = classDeclaration->GetMethodDeclarationList();
-		rightId = nextId();
-		list->Accept( this );
-		addArrrow( current, rightId );
+		visitTripleNode( "ClassDeclaration", classDeclaration->GetIdExpression().get(),
+			classDeclaration->GetClassExtend().get(), classDeclaration->GetMethodDeclarationList().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CClassDeclarationList * const list )
 	{
-		size_t current = enterNode( "ClassDeclarationList" );
-		list->GetClassDeclaration()->Accept( this );
-		addArrrow( current, current + 1 );
-		size_t rightId = nextId();
-		list->GetClassDeclarationList()->Accept( this );
-		addArrrow( current, rightId );
+		visitBinaryNode( "ClassDeclarationList", list->GetClassDeclaration().get(),
+			list->GetClassDeclarationList().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CClassExtend * const extend )
 	{
-		size_t current = enterNode( "ClassExtend" );
-		extend->GetIdExpression()->Accept( this );
-		addArrrow( current, current + 1 );
+		visitUnaryNode( "ClassExtend", extend->GetIdExpression().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CCompoundStatement *const compoundStatement )
@@ -101,12 +83,15 @@ namespace GraphvizOutput {
 			program->GetClassDeclarationList().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CStatementList * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CStatementList * const statementList )
 	{
+		visitBinaryNode( "StatementList", statementList->GetStatement().get(),
+			statementList->GetStatementList().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CType * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CType * const type)
 	{
+		type->GetName();
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CVarDeclaration * const )
@@ -143,7 +128,7 @@ namespace GraphvizOutput {
 	{
 		size_t current = enterNode( "OperationExpression" );
 		operationExpression->GetLeftOperand()->Accept( this );
-		addArrrow( current, current + 1 );
+		addArrow( current, current + 1 );
 		switch( operationExpression->GetOperationType() ) {
 			case AbstractTreeGenerator::COperationExpression::Divide:
 				addSubNode( current, "Divide" );
@@ -174,7 +159,7 @@ namespace GraphvizOutput {
 		}
 		size_t rightId = nextId();
 		operationExpression->GetRightOperand()->Accept( this );
-		addArrrow( current, rightId );
+		addArrow( current, rightId );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CParenExpression * const )
@@ -270,28 +255,40 @@ namespace GraphvizOutput {
 		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
 	}
 
-	void CDotOutputVisitor::addArrrow( const size_t from, const size_t to )
+	void CDotOutputVisitor::addArrow( const size_t from, const size_t to )
 	{
 		dotFile << "\tn" << from << " -> n" << to << ";" << std::endl;
+	}
+
+	void CDotOutputVisitor::addChild( const size_t id, AbstractTreeGenerator::INode * node )
+	{
+		size_t next = nextId();
+		node->Accept( this );
+		addArrow( id, next );
 	}
 
 	void CDotOutputVisitor::visitBinaryNode( const std::string & name, AbstractTreeGenerator::INode * left, AbstractTreeGenerator::INode * right )
 	{
 		size_t current = enterNode( name );
-		left->Accept( this );
-		addArrrow( current, current + 1 );
-		size_t rightId = nextId();
-		right->Accept( this );
-		addArrrow( current, rightId );
+		addChild( current, left );
+		addChild( current, right );
 	}
 
 	void CDotOutputVisitor::visitUnaryNode( const std::string & name, AbstractTreeGenerator::INode * children )
 	{
 		size_t current = enterNode( name );
-		children->Accept( this );
-		addArrrow( current, current + 1 );
+		addChild( current, children );
 
 	}
+
+	void CDotOutputVisitor::visitTripleNode( const std::string & name, AbstractTreeGenerator::INode * left, AbstractTreeGenerator::INode * center, AbstractTreeGenerator::INode * right )
+	{
+		size_t current = enterNode( name );
+		addChild( current, left );
+		addChild( current, center );
+		addChild( current, right );
+	}
+	
 
 	size_t CDotOutputVisitor::nextId()
 	{

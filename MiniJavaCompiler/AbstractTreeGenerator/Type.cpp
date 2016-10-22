@@ -14,7 +14,7 @@ void AbstractTreeGenerator::CType::Accept( IVisitor * v )
 	v->visit( this );
 }
 
-const char* AbstractTreeGenerator::CType::GetChar() const
+const char* AbstractTreeGenerator::CType::GetName() const
 {
 	return idExpression;
 }
