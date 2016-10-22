@@ -37,4 +37,3 @@
 #include "Type.h"
 #include "VarDeclaration.h"
 #include "VarDeclarationList.h"
-#include "VariablesTable.h"

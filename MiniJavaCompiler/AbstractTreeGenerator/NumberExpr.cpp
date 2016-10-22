@@ -6,6 +6,10 @@ AbstractTreeGenerator::CNumberExpr::CNumberExpr( int val ) :
 {
 }
 
+AbstractTreeGenerator::CNumberExpr::~CNumberExpr()
+{
+}
+
 
 void AbstractTreeGenerator::CNumberExpr::Accept( IVisitor * v )
 {

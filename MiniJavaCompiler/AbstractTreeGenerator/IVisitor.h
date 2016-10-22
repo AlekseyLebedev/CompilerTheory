@@ -3,7 +3,6 @@
 namespace AbstractTreeGenerator {
 	class CArgument;
 	class CArgumentList;
-	class CAssignStatement;
 	class CAssignmentListStatement;
 	class CAssignmentStatement;
 	class CClassDeclaration;
@@ -42,7 +41,6 @@ namespace AbstractTreeGenerator {
 	public:
 		virtual void visit( CArgument* const ) = 0;
 		virtual void visit( CArgumentList* const ) = 0;
-		virtual void visit( CAssignStatement* const ) = 0;
 		virtual void visit( CAssignmentListStatement* const ) = 0;
 		virtual void visit( CAssignmentStatement* const ) = 0;
 		virtual void visit( CClassDeclaration* const ) = 0;
