@@ -18,7 +18,7 @@ int yylex(void);
 
 
 
-
+extern AbstractTreeGenerator::CProgram* rootNode;
 
 
 void DebugOutput(const std::string& s){
@@ -81,7 +81,9 @@ void DebugOutput(const std::string& s){
 input: MainProgram
 
 MainProgram: MainClass ClassDeclarationList {
-	$$ = new CProgram($1, $2);
+	CProgram * pointer = new CProgram($1, $2);
+	rootNode = pointer;
+	$$ = pointer;
 	//CProgram(MainClass, ClassDeclarationList)
 }
 

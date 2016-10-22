@@ -6,12 +6,15 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <memory>
 #include "AbstractTreeGenerator\GraphvizLauncher.h"
 
 int yyparse();
 extern FILE* yyin, *yyout;
 void yyrestart( FILE * input_file );
 extern int row, col;
+
+AbstractTreeGenerator::CProgram* rootNode;
 
 int main( int argc, char** argv )
 {
@@ -30,8 +33,8 @@ int main( int argc, char** argv )
 			yyparse();
 			fclose( yyin );
 			buffer.str( "" );
-			AbstractTreeGenerator::INode* root; //set from bison
-			GraphvizOutput::CGraphvizLauncher::Launch( root );
+			std::shared_ptr<AbstractTreeGenerator::CProgram> root( rootNode ); //set from bison
+			GraphvizOutput::CGraphvizLauncher::Launch(root.get());
 		}
 	}
 	return 0;

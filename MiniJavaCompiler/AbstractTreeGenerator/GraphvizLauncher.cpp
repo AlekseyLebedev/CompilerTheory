@@ -12,7 +12,7 @@ namespace GraphvizOutput {
 	{
 	}
 
-	void CGraphvizLauncher::Launch(AbstractTreeGenerator::INode * node)
+	void CGraphvizLauncher::Launch(AbstractTreeGenerator::CProgram * node)
 	{
 		CDotOutputVisitor visitor;
 		visitor.Start(filename);

@@ -1,7 +1,7 @@
 #pragma once
 #include "INode.h"
 namespace AbstractTreeGenerator {
-	class CNumberExpr : public INode {
+	class CNumberExpr : public IExpression {
 	public:
 		CNumberExpr(int val);
 		~CNumberExpr();
