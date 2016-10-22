@@ -32,7 +32,7 @@
       <UniqueIdentifier>{0241eb7e-ec2f-4e58-a56b-21fa82f5fabb}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="AbstractTreeGenerator\global cpp">
+    <Filter Include="global cpp">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
@@ -176,7 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
-      <Filter>AbstractTreeGenerator\global cpp</Filter>
+      <Filter>global cpp</Filter>
     </ClCompile>
     <ClCompile Include="LexicParser\lexer.cpp">
       <Filter>LexicParser\cpp</Filter>

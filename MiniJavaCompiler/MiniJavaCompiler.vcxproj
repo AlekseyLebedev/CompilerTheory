@@ -83,7 +83,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -108,7 +108,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -124,7 +124,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -139,16 +139,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <CustomBuild Include="LexicParser\grammar.l">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)winflexbison\tools\win_flex.exe --wincompat -o"$(ProjectDir)LexicParser\lexer.cpp" "$(ProjectDir)LexicParser\grammar.l"</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">compiling flex</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)LexicParser\lexer.cpp</Outputs>
+      <Command>$(SolutionDir)winflexbison\tools\win_flex.exe --wincompat -o"$(ProjectDir)LexicParser\lexer.cpp" "$(ProjectDir)LexicParser\grammar.l"</Command>
+      <Message>compiling flex</Message>
+      <Outputs>$(ProjectDir)LexicParser\lexer.cpp</Outputs>
     </CustomBuild>
     <CustomBuild Include="LexicParser\syntatic.txt">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(SolutionDir)winflexbison\tools\win_bison.exe" "$(ProjectDir)LexicParser\syntatic.txt"</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">WinBisonLauncher</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(SolutionDir)winflexbison\tools\win_bison.exe" -o"$(ProjectDir)LexicParser\syntatic.cpp"  --defines="$(ProjectDir)LexicParser\syntatic.h" "$(ProjectDir)LexicParser\syntatic.txt"</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">WinBisonLauncher</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)LexicParser\syntatic.cpp </Outputs>
+      <Command>"$(SolutionDir)winflexbison\tools\win_bison.exe" -o"$(ProjectDir)LexicParser\syntatic.cpp"  --defines="$(ProjectDir)LexicParser\syntatic.h" "$(ProjectDir)LexicParser\syntatic.txt"</Command>
+      <Message>WinBisonLauncher</Message>
+      <Outputs>$(ProjectDir)LexicParser\syntatic.cpp </Outputs>
     </CustomBuild>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
