@@ -1,11 +1,9 @@
-#include <string>
+﻿#include <string>
 #include <cassert>
 
 #include "DotOutputVisitor.h"
-
 #include "INode.h"
 #include "AllNodes.h"
-
 
 namespace GraphvizOutput {
 
@@ -60,9 +58,9 @@ namespace GraphvizOutput {
 			compoundStatement->GetRightChild().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CConstructorExpression * const �onstructorExpression )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CConstructorExpression * const сonstructorExpression )
 	{
-		visitUnaryNode( "ConstructorExpression", �onstructorExpression->GetIdExpression().get() );
+		visitUnaryNode( "ConstructorExpression", сonstructorExpression->GetIdExpression().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CPreconditionStatement * const precondition )
@@ -89,46 +87,56 @@ namespace GraphvizOutput {
 			statementList->GetStatementList().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CType * const type)
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CType * const type )
 	{
-		type->GetName();
+		visitValueNode( "Type", type->GetName() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CVarDeclaration * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CVarDeclaration * const varDeclaration )
 	{
+		visitBinaryNode( "VarDeclaration", varDeclaration->GetType().get(),
+			varDeclaration->GetIdExpression().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CVarDeclarationList * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CVarDeclarationList * const list )
 	{
+		visitBinaryNode( "VarDeclarationList", list->GetVarDeclaration().get(),
+			list->GetVarDeclarationList().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CTrueExpression * const )
 	{
+		enterNode( "TrueExpression" );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CFalseExpression * const )
 	{
+		enterNode( "FalseExpression" );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CGetFieldExpression * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CGetFieldExpression * const get )
 	{
+		// Слишком много get ):
+		visitTripleNode( "GetFieldExpression", get->GetIdExpression().get(),
+			get->GetExpression().get(), get->GetExpressionList().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CConditionStatement * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CConditionStatement * const condition )
 	{
+		// TODO разабраться, что это
+		visitTripleNode( "ConditionStatement", condition->GetStatementFirst().get(), condition->GetIdExpression().get(),
+			condition->GetStatementSecond().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CThisExpression * const )
 	{
+		enterNode( "ThisExpression" );
 	}
-
-
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::COperationExpression *const operationExpression )
 	{
 		size_t current = enterNode( "OperationExpression" );
-		operationExpression->GetLeftOperand()->Accept( this );
-		addArrow( current, current + 1 );
+		addChild( current, operationExpression->GetLeftOperand().get() );
 		switch( operationExpression->GetOperationType() ) {
 			case AbstractTreeGenerator::COperationExpression::Divide:
 				addSubNode( current, "Divide" );
@@ -157,45 +165,56 @@ namespace GraphvizOutput {
 			default:
 				assert( false );
 		}
-		size_t rightId = nextId();
-		operationExpression->GetRightOperand()->Accept( this );
-		addArrow( current, rightId );
+		addChild( current, operationExpression->GetRightOperand().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CParenExpression * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CParenExpression * const paren )
 	{
+		visitUnaryNode( "ParenExpression", paren->GetExpression().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CMethodDeclaration * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CMethodDeclaration * const method )
 	{
+		size_t id = enterNode( "MethodDeclaration" );
+		addChild( id, method->GetType().get() );
+		addChild( id, method->GetIdExpression().get() );
+		addChild( id, method->GetArgumentList.get() );
+		addChild( id, method->GetVarDeclarationList().get() );
+		addChild( id, method->GetStatementList().get() );
+		addChild( id, method->GetExpression().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList * const  list )
 	{
+		visitBinaryNode( "MethodDeclarationList", list->GetMethodDeclaration().get(),
+			list->GetMethodDeclarationList().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CNegationExpression * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CNegationExpression * const negatiation )
 	{
+		visitUnaryNode( "NegationExpression", negatiation->GetExpression().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CNumberExpr * const numExpression )
 	{
-		size_t current = enterNode( "NumExpression" );
-		addSubNode( current, numExpression->GetValue() );
+		visitValueNode( "NumExpression", numExpression->GetValue() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CExpressionList * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CExpressionList * const expressionList )
 	{
+		visitBinaryNode( "ExpressionList", expressionList->GetExpression().get(),
+			expressionList->GetExpressionList().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CIdExpression *const idExpression )
 	{
-		size_t current = enterNode( "IdExpression" );
-		addSubNode( current, idExpression->GetName() );
+		visitValueNode( "IdExpression", idExpression->GetName() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CIndexExpression * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CIndexExpression * const index )
 	{
+		visitBinaryNode( "IndexExpression", index->GetEpressionFirst().get(),
+			index->GetExpressionSecond().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CLastExpressionList *const lastExpList )
@@ -215,15 +234,22 @@ namespace GraphvizOutput {
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CMainClass * const main )
 	{
-		// TODO 
+		size_t id = enterNode( "MainClass" );
+		addChild( id, main->GetClassName().get() );
+		addChild( id, main->GetName().get() );
+		addChild( id, main->GetArgv().get() );
+		addChild( id, main->GetStatement().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CArgument * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CArgument * const argument )
 	{
+		visitBinaryNode( "Argument", argument->GetType().get(), argument->GetIdExpression().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CArgumentList * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CArgumentList * const list )
 	{
+		visitBinaryNode( "ArgumentList", list->GetArgument().get(), list->GetArgumentList().get() );
+
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CAssignmentStatement *const assignmentStatement )
@@ -232,8 +258,11 @@ namespace GraphvizOutput {
 			assignmentStatement->GetExpression().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CAssignmentListStatement * const )
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CAssignmentListStatement * const assigment )
 	{
+		visitTripleNode( "AssignmentListStatement", assigment->GetIdExpression().get(),
+			assigment->GetExpressionFirst().get(), assigment->GetExpressionSecond().get() );
+
 	}
 
 	size_t CDotOutputVisitor::enterNode( const std::string& label )
@@ -263,7 +292,11 @@ namespace GraphvizOutput {
 	void CDotOutputVisitor::addChild( const size_t id, AbstractTreeGenerator::INode * node )
 	{
 		size_t next = nextId();
-		node->Accept( this );
+		if( node == 0 ) {
+			enterNode( "nullptr" );
+		} else {
+			node->Accept( this );
+		}
 		addArrow( id, next );
 	}
 
@@ -288,7 +321,19 @@ namespace GraphvizOutput {
 		addChild( current, center );
 		addChild( current, right );
 	}
-	
+
+	void CDotOutputVisitor::visitValueNode( const std::string & name, const std::string & value )
+	{
+		size_t current = enterNode( name );
+		addSubNode( current, value );
+	}
+
+
+	void CDotOutputVisitor::visitValueNode( const std::string & name, const int value )
+	{
+		size_t current = enterNode( name );
+		addSubNode( current, value );
+	}
 
 	size_t CDotOutputVisitor::nextId()
 	{

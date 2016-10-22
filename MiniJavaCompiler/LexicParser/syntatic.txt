@@ -161,7 +161,7 @@ Type: T_int T_lbracket T_rbracket {
 		$$ = new CType("INT");
 	}
 	| Identifier {
-		$$ = new CType(($1)->GetName().c_str());
+		$$ = new CType($1->GetName().c_str());
 		//Type(Identifier)
 	}
 
@@ -252,7 +252,7 @@ Expression: Expression T_and Expression {
 		$$ = new CFalseExpression();
 	}
 	| Identifier {
-		$$ =  new CIdExpression(($1)->GetName().c_str());
+		$$ =  new CIdExpression($1->GetName());
 		//IdExpression(Identifier)
 	}
 	| T_this {

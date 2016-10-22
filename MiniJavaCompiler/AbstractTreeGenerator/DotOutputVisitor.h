@@ -27,6 +27,8 @@ namespace GraphvizOutput {
 		void visitUnaryNode( const std::string& name, AbstractTreeGenerator::INode* children );
 		void visitTripleNode( const std::string& name, AbstractTreeGenerator::INode* left,
 			AbstractTreeGenerator::INode* center, AbstractTreeGenerator::INode* right );
+		void visitValueNode( const std::string& name, const std::string& value );
+		void visitValueNode( const std::string& name, const int value );
 		size_t nextId();
 
 	public:
