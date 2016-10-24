@@ -234,11 +234,8 @@ namespace GraphvizOutput {
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CMainClass * const main )
 	{
-		size_t id = enterNode( "MainClass" );
-		addChild( id, main->GetClassName().get() );
-		addChild( id, main->GetName().get() );
-		addChild( id, main->GetArgv().get() );
-		addChild( id, main->GetStatement().get() );
+		visitTripleNode( "MainClass", main->GetClassName().get(), main->GetArgv().get(), 
+			main->GetStatement().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CArgument * const argument )

@@ -17,10 +17,6 @@ void AbstractTreeGenerator::CMainClass::Accept( IVisitor * v)
 	v->visit( this );
 }
 
-std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CMainClass::GetName() const
-{
-	return className;
-}
 const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CMainClass::GetClassName() const
 {
 	 return className;
