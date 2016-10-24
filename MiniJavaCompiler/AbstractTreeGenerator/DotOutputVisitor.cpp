@@ -37,8 +37,11 @@ namespace GraphvizOutput {
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CClassDeclaration * const classDeclaration )
 	{
-		visitTripleNode( "ClassDeclaration", classDeclaration->GetIdExpression().get(),
-			classDeclaration->GetClassExtend().get(), classDeclaration->GetMethodDeclarationList().get() );
+		size_t id = enterNode( "ClassDeclaration" );
+		addChild( id, classDeclaration->GetIdExpression().get() );
+		addChild( id, classDeclaration->GetClassExtend().get() );
+		addChild( id, classDeclaration->GetVarDeclarationList().get() );
+		addChild( id, classDeclaration->GetMethodDeclarationList().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CClassDeclarationList * const list )
@@ -234,7 +237,7 @@ namespace GraphvizOutput {
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CMainClass * const main )
 	{
-		visitTripleNode( "MainClass", main->GetClassName().get(), main->GetArgv().get(), 
+		visitTripleNode( "MainClass", main->GetClassName().get(), main->GetArgv().get(),
 			main->GetStatement().get() );
 	}
 
