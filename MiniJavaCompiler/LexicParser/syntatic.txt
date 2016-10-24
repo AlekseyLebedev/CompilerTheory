@@ -95,7 +95,7 @@ MainClass: T_class Identifier T_lbrace
 		// IClass(Identifier, Identifier, Statement)
 		}
 
-ClassDeclarationList:
+ClassDeclarationList: {$$ = nullptr;}
 	| ClassDeclaration ClassDeclarationList {
 		$$ = new CClassDeclarationList($1, $2);
 		//ClassDeclarationList(ClassDeclaration, ClassDeclarationList)
@@ -109,13 +109,13 @@ ClassDeclaration: T_class Identifier ClassExtend T_lbrace
 		//ClassDeclaration(Identifier, ClassExtend, VarDeclarationList, MethodList)
 	}
 
-ClassExtend:
+ClassExtend: {$$ = nullptr;}
 	| T_lparen T_extends Identifier T_rparen {
 		$$ =  new CClassExtend((CIdExpression*)$3);
 		//ClassExtend(Identifier)
 	}
 
-VarDeclarationList:
+VarDeclarationList: {$$ = nullptr;}
 	| VarDeclaration VarDeclarationList {
 		$$ =  new CVarDeclarationList($1, $2);
 		//VarDeclarationList(VarDeclaration,VarDeclarationList)
@@ -126,7 +126,7 @@ VarDeclaration : Type Identifier T_semi {
 		//VarDeclaration(Type, Identifier)
 	}
 
-MethodDeclarationList:
+MethodDeclarationList: {$$ = nullptr;}
 	| MethodDeclaration MethodDeclarationList {
 		$$ =  new CMethodDeclarationList($1, $2);
 		//MethodDeclarationList(MethodDeclaration, MethodDeclarationList)
