@@ -91,7 +91,7 @@ MainClass: T_class Identifier T_lbrace
 	T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace
 		Statement T_rbrace
 	T_rbrace {
-		$$ = new CMainClass( $2, $12, $15);
+		$$ = new CMainClass( (CIdExpression*)$2, (CIdExpression*)$12, $15);
 		// IClass(Identifier, Identifier, Statement)
 		}
 
@@ -105,13 +105,13 @@ ClassDeclaration: T_class Identifier ClassExtend T_lbrace
 		VarDeclarationList
 		MethodDeclarationList
 	T_rbrace {
-		$$ = new CClassDeclaration($2, $3, $5, $6);
+		$$ = new CClassDeclaration((CIdExpression*)$2, $3, $5, $6);
 		//ClassDeclaration(Identifier, ClassExtend, VarDeclarationList, MethodList)
 	}
 
 ClassExtend:
 	| T_lparen T_extends Identifier T_rparen {
-		$$ =  new CClassExtend($3);
+		$$ =  new CClassExtend((CIdExpression*)$3);
 		//ClassExtend(Identifier)
 	}
 
@@ -122,7 +122,7 @@ VarDeclarationList:
 	}
 
 VarDeclaration : Type Identifier T_semi {
-		$$ =  new CVarDeclaration($1, $2);
+		$$ =  new CVarDeclaration($1, (CIdExpression*)$2);
 		//VarDeclaration(Type, Identifier)
 	}
 
@@ -134,7 +134,7 @@ MethodDeclarationList:
 
 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace
 	VarDeclarationList StatementList T_return Expression T_semi T_rbrace {
-		$$ = new CMethodDeclaration($2, $3, $5, $8, $9, $11);
+		$$ = new CMethodDeclaration($2, (CIdExpression*)$3, $5, $8, $9, $11);
 		//MethodDeclaration(Type, Identifier, ArgumentList, VarDeclarationList, StatementList, Expression)
 	}
 
@@ -149,7 +149,7 @@ ArgumentList:
 	 }
 
 Argument: Type Identifier {
-		$$ =  new CArgument($1, $2);
+		$$ =  new CArgument($1, (CIdExpression*)$2);
 		//Argument(Type, Identifier)
 	}
 
@@ -163,7 +163,7 @@ Type: T_int T_lbracket T_rbracket {
 		$$ = new CType("INT");
 	}
 	| Identifier {
-		$$ = new CType($1->GetName().c_str());
+		$$ = new CType(((CIdExpression*)$1)->GetName().c_str());
 		//Type(Identifier)
 	}
 
@@ -189,12 +189,12 @@ Statement: T_lbrace StatementList T_rbrace {
 		$$ = new CPrintStatement($3);
 		//PrintStatement(Expression)
 	}
-	| Identifier T_equal Expression T_semi {
-		$$ = new CAssignmentStatement($1, $3);
+	| Identifier T_equal Identifier T_semi {
+		$$ = new CAssignmentStatement((CIdExpression*)$1, $3);
 		//AssignmentStatement(Identifier, Expression)
 	}
 	| Identifier T_lbracket Expression T_rbracket T_equal Expression T_semi {
-		$$ =  new CAssignmentListStatement($1, $3, $6);
+		$$ =  new CAssignmentListStatement((CIdExpression*)$1, $3, $6);
 		//AssignmentListStatement(Identifier, Expression, Expression)
 	}
 
@@ -239,7 +239,7 @@ Expression: Expression T_and Expression {
 		//LengthExpression(Expression)
 	}
 	| Expression T_dot Identifier T_lparen ExpressionList T_rparen {
-		$$ = new CGetFieldExpression($1, $3, $5);
+		$$ = new CGetFieldExpression($1, (CIdExpression*)$3, $5);
 		//GetFieldExpression(Expression, Identifier, ExpressionList)
 	}
 	| T_NUM {
@@ -254,7 +254,7 @@ Expression: Expression T_and Expression {
 		$$ = new CFalseExpression();
 	}
 	| Identifier {
-		$$ =  new CIdExpression($1->GetName());
+		$$ =  new CIdExpression(((CIdExpression*)$1)->GetName());
 		//IdExpression(Identifier)
 	}
 	| T_this {
@@ -266,7 +266,7 @@ Expression: Expression T_and Expression {
 		//ListConstructorExpression(Expression)
 	}
 	| T_new Identifier T_lparen T_rparen {
-		$$ = new CConstructorExpression($2);
+		$$ = new CConstructorExpression((CIdExpression*)$2);
 		//ConstructorExpression(Identifier)
 	}
 	| T_not Expression {

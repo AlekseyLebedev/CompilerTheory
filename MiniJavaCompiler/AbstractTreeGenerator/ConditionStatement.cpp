@@ -1,8 +1,8 @@
 #include "ConditionStatement.h"
 
-AbstractTreeGenerator::CConditionStatement::CConditionStatement( CIdExpression* theIdExpression,
+AbstractTreeGenerator::CConditionStatement::CConditionStatement( IExpression* theIdExpression,
 	IStatement* theStatementFirst, IStatement* theStatementSecond ) :
-	idExpression( theIdExpression ), statementFirst( theStatementFirst ), statementSecond( theStatementSecond )
+	expression( theIdExpression ), statementFirst( theStatementFirst ), statementSecond( theStatementSecond )
 {
 }
 
@@ -14,9 +14,9 @@ void AbstractTreeGenerator::CConditionStatement::Accept( IVisitor * v )
 {
 	v->visit( this );
 }
-const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CConditionStatement::GetIdExpression() const
+const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CConditionStatement::GetExpression() const
 {
-	 return idExpression;
+	 return expression;
 }
 
 const std::shared_ptr<AbstractTreeGenerator::IStatement> AbstractTreeGenerator::CConditionStatement::GetStatementFirst() const

@@ -65,7 +65,7 @@ namespace GraphvizOutput {
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CPreconditionStatement * const precondition )
 	{
-		visitBinaryNode( "PreconditionStatement", precondition->GetIdExpression().get(),
+		visitBinaryNode( "PreconditionStatement", precondition->GetExpression().get(),
 			precondition->GetStatement().get() );
 
 	}
@@ -124,7 +124,7 @@ namespace GraphvizOutput {
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CConditionStatement * const condition )
 	{
 		// TODO разабраться, что это
-		visitTripleNode( "ConditionStatement", condition->GetStatementFirst().get(), condition->GetIdExpression().get(),
+		visitTripleNode( "ConditionStatement", condition->GetStatementFirst().get(), condition->GetExpression().get(),
 			condition->GetStatementSecond().get() );
 	}
 
@@ -178,7 +178,7 @@ namespace GraphvizOutput {
 		size_t id = enterNode( "MethodDeclaration" );
 		addChild( id, method->GetType().get() );
 		addChild( id, method->GetIdExpression().get() );
-		addChild( id, method->GetArgumentList.get() );
+		addChild( id, method->GetArgumentList().get() );
 		addChild( id, method->GetVarDeclarationList().get() );
 		addChild( id, method->GetStatementList().get() );
 		addChild( id, method->GetExpression().get() );

@@ -7,7 +7,7 @@ namespace AbstractTreeGenerator {
 	class CCompoundStatement : public IStatement {
 	public:
 		CCompoundStatement( INode* left, INode* right );
-		CCompoundStatement( std::shared_ptr<CStatementList> theStatementList = nullptr );
+		CCompoundStatement(CStatementList* theStatementList = nullptr );
 		virtual ~CCompoundStatement();
 		virtual void Accept( IVisitor* ) override;
 

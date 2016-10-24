@@ -1,5 +1,6 @@
 #pragma once
-#include "INode.h"
+#include "IExpression.h"
+
 namespace AbstractTreeGenerator {
 	class CNumberExpr : public IExpression {
 	public:

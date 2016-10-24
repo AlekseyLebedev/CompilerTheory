@@ -6,7 +6,7 @@ AbstractTreeGenerator::CCompoundStatement::CCompoundStatement(INode* left,
 {	
 }
 
-AbstractTreeGenerator::CCompoundStatement::CCompoundStatement( std::shared_ptr<CStatementList> theStatementList ) :
+AbstractTreeGenerator::CCompoundStatement::CCompoundStatement( CStatementList* theStatementList ) :
 	statementList( theStatementList )
 {
 }

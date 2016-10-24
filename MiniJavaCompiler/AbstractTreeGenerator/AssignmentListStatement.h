@@ -5,7 +5,7 @@
 
 
 namespace AbstractTreeGenerator {
-	class CAssignmentListStatement : public INode
+	class CAssignmentListStatement : public IStatement
 	{
 	public:
 		CAssignmentListStatement( CIdExpression* theIdExpression,

@@ -1,8 +1,8 @@
 #include "PreconditionStatement.h"
 
-AbstractTreeGenerator::CPreconditionStatement::CPreconditionStatement( CIdExpression* theIdExpression,
+AbstractTreeGenerator::CPreconditionStatement::CPreconditionStatement( IExpression* theIdExpression,
 	IStatement* theStatement ) :
-	idExpression( theIdExpression ), statement( theStatement )
+	expression( theIdExpression ), statement( theStatement )
 {
 }
 
@@ -14,9 +14,9 @@ void AbstractTreeGenerator::CPreconditionStatement::Accept( IVisitor * v )
 {
 	v->visit( this );
 }
-const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CPreconditionStatement::GetIdExpression() const
+const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CPreconditionStatement::GetExpression() const
 {
-	 return idExpression;
+	 return expression;
 }
 
 const std::shared_ptr<AbstractTreeGenerator::IStatement> AbstractTreeGenerator::CPreconditionStatement::GetStatement() const
