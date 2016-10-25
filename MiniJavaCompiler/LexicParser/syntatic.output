@@ -6,17 +6,15 @@ Terminals unused in grammar
    T_times
 
 
-State 25 conflicts: 1 shift/reduce
-State 55 conflicts: 1 shift/reduce
-State 95 conflicts: 10 shift/reduce
-State 117 conflicts: 10 shift/reduce
+State 93 conflicts: 10 shift/reduce
+State 115 conflicts: 10 shift/reduce
+State 118 conflicts: 10 shift/reduce
+State 119 conflicts: 10 shift/reduce
 State 120 conflicts: 10 shift/reduce
 State 121 conflicts: 10 shift/reduce
 State 122 conflicts: 10 shift/reduce
 State 123 conflicts: 10 shift/reduce
 State 124 conflicts: 10 shift/reduce
-State 125 conflicts: 10 shift/reduce
-State 126 conflicts: 10 shift/reduce
 
 
 Grammar
@@ -35,10 +33,10 @@ Grammar
     6 ClassDeclaration: T_class Identifier ClassExtend T_lbrace VarDeclarationList MethodDeclarationList T_rbrace
 
     7 ClassExtend: /* empty */
-    8            | T_lparen T_extends Identifier T_rparen
+    8            | T_extends Identifier
 
     9 VarDeclarationList: /* empty */
-   10                   | VarDeclaration VarDeclarationList
+   10                   | VarDeclarationList VarDeclaration
 
    11 VarDeclaration: Type Identifier T_semi
 
@@ -119,8 +117,8 @@ T_char (273)
 T_dot (274) 40 41
 T_else (275) 26
 T_star (276) 35
-T_lparen (277) 3 8 14 26 27 28 41 48 50
-T_rparen (278) 3 8 14 26 27 28 41 48 50
+T_lparen (277) 3 14 26 27 28 41 48 50
+T_rparen (278) 3 14 26 27 28 41 48 50
 T_lbrace (279) 3 6 14 25
 T_rbrace (280) 3 6 14 25
 T_lbracket (281) 3 19 30 39 47
@@ -296,7 +294,7 @@ State 12
 
     6 ClassDeclaration: T_class Identifier . ClassExtend T_lbrace VarDeclarationList MethodDeclarationList T_rbrace
 
-    T_lparen  shift, and go to state 15
+    T_extends  shift, and go to state 15
 
     $default  reduce using rule 7 (ClassExtend)
 
@@ -319,9 +317,11 @@ State 14
 
 State 15
 
-    8 ClassExtend: T_lparen . T_extends Identifier T_rparen
+    8 ClassExtend: T_extends . Identifier
 
-    T_extends  shift, and go to state 18
+    T_ID  shift, and go to state 5
+
+    Identifier  go to state 18
 
 
 State 16
@@ -340,255 +340,248 @@ State 17
 
 State 18
 
-    8 ClassExtend: T_lparen T_extends . Identifier T_rparen
+    8 ClassExtend: T_extends Identifier .
 
-    T_ID  shift, and go to state 5
-
-    Identifier  go to state 21
+    $default  reduce using rule 8 (ClassExtend)
 
 
 State 19
 
     6 ClassDeclaration: T_class Identifier ClassExtend T_lbrace . VarDeclarationList MethodDeclarationList T_rbrace
 
-    T_ID       shift, and go to state 5
-    T_int      shift, and go to state 22
-    T_boolean  shift, and go to state 23
-
     $default  reduce using rule 9 (VarDeclarationList)
 
-    VarDeclarationList  go to state 24
-    VarDeclaration      go to state 25
-    Type                go to state 26
-    Identifier          go to state 27
+    VarDeclarationList  go to state 21
 
 
 State 20
 
     3 MainClass: T_class Identifier T_lbrace T_public T_static T_void . T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace Statement T_rbrace T_rbrace
 
-    T_main  shift, and go to state 28
+    T_main  shift, and go to state 22
 
 
 State 21
 
-    8 ClassExtend: T_lparen T_extends Identifier . T_rparen
+    6 ClassDeclaration: T_class Identifier ClassExtend T_lbrace VarDeclarationList . MethodDeclarationList T_rbrace
+   10 VarDeclarationList: VarDeclarationList . VarDeclaration
 
-    T_rparen  shift, and go to state 29
+    T_ID       shift, and go to state 5
+    T_public   shift, and go to state 23
+    T_int      shift, and go to state 24
+    T_boolean  shift, and go to state 25
+
+    $default  reduce using rule 12 (MethodDeclarationList)
+
+    VarDeclaration         go to state 26
+    MethodDeclarationList  go to state 27
+    MethodDeclaration      go to state 28
+    Type                   go to state 29
+    Identifier             go to state 30
 
 
 State 22
 
+    3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main . T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace Statement T_rbrace T_rbrace
+
+    T_lparen  shift, and go to state 31
+
+
+State 23
+
+   14 MethodDeclaration: T_public . Type Identifier T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList StatementList T_return Expression T_semi T_rbrace
+
+    T_ID       shift, and go to state 5
+    T_int      shift, and go to state 24
+    T_boolean  shift, and go to state 25
+
+    Type        go to state 32
+    Identifier  go to state 30
+
+
+State 24
+
    19 Type: T_int . T_lbracket T_rbracket
    21     | T_int .
 
-    T_lbracket  shift, and go to state 30
+    T_lbracket  shift, and go to state 33
 
     $default  reduce using rule 21 (Type)
 
 
-State 23
+State 25
 
    20 Type: T_boolean .
 
     $default  reduce using rule 20 (Type)
 
 
-State 24
+State 26
 
-    6 ClassDeclaration: T_class Identifier ClassExtend T_lbrace VarDeclarationList . MethodDeclarationList T_rbrace
+   10 VarDeclarationList: VarDeclarationList VarDeclaration .
 
-    T_public  shift, and go to state 31
+    $default  reduce using rule 10 (VarDeclarationList)
+
+
+State 27
+
+    6 ClassDeclaration: T_class Identifier ClassExtend T_lbrace VarDeclarationList MethodDeclarationList . T_rbrace
+
+    T_rbrace  shift, and go to state 34
+
+
+State 28
+
+   13 MethodDeclarationList: MethodDeclaration . MethodDeclarationList
+
+    T_public  shift, and go to state 23
 
     $default  reduce using rule 12 (MethodDeclarationList)
 
-    MethodDeclarationList  go to state 32
-    MethodDeclaration      go to state 33
+    MethodDeclarationList  go to state 35
+    MethodDeclaration      go to state 28
 
 
-State 25
-
-   10 VarDeclarationList: VarDeclaration . VarDeclarationList
-
-    T_ID       shift, and go to state 5
-    T_int      shift, and go to state 22
-    T_boolean  shift, and go to state 23
-
-    T_ID      [reduce using rule 9 (VarDeclarationList)]
-    $default  reduce using rule 9 (VarDeclarationList)
-
-    VarDeclarationList  go to state 34
-    VarDeclaration      go to state 25
-    Type                go to state 26
-    Identifier          go to state 27
-
-
-State 26
+State 29
 
    11 VarDeclaration: Type . Identifier T_semi
 
     T_ID  shift, and go to state 5
 
-    Identifier  go to state 35
+    Identifier  go to state 36
 
 
-State 27
+State 30
 
    22 Type: Identifier .
 
     $default  reduce using rule 22 (Type)
 
 
-State 28
-
-    3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main . T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace Statement T_rbrace T_rbrace
-
-    T_lparen  shift, and go to state 36
-
-
-State 29
-
-    8 ClassExtend: T_lparen T_extends Identifier T_rparen .
-
-    $default  reduce using rule 8 (ClassExtend)
-
-
-State 30
-
-   19 Type: T_int T_lbracket . T_rbracket
-
-    T_rbracket  shift, and go to state 37
-
-
 State 31
-
-   14 MethodDeclaration: T_public . Type Identifier T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList StatementList T_return Expression T_semi T_rbrace
-
-    T_ID       shift, and go to state 5
-    T_int      shift, and go to state 22
-    T_boolean  shift, and go to state 23
-
-    Type        go to state 38
-    Identifier  go to state 27
-
-
-State 32
-
-    6 ClassDeclaration: T_class Identifier ClassExtend T_lbrace VarDeclarationList MethodDeclarationList . T_rbrace
-
-    T_rbrace  shift, and go to state 39
-
-
-State 33
-
-   13 MethodDeclarationList: MethodDeclaration . MethodDeclarationList
-
-    T_public  shift, and go to state 31
-
-    $default  reduce using rule 12 (MethodDeclarationList)
-
-    MethodDeclarationList  go to state 40
-    MethodDeclaration      go to state 33
-
-
-State 34
-
-   10 VarDeclarationList: VarDeclaration VarDeclarationList .
-
-    $default  reduce using rule 10 (VarDeclarationList)
-
-
-State 35
-
-   11 VarDeclaration: Type Identifier . T_semi
-
-    T_semi  shift, and go to state 41
-
-
-State 36
 
     3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen . T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace Statement T_rbrace T_rbrace
 
-    T_string  shift, and go to state 42
+    T_string  shift, and go to state 37
 
 
-State 37
-
-   19 Type: T_int T_lbracket T_rbracket .
-
-    $default  reduce using rule 19 (Type)
-
-
-State 38
+State 32
 
    14 MethodDeclaration: T_public Type . Identifier T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList StatementList T_return Expression T_semi T_rbrace
 
     T_ID  shift, and go to state 5
 
-    Identifier  go to state 43
+    Identifier  go to state 38
 
 
-State 39
+State 33
+
+   19 Type: T_int T_lbracket . T_rbracket
+
+    T_rbracket  shift, and go to state 39
+
+
+State 34
 
     6 ClassDeclaration: T_class Identifier ClassExtend T_lbrace VarDeclarationList MethodDeclarationList T_rbrace .
 
     $default  reduce using rule 6 (ClassDeclaration)
 
 
-State 40
+State 35
 
    13 MethodDeclarationList: MethodDeclaration MethodDeclarationList .
 
     $default  reduce using rule 13 (MethodDeclarationList)
 
 
-State 41
+State 36
+
+   11 VarDeclaration: Type Identifier . T_semi
+
+    T_semi  shift, and go to state 40
+
+
+State 37
+
+    3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string . T_lbracket T_rbracket Identifier T_rparen T_lbrace Statement T_rbrace T_rbrace
+
+    T_lbracket  shift, and go to state 41
+
+
+State 38
+
+   14 MethodDeclaration: T_public Type Identifier . T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList StatementList T_return Expression T_semi T_rbrace
+
+    T_lparen  shift, and go to state 42
+
+
+State 39
+
+   19 Type: T_int T_lbracket T_rbracket .
+
+    $default  reduce using rule 19 (Type)
+
+
+State 40
 
    11 VarDeclaration: Type Identifier T_semi .
 
     $default  reduce using rule 11 (VarDeclaration)
 
 
-State 42
-
-    3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string . T_lbracket T_rbracket Identifier T_rparen T_lbrace Statement T_rbrace T_rbrace
-
-    T_lbracket  shift, and go to state 44
-
-
-State 43
-
-   14 MethodDeclaration: T_public Type Identifier . T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList StatementList T_return Expression T_semi T_rbrace
-
-    T_lparen  shift, and go to state 45
-
-
-State 44
+State 41
 
     3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string T_lbracket . T_rbracket Identifier T_rparen T_lbrace Statement T_rbrace T_rbrace
 
-    T_rbracket  shift, and go to state 46
+    T_rbracket  shift, and go to state 43
 
 
-State 45
+State 42
 
    14 MethodDeclaration: T_public Type Identifier T_lparen . ArgumentList T_rparen T_lbrace VarDeclarationList StatementList T_return Expression T_semi T_rbrace
 
     T_ID       shift, and go to state 5
-    T_int      shift, and go to state 22
-    T_boolean  shift, and go to state 23
+    T_int      shift, and go to state 24
+    T_boolean  shift, and go to state 25
 
     $default  reduce using rule 15 (ArgumentList)
 
-    ArgumentList  go to state 47
-    Argument      go to state 48
-    Type          go to state 49
-    Identifier    go to state 27
+    ArgumentList  go to state 44
+    Argument      go to state 45
+    Type          go to state 46
+    Identifier    go to state 30
+
+
+State 43
+
+    3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket . Identifier T_rparen T_lbrace Statement T_rbrace T_rbrace
+
+    T_ID  shift, and go to state 5
+
+    Identifier  go to state 47
+
+
+State 44
+
+   14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList . T_rparen T_lbrace VarDeclarationList StatementList T_return Expression T_semi T_rbrace
+
+    T_rparen  shift, and go to state 48
+
+
+State 45
+
+   16 ArgumentList: Argument .
+   17             | Argument . T_comma ArgumentList
+
+    T_comma  shift, and go to state 49
+
+    $default  reduce using rule 16 (ArgumentList)
 
 
 State 46
 
-    3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket . Identifier T_rparen T_lbrace Statement T_rbrace T_rbrace
+   18 Argument: Type . Identifier
 
     T_ID  shift, and go to state 5
 
@@ -597,411 +590,394 @@ State 46
 
 State 47
 
-   14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList . T_rparen T_lbrace VarDeclarationList StatementList T_return Expression T_semi T_rbrace
+    3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier . T_rparen T_lbrace Statement T_rbrace T_rbrace
 
     T_rparen  shift, and go to state 51
 
 
 State 48
 
-   16 ArgumentList: Argument .
-   17             | Argument . T_comma ArgumentList
+   14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen . T_lbrace VarDeclarationList StatementList T_return Expression T_semi T_rbrace
 
-    T_comma  shift, and go to state 52
-
-    $default  reduce using rule 16 (ArgumentList)
+    T_lbrace  shift, and go to state 52
 
 
 State 49
 
-   18 Argument: Type . Identifier
-
-    T_ID  shift, and go to state 5
-
-    Identifier  go to state 53
-
-
-State 50
-
-    3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier . T_rparen T_lbrace Statement T_rbrace T_rbrace
-
-    T_rparen  shift, and go to state 54
-
-
-State 51
-
-   14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen . T_lbrace VarDeclarationList StatementList T_return Expression T_semi T_rbrace
-
-    T_lbrace  shift, and go to state 55
-
-
-State 52
-
    17 ArgumentList: Argument T_comma . ArgumentList
 
     T_ID       shift, and go to state 5
-    T_int      shift, and go to state 22
-    T_boolean  shift, and go to state 23
+    T_int      shift, and go to state 24
+    T_boolean  shift, and go to state 25
 
     $default  reduce using rule 15 (ArgumentList)
 
-    ArgumentList  go to state 56
-    Argument      go to state 48
-    Type          go to state 49
-    Identifier    go to state 27
+    ArgumentList  go to state 53
+    Argument      go to state 45
+    Type          go to state 46
+    Identifier    go to state 30
 
 
-State 53
+State 50
 
    18 Argument: Type Identifier .
 
     $default  reduce using rule 18 (Argument)
 
 
-State 54
+State 51
 
     3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen . T_lbrace Statement T_rbrace T_rbrace
 
-    T_lbrace  shift, and go to state 57
+    T_lbrace  shift, and go to state 54
 
 
-State 55
+State 52
 
    14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace . VarDeclarationList StatementList T_return Expression T_semi T_rbrace
 
-    T_ID       shift, and go to state 5
-    T_int      shift, and go to state 22
-    T_boolean  shift, and go to state 23
-
-    T_ID      [reduce using rule 9 (VarDeclarationList)]
     $default  reduce using rule 9 (VarDeclarationList)
 
-    VarDeclarationList  go to state 58
-    VarDeclaration      go to state 25
-    Type                go to state 26
-    Identifier          go to state 27
+    VarDeclarationList  go to state 55
 
 
-State 56
+State 53
 
    17 ArgumentList: Argument T_comma ArgumentList .
 
     $default  reduce using rule 17 (ArgumentList)
 
 
-State 57
+State 54
 
     3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace . Statement T_rbrace T_rbrace
 
     T_ID      shift, and go to state 5
-    T_lbrace  shift, and go to state 59
-    T_if      shift, and go to state 60
-    T_while   shift, and go to state 61
-    T_sop     shift, and go to state 62
+    T_lbrace  shift, and go to state 56
+    T_if      shift, and go to state 57
+    T_while   shift, and go to state 58
+    T_sop     shift, and go to state 59
 
-    Statement   go to state 63
-    Identifier  go to state 64
+    Statement   go to state 60
+    Identifier  go to state 61
 
 
-State 58
+State 55
 
+   10 VarDeclarationList: VarDeclarationList . VarDeclaration
    14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList . StatementList T_return Expression T_semi T_rbrace
 
-    T_ID      shift, and go to state 5
-    T_lbrace  shift, and go to state 59
-    T_if      shift, and go to state 60
-    T_while   shift, and go to state 61
-    T_sop     shift, and go to state 62
+    T_ID       shift, and go to state 5
+    T_int      shift, and go to state 24
+    T_boolean  shift, and go to state 25
+    T_lbrace   shift, and go to state 56
+    T_if       shift, and go to state 57
+    T_while    shift, and go to state 58
+    T_sop      shift, and go to state 59
 
     $default  reduce using rule 23 (StatementList)
 
-    StatementList  go to state 65
-    Statement      go to state 66
-    Identifier     go to state 64
+    VarDeclaration  go to state 26
+    Type            go to state 29
+    StatementList   go to state 62
+    Statement       go to state 63
+    Identifier      go to state 64
 
 
-State 59
+State 56
 
    25 Statement: T_lbrace . StatementList T_rbrace
 
     T_ID      shift, and go to state 5
-    T_lbrace  shift, and go to state 59
-    T_if      shift, and go to state 60
-    T_while   shift, and go to state 61
-    T_sop     shift, and go to state 62
+    T_lbrace  shift, and go to state 56
+    T_if      shift, and go to state 57
+    T_while   shift, and go to state 58
+    T_sop     shift, and go to state 59
 
     $default  reduce using rule 23 (StatementList)
 
-    StatementList  go to state 67
-    Statement      go to state 66
-    Identifier     go to state 64
+    StatementList  go to state 65
+    Statement      go to state 63
+    Identifier     go to state 61
 
 
-State 60
+State 57
 
    26 Statement: T_if . T_lparen Expression T_rparen Statement T_else Statement
+
+    T_lparen  shift, and go to state 66
+
+
+State 58
+
+   27 Statement: T_while . T_lparen Expression T_rparen Statement
+
+    T_lparen  shift, and go to state 67
+
+
+State 59
+
+   28 Statement: T_sop . T_lparen Expression T_rparen T_semi
 
     T_lparen  shift, and go to state 68
 
 
-State 61
-
-   27 Statement: T_while . T_lparen Expression T_rparen Statement
-
-    T_lparen  shift, and go to state 69
-
-
-State 62
-
-   28 Statement: T_sop . T_lparen Expression T_rparen T_semi
-
-    T_lparen  shift, and go to state 70
-
-
-State 63
+State 60
 
     3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace Statement . T_rbrace T_rbrace
 
-    T_rbrace  shift, and go to state 71
+    T_rbrace  shift, and go to state 69
 
 
-State 64
+State 61
 
    29 Statement: Identifier . T_equal Expression T_semi
    30          | Identifier . T_lbracket Expression T_rbracket T_equal Expression T_semi
 
-    T_lbracket  shift, and go to state 72
-    T_equal     shift, and go to state 73
+    T_lbracket  shift, and go to state 70
+    T_equal     shift, and go to state 71
 
 
-State 65
+State 62
 
    14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList StatementList . T_return Expression T_semi T_rbrace
 
-    T_return  shift, and go to state 74
+    T_return  shift, and go to state 72
 
 
-State 66
+State 63
 
    24 StatementList: Statement . StatementList
 
     T_ID      shift, and go to state 5
-    T_lbrace  shift, and go to state 59
-    T_if      shift, and go to state 60
-    T_while   shift, and go to state 61
-    T_sop     shift, and go to state 62
+    T_lbrace  shift, and go to state 56
+    T_if      shift, and go to state 57
+    T_while   shift, and go to state 58
+    T_sop     shift, and go to state 59
 
     $default  reduce using rule 23 (StatementList)
 
-    StatementList  go to state 75
-    Statement      go to state 66
-    Identifier     go to state 64
+    StatementList  go to state 73
+    Statement      go to state 63
+    Identifier     go to state 61
+
+
+State 64
+
+   22 Type: Identifier .
+   29 Statement: Identifier . T_equal Expression T_semi
+   30          | Identifier . T_lbracket Expression T_rbracket T_equal Expression T_semi
+
+    T_lbracket  shift, and go to state 70
+    T_equal     shift, and go to state 71
+
+    $default  reduce using rule 22 (Type)
+
+
+State 65
+
+   25 Statement: T_lbrace StatementList . T_rbrace
+
+    T_rbrace  shift, and go to state 74
+
+
+State 66
+
+   26 Statement: T_if T_lparen . Expression T_rparen Statement T_else Statement
+
+    T_NUM     shift, and go to state 75
+    T_ID      shift, and go to state 5
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
+
+    Expression  go to state 82
+    Identifier  go to state 83
 
 
 State 67
 
-   25 Statement: T_lbrace StatementList . T_rbrace
+   27 Statement: T_while T_lparen . Expression T_rparen Statement
 
-    T_rbrace  shift, and go to state 76
+    T_NUM     shift, and go to state 75
+    T_ID      shift, and go to state 5
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
+
+    Expression  go to state 84
+    Identifier  go to state 83
 
 
 State 68
 
-   26 Statement: T_if T_lparen . Expression T_rparen Statement T_else Statement
+   28 Statement: T_sop T_lparen . Expression T_rparen T_semi
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
-    Expression  go to state 84
-    Identifier  go to state 85
+    Expression  go to state 85
+    Identifier  go to state 83
 
 
 State 69
 
-   27 Statement: T_while T_lparen . Expression T_rparen Statement
+    3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace Statement T_rbrace . T_rbrace
 
-    T_NUM     shift, and go to state 77
-    T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
-
-    Expression  go to state 86
-    Identifier  go to state 85
+    T_rbrace  shift, and go to state 86
 
 
 State 70
 
-   28 Statement: T_sop T_lparen . Expression T_rparen T_semi
+   30 Statement: Identifier T_lbracket . Expression T_rbracket T_equal Expression T_semi
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
     Expression  go to state 87
-    Identifier  go to state 85
+    Identifier  go to state 83
 
 
 State 71
 
-    3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace Statement T_rbrace . T_rbrace
+   29 Statement: Identifier T_equal . Expression T_semi
 
-    T_rbrace  shift, and go to state 88
+    T_NUM     shift, and go to state 75
+    T_ID      shift, and go to state 5
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
+
+    Expression  go to state 88
+    Identifier  go to state 83
 
 
 State 72
 
-   30 Statement: Identifier T_lbracket . Expression T_rbracket T_equal Expression T_semi
+   14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList StatementList T_return . Expression T_semi T_rbrace
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
     Expression  go to state 89
-    Identifier  go to state 85
+    Identifier  go to state 83
 
 
 State 73
-
-   29 Statement: Identifier T_equal . Expression T_semi
-
-    T_NUM     shift, and go to state 77
-    T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
-
-    Expression  go to state 90
-    Identifier  go to state 85
-
-
-State 74
-
-   14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList StatementList T_return . Expression T_semi T_rbrace
-
-    T_NUM     shift, and go to state 77
-    T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
-
-    Expression  go to state 91
-    Identifier  go to state 85
-
-
-State 75
 
    24 StatementList: Statement StatementList .
 
     $default  reduce using rule 24 (StatementList)
 
 
-State 76
+State 74
 
    25 Statement: T_lbrace StatementList T_rbrace .
 
     $default  reduce using rule 25 (Statement)
 
 
-State 77
+State 75
 
    42 Expression: T_NUM .
 
     $default  reduce using rule 42 (Expression)
 
 
-State 78
+State 76
 
    47 Expression: T_new . T_int T_lbracket Expression T_rbracket
    48           | T_new . Identifier T_lparen T_rparen
 
     T_ID   shift, and go to state 5
-    T_int  shift, and go to state 92
+    T_int  shift, and go to state 90
 
-    Identifier  go to state 93
+    Identifier  go to state 91
 
 
-State 79
+State 77
 
    50 Expression: T_lparen . Expression T_rparen
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
-    Expression  go to state 94
-    Identifier  go to state 85
+    Expression  go to state 92
+    Identifier  go to state 83
 
 
-State 80
+State 78
 
    43 Expression: T_true .
 
     $default  reduce using rule 43 (Expression)
 
 
-State 81
+State 79
 
    44 Expression: T_false .
 
     $default  reduce using rule 44 (Expression)
 
 
-State 82
+State 80
 
    46 Expression: T_this .
 
     $default  reduce using rule 46 (Expression)
 
 
-State 83
+State 81
 
    49 Expression: T_not . Expression
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
-    Expression  go to state 95
-    Identifier  go to state 85
+    Expression  go to state 93
+    Identifier  go to state 83
 
 
-State 84
+State 82
 
    26 Statement: T_if T_lparen Expression . T_rparen Statement T_else Statement
    31 Expression: Expression . T_and Expression
@@ -1016,27 +992,27 @@ State 84
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_rparen    shift, and go to state 98
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_rparen    shift, and go to state 96
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
 
-State 85
+State 83
 
    45 Expression: Identifier .
 
     $default  reduce using rule 45 (Expression)
 
 
-State 86
+State 84
 
    27 Statement: T_while T_lparen Expression . T_rparen Statement
    31 Expression: Expression . T_and Expression
@@ -1051,20 +1027,20 @@ State 86
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_rparen    shift, and go to state 107
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_rparen    shift, and go to state 105
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
 
-State 87
+State 85
 
    28 Statement: T_sop T_lparen Expression . T_rparen T_semi
    31 Expression: Expression . T_and Expression
@@ -1079,27 +1055,27 @@ State 87
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_rparen    shift, and go to state 108
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_rparen    shift, and go to state 106
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
 
-State 88
+State 86
 
     3 MainClass: T_class Identifier T_lbrace T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace Statement T_rbrace T_rbrace .
 
     $default  reduce using rule 3 (MainClass)
 
 
-State 89
+State 87
 
    30 Statement: Identifier T_lbracket Expression . T_rbracket T_equal Expression T_semi
    31 Expression: Expression . T_and Expression
@@ -1114,20 +1090,20 @@ State 89
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_rbracket  shift, and go to state 109
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_rbracket  shift, and go to state 107
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
 
-State 90
+State 88
 
    29 Statement: Identifier T_equal Expression . T_semi
    31 Expression: Expression . T_and Expression
@@ -1142,20 +1118,20 @@ State 90
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
-    T_semi      shift, and go to state 110
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
+    T_semi      shift, and go to state 108
 
 
-State 91
+State 89
 
    14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList StatementList T_return Expression . T_semi T_rbrace
    31 Expression: Expression . T_and Expression
@@ -1170,34 +1146,34 @@ State 91
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
-    T_semi      shift, and go to state 111
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
+    T_semi      shift, and go to state 109
 
 
-State 92
+State 90
 
    47 Expression: T_new T_int . T_lbracket Expression T_rbracket
 
-    T_lbracket  shift, and go to state 112
+    T_lbracket  shift, and go to state 110
 
 
-State 93
+State 91
 
    48 Expression: T_new Identifier . T_lparen T_rparen
 
-    T_lparen  shift, and go to state 113
+    T_lparen  shift, and go to state 111
 
 
-State 94
+State 92
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -1212,20 +1188,20 @@ State 94
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
    50           | T_lparen Expression . T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_rparen    shift, and go to state 114
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_rparen    shift, and go to state 112
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
 
-State 95
+State 93
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -1240,16 +1216,16 @@ State 95
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
    49           | T_not Expression .
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
     T_dot       [reduce using rule 49 (Expression)]
     T_star      [reduce using rule 49 (Expression)]
@@ -1264,272 +1240,272 @@ State 95
     $default    reduce using rule 49 (Expression)
 
 
-State 96
+State 94
 
    40 Expression: Expression T_dot . T_length
    41           | Expression T_dot . Identifier T_lparen ExpressionList T_rparen
 
     T_ID      shift, and go to state 5
-    T_length  shift, and go to state 115
+    T_length  shift, and go to state 113
 
-    Identifier  go to state 116
+    Identifier  go to state 114
 
 
-State 97
+State 95
 
    35 Expression: Expression T_star . Expression
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
-    Expression  go to state 117
-    Identifier  go to state 85
+    Expression  go to state 115
+    Identifier  go to state 83
 
 
-State 98
+State 96
 
    26 Statement: T_if T_lparen Expression T_rparen . Statement T_else Statement
 
     T_ID      shift, and go to state 5
-    T_lbrace  shift, and go to state 59
-    T_if      shift, and go to state 60
-    T_while   shift, and go to state 61
-    T_sop     shift, and go to state 62
+    T_lbrace  shift, and go to state 56
+    T_if      shift, and go to state 57
+    T_while   shift, and go to state 58
+    T_sop     shift, and go to state 59
 
-    Statement   go to state 118
-    Identifier  go to state 64
+    Statement   go to state 116
+    Identifier  go to state 61
+
+
+State 97
+
+   39 Expression: Expression T_lbracket . Expression T_rbracket
+
+    T_NUM     shift, and go to state 75
+    T_ID      shift, and go to state 5
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
+
+    Expression  go to state 117
+    Identifier  go to state 83
+
+
+State 98
+
+   31 Expression: Expression T_and . Expression
+
+    T_NUM     shift, and go to state 75
+    T_ID      shift, and go to state 5
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
+
+    Expression  go to state 118
+    Identifier  go to state 83
 
 
 State 99
 
-   39 Expression: Expression T_lbracket . Expression T_rbracket
+   32 Expression: Expression T_less . Expression
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
     Expression  go to state 119
-    Identifier  go to state 85
+    Identifier  go to state 83
 
 
 State 100
 
-   31 Expression: Expression T_and . Expression
+   33 Expression: Expression T_plus . Expression
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
     Expression  go to state 120
-    Identifier  go to state 85
+    Identifier  go to state 83
 
 
 State 101
 
-   32 Expression: Expression T_less . Expression
+   34 Expression: Expression T_minus . Expression
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
     Expression  go to state 121
-    Identifier  go to state 85
+    Identifier  go to state 83
 
 
 State 102
 
-   33 Expression: Expression T_plus . Expression
+   36 Expression: Expression T_divide . Expression
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
     Expression  go to state 122
-    Identifier  go to state 85
+    Identifier  go to state 83
 
 
 State 103
 
-   34 Expression: Expression T_minus . Expression
+   37 Expression: Expression T_mod . Expression
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
     Expression  go to state 123
-    Identifier  go to state 85
+    Identifier  go to state 83
 
 
 State 104
 
-   36 Expression: Expression T_divide . Expression
+   38 Expression: Expression T_or . Expression
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
     Expression  go to state 124
-    Identifier  go to state 85
+    Identifier  go to state 83
 
 
 State 105
 
-   37 Expression: Expression T_mod . Expression
+   27 Statement: T_while T_lparen Expression T_rparen . Statement
 
-    T_NUM     shift, and go to state 77
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_lbrace  shift, and go to state 56
+    T_if      shift, and go to state 57
+    T_while   shift, and go to state 58
+    T_sop     shift, and go to state 59
 
-    Expression  go to state 125
-    Identifier  go to state 85
+    Statement   go to state 125
+    Identifier  go to state 61
 
 
 State 106
 
-   38 Expression: Expression T_or . Expression
+   28 Statement: T_sop T_lparen Expression T_rparen . T_semi
 
-    T_NUM     shift, and go to state 77
-    T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
-
-    Expression  go to state 126
-    Identifier  go to state 85
+    T_semi  shift, and go to state 126
 
 
 State 107
 
-   27 Statement: T_while T_lparen Expression T_rparen . Statement
+   30 Statement: Identifier T_lbracket Expression T_rbracket . T_equal Expression T_semi
 
-    T_ID      shift, and go to state 5
-    T_lbrace  shift, and go to state 59
-    T_if      shift, and go to state 60
-    T_while   shift, and go to state 61
-    T_sop     shift, and go to state 62
-
-    Statement   go to state 127
-    Identifier  go to state 64
+    T_equal  shift, and go to state 127
 
 
 State 108
-
-   28 Statement: T_sop T_lparen Expression T_rparen . T_semi
-
-    T_semi  shift, and go to state 128
-
-
-State 109
-
-   30 Statement: Identifier T_lbracket Expression T_rbracket . T_equal Expression T_semi
-
-    T_equal  shift, and go to state 129
-
-
-State 110
 
    29 Statement: Identifier T_equal Expression T_semi .
 
     $default  reduce using rule 29 (Statement)
 
 
-State 111
+State 109
 
    14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList StatementList T_return Expression T_semi . T_rbrace
 
-    T_rbrace  shift, and go to state 130
+    T_rbrace  shift, and go to state 128
 
 
-State 112
+State 110
 
    47 Expression: T_new T_int T_lbracket . Expression T_rbracket
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
-    Expression  go to state 131
-    Identifier  go to state 85
+    Expression  go to state 129
+    Identifier  go to state 83
 
 
-State 113
+State 111
 
    48 Expression: T_new Identifier T_lparen . T_rparen
 
-    T_rparen  shift, and go to state 132
+    T_rparen  shift, and go to state 130
 
 
-State 114
+State 112
 
    50 Expression: T_lparen Expression T_rparen .
 
     $default  reduce using rule 50 (Expression)
 
 
-State 115
+State 113
 
    40 Expression: Expression T_dot T_length .
 
     $default  reduce using rule 40 (Expression)
 
 
-State 116
+State 114
 
    41 Expression: Expression T_dot Identifier . T_lparen ExpressionList T_rparen
 
-    T_lparen  shift, and go to state 133
+    T_lparen  shift, and go to state 131
 
 
-State 117
+State 115
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -1544,16 +1520,16 @@ State 117
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
     T_dot       [reduce using rule 35 (Expression)]
     T_star      [reduce using rule 35 (Expression)]
@@ -1568,14 +1544,14 @@ State 117
     $default    reduce using rule 35 (Expression)
 
 
-State 118
+State 116
 
    26 Statement: T_if T_lparen Expression T_rparen Statement . T_else Statement
 
-    T_else  shift, and go to state 134
+    T_else  shift, and go to state 132
 
 
-State 119
+State 117
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -1590,20 +1566,20 @@ State 119
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_rbracket  shift, and go to state 135
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_rbracket  shift, and go to state 133
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
 
-State 120
+State 118
 
    31 Expression: Expression . T_and Expression
    31           | Expression T_and Expression .
@@ -1618,16 +1594,16 @@ State 120
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
     T_dot       [reduce using rule 31 (Expression)]
     T_star      [reduce using rule 31 (Expression)]
@@ -1642,7 +1618,7 @@ State 120
     $default    reduce using rule 31 (Expression)
 
 
-State 121
+State 119
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -1657,16 +1633,16 @@ State 121
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
     T_dot       [reduce using rule 32 (Expression)]
     T_star      [reduce using rule 32 (Expression)]
@@ -1681,7 +1657,7 @@ State 121
     $default    reduce using rule 32 (Expression)
 
 
-State 122
+State 120
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -1696,16 +1672,16 @@ State 122
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
     T_dot       [reduce using rule 33 (Expression)]
     T_star      [reduce using rule 33 (Expression)]
@@ -1720,7 +1696,7 @@ State 122
     $default    reduce using rule 33 (Expression)
 
 
-State 123
+State 121
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -1735,16 +1711,16 @@ State 123
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
     T_dot       [reduce using rule 34 (Expression)]
     T_star      [reduce using rule 34 (Expression)]
@@ -1759,7 +1735,7 @@ State 123
     $default    reduce using rule 34 (Expression)
 
 
-State 124
+State 122
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -1774,16 +1750,16 @@ State 124
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
     T_dot       [reduce using rule 36 (Expression)]
     T_star      [reduce using rule 36 (Expression)]
@@ -1798,7 +1774,7 @@ State 124
     $default    reduce using rule 36 (Expression)
 
 
-State 125
+State 123
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -1813,16 +1789,16 @@ State 125
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
     T_dot       [reduce using rule 37 (Expression)]
     T_star      [reduce using rule 37 (Expression)]
@@ -1837,7 +1813,7 @@ State 125
     $default    reduce using rule 37 (Expression)
 
 
-State 126
+State 124
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -1852,16 +1828,16 @@ State 126
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
     T_dot       [reduce using rule 38 (Expression)]
     T_star      [reduce using rule 38 (Expression)]
@@ -1876,45 +1852,45 @@ State 126
     $default    reduce using rule 38 (Expression)
 
 
-State 127
+State 125
 
    27 Statement: T_while T_lparen Expression T_rparen Statement .
 
     $default  reduce using rule 27 (Statement)
 
 
-State 128
+State 126
 
    28 Statement: T_sop T_lparen Expression T_rparen T_semi .
 
     $default  reduce using rule 28 (Statement)
 
 
-State 129
+State 127
 
    30 Statement: Identifier T_lbracket Expression T_rbracket T_equal . Expression T_semi
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
-    Expression  go to state 136
-    Identifier  go to state 85
+    Expression  go to state 134
+    Identifier  go to state 83
 
 
-State 130
+State 128
 
    14 MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace VarDeclarationList StatementList T_return Expression T_semi T_rbrace .
 
     $default  reduce using rule 14 (MethodDeclaration)
 
 
-State 131
+State 129
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -1929,68 +1905,68 @@ State 131
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
    47           | T_new T_int T_lbracket Expression . T_rbracket
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_rbracket  shift, and go to state 137
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_rbracket  shift, and go to state 135
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
 
 
-State 132
+State 130
 
    48 Expression: T_new Identifier T_lparen T_rparen .
 
     $default  reduce using rule 48 (Expression)
 
 
-State 133
+State 131
 
    41 Expression: Expression T_dot Identifier T_lparen . ExpressionList T_rparen
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
     $default  reduce using rule 51 (ExpressionList)
 
-    Expression      go to state 138
-    ExpressionList  go to state 139
-    Identifier      go to state 85
+    Expression      go to state 136
+    ExpressionList  go to state 137
+    Identifier      go to state 83
 
 
-State 134
+State 132
 
    26 Statement: T_if T_lparen Expression T_rparen Statement T_else . Statement
 
     T_ID      shift, and go to state 5
-    T_lbrace  shift, and go to state 59
-    T_if      shift, and go to state 60
-    T_while   shift, and go to state 61
-    T_sop     shift, and go to state 62
+    T_lbrace  shift, and go to state 56
+    T_if      shift, and go to state 57
+    T_while   shift, and go to state 58
+    T_sop     shift, and go to state 59
 
-    Statement   go to state 140
-    Identifier  go to state 64
+    Statement   go to state 138
+    Identifier  go to state 61
 
 
-State 135
+State 133
 
    39 Expression: Expression T_lbracket Expression T_rbracket .
 
     $default  reduce using rule 39 (Expression)
 
 
-State 136
+State 134
 
    30 Statement: Identifier T_lbracket Expression T_rbracket T_equal Expression . T_semi
    31 Expression: Expression . T_and Expression
@@ -2005,27 +1981,27 @@ State 136
    40           | Expression . T_dot T_length
    41           | Expression . T_dot Identifier T_lparen ExpressionList T_rparen
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
-    T_semi      shift, and go to state 141
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
+    T_semi      shift, and go to state 139
 
 
-State 137
+State 135
 
    47 Expression: T_new T_int T_lbracket Expression T_rbracket .
 
     $default  reduce using rule 47 (Expression)
 
 
-State 138
+State 136
 
    31 Expression: Expression . T_and Expression
    32           | Expression . T_less Expression
@@ -2041,70 +2017,70 @@ State 138
    52 ExpressionList: Expression . T_comma ExpressionList
    53               | Expression .
 
-    T_dot       shift, and go to state 96
-    T_star      shift, and go to state 97
-    T_lbracket  shift, and go to state 99
-    T_and       shift, and go to state 100
-    T_less      shift, and go to state 101
-    T_plus      shift, and go to state 102
-    T_minus     shift, and go to state 103
-    T_divide    shift, and go to state 104
-    T_mod       shift, and go to state 105
-    T_or        shift, and go to state 106
-    T_comma     shift, and go to state 142
+    T_dot       shift, and go to state 94
+    T_star      shift, and go to state 95
+    T_lbracket  shift, and go to state 97
+    T_and       shift, and go to state 98
+    T_less      shift, and go to state 99
+    T_plus      shift, and go to state 100
+    T_minus     shift, and go to state 101
+    T_divide    shift, and go to state 102
+    T_mod       shift, and go to state 103
+    T_or        shift, and go to state 104
+    T_comma     shift, and go to state 140
 
     $default  reduce using rule 53 (ExpressionList)
 
 
-State 139
+State 137
 
    41 Expression: Expression T_dot Identifier T_lparen ExpressionList . T_rparen
 
-    T_rparen  shift, and go to state 143
+    T_rparen  shift, and go to state 141
 
 
-State 140
+State 138
 
    26 Statement: T_if T_lparen Expression T_rparen Statement T_else Statement .
 
     $default  reduce using rule 26 (Statement)
 
 
-State 141
+State 139
 
    30 Statement: Identifier T_lbracket Expression T_rbracket T_equal Expression T_semi .
 
     $default  reduce using rule 30 (Statement)
 
 
-State 142
+State 140
 
    52 ExpressionList: Expression T_comma . ExpressionList
 
-    T_NUM     shift, and go to state 77
+    T_NUM     shift, and go to state 75
     T_ID      shift, and go to state 5
-    T_new     shift, and go to state 78
-    T_lparen  shift, and go to state 79
-    T_true    shift, and go to state 80
-    T_false   shift, and go to state 81
-    T_this    shift, and go to state 82
-    T_not     shift, and go to state 83
+    T_new     shift, and go to state 76
+    T_lparen  shift, and go to state 77
+    T_true    shift, and go to state 78
+    T_false   shift, and go to state 79
+    T_this    shift, and go to state 80
+    T_not     shift, and go to state 81
 
     $default  reduce using rule 51 (ExpressionList)
 
-    Expression      go to state 138
-    ExpressionList  go to state 144
-    Identifier      go to state 85
+    Expression      go to state 136
+    ExpressionList  go to state 142
+    Identifier      go to state 83
 
 
-State 143
+State 141
 
    41 Expression: Expression T_dot Identifier T_lparen ExpressionList T_rparen .
 
     $default  reduce using rule 41 (Expression)
 
 
-State 144
+State 142
 
    52 ExpressionList: Expression T_comma ExpressionList .
 

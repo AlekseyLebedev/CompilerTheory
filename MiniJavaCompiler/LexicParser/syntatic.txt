@@ -108,14 +108,14 @@ ClassDeclaration: T_class Identifier ClassExtend T_lbrace
 	}
 
 ClassExtend: {$$ = nullptr;}
-	| T_lparen T_extends Identifier T_rparen {
-		$$ =  new CClassExtend((CIdExpression*)$3);
+	|  T_extends Identifier  {
+		$$ =  new CClassExtend((CIdExpression*)$2);
 		//ClassExtend(Identifier)
 	}
 
 VarDeclarationList: {$$ = nullptr;}
-	| VarDeclaration VarDeclarationList {
-		$$ =  new CVarDeclarationList($1, $2);
+	| VarDeclarationList VarDeclaration {
+		$$ =  new CVarDeclarationList($2, $1);
 		//VarDeclarationList(VarDeclaration,VarDeclarationList)
 	}
 
@@ -136,7 +136,7 @@ MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbr
 		//MethodDeclaration(Type, Identifier, ArgumentList, VarDeclarationList, StatementList, Expression)
 	}
 
-ArgumentList:
+ArgumentList: { $$ = nullptr; }
 	| Argument {
 		$$ =  new CArgumentList($1, nullptr);
 		//ArgumentList(Argument, nullptr)

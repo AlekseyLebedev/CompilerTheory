@@ -4,13 +4,24 @@ class BinarySearch{
     }
 }
 
-class BS {
-	int[] number ;
-    	int size ;
-public int Start(int sz){
-	int aux01;
-	int aux02;	
-	d=0;
-return aux01;
-}
+class MyVisitor extends Visitor {
+
+    public int visit(Tree n){
+	int nti ;
+
+	if (n.GetHas_Right()){
+	    r = n.GetRight() ;
+	    nti = r.accept(this) ; }
+	else nti = 0 ;
+
+	System.out.println(n.GetKey());
+
+	if (n.GetHas_Left()) {
+	    l = n.GetLeft(); 
+	    nti =l.accept(this) ; }
+	else nti = 0 ;
+
+	return 0;
+    }
+
 }

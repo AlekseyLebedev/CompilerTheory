@@ -278,7 +278,7 @@ false {
 	debugOutput(yytext);
 	updateLocation(false);
 }
-({DIGIT}|"-"{DIGIT})({DIGIT})* {
+({DIGIT})({DIGIT})* {
 	yylval.int_val = atoi(yytext);
 	debugOutput("NUM(");
 	debugOutput(yytext);
