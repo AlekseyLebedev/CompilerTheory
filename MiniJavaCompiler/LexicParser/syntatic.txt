@@ -16,8 +16,6 @@ using namespace AbstractTreeGenerator;
 int yyerror(char *s);
 int yylex(void);
 
-
-
 extern AbstractTreeGenerator::CProgram* rootNode;
 
 
@@ -189,7 +187,7 @@ Statement: T_lbrace StatementList T_rbrace {
 		$$ = new CPrintStatement($3);
 		//PrintStatement(Expression)
 	}
-	| Identifier T_equal Identifier T_semi {
+	| Identifier T_equal Expression T_semi {
 		$$ = new CAssignmentStatement((CIdExpression*)$1, $3);
 		//AssignmentStatement(Identifier, Expression)
 	}

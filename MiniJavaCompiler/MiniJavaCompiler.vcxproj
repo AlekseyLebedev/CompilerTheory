@@ -147,6 +147,8 @@
       <Command>"$(SolutionDir)winflexbison\tools\win_bison.exe" -o"$(ProjectDir)LexicParser\syntatic.cpp"  --defines="$(ProjectDir)LexicParser\syntatic.h" "$(ProjectDir)LexicParser\syntatic.txt"</Command>
       <Message>WinBisonLauncher</Message>
       <Outputs>$(ProjectDir)LexicParser\syntatic.cpp </Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(SolutionDir)winflexbison\tools\win_bison.exe" -v -d -o"$(ProjectDir)LexicParser\syntatic.cpp"  --defines="$(ProjectDir)LexicParser\syntatic.h" "$(ProjectDir)LexicParser\syntatic.txt"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(SolutionDir)winflexbison\tools\win_bison.exe" -v -d -o"$(ProjectDir)LexicParser\syntatic.cpp"  --defines="$(ProjectDir)LexicParser\syntatic.h" "$(ProjectDir)LexicParser\syntatic.txt"</Command>
     </CustomBuild>
     <Text Include="ReadMe.txt" />
   </ItemGroup>

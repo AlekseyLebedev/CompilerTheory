@@ -10,7 +10,7 @@ class BS {
 public int Start(int sz){
 	int aux01;
 	int aux02;	
-	//d=0;
+	d=0;
 return aux01;
 }
 }
