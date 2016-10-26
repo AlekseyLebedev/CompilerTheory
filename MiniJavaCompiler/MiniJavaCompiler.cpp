@@ -34,7 +34,7 @@ int main( int argc, char** argv )
 			fclose( yyin );
 			buffer.str( "" );
 			std::shared_ptr<AbstractTreeGenerator::CProgram> root( rootNode ); //set from bison
-			GraphvizOutput::CGraphvizLauncher::Launch(root.get());
+			GraphvizOutput::CGraphvizLauncher::Launch(root.get(), i);
 		}
 	}
 	return 0;

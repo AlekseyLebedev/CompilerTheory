@@ -1,6 +1,7 @@
 #include "GraphvizLauncher.h"
 #include "DotOutputVisitor.h"
 #include <cstdlib>
+#include <sstream>
 
 namespace GraphvizOutput {
 	CGraphvizLauncher::CGraphvizLauncher()
@@ -12,17 +13,22 @@ namespace GraphvizOutput {
 	{
 	}
 
-	void CGraphvizLauncher::Launch(AbstractTreeGenerator::CProgram * node)
+	void CGraphvizLauncher::Launch(AbstractTreeGenerator::CProgram * node, int number)
 	{
 		CDotOutputVisitor visitor;
 		visitor.Start(filename);
 		node->Accept(&visitor);
 		visitor.Close();
-		system(convertString);
-		system(launchString);
+		std::stringstream convert;
+		convert << convertString << number << extentionString;
+		system(convert.str().c_str());
+		convert = std::stringstream();
+		convert << launchString << number << extentionString;
+		system( convert.str().c_str() );
 	}
 
 	const char* CGraphvizLauncher::filename = "temp.dot";
-	const char* CGraphvizLauncher::convertString = "\"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe\" -Tpng temp.dot -o temp.png";
-	const char* CGraphvizLauncher::launchString = "temp.png";
+	const char* CGraphvizLauncher::convertString = "\"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe\" -Tpng temp.dot -o image";
+	const char* CGraphvizLauncher::launchString = "image";
+	const char* CGraphvizLauncher::extentionString = ".png";
 }
