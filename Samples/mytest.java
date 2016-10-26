@@ -1,6 +1,6 @@
 class BinaryTree{
     public static void main(String[] a){
-	System.out.println("abc");
+	System.out.println(1);
     }
 }
 

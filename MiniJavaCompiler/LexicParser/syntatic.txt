@@ -36,7 +36,7 @@ void DebugOutput(const std::string& s){
 	CVarDeclaration* varDeclaration;
 	CMethodDeclarationList* methodDeclarationList;
 	CMethodDeclaration* methodDeclaration;
-	CType* type;
+	IType* type;
 	CNumberExpr* numExpression;
 	CExpressionList* expressionList;
 	IExpression* expression;
@@ -152,16 +152,16 @@ Argument: Type Identifier {
 	}
 
 Type: T_int T_lbracket T_rbracket {
-		$$ = new CType("INTLIST");
+		$$ = new CBasicType("INTLIST");
 	}
 	| T_boolean {
-		$$ = new CType("BOOL");
+		$$ = new CBasicType("BOOL");
 	}
 	| T_int {
-		$$ = new CType("INT");
+		$$ = new CBasicType("INT");
 	}
 	| Identifier {
-		$$ = new CType(((CIdExpression*)$1)->GetName().c_str());
+		$$ = new CIdType((CIdExpression*)$1);
 		//Type(Identifier)
 	}
 

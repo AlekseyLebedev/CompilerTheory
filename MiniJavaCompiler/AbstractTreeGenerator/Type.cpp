@@ -1,21 +1,29 @@
 #include "Type.h"
 
-AbstractTreeGenerator::CType::CType( const char* id ) :
-	idExpression ( id ) 
+AbstractTreeGenerator::CBasicType::CBasicType( const char * _name ) : name( _name )
 {
 }
 
-AbstractTreeGenerator::CType::~CType()
-{
-}
-
-void AbstractTreeGenerator::CType::Accept( IVisitor * v )
+void AbstractTreeGenerator::CBasicType::Accept( IVisitor * v )
 {
 	v->visit( this );
 }
 
-const char* AbstractTreeGenerator::CType::GetName() const
+const char * AbstractTreeGenerator::CBasicType::GetName() const
+{
+	return name;
+}
+
+AbstractTreeGenerator::CIdType::CIdType( CIdExpression * theIdExpression ) : idExpression( theIdExpression )
+{
+}
+
+void AbstractTreeGenerator::CIdType::Accept( IVisitor * v )
+{
+	v->visit( this );
+}
+
+const std::shared_ptr<AbstractTreeGenerator::CIdExpression> AbstractTreeGenerator::CIdType::GetIdExpression() const
 {
 	return idExpression;
 }
-

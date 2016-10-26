@@ -7,15 +7,15 @@
 namespace AbstractTreeGenerator {
 	class CVarDeclaration : public INode {
 	public:
-		CVarDeclaration( CType* theType,
+		CVarDeclaration( IType* theType,
 			CIdExpression* theIdExpression );
 		virtual ~CVarDeclaration();
 
 		virtual void Accept(IVisitor*v) override;
-		const std::shared_ptr<CType> GetType() const;
+		const std::shared_ptr<IType> GetType() const;
 		const std::shared_ptr<CIdExpression> GetIdExpression() const;
 	private:
-		std::shared_ptr<CType> type;
+		std::shared_ptr<IType> type;
 		std::shared_ptr<CIdExpression> idExpression;
 	};
 }

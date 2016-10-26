@@ -1,6 +1,6 @@
 #include "Argument.h"
 
-AbstractTreeGenerator::CArgument::CArgument( CType * theType, CIdExpression * theIdExpression ) :
+AbstractTreeGenerator::CArgument::CArgument( IType * theType, CIdExpression * theIdExpression ) :
 	type( theType ), idExpression( theIdExpression )
 {
 }
@@ -9,7 +9,7 @@ AbstractTreeGenerator::CArgument::~CArgument()
 {
 }
 
-const std::shared_ptr<AbstractTreeGenerator::CType> AbstractTreeGenerator::CArgument::GetType() const
+const std::shared_ptr<AbstractTreeGenerator::IType> AbstractTreeGenerator::CArgument::GetType() const
 {
 	return type;
 }

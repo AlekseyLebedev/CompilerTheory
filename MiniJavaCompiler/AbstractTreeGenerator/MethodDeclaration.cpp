@@ -1,6 +1,6 @@
 #include "MethodDeclaration.h"
 
-AbstractTreeGenerator::CMethodDeclaration::CMethodDeclaration( CType* theType,
+AbstractTreeGenerator::CMethodDeclaration::CMethodDeclaration( IType* theType,
 	CIdExpression* theIdExpression,
 	CArgumentList* theArgumentList,
 	CVarDeclarationList*  theVarDeclarationList,
@@ -19,7 +19,7 @@ void AbstractTreeGenerator::CMethodDeclaration::Accept( IVisitor * v )
 {
 	v->visit( this );
 }
-const std::shared_ptr<AbstractTreeGenerator::CType> AbstractTreeGenerator::CMethodDeclaration::GetType() const
+const std::shared_ptr<AbstractTreeGenerator::IType> AbstractTreeGenerator::CMethodDeclaration::GetType() const
 {
 	return type;
 }

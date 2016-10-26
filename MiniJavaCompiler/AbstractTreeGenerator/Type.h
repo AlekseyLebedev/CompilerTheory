@@ -5,15 +5,30 @@
 #include "INode.h"
 
 namespace AbstractTreeGenerator {
-	class CType : public INode {
-	public:
-		CType( const char* theIdExpression );
-		virtual ~CType();
+	class IType : public INode {
 
-		virtual void Accept(IVisitor* v) override;
+	};
+
+	class CBasicType : public IType {
+	public:
+		CBasicType( const char* _name );
+		virtual ~CBasicType() {};
+
+		virtual void Accept( IVisitor* v ) override;
 		const char* GetName() const;
 	private:
-		const char* idExpression;
+		const char* name;
+	};
+
+	class CIdType : public IType {
+	public:
+		CIdType( CIdExpression* theIdExpression );
+		virtual ~CIdType() { }
+
+		virtual void Accept( IVisitor* v ) override;
+		const std::shared_ptr<CIdExpression> GetIdExpression() const;
+	private:
+		std::shared_ptr<CIdExpression> idExpression;
 	};
 
 

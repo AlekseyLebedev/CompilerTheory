@@ -1,6 +1,6 @@
 #include "VarDeclaration.h"
 
-AbstractTreeGenerator::CVarDeclaration::CVarDeclaration( CType* theType,
+AbstractTreeGenerator::CVarDeclaration::CVarDeclaration( IType* theType,
 	CIdExpression* theIdExpression ) :
 	type( theType ), idExpression( theIdExpression )
 {
@@ -14,7 +14,7 @@ void AbstractTreeGenerator::CVarDeclaration::Accept( IVisitor * v )
 {
 	v->visit( this );
 }
-const std::shared_ptr<AbstractTreeGenerator::CType> AbstractTreeGenerator::CVarDeclaration::GetType() const
+const std::shared_ptr<AbstractTreeGenerator::IType> AbstractTreeGenerator::CVarDeclaration::GetType() const
 {
 	 return type;
 }

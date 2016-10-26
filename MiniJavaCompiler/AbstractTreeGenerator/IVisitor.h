@@ -28,7 +28,8 @@ namespace AbstractTreeGenerator {
 	class CPrintStatement;
 	class CProgram;
 	class CStatementList;
-	class CType;
+	class CBasicType;
+	class CIdType;
 	class CVarDeclaration;
 	class CVarDeclarationList;
 	class CTrueExpression;
@@ -65,7 +66,8 @@ namespace AbstractTreeGenerator {
 		virtual void visit( CPrintStatement* const ) = 0;
 		virtual void visit( CProgram* const ) = 0;
 		virtual void visit( CStatementList* const ) = 0;
-		virtual void visit( CType* const ) = 0;
+		virtual void visit( CBasicType* const ) = 0;
+		virtual void visit( CIdType* const ) = 0;
 		virtual void visit( CVarDeclaration* const ) = 0;
 		virtual void visit( CVarDeclarationList* const ) = 0;
 		virtual void visit( CTrueExpression* const ) = 0;

@@ -90,11 +90,6 @@ namespace GraphvizOutput {
 			statementList->GetStatementList().get() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CType * const type )
-	{
-		visitValueNode( "Type", type->GetName() );
-	}
-
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CVarDeclaration * const varDeclaration )
 	{
 		visitBinaryNode( "VarDeclaration", varDeclaration->GetType().get(),
@@ -134,6 +129,17 @@ namespace GraphvizOutput {
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CThisExpression * const )
 	{
 		enterNode( "ThisExpression" );
+	}
+
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CBasicType * const type)
+	{
+		size_t id = enterNode( "BasicType" );
+		addSubNode( id, type->GetName() );
+	}
+
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CIdType * const type)
+	{
+		visitUnaryNode( "IdType", type->GetIdExpression().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::COperationExpression *const operationExpression )
