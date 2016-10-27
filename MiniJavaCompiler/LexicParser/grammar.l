@@ -211,7 +211,7 @@ false {
 "*" {
 	debugOutput("STAR");	
 	updateLocation();
-	return T_star;
+	return T_times;
 }
 "%" {
 	debugOutput("%");

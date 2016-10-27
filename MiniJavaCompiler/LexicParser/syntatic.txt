@@ -51,7 +51,7 @@ void DebugOutput(const std::string& s){
 %token<int_val> T_NUM
 %token<str_val> T_ID
 %token T_class, T_public, T_private, T_protected, T_static, T_main,  T_extends, T_return, T_new
-%token T_void, T_int, T_boolean, T_string, T_char, T_dot, T_else, T_star
+%token T_void, T_int, T_boolean, T_string, T_char, T_dot, T_else
 %token T_lparen, T_rparen, T_lbrace, T_rbrace, T_lbracket, T_rbracket
 %token T_if, T_while, T_sop, T_length, T_true, T_false, T_this
 %token T_equal,  T_and, T_less, T_plus, T_minus, T_times, T_divide, T_mod, T_or
@@ -73,6 +73,15 @@ void DebugOutput(const std::string& s){
 %type<statement> Statement
 %type<expressionList> ExpressionList
 %type<expression> Expression, Identifier
+
+%right T_equal
+%left T_or
+%left T_and
+%left T_less
+%left T_minus, T_plus
+%left T_times, T_divide, T_mod
+%right T_not
+%left T_dot T_lbracket
 
 %%
 
@@ -212,7 +221,7 @@ Expression: Expression T_and Expression {
 		$$ = new COperationExpression($1, $3, COperationExpression::TOperationType::Minus);
 		//OperationExpression(Expression, Expression, Minus)
 	}
-	|  Expression T_star Expression {
+	|  Expression T_times Expression {
 		$$ = new COperationExpression($1, $3, COperationExpression::TOperationType::Times);
 		//OperationExpression(Expression, Expression, Times)
 	}
