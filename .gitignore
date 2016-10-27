@@ -247,7 +247,6 @@ ModelManifest.xml
 
 Temp images
 *.dot
-*.png
 temp*
 Outputs
 
