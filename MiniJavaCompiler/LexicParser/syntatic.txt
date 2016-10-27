@@ -1,11 +1,23 @@
-/* Mini Calculator *
-/* calc.y */
+%code requires {
+#include <iostream>
+#include "..\AbstractTreeGenerator\AllNodes.h"
+using namespace AbstractTreeGenerator;
+//using namespace std;
+}
 
 %{
-#include  <iostream>
-#include <string>
+
+#include <iostream>
+#include "..\AbstractTreeGenerator\AllNodes.h"
+using namespace AbstractTreeGenerator;
+//using namespace std;
+
+
 int yyerror(char *s);
 int yylex(void);
+
+extern AbstractTreeGenerator::CProgram* rootNode;
+
 
 void DebugOutput(const std::string& s){
 	std::cout << s << std::endl;
@@ -13,22 +25,276 @@ void DebugOutput(const std::string& s){
 %}
 
 %union{
-  int		int_val;
-  std::string*	op_val;
+	int int_val;
+	char* str_val;
+	CProgram* program;
+	CMainClass* mainClass;
+	CClassDeclarationList* classDeclarationList;
+	CClassDeclaration* classDeclaration;
+	CClassExtend* classExtend;
+	CVarDeclarationList* varDeclarationList;
+	CVarDeclaration* varDeclaration;
+	CMethodDeclarationList* methodDeclarationList;
+	CMethodDeclaration* methodDeclaration;
+	IType* type;
+	CNumberExpr* numExpression;
+	CExpressionList* expressionList;
+	IExpression* expression;
+	CStatementList* statementList;
+	IStatement* statement;
+	CArgumentList* argumentList;
+	CArgument* argument;
 }
 
 %start	input 
 
-%token	T_class
+%token<int_val> T_NUM
+%token<str_val> T_ID
+%token T_class, T_public, T_private, T_protected, T_static, T_main,  T_extends, T_return, T_new
+%token T_void, T_int, T_boolean, T_string, T_char, T_dot, T_else, T_star
+%token T_lparen, T_rparen, T_lbrace, T_rbrace, T_lbracket, T_rbracket
+%token T_if, T_while, T_sop, T_length, T_true, T_false, T_this
+%token T_equal,  T_and, T_less, T_plus, T_minus, T_times, T_divide, T_mod, T_or
+%token T_semi, T_comma, T_not
+
+%type<program> MainProgram
+%type<mainClass> MainClass
+%type<classDeclarationList> ClassDeclarationList
+%type<classDeclaration> ClassDeclaration
+%type<classExtend> ClassExtend
+%type<varDeclarationList> VarDeclarationList
+%type<varDeclaration> VarDeclaration
+%type<methodDeclarationList> MethodDeclarationList
+%type<methodDeclaration> MethodDeclaration
+%type<argumentList> ArgumentList
+%type<argument> Argument
+%type<type> Type
+%type<statementList> StatementList
+%type<statement> Statement
+%type<expressionList> ExpressionList
+%type<expression> Expression, Identifier
+
 %%
 
-input:
-	T_class { DebugOutput("Class: "); }
+input: MainProgram
+
+MainProgram: MainClass ClassDeclarationList {
+	CProgram * pointer = new CProgram($1, $2);
+	rootNode = pointer;
+	$$ = pointer;
+	//CProgram(MainClass, ClassDeclarationList)
+}
+
+MainClass: T_class Identifier T_lbrace
+	T_public T_static T_void T_main T_lparen T_string T_lbracket T_rbracket Identifier T_rparen T_lbrace
+		Statement T_rbrace
+	T_rbrace {
+		$$ = new CMainClass( (CIdExpression*)$2, (CIdExpression*)$12, $15);
+		// IClass(Identifier, Identifier, Statement)
+		}
+
+ClassDeclarationList: {$$ = nullptr;}
+	| ClassDeclaration ClassDeclarationList {
+		$$ = new CClassDeclarationList($1, $2);
+		//ClassDeclarationList(ClassDeclaration, ClassDeclarationList)
+	}
+
+ClassDeclaration: T_class Identifier ClassExtend T_lbrace
+		VarDeclarationList
+		MethodDeclarationList
+	T_rbrace {
+		$$ = new CClassDeclaration((CIdExpression*)$2, $3, $5, $6);
+		//ClassDeclaration(Identifier, ClassExtend, VarDeclarationList, MethodList)
+	}
+
+ClassExtend: {$$ = nullptr;}
+	|  T_extends Identifier  {
+		$$ =  new CClassExtend((CIdExpression*)$2);
+		//ClassExtend(Identifier)
+	}
+
+VarDeclarationList: {$$ = nullptr;}
+	| VarDeclarationList VarDeclaration {
+		$$ =  new CVarDeclarationList($2, $1);
+		//VarDeclarationList(VarDeclaration,VarDeclarationList)
+	}
+
+VarDeclaration : Type Identifier T_semi {
+		$$ =  new CVarDeclaration($1, (CIdExpression*)$2);
+		//VarDeclaration(Type, Identifier)
+	}
+
+MethodDeclarationList: {$$ = nullptr;}
+	| MethodDeclaration MethodDeclarationList {
+		$$ =  new CMethodDeclarationList($1, $2);
+		//MethodDeclarationList(MethodDeclaration, MethodDeclarationList)
+	}
+
+MethodDeclaration: T_public Type Identifier T_lparen ArgumentList T_rparen T_lbrace
+	VarDeclarationList StatementList T_return Expression T_semi T_rbrace {
+		$$ = new CMethodDeclaration($2, (CIdExpression*)$3, $5, $8, $9, $11);
+		//MethodDeclaration(Type, Identifier, ArgumentList, VarDeclarationList, StatementList, Expression)
+	}
+
+ArgumentList: { $$ = nullptr; }
+	| Argument {
+		$$ =  new CArgumentList($1, nullptr);
+		//ArgumentList(Argument, nullptr)
+	}
+	| Argument T_comma ArgumentList {
+		$$ =  new CArgumentList($1, $3);
+		//ArgumentList(Argument, ArgumentList)
+	 }
+
+Argument: Type Identifier {
+		$$ =  new CArgument($1, (CIdExpression*)$2);
+		//Argument(Type, Identifier)
+	}
+
+Type: T_int T_lbracket T_rbracket {
+		$$ = new CBasicType("INTLIST");
+	}
+	| T_boolean {
+		$$ = new CBasicType("BOOL");
+	}
+	| T_int {
+		$$ = new CBasicType("INT");
+	}
+	| Identifier {
+		$$ = new CIdType((CIdExpression*)$1);
+		//Type(Identifier)
+	}
+
+StatementList: {$$ = nullptr;}
+	| Statement StatementList {
+		$$ = new CStatementList($1, $2);
+		//StatementList(Statement, StatementList)
+	}
+
+Statement: T_lbrace StatementList T_rbrace {
+		$$ = new CCompoundStatement($2);
+		//CompoundStatement(StatementList)
+	}
+	| T_if T_lparen Expression T_rparen Statement T_else Statement {
+		$$ = new CConditionStatement($3, $5, $7);		
+		//CondtitionStatement(Expression, Statement, Statement)
+	}
+	| T_while T_lparen Expression T_rparen Statement {
+		$$ = new CPreconditionStatement($3, $5);
+		//PreconditionStatement(Expression, Statement)
+	}
+	| T_sop  T_lparen Expression T_rparen T_semi {
+		$$ = new CPrintStatement($3);
+		//PrintStatement(Expression)
+	}
+	| Identifier T_equal Expression T_semi {
+		$$ = new CAssignmentStatement((CIdExpression*)$1, $3);
+		//AssignmentStatement(Identifier, Expression)
+	}
+	| Identifier T_lbracket Expression T_rbracket T_equal Expression T_semi {
+		$$ =  new CAssignmentListStatement((CIdExpression*)$1, $3, $6);
+		//AssignmentListStatement(Identifier, Expression, Expression)
+	}
+
+Expression: Expression T_and Expression {
+		$$ = new COperationExpression($1, $3, COperationExpression::TOperationType::And);
+		//OperationExpression(Expression, Expression, And)
+	}
+	|  Expression T_less Expression {
+		$$ = new COperationExpression($1, $3, COperationExpression::TOperationType::Less);
+		//OperationExpression(Expression, Expression, Less)
+	}
+	|  Expression T_plus Expression {
+		$$ = new COperationExpression($1, $3, COperationExpression::TOperationType::Plus);
+		//OperationExpression(Expression, Expression, Plus)
+	}
+	|  Expression T_minus Expression {
+		$$ = new COperationExpression($1, $3, COperationExpression::TOperationType::Minus);
+		//OperationExpression(Expression, Expression, Minus)
+	}
+	|  Expression T_star Expression {
+		$$ = new COperationExpression($1, $3, COperationExpression::TOperationType::Times);
+		//OperationExpression(Expression, Expression, Times)
+	}
+	|  Expression T_divide Expression {
+		$$ = new COperationExpression($1, $3, COperationExpression::TOperationType::Divide);
+		//OperationExpression(Expression, Expression, Divide)
+	}
+	|  Expression T_mod Expression {
+		$$ = new COperationExpression($1, $3, COperationExpression::TOperationType::Mod);
+		//OperationExpression(Expression, Expression, Mod)
+	}
+	|  Expression T_or Expression {
+		$$ = new COperationExpression($1, $3, COperationExpression::TOperationType::Or);
+		//OperationExpression(Expression, Expression, Or)
+	}
+	| Expression T_lbracket Expression T_rbracket {
+		$$ = new CIndexExpression($1, $3);
+		//IndexExpression(Expression,Expression)
+	}
+	| Expression T_dot T_length {
+		$$ = new CLengthExpression($1);
+		//LengthExpression(Expression)
+	}
+	| Expression T_dot Identifier T_lparen ExpressionList T_rparen {
+		$$ = new CGetFieldExpression($1, (CIdExpression*)$3, $5);
+		//GetFieldExpression(Expression, Identifier, ExpressionList)
+	}
+	| T_NUM {
+		//$$ =  IExpression>(0);
+		$$ = new CNumberExpr($1);
+		//NumExpression(int)
+	}
+	| T_true {
+		$$ =  new CTrueExpression();
+	}
+	| T_false {
+		$$ = new CFalseExpression();
+	}
+	| Identifier {
+		$$ =  new CIdExpression(((CIdExpression*)$1)->GetName());
+		//IdExpression(Identifier)
+	}
+	| T_this {
+		$$ = new CThisExpression();
+		//ThisExpression()
+	}
+	| T_new T_int T_lbracket Expression T_rbracket {
+		$$ = new CListConstructorExpression($4);
+		//ListConstructorExpression(Expression)
+	}
+	| T_new Identifier T_lparen T_rparen {
+		$$ = new CConstructorExpression((CIdExpression*)$2);
+		//ConstructorExpression(Identifier)
+	}
+	| T_not Expression {
+		$$ = new CNegationExpression($2);
+		//NegationExpression(Expression)
+	}
+	| T_lparen Expression T_rparen {
+		$$ = new CParenExpression($2);
+		//ParenExpression(Expression)
+	}
+
+ExpressionList: {$$ = nullptr;}
+	| Expression T_comma ExpressionList {
+		$$ = new CExpressionList($1, $3);
+		//ExpressionList(Expression, ExpressionList)
+	}
+	| Expression {
+		$$ = new CExpressionList($1, nullptr);
+		//ExpressionList(Expression, nullptr)
+	}
+
+Identifier: T_ID {
+		$$ = new CIdExpression($1);
+		//IdExpression(string);
+	}
+
 
 %%
 
-int yyerror(std::string s)
-{
+int yyerror(std::string s) {
   extern int yylineno;	// defined and maintained in lex.c
   extern char *yytext;	// defined and maintained in lex.c
   
@@ -37,8 +303,7 @@ int yyerror(std::string s)
   exit(1);
 }
 
-int yyerror(char *s)
-{
+int yyerror(char *s) {
 	return yyerror(std::string(s));
 }
 
