@@ -3,12 +3,17 @@
 #include <string>
 #include <unordered_map>
 
-#include "Symbol.h"
+#include "VariableInfo.h"
 
 // таблица символов
 class CTable {
 public:
+	void insert( std::string theName, CVariableInfo theVarInfo); // в книге void, но лучше сделать булевый результат
+	void pop( std::string theName );
+	// метод дл€ поиска переменной в таблице (включа€ все предыдущие секции)
+	CVariableInfo lookup( std::string theName );
 
 private:
-	//std::unordered_map < им€ѕеременной , типѕеременной > table;
+	// не уверен что должно быть именно так
+	std::unordered_map < std::string, CVariableInfo > table;
 };
