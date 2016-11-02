@@ -173,6 +173,15 @@
     <ClInclude Include="AbstractTreeGenerator\ConditionStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
+    <ClInclude Include="Table.h">
+      <Filter>Global h</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableInfo.h">
+      <Filter>Global h</Filter>
+    </ClInclude>
+    <ClInclude Include="Symbol.h">
+      <Filter>Global h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -294,6 +303,15 @@
     </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\ConditionStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Table.cpp">
+      <Filter>global cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableInfo.cpp">
+      <Filter>global cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Symbol.cpp">
+      <Filter>global cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
