@@ -1,6 +1,9 @@
 #pragma once
+#include "Info.h"
 
-// информация о переменных
-class CVariableInfo {
+// TODO: Все переменные и параметры функций должны быть привязаны к своим типам
+
+// информация о переменной
+class CVariableInfo : public virtual IInfo {
 
 };

@@ -1,5 +1,9 @@
 #pragma once
+#include "Info.h"
 
-class CMethodInfo {
+// TODO: Каждый метод должен быть привязан к своим параметрам, локальным переменным и возвращаемому значению
+
+// информация о методах
+class CMethodInfo : public virtual IInfo {
 
 };

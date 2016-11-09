@@ -2,18 +2,20 @@
 
 #include <string>
 #include <unordered_map>
-
-#include "VariableInfo.h"
+#include "Symbol.h"
+#include "Info.h"
 
 // таблица символов
 class CTable {
 public:
-	void insert( std::string theName, CVariableInfo theVarInfo); // в книге void, но лучше сделать булевый результат
-	void pop( std::string theName );
+	void insert( const CSymbol& theSymbol, const IInfo& theInfo);
+	void pop(const std::string& theName );
+	// для избежания коллизий при удалении нужно передавать информацию об объекте
+	void pop(const std::string& theName, const IInfo& theInfo );
 	// метод для поиска переменной в таблице (включая все предыдущие секции)
-	CVariableInfo lookup( std::string theName );
+	const IInfo lookup(const CSymbol& theSymbol ) const;
 
 private:
 	// не уверен что должно быть именно так
-	std::unordered_map < std::string, CVariableInfo > table;
+	std::unordered_map < CSymbol, IInfo > table;
 };
