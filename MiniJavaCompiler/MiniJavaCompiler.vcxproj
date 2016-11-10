@@ -196,7 +196,6 @@
     <ClInclude Include="AbstractTreeGenerator\VarDeclarationList.h" />
     <ClInclude Include="AbstractTreeGenerator\VariablesTable.h" />
     <ClInclude Include="ClassInfo.h" />
-    <ClInclude Include="Info.h" />
     <ClInclude Include="MethodInfo.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Symbol.h" />
@@ -243,7 +242,6 @@
     <ClCompile Include="AbstractTreeGenerator\VarDeclarationList.cpp" />
     <ClCompile Include="AbstractTreeGenerator\VariablesTable.cpp" />
     <ClCompile Include="ClassInfo.cpp" />
-    <ClCompile Include="Info.cpp" />
     <ClCompile Include="LexicParser\lexer.cpp" />
     <ClCompile Include="LexicParser\syntatic.cpp" />
     <ClCompile Include="MethodInfo.cpp" />
