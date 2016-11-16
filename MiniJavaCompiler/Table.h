@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include "Symbol.h"
 #include "ClassInfo.h"
 #include "MethodInfo.h"
@@ -10,7 +11,11 @@
 // таблица символов
 class CTable {
 public:
-	
+	// отображение из строк в номера
+	CStringTable stringTable;
+	// отображение из номеров в CSymbol
+	std::vector<CSymbol> v;
+
 
 
 	////  нужно делать иначе

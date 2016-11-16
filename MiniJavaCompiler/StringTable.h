@@ -4,20 +4,21 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <memory>
 #include <unordered_map>
 #include "Symbol.h"
 
 
 class CStringTable {
 public:
-	bool insert( std::string& theString, CSymbol* theSymbol );
-
+	CStringTable();
+	// возвращает номер присвоенный новой строке, 0 - в случае повтора
+	int insert( const std::string &theString );
+	// возвращает номер присвоенный ранее строке, 0 - в случае отсутствия строки
+	int find( const std::string &theString );
 private:
 	// для сравнения будем использовать указатель на соответствующий символ
 	// Для класса Symbol известно, что для каждой возможной строки есть один и только один объект Symbol.
-	// Т.е.сравнение строк можно свести к сравнению указателей
-	std::unordered_map< std::string, CSymbol* > stringTable;
-
-	// так сказать вариант для лалок - нужно map
-	std::vector<std::string> v;
+	// Мы каждой строке сопоставим число
+	std::unordered_map< std::string, int > stringTable;
 };
