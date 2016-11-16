@@ -13,9 +13,12 @@ class CStringTable {
 public:
 	CStringTable();
 	// возвращает номер присвоенный новой строке, 0 - в случае повтора
-	int insert( const std::string &theString );
+	int insert( const std::string& theString );
 	// возвращает номер присвоенный ранее строке, 0 - в случае отсутствия строки
-	int find( const std::string &theString );
+	int find( const std::string& theString );
+	// проверка совпадают ли две строки
+	bool equals( const std::string& left, const std::string& right);
+
 private:
 	// для сравнения будем использовать указатель на соответствующий символ
 	// Для класса Symbol известно, что для каждой возможной строки есть один и только один объект Symbol.

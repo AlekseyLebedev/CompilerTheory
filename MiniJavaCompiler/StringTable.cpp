@@ -19,7 +19,7 @@ int CStringTable::insert( const std::string& theString )
 	return n;
 }
 
-int CStringTable::find( const std::string & theString )
+int CStringTable::find( const std::string& theString )
 {
 	auto iter = stringTable.find( theString );
 	if( iter != stringTable.end() ) {
@@ -27,4 +27,13 @@ int CStringTable::find( const std::string & theString )
 	}
 	// в случае если не нашли
 	return 0;
+}
+
+bool CStringTable::equals( const std::string& left, const std::string& right )
+{
+	int leftNum = find( left );
+	int rightNum = find( right );
+	// TODO: было бы неплохо тут проверить то, что обе строки вообще были в таблице
+	// т.е. что find вернул не ноль
+	return (leftNum == rightNum);
 }
