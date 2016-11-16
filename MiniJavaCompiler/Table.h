@@ -1,15 +1,19 @@
 #pragma once
 
 #include <string>
-//#include <unordered_map>
-#include <map>
-#include <list>
 #include "Symbol.h"
+#include "ClassInfo.h"
+#include "MethodInfo.h"
+#include "VariableInfo.h"
+#include "StringTable.h"
 
 // таблица символов
 class CTable {
 public:
-	//  нужно делать иначе
+	
+
+
+	////  нужно делать иначе
 	//// добавляет новый блок в таблицу
 	//void addBlock();
 	//// удаляет последний блок, может потеряться валидность итератора на текущий блок

@@ -188,6 +188,9 @@
     <ClInclude Include="MethodInfo.h">
       <Filter>Global h</Filter>
     </ClInclude>
+    <ClInclude Include="StringTable.h">
+      <Filter>Global h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -323,6 +326,9 @@
       <Filter>global cpp</Filter>
     </ClCompile>
     <ClCompile Include="MethodInfo.cpp">
+      <Filter>global cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="StringTable.cpp">
       <Filter>global cpp</Filter>
     </ClCompile>
   </ItemGroup>

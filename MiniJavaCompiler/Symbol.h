@@ -1,7 +1,7 @@
 #pragma once
 
+#include "StringTable.h"
 #include <string>
-#include <unordered_map>
 
 class CSymbol {
 public:

@@ -198,6 +198,7 @@
     <ClInclude Include="ClassInfo.h" />
     <ClInclude Include="MethodInfo.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="StringTable.h" />
     <ClInclude Include="Symbol.h" />
     <ClInclude Include="Table.h" />
     <ClInclude Include="targetver.h" />
@@ -246,6 +247,7 @@
     <ClCompile Include="LexicParser\syntatic.cpp" />
     <ClCompile Include="MethodInfo.cpp" />
     <ClCompile Include="MiniJavaCompiler.cpp" />
+    <ClCompile Include="StringTable.cpp" />
     <ClCompile Include="Symbol.cpp" />
     <ClCompile Include="Table.cpp" />
     <ClCompile Include="VariableInfo.cpp" />
