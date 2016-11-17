@@ -15,8 +15,8 @@ public:
 	CStringTable stringTable;
 	// отображение из номеров в CSymbol
 	std::vector<CSymbol> v;
-
-
+	// хранить мап для всего
+	
 
 	////  нужно делать иначе
 	//// добавляет новый блок в таблицу

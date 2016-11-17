@@ -3,6 +3,7 @@
 #include "StringTable.h"
 #include <string>
 
+// глобалдьная таблица
 class CSymbol {
 public:
 	CSymbol( const std::string& theSymbol );
@@ -12,6 +13,7 @@ public:
 	CSymbol( const CSymbol& ) = delete;
 	void operator=( const CSymbol& ) = delete;
 private:
+	// TODO: убрать строки
 	std::string symbol;
 	// номер в StringTable
 	int num;
