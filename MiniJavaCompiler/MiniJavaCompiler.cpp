@@ -8,11 +8,14 @@
 #include <sstream>
 #include <memory>
 #include "AbstractTreeGenerator\GraphvizLauncher.h"
+#include "AbstractTreeGenerator\StringTable.h"
 
 int yyparse();
 extern FILE* yyin, *yyout;
 void yyrestart( FILE * input_file );
 extern int row, col;
+
+std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 
 AbstractTreeGenerator::CProgram* rootNode;
 
@@ -23,6 +26,7 @@ int main( int argc, char** argv )
 	} else {
 		std::stringstream buffer;
 		for( size_t i = 1; i < argc; i++ ) {
+			glabalStringTable = std::make_shared<AbstractTreeGenerator::CStringTable>();
 			row = 1;
 			col = 1;
 			buffer << argv[i];

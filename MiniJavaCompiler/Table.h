@@ -6,13 +6,13 @@
 #include "ClassInfo.h"
 #include "MethodInfo.h"
 #include "VariableInfo.h"
-#include "StringTable.h"
+#include "AbstractTreeGenerator\StringTable.h"
 
 // таблица символов
 class CTable {
 public:
 	// отображение из строк в номера
-	CStringTable stringTable;
+	AbstractTreeGenerator::CStringTable stringTable;
 	// отображение из номеров в CSymbol
 	std::vector<CSymbol> v;
 	// хранить мап для всего

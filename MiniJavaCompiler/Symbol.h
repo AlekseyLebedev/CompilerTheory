@@ -1,9 +1,8 @@
 #pragma once
 
-#include "StringTable.h"
 #include <string>
 
-// глобалдьная таблица
+// глобальная таблица
 class CSymbol {
 public:
 	CSymbol( const std::string& theSymbol );
