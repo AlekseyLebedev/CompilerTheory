@@ -9,6 +9,11 @@ using namespace AbstractTreeGenerator;
 
 #include <iostream>
 #include "..\AbstractTreeGenerator\AllNodes.h"
+
+#include <memory>
+
+extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
+
 using namespace AbstractTreeGenerator;
 //using namespace std;
 
@@ -296,7 +301,7 @@ ExpressionList: {$$ = nullptr;}
 	}
 
 Identifier: T_ID {
-		$$ = new CIdExpression($1);
+		$$ = new CIdExpression(glabalStringTable->insert($1));
 		//IdExpression(string);
 	}
 

@@ -5,6 +5,8 @@
 #include "INode.h"
 #include "AllNodes.h"
 
+extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
+
 namespace GraphvizOutput {
 
 	CDotOutputVisitor::CDotOutputVisitor() : id( 0 )
@@ -283,6 +285,13 @@ namespace GraphvizOutput {
 		dotFile << "\tn" << id << postfix << "[label=\"" << label << "\"]" << std::endl;
 		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
 	}
+
+	//Эта штука может заработать, если будут реализован метод GetString у таблицы строк
+	//void CDotOutputVisitor::addSubNodeWithStringTable( size_t id, const size_t label, const std::string & postfix )
+	//{
+	//	dotFile << "\tn" << id << postfix << "[label=\"(" << label << "): '" << glabalStringTable->GetString() << "'\"]" << std::endl;
+	//	dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
+	//}
 
 	void CDotOutputVisitor::addArrow( const size_t from, const size_t to )
 	{

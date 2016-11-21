@@ -1,7 +1,7 @@
 #include "IdExpression.h"
 #include <string>
 
-AbstractTreeGenerator::CIdExpression::CIdExpression(std::string theName ) : name( theName )
+AbstractTreeGenerator::CIdExpression::CIdExpression(int theName ) : name( theName )
 {
 }
 
@@ -14,7 +14,7 @@ void AbstractTreeGenerator::CIdExpression::Accept(IVisitor* v) {
 }
 
 
-const std::string AbstractTreeGenerator::CIdExpression::GetName() const
+const int AbstractTreeGenerator::CIdExpression::GetName() const
 {
 	 return name;
 }
