@@ -166,13 +166,13 @@ Argument: Type Identifier {
 	}
 
 Type: T_int T_lbracket T_rbracket {
-		$$ = new CBasicType("INTLIST");
+		$$ = new CBasicType( TStandardType::ST_Intlist );
 	}
 	| T_boolean {
-		$$ = new CBasicType("BOOL");
+		$$ = new CBasicType( TStandardType::ST_Bool );
 	}
 	| T_int {
-		$$ = new CBasicType("INT");
+		$$ = new CBasicType( TStandardType::ST_Int );
 	}
 	| Identifier {
 		$$ = new CIdType((CIdExpression*)$1);

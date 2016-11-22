@@ -136,7 +136,7 @@ namespace GraphvizOutput {
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CBasicType * const type)
 	{
 		size_t id = enterNode( "BasicType" );
-		addSubNode( id, type->GetName() );
+		addSubNode( id, type->GetValue() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CIdType * const type)

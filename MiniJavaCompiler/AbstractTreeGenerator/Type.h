@@ -9,21 +9,25 @@ namespace AbstractTreeGenerator {
 
 	};
 
+	enum TStandardType {
+		ST_Int, ST_Bool, ST_Intlist
+	};
+
 	class CBasicType : public IType {
 	public:
-		CBasicType( const char* _name );
+		CBasicType( TStandardType );
 		virtual ~CBasicType() {};
 
 		virtual void Accept( IVisitor* v ) override;
-		const char* GetName() const;
+		TStandardType GetValue() const;
 	private:
-		const char* name;
+		TStandardType value;
 	};
 
 	class CIdType : public IType {
 	public:
 		CIdType( CIdExpression* theIdExpression );
-		virtual ~CIdType() { }
+		virtual ~CIdType() {}
 
 		virtual void Accept( IVisitor* v ) override;
 		const std::shared_ptr<CIdExpression> GetIdExpression() const;
