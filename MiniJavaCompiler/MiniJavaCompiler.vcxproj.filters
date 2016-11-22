@@ -36,6 +36,17 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="SymbolTable">
+      <UniqueIdentifier>{0598a9ed-f520-44fa-9ca2-e809bfc50988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SymbolTable\cpp">
+      <UniqueIdentifier>{ccd32ac9-0c51-4271-aa55-895a7eb588c3}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="SymbolTable\h">
+      <UniqueIdentifier>{c198b089-5870-4901-b5c0-367c862445e4}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -173,23 +184,23 @@
     <ClInclude Include="AbstractTreeGenerator\ConditionStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="Table.h">
-      <Filter>Global h</Filter>
-    </ClInclude>
-    <ClInclude Include="VariableInfo.h">
-      <Filter>Global h</Filter>
-    </ClInclude>
-    <ClInclude Include="Symbol.h">
-      <Filter>Global h</Filter>
-    </ClInclude>
-    <ClInclude Include="ClassInfo.h">
-      <Filter>Global h</Filter>
-    </ClInclude>
-    <ClInclude Include="MethodInfo.h">
-      <Filter>Global h</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\StringTable.h">
       <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\ClassInfo.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\MethodInfo.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\Symbol.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\Table.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\VariableInfo.h">
+      <Filter>SymbolTable\h</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -313,23 +324,23 @@
     <ClCompile Include="AbstractTreeGenerator\ConditionStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Table.cpp">
-      <Filter>global cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="VariableInfo.cpp">
-      <Filter>global cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Symbol.cpp">
-      <Filter>global cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="ClassInfo.cpp">
-      <Filter>global cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="MethodInfo.cpp">
-      <Filter>global cpp</Filter>
-    </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\StringTable.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\ClassInfo.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\MethodInfo.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\Symbol.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\Table.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\VariableInfo.cpp">
+      <Filter>SymbolTable\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
