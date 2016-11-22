@@ -202,6 +202,9 @@
     <ClInclude Include="SymbolTable\VariableInfo.h">
       <Filter>SymbolTable\h</Filter>
     </ClInclude>
+    <ClInclude Include="SymbolTable\TypeCheckerVistor.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -340,6 +343,9 @@
       <Filter>SymbolTable\cpp</Filter>
     </ClCompile>
     <ClCompile Include="SymbolTable\VariableInfo.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\TypeCheckerVistor.cpp">
       <Filter>SymbolTable\cpp</Filter>
     </ClCompile>
   </ItemGroup>

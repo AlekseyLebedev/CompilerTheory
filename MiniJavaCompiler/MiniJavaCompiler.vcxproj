@@ -201,6 +201,7 @@
     <ClInclude Include="SymbolTable\MethodInfo.h" />
     <ClInclude Include="SymbolTable\Symbol.h" />
     <ClInclude Include="SymbolTable\Table.h" />
+    <ClInclude Include="SymbolTable\TypeCheckerVistor.h" />
     <ClInclude Include="SymbolTable\VariableInfo.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -250,6 +251,7 @@
     <ClCompile Include="SymbolTable\MethodInfo.cpp" />
     <ClCompile Include="SymbolTable\Symbol.cpp" />
     <ClCompile Include="SymbolTable\Table.cpp" />
+    <ClCompile Include="SymbolTable\TypeCheckerVistor.cpp" />
     <ClCompile Include="SymbolTable\VariableInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
