@@ -11,12 +11,10 @@ namespace AbstractTreeGenerator {
 
 	class CStringTable {
 	public:
-		CStringTable();
-		// TODO: объединить в один инсерт который возвращает номер без проверки
 		// возвращает номер присвоенный новой строке, 0 - в случае повтора
 		int insert( const std::string& theString );
-		// возвращает номер присвоенный ранее строке, 0 - в случае отсутствия строки
-		int find( const std::string& theString );
+		//// возвращает номер присвоенный ранее строке, 0 - в случае отсутствия строки
+		//int find( const std::string& theString );
 
 		// проверка совпадают ли две строки
 		bool equals( const std::string& left, const std::string& right );
