@@ -6,6 +6,7 @@ namespace SymbolTable {
 
 	// информация о переменной
 	class CVariableInfo {
-
+	public:
+		std::shared_ptr<AbstractTreeGenerator::IType> GetType();
 	};
 }

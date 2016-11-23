@@ -27,7 +27,7 @@ namespace SymbolTable {
 			int id = type->GetIdExpression()->GetName();
 			CTable classes;
 			try {
-				classes.GetClassInfo( id );
+				classes.GetClass( id );
 			}
 			catch( std::string& e ) {
 				// no such class;
@@ -195,7 +195,7 @@ namespace SymbolTable {
 		int id = expression->GetIdExpression()->GetName();
 		CTable classes;
 		try {
-			classes->GetClass( id );
+			classes.GetClass( id );
 		}
 		catch (std::string& e) {
 			// no such class
@@ -504,6 +504,7 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CVarDeclaration * const var)
 	{
 		std::shared_ptr<AbstractTreeGenerator::IType> type = var->GetType();
+		int id = var->GetIdExpression()->GetName();
 		CVariableInfo varinfo;
 
 		if( currentMethod != nullptr ) {
