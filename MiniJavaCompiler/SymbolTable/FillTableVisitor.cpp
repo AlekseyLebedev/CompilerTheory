@@ -10,10 +10,17 @@ namespace SymbolTable
 
 	CFillTableVisitor::CFillTableVisitor()
 	{
+		assert( false );
 	}
 
 	CFillTableVisitor::~CFillTableVisitor()
 	{
+		assert( false );
+	}
+
+	const CTable& CFillTableVisitor::GetTable() const
+	{
+		return table;
 	}
 
 	void CFillTableVisitor::visitChild( AbstractTreeGenerator::INode* node )
@@ -44,20 +51,21 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CAssignmentStatement* const assignmentStatement )
 	{
-		visitBinaryNode( assignmentStatement->GetIdExpression().get(), assignmentStatement->GetExpression().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CClassDeclaration* const classDeclaration )
 	{
-		
-		classInfo->SetIdExpression( classDeclaration->GetIdExpression() );
-		classInfo->SetClassExtend( classDeclaration->GetClassExtend() );
-		classInfo->SetVarDeclaration( classDeclaration->GetVarDeclarationList() );
-		classInfo->SetMethodDeclaration( classDeclaration->GetMethodDeclarationList() );
-		visitChild( classDeclaration->GetIdExpression().get() );
-		visitChild( classDeclaration->GetClassExtend().get() );
-		visitChild( classDeclaration->GetVarDeclarationList().get() );
+		currentClassInfo = CClassInfo();
+
+		if( classDeclaration->GetClassExtend() != 0 ) {
+			currentClassInfo.SetExtend( classDeclaration->GetClassExtend()->GetIdExpression()->GetName() );
+		}
+
 		visitChild( classDeclaration->GetMethodDeclarationList().get() );
+		visitChild( classDeclaration->GetVarDeclarationList().get() );
+
+		table.AddClassInfo( classDeclaration->GetIdExpression()->GetName(), currentClassInfo );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CClassDeclarationList* const list )
@@ -67,27 +75,27 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CClassExtend* const extend )
 	{
-		visitUnaryNode( extend->GetIdExpression().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CCompoundStatement* const compoundStatement )
 	{
-		visitBinaryNode( compoundStatement->GetLeftChild().get(), compoundStatement->GetRightChild().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CConstructorExpression* const сonstructorExpression )
 	{
-		visitUnaryNode( сonstructorExpression->GetIdExpression().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CPreconditionStatement* const precondition )
 	{
-		visitBinaryNode( precondition->GetExpression().get(), precondition->GetStatement().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CPrintStatement* const printStatement )
 	{
-		visitUnaryNode( printStatement->GetExpression().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CProgram* const program )
@@ -97,80 +105,75 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CStatementList* const statementList )
 	{
-		visitBinaryNode( statementList->GetStatement().get(), statementList->GetStatementList().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CVarDeclaration* const varDeclaration )
 	{
-		variableInfo->SetType( varDeclaration->GetType() );
-		variableInfo->SetIdExpression( varDeclaration->GetIdExpression() );
-		visitBinaryNode( varDeclaration->GetType().get(), varDeclaration->GetIdExpression().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CVarDeclarationList* const list )
 	{
-		visitBinaryNode( list->GetVarDeclaration().get(), list->GetVarDeclarationList().get() );
+		currentMethodInfo.AddVariableInfo( list->GetVarDeclaration()->GetIdExpression()->GetName(),
+			list->GetVarDeclaration()->GetType()->GetType() );
+		visitChild( list->GetVarDeclarationList().get() );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CTrueExpression* const )
 	{
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CFalseExpression* const )
 	{
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CGetFieldExpression* const get )
 	{
-		// Слишком много get ):
-		visitTripleNode( get->GetIdExpression().get(), get->GetExpression().get(), get->GetExpressionList().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CConditionStatement* const condition )
 	{
-		// TODO разабраться, что это
-		visitTripleNode( condition->GetStatementFirst().get(), condition->GetExpression().get(), condition->GetStatementSecond().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CThisExpression* const )
 	{
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CBasicType* const type )
 	{
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CIdType* const type )
 	{
-		visitUnaryNode( type->GetIdExpression().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::COperationExpression* const operationExpression )
 	{
-		visitChild( current, operationExpression->GetLeftOperand().get() );
-		visitChild( current, operationExpression->GetRightOperand().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CParenExpression* const paren )
 	{
-		visitUnaryNode( paren->GetExpression().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )
 	{
-		methodInfo->SetType( method->GetType().get() );
-		methodInfo->SetIdExpression( method->GetIdExpression().get() );
-		methodInfo->SetArgumentList( method->GetArgumentList().get() );
-		methodInfo->SetVarDeclarationList( method->GetVarDeclarationList().get() );
-		methodInfo->SetStatementList( method->GetStatementList().get() );
-		methodInfo->SetExpression( method->GetExpression().get() );
-
-		visitChild( method->GetType().get() );
-		visitChild( method->GetIdExpression().get() );
+		currentMethodInfo = CMethodInfo();
+		currentArguments.clear();
 		visitChild( method->GetArgumentList().get() );
+		currentMethodInfo.SetArguments( currentArguments );
+		currentMethodInfo.SetReturnType( method->GetType()->GetType() );
 		visitChild( method->GetVarDeclarationList().get() );
-		visitChild( method->GetStatementList().get() );
-		visitChild( method->GetExpression().get() );
+		currentClassInfo.InsertMethod( method->GetIdExpression()->GetName() , currentMethodInfo );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const  list )
@@ -180,51 +183,60 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CNegationExpression* const negatiation )
 	{
-		visitUnaryNode( negatiation->GetExpression().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CNumberExpr* const numExpression )
 	{
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CExpressionList* const expressionList )
 	{
-		visitBinaryNode( expressionList->GetExpression().get(), expressionList->GetExpressionList().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CIdExpression* const idExpression )
 	{
-		visitValueNode( idExpression->GetName() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CIndexExpression* const index )
 	{
-		visitBinaryNode( index->GetEpressionFirst().get(), index->GetExpressionSecond().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CLastExpressionList* const lastExpList )
 	{
-		visitUnaryNode( lastExpList->GetExpression().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CLengthExpression* const length )
 	{
-		visitUnaryNode( length->GetExpression().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CListConstructorExpression* const listCtor )
 	{
-		visitUnaryNode( listCtor->GetExpression().get() );
+		assert( false );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CMainClass* const main )
 	{
-		visitTripleNode( main->GetClassName().get(), main->GetArgv().get(), main->GetStatement().get() );
+		currentClassInfo = CClassInfo();
+		currentMethodInfo = CMethodInfo();
+		currentArguments.clear();
+		currentArguments.push_back( AbstractTreeGenerator::TStandardType::ST_StringList );
+		currentMethodInfo.SetArguments( currentArguments );
+		currentMethodInfo.SetReturnType( AbstractTreeGenerator::TStandardType::ST_Void );
+		assert( glabalStringTable->insert( "main" ) == 0 );
+		currentClassInfo.InsertMethod( 0, currentMethodInfo );
+		table.AddClassInfo( main->GetClassName()->GetName(), currentClassInfo );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CArgument* const argument )
 	{
-		visitBinaryNode( argument->GetType().get(), argument->GetIdExpression().get() );
+		currentArguments.push_back( argument->GetType()->GetType() );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CArgumentList* const list )
@@ -234,6 +246,6 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CAssignmentListStatement* const assigment )
 	{
-		visitTripleNode( assigment->GetIdExpression().get(), assigment->GetExpressionFirst().get(), assigment->GetExpressionSecond().get() );
+		assert( false );
 	}
 }
