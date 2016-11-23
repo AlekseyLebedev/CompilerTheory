@@ -11,7 +11,7 @@ namespace AbstractTreeGenerator {
 	};
 
 	enum TStandardType {
-		ST_Int = -1, ST_Bool = -2, ST_Intlist = -3
+		ST_Int = -1, ST_Bool = -2, ST_Intlist = -3, ST_Void = -4, ST_StringList = -5
 	};
 
 	class CBasicType : public IType {

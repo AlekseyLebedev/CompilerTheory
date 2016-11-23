@@ -15,7 +15,7 @@ namespace SymbolTable {
 		const CVariableInfo& GetVarInfo( const int id ) const;
 		void AddVariableInfo( const int id, const CVariableInfo& info );
 		const std::vector<int>& GetArguments() const;
-		void setArguments( const std::vector<int>& args );
+		void SetArguments( const std::vector<int>& args );
 	private:
 		int returnType;
 		std::map<int, CVariableInfo> vars;

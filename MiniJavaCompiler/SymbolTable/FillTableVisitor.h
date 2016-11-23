@@ -3,6 +3,7 @@
 #include "..\SymbolTable\Table.h"
 #include <string>
 #include <fstream>
+#include <vector>
 
 using namespace SymbolTable;
 
@@ -15,11 +16,15 @@ namespace SymbolTable
 		CFillTableVisitor();
 		virtual ~CFillTableVisitor();
 
+		const CTable& GetTable() const;
+
 	private:
 		
-		SymbolTable::CClassInfo* classInfo;
-		SymbolTable::CMethodInfo* methodInfo;
-		SymbolTable::CVariableInfo* variableInfo;
+		CClassInfo currentClassInfo;
+		CMethodInfo currentMethodInfo;
+		CVariableInfo currentVariableInfo;
+		CTable table;
+		std::vector<int> currentArguments;
 
 		void visitChild( AbstractTreeGenerator::INode* node );
 		void visitUnaryNode( AbstractTreeGenerator::INode* children );

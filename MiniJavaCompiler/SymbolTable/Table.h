@@ -12,6 +12,7 @@ namespace SymbolTable {
 
 	class CTable {
 	public:
+		CTable();
 		const CClassInfo& GetClassInfo( const int& id ) const;
 		void AddClassInfo(const int id, const CClassInfo& info );
 		int TotalAdditionCount() const ;

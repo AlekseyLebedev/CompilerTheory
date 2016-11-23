@@ -7,6 +7,10 @@ namespace SymbolTable {
 		++additionCount;
 	}
 
+	CTable::CTable() : additionCount( 0 )
+	{
+	}
+
 	const CClassInfo & CTable::GetClassInfo( const int & id ) const
 	{
 		auto info = classesInfos.find( id );

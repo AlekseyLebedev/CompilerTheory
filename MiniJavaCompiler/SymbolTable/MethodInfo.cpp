@@ -31,7 +31,7 @@ namespace SymbolTable {
 		return argments;
 	}
 
-	void CMethodInfo::setArguments( const std::vector<int>& args )
+	void CMethodInfo::SetArguments( const std::vector<int>& args )
 	{
 		argments = args;
 	}

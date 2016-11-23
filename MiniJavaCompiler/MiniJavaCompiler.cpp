@@ -9,6 +9,7 @@
 #include <memory>
 #include "AbstractTreeGenerator\GraphvizLauncher.h"
 #include "AbstractTreeGenerator\StringTable.h"
+#include <assert.h>
 
 int yyparse();
 extern FILE* yyin, *yyout;
@@ -27,6 +28,7 @@ int main( int argc, char** argv )
 		std::stringstream buffer;
 		for( size_t i = 1; i < argc; i++ ) {
 			glabalStringTable = std::make_shared<AbstractTreeGenerator::CStringTable>();
+			assert( glabalStringTable->insert( "main" ) == 0 );
 			row = 1;
 			col = 1;
 			buffer << argv[i];
@@ -38,7 +40,7 @@ int main( int argc, char** argv )
 			fclose( yyin );
 			buffer.str( "" );
 			std::shared_ptr<AbstractTreeGenerator::CProgram> root( rootNode ); //set from bison
-			GraphvizOutput::CGraphvizLauncher::Launch(root.get(), i);
+			GraphvizOutput::CGraphvizLauncher::Launch( root.get(), i );
 		}
 	}
 	return 0;
