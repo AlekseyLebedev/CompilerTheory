@@ -23,7 +23,8 @@ namespace SymbolTable {
 		// добавить новый класс в таблицу символов
 		void AddClass( const CSymbol& theSymbol, const CClassInfo& theClassInfo );
 		const CClassInfo GetClassInfo( const CSymbol& theSymbol ) const;
-
+		CClassInfo GetClassInfo( const int& id );
+		int GetClass( const int& id );
 	private:
 		// отображение из строк в номера
 		AbstractTreeGenerator::CStringTable stringTable;

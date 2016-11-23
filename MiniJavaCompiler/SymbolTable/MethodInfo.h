@@ -1,4 +1,6 @@
 #pragma once
+#include "VariableInfo.h"
+#include <vector>
 
 namespace SymbolTable {
 
@@ -6,6 +8,8 @@ namespace SymbolTable {
 
 	// информация о методах
 	class CMethodInfo {
-
+	public:
+		CVariableInfo GetVarInfo( const int& id );
+		std::vector<int> GetArguments();
 	};
 }
