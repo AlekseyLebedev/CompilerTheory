@@ -8,6 +8,7 @@ namespace SymbolTable {
 
 	CTypeCheckerVistor::CTypeCheckerVistor()
 	{
+		state = None;
 	}
 
 
@@ -17,7 +18,21 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CArgument * const argument)
 	{
-		argument->
+		// 4. Argument definition
+			// b. Availability of classes
+		if( argument->GetType()->GetType() == "POD" ) {
+			std::shared_ptr<AbstractTreeGenerator::CIdType> type =
+				std::dynamic_pointer_cast<AbstractTreeGenerator::CIdType>(argument->GetType());
+			int id = type->GetIdExpression()->GetName();
+			CTable classes;
+			try {
+				classes.GetClassInfo( id );
+			}
+			catch( std::string& e ) {
+				// no such class;
+				throw;
+			}
+		}
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CArgumentList * const )
@@ -28,8 +43,9 @@ namespace SymbolTable {
 	{
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CAssignmentStatement * const )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CAssignmentStatement * const statement)
 	{
+		
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassDeclaration * const CClass)
@@ -37,7 +53,7 @@ namespace SymbolTable {
 		// 3.  method definition
 			// a. Multiple method definition
 		// maybe it's good to check in first run
-		CClass->GetIdExpression()->GetName();
+		int id = CClass->GetIdExpression()->GetName();
 		CTable classes;		
 		CClassInfo clinfo = classes.GetClassInfo( id );
 		std::vector<CMethodInfo> methods_infos = clinfo.GetMethods();		
@@ -70,12 +86,19 @@ namespace SymbolTable {
 	{
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CIdExpression * const )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CIdExpression * const expression)
 	{
+		int id = expression->GetName();
+
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CIndexExpression * const )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CIndexExpression * const expression )
 	{
+		// 10. IndexExpression
+			// a. must be int
+		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = expression->GetExpressionSecond();
+		state = LookingForInt;
+		exp->Accept( this );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CLastExpressionList * const )
@@ -140,20 +163,89 @@ namespace SymbolTable {
 	{
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::COperationExpression * const )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::COperationExpression * const operation)
 	{
+		// checking result type
+		typedef AbstractTreeGenerator::COperationExpression::TOperationType OperationType;
+		switch( state ) {
+			case LookingForBool: {
+				switch( operation->GetOperationType() ) {
+					case OperationType::And: {
+						state = LookingForBool;
+						break;
+					}
+					case OperationType::Less: {
+						state = LookingForBool;
+						break;
+					}
+					case OperationType::Mod: {
+						state = LookingForBool;
+						break;
+					}
+					case OperationType::Or: {
+						state = LookingForBool;
+						break;
+					}
+					default: {
+						throw "Incorrect return value: bool required but method returns int";
+					}							
+				}
+				break;			
+			}
+			case LookingForInt: {
+				switch( operation->GetOperationType() ) {
+					case OperationType::Plus: {
+						state = LookingForInt;
+						break;
+					}
+					case OperationType::Minus: {
+						state = LookingForInt;
+						break;
+					}
+					case OperationType::Times: {
+						state = LookingForInt;
+						break;
+					}
+					case OperationType::Divide: {
+						state = LookingForInt;
+						break;
+					}
+					default: {
+						throw "Incorrect return value: int required but method returns bool";
+					}
+				}
+				break;
+			}			
+		}
+
+		// 8. - 9. logical and numerical expressions
+		std::shared_ptr<AbstractTreeGenerator::IExpression> leftOperand = operation->GetLeftOperand();
+		std::shared_ptr<AbstractTreeGenerator::IExpression> rightOperand = operation->GetRightOperand();
+		leftOperand->Accept( this );
+		rightOperand->Accept( this );
+
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CParenExpression * const )
 	{
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CPreconditionStatement * const )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CPreconditionStatement * const condition)
 	{
+		// 5. if-while statement
+			// a. exp is boolean
+		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = condition->GetExpression();
+		state = LookingForBool;
+		exp->Accept( this );
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CPrintStatement * const )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CPrintStatement * const statement)
 	{
+		// 6. print statement
+			// a. exp is int
+		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = statement->GetExpression();
+		state = LookingForInt;
+		exp->Accept( this );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CProgram * const )
@@ -192,10 +284,36 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CTrueExpression * const )
 	{
+		// Checking return value type
+		switch( state ) {
+			case LookingForBool: {
+				state = None;
+				break;
+			}
+			case LookingForInt: {
+				throw "Incorrect return value: int required but method returns bool";
+				break;
+			}
+			default:
+				break;
+		}
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CFalseExpression * const )
 	{
+		// Checking return value type
+		switch( state ) {
+			case LookingForBool: {
+				state = None;
+				break;
+			}
+			case LookingForInt: {
+				throw "Incorrect return value: int required but method returns bool";
+				break;
+			}
+			default:
+				break;
+		}
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CGetFieldExpression * const )

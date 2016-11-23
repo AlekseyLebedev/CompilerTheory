@@ -5,6 +5,13 @@
 namespace SymbolTable {
 	class CTypeCheckerVistor : public AbstractTreeGenerator::IVisitor {
 	public:
+
+		enum TypeCheckerState {
+			LookingForBool,
+			LookingForInt,
+			None
+		} state;
+
 		CTypeCheckerVistor();
 		virtual ~CTypeCheckerVistor();
 
