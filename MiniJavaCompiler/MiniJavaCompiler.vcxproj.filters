@@ -193,12 +193,6 @@
     <ClInclude Include="SymbolTable\MethodInfo.h">
       <Filter>SymbolTable\h</Filter>
     </ClInclude>
-    <ClInclude Include="SymbolTable\Symbol.h">
-      <Filter>SymbolTable\h</Filter>
-    </ClInclude>
-    <ClInclude Include="SymbolTable\Table.h">
-      <Filter>SymbolTable\h</Filter>
-    </ClInclude>
     <ClInclude Include="SymbolTable\VariableInfo.h">
       <Filter>SymbolTable\h</Filter>
     </ClInclude>
@@ -337,12 +331,6 @@
       <Filter>SymbolTable\cpp</Filter>
     </ClCompile>
     <ClCompile Include="SymbolTable\MethodInfo.cpp">
-      <Filter>SymbolTable\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="SymbolTable\Symbol.cpp">
-      <Filter>SymbolTable\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="SymbolTable\Table.cpp">
       <Filter>SymbolTable\cpp</Filter>
     </ClCompile>
     <ClCompile Include="SymbolTable\VariableInfo.cpp">

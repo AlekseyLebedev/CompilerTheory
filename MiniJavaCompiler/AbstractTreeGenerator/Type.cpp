@@ -4,9 +4,9 @@ AbstractTreeGenerator::CBasicType::CBasicType( AbstractTreeGenerator::TStandardT
 {
 }
 
-std::string AbstractTreeGenerator::CBasicType::GetType() const
+int AbstractTreeGenerator::CBasicType::GetType() const
 {
-	return std::string("Basic");
+	return GetValue();
 }
 
 void AbstractTreeGenerator::CBasicType::Accept( IVisitor * v )
@@ -23,9 +23,9 @@ AbstractTreeGenerator::CIdType::CIdType( CIdExpression * theIdExpression ) : idE
 {
 }
 
-std::string AbstractTreeGenerator::CIdType::GetType() const
+int AbstractTreeGenerator::CIdType::GetType() const
 {
-	return std::string("POD");
+	return idExpression->GetName();
 }
 
 void AbstractTreeGenerator::CIdType::Accept( IVisitor * v )

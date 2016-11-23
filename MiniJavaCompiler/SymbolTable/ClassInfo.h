@@ -16,12 +16,16 @@ namespace SymbolTable {
 	class CClassInfo {
 	public:
 		// добавить информацию о методе класса
-		void insertMethod( const CMethodInfo theMethodInfo );
+		void InsertMethod( const CMethodInfo theMethodInfo );
 		// добавить информацию о поле класса 
-		void insertVariableInfo( const CVariableInfo theVariableInfo );
+		void InsertVariableInfo( const CVariableInfo theVariableInfo );
 
 		CVariableInfo GetVarInfo( const int& id );
 		std::vector<CMethodInfo> GetMethods();
+
+		int GetExtend();
+
+		const int NothingExtend;
 	private:
 		// информация о методах
 		std::vector<CMethodInfo> methods; // возможно здесь следует ссылаться на MethodDeclaration но хз

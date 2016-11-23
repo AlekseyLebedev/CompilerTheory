@@ -9,7 +9,8 @@ namespace SymbolTable {
 	// информация о методах
 	class CMethodInfo {
 	public:
-		CVariableInfo GetVarInfo( const int& id );
+		int GetReturnType();
+		const CVariableInfo& GetVarInfo( const int& id );
 		std::vector<int> GetArguments();
 	};
 }
