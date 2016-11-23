@@ -198,6 +198,7 @@
     <ClInclude Include="AbstractTreeGenerator\VariablesTable.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SymbolTable\ClassInfo.h" />
+    <ClInclude Include="SymbolTable\FillTableVisitor.h" />
     <ClInclude Include="SymbolTable\MethodInfo.h" />
     <ClInclude Include="SymbolTable\Symbol.h" />
     <ClInclude Include="SymbolTable\Table.h" />
@@ -248,6 +249,7 @@
     <ClCompile Include="LexicParser\syntatic.cpp" />
     <ClCompile Include="MiniJavaCompiler.cpp" />
     <ClCompile Include="SymbolTable\ClassInfo.cpp" />
+    <ClCompile Include="SymbolTable\FillTableVisitor.cpp" />
     <ClCompile Include="SymbolTable\MethodInfo.cpp" />
     <ClCompile Include="SymbolTable\Symbol.cpp" />
     <ClCompile Include="SymbolTable\Table.cpp" />

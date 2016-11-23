@@ -1,14 +1,12 @@
 ﻿#pragma once
-#include "IVisitor.h"
-#include "AllNodes.h"
-#include "INode.h"
+#include "..\AbstractTreeGenerator\AllNodes.h"
 #include "..\SymbolTable\Table.h"
 #include <string>
 #include <fstream>
 
 using namespace SymbolTable;
 
-namespace GraphvizOutput
+namespace SymbolTable
 {
 
 	class CFillTableVisitor : public AbstractTreeGenerator::IVisitor

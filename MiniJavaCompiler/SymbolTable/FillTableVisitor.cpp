@@ -2,12 +2,10 @@
 #include <cassert>
 
 #include "FillTableVisitor.h"
-#include "INode.h"
-#include "AllNodes.h"
 
 extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 
-namespace GraphvizOutput
+namespace SymbolTable
 {
 
 	CFillTableVisitor::CFillTableVisitor() : id( 0 )
