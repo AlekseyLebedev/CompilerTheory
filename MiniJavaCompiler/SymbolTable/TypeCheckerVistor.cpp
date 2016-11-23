@@ -21,7 +21,7 @@ namespace SymbolTable {
 	{
 		// 4. Argument definition
 			// b. Availability of classes
-		if( argument->GetType()->GetType() == "POD" ) {
+		if( argument->GetType()->GetType() >= 0 ) {
 			std::shared_ptr<AbstractTreeGenerator::CIdType> type =
 				std::dynamic_pointer_cast<AbstractTreeGenerator::CIdType>(argument->GetType());
 			int id = type->GetIdExpression()->GetName();
@@ -61,13 +61,10 @@ namespace SymbolTable {
 			varinfo = currentClass->GetVarInfo( assignexp->GetName() );
 		}			
 		
-		std::shared_ptr<AbstractTreeGenerator::IType> vartype = varinfo.GetType();
-		if( vartype->GetType() != "POD" ) {
-			std::shared_ptr<AbstractTreeGenerator::CBasicType> vartypebasic = 
-				std::dynamic_pointer_cast<AbstractTreeGenerator::CBasicType>(vartype);
-			typedef AbstractTreeGenerator::TStandardType stdtype;
-			stdtype tp = vartypebasic->GetValue();
-			switch( tp ) {
+		int vartype = varinfo.GetType();
+		if( vartype < 0 ) {			
+			typedef AbstractTreeGenerator::TStandardType stdtype;			
+			switch( vartype ) {
 				case stdtype::ST_Int: {
 					state = LookingForInt;
 					exp->Accept( this );
@@ -83,12 +80,8 @@ namespace SymbolTable {
 					exp->Accept( this );
 				}
 			}
-		} else {
-			std::shared_ptr<AbstractTreeGenerator::CIdType> vartypebasic =
-				std::dynamic_pointer_cast<AbstractTreeGenerator::CIdType>(vartype);
-			int id = vartypebasic->GetIdExpression()->GetName();
-			CTable classes;
-			lookingClass = classes.GetClass( id );
+		} else {			
+			lookingClass = vartype ;
 			state=LookingForCustom;
 			exp->Accept( this );
 		}			
@@ -109,13 +102,10 @@ namespace SymbolTable {
 		} else {
 			varinfo = currentClass->GetVarInfo( assignexp->GetName() );
 		}
-		std::shared_ptr<AbstractTreeGenerator::IType> vartype = varinfo.GetType();
-		if( vartype->GetType() != "POD" ) {
-			std::shared_ptr<AbstractTreeGenerator::CBasicType> vartypebasic =
-				std::dynamic_pointer_cast<AbstractTreeGenerator::CBasicType>(vartype);
-			typedef AbstractTreeGenerator::TStandardType stdtype;
-			stdtype tp = vartypebasic->GetValue();
-			switch( tp ) {
+		int  vartype = varinfo.GetType();
+		if( vartype < 0 ) {			
+			typedef AbstractTreeGenerator::TStandardType stdtype;			
+			switch( vartype ) {
 				case stdtype::ST_Int: {
 					state = LookingForInt;
 					exp->Accept( this );
@@ -131,12 +121,8 @@ namespace SymbolTable {
 					exp->Accept( this );
 				}
 			}
-		} else {
-			std::shared_ptr<AbstractTreeGenerator::CIdType> vartypebasic =
-				std::dynamic_pointer_cast<AbstractTreeGenerator::CIdType>(vartype);
-			int id = vartypebasic->GetIdExpression()->GetName();
-			CTable classes;
-			lookingClass = classes.GetClass( id );
+		} else {				
+			lookingClass = vartype;
 			state = LookingForCustom;
 			exp->Accept( this );
 		}
@@ -244,13 +230,10 @@ namespace SymbolTable {
 			} else {
 				varinfo = currentClass->GetVarInfo( id );
 			}
-			std::shared_ptr<AbstractTreeGenerator::IType> vartype = varinfo.GetType();
-			if( vartype->GetType() != "POD" ) {
-				std::shared_ptr<AbstractTreeGenerator::CBasicType> vartypebasic =
-					std::dynamic_pointer_cast<AbstractTreeGenerator::CBasicType>(vartype);
-				typedef AbstractTreeGenerator::TStandardType stdtype;
-				stdtype tp = vartypebasic->GetValue();
-				switch( tp ) {
+			int vartype = varinfo.GetType();
+			if( vartype < 0 ) {				
+				typedef AbstractTreeGenerator::TStandardType stdtype;				
+				switch( vartype ) {
 					case stdtype::ST_Int: {
 						if( state != LookingForInt ) {
 							throw "Incorrect return value";
@@ -270,15 +253,11 @@ namespace SymbolTable {
 						break;
 					}
 				}
-			} else {
-				std::shared_ptr<AbstractTreeGenerator::CIdType> vartypebasic =
-					std::dynamic_pointer_cast<AbstractTreeGenerator::CIdType>(vartype);
-				int id = vartypebasic->GetIdExpression()->GetName();
-				CTable classes;
+			} else {				
 				if( state != LookingForCustom ) {
 					throw "Incorrect return value";
 				}
-				if( lookingClass != classes.GetClass( id ) ) {
+				if( lookingClass != vartype ) {
 					throw "Incorrect return value: no such class";
 				}
 			}
@@ -320,10 +299,8 @@ namespace SymbolTable {
 	{
 		// 3. Method definition
 			// b. Availability of classes
-		if( method->GetType()->GetType() == "POD" ) {
-			std::shared_ptr<AbstractTreeGenerator::CIdType> type =
-				std::dynamic_pointer_cast<AbstractTreeGenerator::CIdType>(method->GetType());
-			int id = type->GetIdExpression()->GetName();
+		if( method->GetType()->GetType() >= 0 ) {			
+			int id = method->GetType()->GetType();
 			CTable classes;
 			try {
 				classes.GetClassInfo( id );
@@ -512,11 +489,9 @@ namespace SymbolTable {
 		} else {
 			varinfo = currentClass->GetVarInfo( id );
 		}
-		std::shared_ptr<AbstractTreeGenerator::IType> vartype = varinfo.GetType();
-		if( vartype->GetType() == "POD" ) {
-			std::shared_ptr<AbstractTreeGenerator::CIdType> vartypebasic =
-				std::dynamic_pointer_cast<AbstractTreeGenerator::CIdType>(vartype);
-			int id = vartypebasic->GetIdExpression()->GetName();
+		int vartype = varinfo.GetType();
+		if( vartype >= 0 ) {			
+			int id = vartype;
 			CTable classes;			
 			if( lookingClass != classes.GetClass( id ) ) {
 				throw "Incorrect return value: no such class";
@@ -589,11 +564,9 @@ namespace SymbolTable {
 
 		
 		varinfo = currentClass->GetVarInfo( id );		
-		std::shared_ptr<AbstractTreeGenerator::IType> vartype = varinfo.GetType();
-		if( vartype->GetType() == "POD" ) {
-			std::shared_ptr<AbstractTreeGenerator::CIdType> vartypebasic =
-				std::dynamic_pointer_cast<AbstractTreeGenerator::CIdType>(vartype);
-			int id = vartypebasic->GetIdExpression()->GetName();
+		int vartype = varinfo.GetType();
+		if( vartype >= 0 ) {
+			int id = vartype;
 			CTable classes;
 			if( lookingClass != classes.GetClass( id ) ) {
 				throw "Incorrect return value: no such class";
