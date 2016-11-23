@@ -345,6 +345,9 @@
     <ClCompile Include="SymbolTable\FillTableVisitor.cpp">
       <Filter>SymbolTable\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="SymbolTable\Table.cpp">
+      <Filter>global cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="LexicParser\grammar.l">

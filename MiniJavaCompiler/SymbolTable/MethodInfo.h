@@ -1,6 +1,7 @@
 #pragma once
 #include "VariableInfo.h"
 #include <vector>
+#include <map>
 
 namespace SymbolTable {
 
@@ -9,8 +10,15 @@ namespace SymbolTable {
 	// информация о методах
 	class CMethodInfo {
 	public:
-		int GetReturnType();
-		const CVariableInfo& GetVarInfo( const int& id );
-		std::vector<int> GetArguments();
+		int GetReturnType() const;
+		void SetReturnType( const int id );
+		const CVariableInfo& GetVarInfo( const int id ) const;
+		void AddVariableInfo( const int id, const CVariableInfo& info );
+		const std::vector<int>& GetArguments() const;
+		void setArguments( const std::vector<int>& args );
+	private:
+		int returnType;
+		std::map<int, CVariableInfo> vars;
+		std::vector<int> argments;
 	};
 }

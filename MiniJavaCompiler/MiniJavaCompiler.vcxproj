@@ -250,6 +250,7 @@
     <ClCompile Include="SymbolTable\ClassInfo.cpp" />
     <ClCompile Include="SymbolTable\FillTableVisitor.cpp" />
     <ClCompile Include="SymbolTable\MethodInfo.cpp" />
+    <ClCompile Include="SymbolTable\Table.cpp" />
     <ClCompile Include="SymbolTable\TypeCheckerVistor.cpp" />
     <ClCompile Include="SymbolTable\VariableInfo.cpp" />
   </ItemGroup>

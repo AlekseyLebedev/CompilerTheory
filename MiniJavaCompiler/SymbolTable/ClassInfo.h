@@ -8,29 +8,35 @@
 #include "VariableInfo.h"
 
 namespace SymbolTable {
-
-	// TODO: Каждый класс должен быть связан со своими переменными и методами
-	// TODO: добавить методы для поиска инфомрации - TypeCheker может вызывать эти методы
-	// и проверять правила или можно сделать публичными methods и variables
-
 	// информация о классе
 	class CClassInfo {
 	public:
-		// добавить информацию о методе класса
-		void InsertMethod( const CMethodInfo theMethodInfo );
-		// добавить информацию о поле класса 
-		void InsertVariableInfo( const CVariableInfo theVariableInfo );
+		CClassInfo();
 
-		CVariableInfo GetVarInfo( const int& id );
-		std::vector<CMethodInfo> GetMethods();
+		// добавить информацию о методе класса
+		void InsertMethod( int id, const CMethodInfo & theMethodInfo );
+		// добавить информацию о поле класса 
+		void InsertVariableInfo( int id, const CVariableInfo & theVariableInfo );
+
+		const CVariableInfo& GetVarInfo( const int id )const;
+		const CMethodInfo& GetMethodInfo( const int id ) const;
+		const std::vector<CMethodInfo>& GetMethods() const;
 
 		int GetExtend();
+		void SetExtend(const int id);
 
-		const int NothingExtend;
+
+		int GetUniqueMethodsCount();
+
+
+		static const int NothingExtend;
 	private:
 		// информация о методах
-		std::vector<CMethodInfo> methods; // возможно здесь следует ссылаться на MethodDeclaration но хз
+		std::vector<CMethodInfo> allMethods;
+		std::map<int, CMethodInfo> methods;
 		// инфомрация о полях
 		std::map<int, CVariableInfo> variables; // возможно здесь следует ссылаться на VarDeclaration но хз
+
+		int extend;
 	};
 }

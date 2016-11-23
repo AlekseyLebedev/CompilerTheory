@@ -12,11 +12,12 @@ namespace SymbolTable {
 
 	class CTable {
 	public:
-		const CClassInfo& GetClassInfo( const int& id );
-		int GetClass( const int& id );
+		const CClassInfo& GetClassInfo( const int& id ) const;
+		void AddClassInfo(const int id, const CClassInfo& info );
+		int TotalAdditionCount() const ;
+		int UniqueClassesCount() const ;
 	private:
-		AbstractTreeGenerator::CStringTable stringTable;
-		std::map<int, CClassInfo> classesInfo;
-
+		int additionCount;
+		std::map<int, CClassInfo> classesInfos;
 	};
 }
