@@ -9,7 +9,8 @@ namespace SymbolTable
 {
 
 	CFillTableVisitor::CFillTableVisitor() : id( 0 )
-	{}
+	{
+	}
 
 	void CFillTableVisitor::Start( SymbolTable::CClassInfo* classInfo_, SymbolTable::CMethodInfo* methodInfo_, SymbolTable::CVariableInfo* variableInfo_ )
 	{
@@ -21,79 +22,55 @@ namespace SymbolTable
 	}
 
 	void CFillTableVisitor::Close()
-	{}
-
-	CFillTableVisitor::~CFillTableVisitor()
-	{}
-
-	size_t CFillTableVisitor::enterNode()
 	{
-		++id;
-		return id;
 	}
 
-	void CFillTableVisitor::addChild( const size_t id, AbstractTreeGenerator::INode* node )
+	CFillTableVisitor::~CFillTableVisitor()
 	{
-		size_t next = nextId();
-		if( node == 0 ) {
-			enterNode();
-		} else {
+	}
+
+	void CFillTableVisitor::visitChild( AbstractTreeGenerator::INode* node )
+	{
+		if( node != 0 ) {
 			node->Accept( this );
 		}
 	}
 
 	void CFillTableVisitor::visitUnaryNode( AbstractTreeGenerator::INode* children )
 	{
-		size_t current = enterNode();
-		addChild( current, children );
+		visitChild( children );
 	}
 
 	void CFillTableVisitor::visitBinaryNode( AbstractTreeGenerator::INode* left, AbstractTreeGenerator::INode* right )
 	{
-		size_t current = enterNode();
-		addChild( current, left );
-		addChild( current, right );
+		visitChild( left );
+		visitChild( right );
 	}
 
 	void CFillTableVisitor::visitTripleNode( AbstractTreeGenerator::INode* left, AbstractTreeGenerator::INode* center, AbstractTreeGenerator::INode* right )
 	{
-		size_t current = enterNode();
-		addChild( current, left );
-		addChild( current, center );
-		addChild( current, right );
+		visitChild( left );
+		visitChild( center );
+		visitChild( right );
 	}
 
-	void CFillTableVisitor::visitValueNode( const std::string& value )
-	{
-		enterNode();
-	}
-
-	void CFillTableVisitor::visitValueNode( const int value )
-	{
-		enterNode();
-	}
-
-	size_t CFillTableVisitor::nextId()
-	{
-		return id + 1;
-	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CAssignmentStatement* const assignmentStatement )
 	{
-		visitBinaryNode(assignmentStatement->GetIdExpression().get(), assignmentStatement->GetExpression().get() );
+		visitBinaryNode( assignmentStatement->GetIdExpression().get(), assignmentStatement->GetExpression().get() );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CClassDeclaration* const classDeclaration )
 	{
 		size_t id = enterNode();
-		classInfo->SetIdExpression( id, classDeclaration->GetIdExpression() );
-		classInfo->SetClassExtend( id, classDeclaration->GetClassExtend() );
-		classInfo->SetVarDeclaration( id, classDeclaration->GetVarDeclarationList() );
-		classInfo->SetMethodDeclaration( id, classDeclaration->GetMethodDeclarationList() );
-		addChild( id, classDeclaration->GetIdExpression().get() );
-		addChild( id, classDeclaration->GetClassExtend().get() );
-		addChild( id, classDeclaration->GetVarDeclarationList().get() );
-		addChild( id, classDeclaration->GetMethodDeclarationList().get() );
+		classInfo->SetIdExpression( classDeclaration->GetIdExpression() );
+		classInfo->SetClassExtend( classDeclaration->GetClassExtend() );
+		classInfo->SetVarDeclaration( classDeclaration->GetVarDeclarationList() );
+		classInfo->SetMethodDeclaration( classDeclaration->GetMethodDeclarationList() );
+		visitChild( classDeclaration->GetIdExpression().get() );
+		visitChild( classDeclaration->GetClassExtend().get() );
+		visitChild( classDeclaration->GetVarDeclarationList().get() );
+		visitChild( classDeclaration->GetMethodDeclarationList().get() );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CClassDeclarationList* const list )
@@ -138,8 +115,8 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CVarDeclaration* const varDeclaration )
 	{
-		variableInfo->SetType( id, varDeclaration->GetType() );
-		variableInfo->SetIdExpression( id, varDeclaration->GetIdExpression() );
+		variableInfo->SetType( varDeclaration->GetType() );
+		variableInfo->SetIdExpression( varDeclaration->GetIdExpression() );
 		visitBinaryNode( varDeclaration->GetType().get(), varDeclaration->GetIdExpression().get() );
 	}
 
@@ -150,12 +127,10 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CTrueExpression* const )
 	{
-		enterNode();
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CFalseExpression* const )
 	{
-		enterNode();
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CGetFieldExpression* const get )
@@ -172,12 +147,10 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CThisExpression* const )
 	{
-		enterNode();
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CBasicType* const type )
 	{
-		enterNode();
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CIdType* const type )
@@ -187,9 +160,8 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::COperationExpression* const operationExpression )
 	{
-		size_t current = enterNode();
-		addChild( current, operationExpression->GetLeftOperand().get() );
-		addChild( current, operationExpression->GetRightOperand().get() );
+		visitChild( current, operationExpression->GetLeftOperand().get() );
+		visitChild( current, operationExpression->GetRightOperand().get() );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CParenExpression* const paren )
@@ -199,21 +171,19 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )
 	{
-		size_t id = enterNode();
+		methodInfo->SetType( method->GetType().get() );
+		methodInfo->SetIdExpression( method->GetIdExpression().get() );
+		methodInfo->SetArgumentList( method->GetArgumentList().get() );
+		methodInfo->SetVarDeclarationList( method->GetVarDeclarationList().get() );
+		methodInfo->SetStatementList( method->GetStatementList().get() );
+		methodInfo->SetExpression( method->GetExpression().get() );
 
-		methodInfo->SetType( id, method->GetType().get());
-		methodInfo->SetIdExpression( id, method->GetIdExpression().get());
-		methodInfo->SetArgumentList( id, method->GetArgumentList().get());
-		methodInfo->SetVarDeclarationList( id, method->GetVarDeclarationList().get());
-		methodInfo->SetStatementList( id, method->GetStatementList().get());
-		methodInfo->SetExpression( id, method->GetExpression().get() );
-
-		addChild( id, method->GetType().get() );
-		addChild( id, method->GetIdExpression().get() );
-		addChild( id, method->GetArgumentList().get() );
-		addChild( id, method->GetVarDeclarationList().get() );
-		addChild( id, method->GetStatementList().get() );
-		addChild( id, method->GetExpression().get() );
+		visitChild( method->GetType().get() );
+		visitChild( method->GetIdExpression().get() );
+		visitChild( method->GetArgumentList().get() );
+		visitChild( method->GetVarDeclarationList().get() );
+		visitChild( method->GetStatementList().get() );
+		visitChild( method->GetExpression().get() );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const  list )
@@ -228,7 +198,6 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CNumberExpr* const numExpression )
 	{
-		visitValueNode( numExpression->GetValue() );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CExpressionList* const expressionList )

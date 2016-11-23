@@ -13,8 +13,6 @@ namespace SymbolTable
 	{
 	public:
 		CFillTableVisitor();
-		void Start( SymbolTable::CClassInfo* classInfo_, SymbolTable::CMethodInfo* methodInfo_, SymbolTable::CVariableInfo* variablenfo );
-		void Close();
 		virtual ~CFillTableVisitor();
 
 	private:
@@ -23,17 +21,10 @@ namespace SymbolTable
 		SymbolTable::CMethodInfo* methodInfo;
 		SymbolTable::CVariableInfo* variableInfo;
 
-		size_t id;
-
-		size_t enterNode();
-		void addChild( const size_t id, AbstractTreeGenerator::INode* node );
+		void visitChild( AbstractTreeGenerator::INode* node );
 		void visitUnaryNode( AbstractTreeGenerator::INode* children );
 		void visitBinaryNode( AbstractTreeGenerator::INode* left, AbstractTreeGenerator::INode* right );
 		void visitTripleNode( AbstractTreeGenerator::INode* left, AbstractTreeGenerator::INode* center, AbstractTreeGenerator::INode* right );
-		void visitValueNode( const std::string& value );
-		void visitValueNode( const int value );
-		
-		size_t nextId();
 
 	public:
 		// Унаследовано через IVisitor
