@@ -9,10 +9,12 @@ namespace SymbolTable {
 		enum TypeCheckerState {
 			LookingForBool,
 			LookingForInt,
+			LookingForIntList,
 			LookingForCustom,
 			None
 		} state;
 		
+		int lookingClass;
 		std::shared_ptr<CClassInfo> currentClass;
 		std::shared_ptr<CMethodInfo> currentMethod;
 
