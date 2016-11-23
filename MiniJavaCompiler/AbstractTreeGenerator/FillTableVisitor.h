@@ -1,3 +1,4 @@
+﻿#pragma once
 #include "IVisitor.h"
 #include "AllNodes.h"
 #include "INode.h"
@@ -37,6 +38,7 @@ namespace GraphvizOutput
 		size_t nextId();
 
 	public:
+		// Унаследовано через IVisitor
 		virtual void visit( AbstractTreeGenerator::CArgument* const ) override;
 		virtual void visit( AbstractTreeGenerator::CArgumentList* const ) override;
 		virtual void visit( AbstractTreeGenerator::CAssignmentListStatement* const ) override;

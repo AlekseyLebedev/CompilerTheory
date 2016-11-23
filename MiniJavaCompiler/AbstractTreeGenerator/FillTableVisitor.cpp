@@ -1,3 +1,4 @@
+﻿#include <string>
 #include <cassert>
 
 #include "FillTableVisitor.h"
@@ -112,7 +113,9 @@ namespace GraphvizOutput
 		visitBinaryNode( compoundStatement->GetLeftChild().get(), compoundStatement->GetRightChild().get() );
 	}
 
+	void CFillTableVisitor::visit( AbstractTreeGenerator::CConstructorExpression* const сonstructorExpression )
 	{
+		visitUnaryNode( сonstructorExpression->GetIdExpression().get() );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CPreconditionStatement* const precondition )
@@ -159,11 +162,13 @@ namespace GraphvizOutput
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CGetFieldExpression* const get )
 	{
+		// Слишком много get ):
 		visitTripleNode( get->GetIdExpression().get(), get->GetExpression().get(), get->GetExpressionList().get() );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CConditionStatement* const condition )
 	{
+		// TODO разабраться, что это
 		visitTripleNode( condition->GetStatementFirst().get(), condition->GetExpression().get(), condition->GetStatementSecond().get() );
 	}
 
