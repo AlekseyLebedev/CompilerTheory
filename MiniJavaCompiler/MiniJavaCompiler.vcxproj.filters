@@ -202,6 +202,9 @@
     <ClInclude Include="SymbolTable\FillTableVisitor.h">
       <Filter>SymbolTable\h</Filter>
     </ClInclude>
+    <ClInclude Include="SymbolTable\Table.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">

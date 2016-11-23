@@ -3,6 +3,7 @@
 // нужно уметь заполнять информацию о классе при обходе до TypeCheker-а
 #pragma once
 #include <vector>
+#include <map>
 #include "MethodInfo.h"
 #include "VariableInfo.h"
 
@@ -30,6 +31,6 @@ namespace SymbolTable {
 		// информация о методах
 		std::vector<CMethodInfo> methods; // возможно здесь следует ссылаться на MethodDeclaration но хз
 		// инфомрация о полях
-		std::vector<CVariableInfo> variables; // возможно здесь следует ссылаться на VarDeclaration но хз
+		std::map<int, CVariableInfo> variables; // возможно здесь следует ссылаться на VarDeclaration но хз
 	};
 }

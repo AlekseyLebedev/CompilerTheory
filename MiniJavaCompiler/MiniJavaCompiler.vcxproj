@@ -200,6 +200,7 @@
     <ClInclude Include="SymbolTable\ClassInfo.h" />
     <ClInclude Include="SymbolTable\FillTableVisitor.h" />
     <ClInclude Include="SymbolTable\MethodInfo.h" />
+    <ClInclude Include="SymbolTable\Table.h" />
     <ClInclude Include="SymbolTable\TypeCheckerVistor.h" />
     <ClInclude Include="SymbolTable\VariableInfo.h" />
     <ClInclude Include="targetver.h" />
