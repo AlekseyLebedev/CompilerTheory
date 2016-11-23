@@ -35,28 +35,73 @@ namespace SymbolTable {
 		}
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CArgumentList * const )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CArgumentList * const args)
 	{
+		std::shared_ptr<AbstractTreeGenerator::CArgument> arg = args->GetArgument();
+		std::shared_ptr<AbstractTreeGenerator::CArgumentList> leftargs = args->GetArgumentList();
+		arg->Accept( this );
+		leftargs->Accept( this );
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CAssignmentListStatement * const )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CAssignmentListStatement * const statements )
 	{
+		std::shared_ptr<AbstractTreeGenerator::CIdExpression> assignexp = statements->GetIdExpression();
+		std::shared_ptr<AbstractTreeGenerator::IExpression> indexexp = statements->GetExpressionFirst();
+		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = statements->GetExpressionSecond();
+
+		state = LookingForInt;
+		indexexp->Accept( this );
+
+		if( currentMethod != nullptr ) {
+			CVariableInfo varinfo = currentMethod->GetVarInfo( assignexp->GetName() );
+			std::shared_ptr<AbstractTreeGenerator::IType> vartype = varinfo.GetType();
+			if( vartype->GetType() != "POD" ) {
+				std::shared_ptr<AbstractTreeGenerator::CBasicType> vartypebasic = 
+					std::dynamic_pointer_cast<AbstractTreeGenerator::CBasicType>(vartype);
+				typedef AbstractTreeGenerator::TStandardType stdtype;
+				stdtype tp = vartypebasic->GetValue();
+				switch( tp ) {
+					case stdtype::ST_Int: {
+						state = LookingForInt;
+						exp->Accept( this );
+						break;
+					}
+					case stdtype::ST_Bool: {
+						state = LookingForBool;
+						exp->Accept( this );
+						break;
+					}
+				}
+			} else {
+				std::shared_ptr<AbstractTreeGenerator::CIdType> vartypebasic =
+					std::dynamic_pointer_cast<AbstractTreeGenerator::CIdType>(vartype);
+			}
+		}
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CAssignmentStatement * const statement)
 	{
-		
+		// 7. Assignment
+			// b. both expressions have the same type
+		std::shared_ptr<AbstractTreeGenerator::CIdExpression> assignexp = statement->GetIdExpression();
+		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = statement->GetExpression();
+		int id = assignexp->GetName();
+		switch( vartable->GetType( id ) ) {
+			case INT:
+
+		}
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassDeclaration * const CClass)
 	{
+
 		// 3.  method definition
 			// a. Multiple method definition
 		// maybe it's good to check in first run
 		int id = CClass->GetIdExpression()->GetName();
 		CTable classes;		
-		CClassInfo clinfo = classes.GetClassInfo( id );
-		std::vector<CMethodInfo> methods_infos = clinfo.GetMethods();		
+		currentClass = std::make_shared<CClassInfo>(classes.GetClassInfo( id ));
+		std::vector<CMethodInfo> methods_infos = currentClass->GetMethods();
 		std::set<CMethodInfo> mi_set;
 		for( auto methods_info : methods_infos ) {
 			mi_set.insert( methods_info );
@@ -66,8 +111,12 @@ namespace SymbolTable {
 		}
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassDeclarationList * const )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassDeclarationList * const classlist )
 	{
+		std::shared_ptr<AbstractTreeGenerator::CClassDeclaration> Cclass = classlist->GetClassDeclaration();
+		std::shared_ptr<AbstractTreeGenerator::CClassDeclarationList> leftclasses= classlist->GetClassDeclarationList();
+		Cclass->Accept( this );
+		leftclasses->Accept( this );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassExtend * const )
