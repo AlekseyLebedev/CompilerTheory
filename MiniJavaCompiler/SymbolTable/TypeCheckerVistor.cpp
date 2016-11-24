@@ -7,8 +7,11 @@ extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 namespace SymbolTable {
 	typedef AbstractTreeGenerator::TStandardType stdtype;
 
-	CTypeCheckerVistor::CTypeCheckerVistor(CTable classes_):classes(classes_), state(None),lookingType(-4)
+	CTypeCheckerVistor::CTypeCheckerVistor(CTable classes_)
 	{
+		state = None;
+		lookingType = -4;
+		classes = classes_;
 	}
 
 
@@ -89,11 +92,7 @@ namespace SymbolTable {
 		currentClass = std::make_shared<CClassInfo>(classes.GetClassInfo( id ));
 		currentMethod = nullptr;
 		std::vector<CMethodInfo> methods_infos = currentClass->GetMethods();
-		std::set<CMethodInfo> mi_set;
-		for( auto methods_info : methods_infos ) {
-			mi_set.insert( methods_info );
-		}
-		if( methods_infos.size() != mi_set.size() ) {
+		if (methods_infos.size() != currentClass->GetUniqueMethodsCount() ) {		
 			throw "Multiple method definition";
 		}
 

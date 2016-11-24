@@ -27,4 +27,11 @@ namespace SymbolTable {
 	{
 		return classesInfos.size();
 	}
+	CTable CTable::operator=( CTable a )
+	{
+		CTable b;
+		b.additionCount = a.additionCount;
+		b.classesInfos = a.classesInfos;
+		return b;
+	}
 }
