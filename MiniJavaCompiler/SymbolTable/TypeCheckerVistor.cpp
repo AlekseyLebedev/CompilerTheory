@@ -26,7 +26,7 @@ namespace SymbolTable {
 			try {
 				classes.GetClassInfo( type );
 			}
-			catch( std::string& e ) {
+			catch( std::exception& e ) {
 				// no such class;
 				throw;
 			}
@@ -91,7 +91,7 @@ namespace SymbolTable {
 		methodExist = false;
 		std::vector<CMethodInfo> methods_infos = currentClass.GetMethods();
 		if( methods_infos.size() != currentClass.GetUniqueMethodsCount() ) {
-			throw "Multiple method definition";
+			throw std::logic_error( "Multiple method definition" );
 		}
 
 		if( !CClass->GetClassExtend() ) {
@@ -99,7 +99,7 @@ namespace SymbolTable {
 			int class_extend = CClass->GetClassExtend()->GetIdExpression()->GetName();
 			CClassInfo extend_info = classes.GetClassInfo( class_extend );
 			if( id == extend_info.GetExtend() ) {
-				throw "circular dependency";
+				throw std::logic_error( "circular dependency" );
 			}
 		}
 
@@ -122,7 +122,7 @@ namespace SymbolTable {
 		try {
 			classes.GetClassInfo( id );
 		}
-		catch( std::string& e ) {
+		catch( std::exception& e ) {
 			// no such class;
 			throw;
 		}
@@ -141,15 +141,15 @@ namespace SymbolTable {
 		try {
 			classes.GetClassInfo( id );
 		}
-		catch( std::string& e ) {
+		catch( std::exception& e ) {
 			// no such class
 			throw;
 		}
 		if( lookingType < 0 ) {
-			throw "Incorrect return value: basic type required but method returns custom";
+			throw std::logic_error( "Incorrect return value: basic type required but method returns custom" );
 		} else {
 			if( classes.GetClassInfo( id ) != classes.GetClassInfo( lookingType ) ) {
-				throw "Incorrect return value: no such class";
+				throw std::logic_error( "Incorrect return value: no such class" );
 			} else {
 				lookingType = -4;
 				state = None;
@@ -177,7 +177,7 @@ namespace SymbolTable {
 			}
 			int vartype = varinfo.GetType();
 			if( vartype != lookingType ) {
-				throw "Incorrect return value";
+				throw std::logic_error( "Incorrect return value" );
 			} else {
 				state = None;
 				lookingType = -4;
@@ -233,7 +233,7 @@ namespace SymbolTable {
 			try {
 				classes.GetClassInfo( id );
 			}
-			catch( std::string& e ) {
+			catch( std::exception& e ) {
 				// no such class;
 				throw;
 			}
@@ -251,7 +251,7 @@ namespace SymbolTable {
 			args_set.insert( arg );
 		}
 		if( args.size() != args_set.size() ) {
-			throw "Multiple argument definition";
+			throw std::logic_error( "Multiple argument definition" );
 		}
 
 		method->GetVarDeclarationList()->Accept( this );
@@ -287,7 +287,7 @@ namespace SymbolTable {
 				state = None;
 				lookingType;
 			} else {
-				throw "Incorrect type";
+				throw std::logic_error( "Incorrect type" );
 			}
 		}
 	}
@@ -320,7 +320,7 @@ namespace SymbolTable {
 						break;
 					}
 					default: {
-						throw "Incorrect return value: bool required but method returns int";
+						throw std::logic_error( "Incorrect return value: bool required but method returns int" );
 					}
 				}
 				break;
@@ -348,14 +348,14 @@ namespace SymbolTable {
 						break;
 					}
 					default: {
-						throw "Incorrect return value: int required but method returns bool";
+						throw std::logic_error( "Incorrect return value: int required but method returns bool" );
 						break;
 					}
 				}
 				break;
 			}
 			default: {
-				throw "Incorrect return type";
+				throw std::logic_error( "Incorrect return type" );
 				break;
 			}
 		}
@@ -413,7 +413,7 @@ namespace SymbolTable {
 		try {
 			classes.GetClassInfo( id );
 		}
-		catch( std::string& e ) {
+		catch( std::exception& e ) {
 			// no such class;
 			throw;
 		}
@@ -434,7 +434,7 @@ namespace SymbolTable {
 		if( vartype >= 0 ) {
 			int id = vartype;
 			if( lookingType != classes.GetClassInfo( id ) ) {
-				throw "Incorrect return value: no such class";
+				throw std::logic_error( "Incorrect return value: no such class" );
 			} else {
 				state = None;
 				lookingType = -4;
@@ -459,7 +459,7 @@ namespace SymbolTable {
 				state = None;
 				lookingType = -4;
 			} else {
-				"Incorrect return value: method returns bool";
+				throw std::logic_error( "Incorrect return value: method returns bool" );
 			}
 		}
 	}
@@ -473,7 +473,7 @@ namespace SymbolTable {
 				state = None;
 				lookingType = -4;
 			} else {
-				"Incorrect return value: method returns bool";
+				std::logic_error( "Incorrect return value: method returns bool" );
 			}
 		}
 	}
@@ -488,7 +488,7 @@ namespace SymbolTable {
 			int id = vartype;
 			CTable classes;
 			if( classes.GetClassInfo( lookingType ) != classes.GetClassInfo( id ) ) {
-				throw "Incorrect return value: no such class";
+				throw std::logic_error( "Incorrect return value: no such class" );
 			} else {
 				// OK
 				state = None;
