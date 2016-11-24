@@ -15,7 +15,7 @@ namespace SymbolTable {
 	{
 		auto info = classesInfos.find( id );
 		if( info == classesInfos.end() )
-			throw std::logic_error( "Class not found" );
+			throw new std::logic_error( "Class not found" );
 		else
 			return info->second;
 	}
