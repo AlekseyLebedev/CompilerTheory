@@ -7,7 +7,8 @@ extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 namespace SymbolTable {
 	typedef AbstractTreeGenerator::TStandardType stdtype;
 
-	CTypeCheckerVistor::CTypeCheckerVistor(CTable classes_) : state(None), lookingType(-4), classes(classes_)
+	CTypeCheckerVistor::CTypeCheckerVistor(CTable classes_) : 
+		state(None), lookingType(-4), classes(classes_), methodExist(false)
 	{
 	}
 
@@ -50,10 +51,10 @@ namespace SymbolTable {
 		lookingType = stdtype::ST_Int;
 		indexexp->Accept( this );
 		CVariableInfo varinfo;
-		if( currentMethod != nullptr ) {
-			varinfo = currentMethod->GetVarInfo( assignexp->GetName() );			
+		if( methodExist ) {
+			varinfo = currentMethod.GetVarInfo( assignexp->GetName() );			
 		} else {
-			varinfo = currentClass->GetVarInfo( assignexp->GetName() );
+			varinfo = currentClass.GetVarInfo( assignexp->GetName() );
 		}			
 		int vartype = varinfo.GetType();
 		state = LookingType;
@@ -68,10 +69,10 @@ namespace SymbolTable {
 			// b. both expressions have the same type
 		int id = statement->GetIdExpression()->GetName();			
 		CVariableInfo varinfo;
-		if( currentMethod != nullptr ) {
-			varinfo = currentMethod->GetVarInfo( id );			
+		if( methodExist ) {
+			varinfo = currentMethod.GetVarInfo( id );			
 		} else {
-			varinfo = currentClass->GetVarInfo( id );			
+			varinfo = currentClass.GetVarInfo( id );			
 		}
 		int vartype = varinfo.GetType();
 		state = LookingType;
@@ -86,10 +87,10 @@ namespace SymbolTable {
 			// a. Multiple method definition
 		// maybe it's good to check in first run
 		int id = CClass->GetIdExpression()->GetName();
-		currentClass = std::make_shared<CClassInfo>(classes.GetClassInfo( id ));
-		currentMethod = nullptr;
-		std::vector<CMethodInfo> methods_infos = currentClass->GetMethods();
-		if (methods_infos.size() != currentClass->GetUniqueMethodsCount() ) {		
+		currentClass = classes.GetClassInfo( id );
+		methodExist = false;		
+		std::vector<CMethodInfo> methods_infos = currentClass.GetMethods();
+		if (methods_infos.size() != currentClass.GetUniqueMethodsCount() ) {		
 			throw "Multiple method definition";
 		}
 
@@ -167,10 +168,10 @@ namespace SymbolTable {
 		int id = expression->GetName();
 		if( state != None ) {	
 			CVariableInfo varinfo;
-			if( currentMethod != nullptr ) {
-				varinfo = currentMethod->GetVarInfo( id );				
+			if( methodExist ) {
+				varinfo = currentMethod.GetVarInfo( id );				
 			} else {
-				varinfo = currentClass->GetVarInfo( id );				
+				varinfo = currentClass.GetVarInfo( id );				
 			}
 			int vartype = varinfo.GetType();
 			if( vartype != lookingType ) {
@@ -240,8 +241,9 @@ namespace SymbolTable {
 			// a. Multiple arguments definition
 		// maybe it's good to check in first run
 		int id = method->GetIdExpression()->GetName();
-		CMethodInfo methodinfo = currentClass->GetMethodInfo(id);		
-		std::vector<int> args = methodinfo.GetArguments();
+		currentMethod = currentClass.GetMethodInfo(id);
+		methodExist = true;
+		std::vector<int> args = currentMethod.GetArguments();
 		std::set<int> args_set;
 		for( auto arg : args ) {
 			args_set.insert( arg );
@@ -249,7 +251,7 @@ namespace SymbolTable {
 		if( args.size() != args_set.size() ) {
 			throw "Multiple argument definition";
 		}
-		currentMethod = std::make_shared<CMethodInfo>(methodinfo);
+		
 		method->GetVarDeclarationList()->Accept( this );
 		method->GetStatementList()->Accept( this );
 
@@ -419,11 +421,11 @@ namespace SymbolTable {
 		std::shared_ptr<AbstractTreeGenerator::IType> type = var->GetType();
 		int id = var->GetIdExpression()->GetName();	
 		CVariableInfo varinfo;
-		if( currentMethod != nullptr ) {
-			varinfo = currentMethod->GetVarInfo( id );
+		if( methodExist ) {
+			varinfo = currentMethod.GetVarInfo( id );
 			
 		} else {
-			varinfo = currentClass->GetVarInfo( id );			
+			varinfo = currentClass.GetVarInfo( id );			
 		}
 		int vartype = varinfo.GetType();
 		if( vartype >= 0 ) {
@@ -477,7 +479,7 @@ namespace SymbolTable {
 	{
 		int id = expression->GetIdExpression()->GetName();		
 		
-		CVariableInfo varinfo = currentClass->GetVarInfo( id );
+		CVariableInfo varinfo = currentClass.GetVarInfo( id );
 		int vartype = varinfo.GetType();
 		if( vartype >= 0 ) {
 			int id = vartype;
