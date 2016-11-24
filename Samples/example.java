@@ -7,9 +7,9 @@ class BubbleSort{
 class BBS{
     
     int[] number ;
-    int size ;
+    int size ;		
     public int Start(int sz){	
-	return 0 ;
+	return sz ;
     } 
     
     public int Sort(){	

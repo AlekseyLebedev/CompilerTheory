@@ -226,27 +226,39 @@ namespace SymbolTable {
 		if( state != None ) {
 			CVariableInfo varinfo;
 			if( methodExist ) {
-				bool assign = false;
+				bool assign[3] = { false, false, false };
 				try {
 					varinfo = currentMethod.GetVarInfo( id, expression );
-					assign = true;
+					assign[0] = true;
 				}
-				catch( std::exception* e ) {
+				catch( ... ) {
+
+				}
+				try {
+					varinfo = currentMethod.GetArgInfo( id, expression );
+					assign[1] = true;
+				}
+				catch( ... ) {
+
+				}
+				try {
 					varinfo = currentClass.GetVarInfo( id, expression );
+					assign[2] = true;
 				}
-				if( assign ) {
-					bool bothassign = false;
-					try {
-						currentClass.GetVarInfo( id, expression );
-						bothassign = true;
-					}
-					catch( ... ) {
-						
-					} 
-					if( bothassign ) {
-						throw new CTypeException( expression->GetCol(), expression->GetRow(),
-							"Multiple definition" );
-					}
+				catch( ... ) {
+
+				}
+				int sum = 0;
+				for( int i = 0; i < 3; i++ ) {
+					sum += assign[i];
+				}
+				if( sum == 0 ) {
+					throw new CTypeException( expression->GetCol(), expression->GetRow(),
+						"No such variable" );
+				}
+				else if( sum > 1 ) {
+					throw new CTypeException( expression->GetCol(), expression->GetRow(),
+						"Multiple declaration" );
 				}
 			} else {
 				varinfo = currentClass.GetVarInfo( id, expression );
