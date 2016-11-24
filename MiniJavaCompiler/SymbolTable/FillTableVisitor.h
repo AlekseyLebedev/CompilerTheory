@@ -24,7 +24,6 @@ namespace SymbolTable
 		CMethodInfo currentMethodInfo;
 		CVariableInfo currentVariableInfo;
 		CTable table;
-		std::vector<int> currentArguments;
 
 		void visitChild( AbstractTreeGenerator::INode* node );
 		void visitUnaryNode( AbstractTreeGenerator::INode* children );
