@@ -4,11 +4,13 @@ namespace SymbolTable {
 
 	char const * CTypeException::what() const
 	{
-		return message.str().c_str();
+		return msgresult.c_str();
 	}
 
-	CTypeException::CTypeException( int col, int row, std::string msg )
+	CTypeException::CTypeException( int col, int row, const std::string & msg )
 	{
+		message = std::stringstream();
 		message << "Col: " << col << " row: " << row << " Error: " << msg;
+		msgresult = message.str();
 	}
 }

@@ -45,8 +45,8 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CArgumentList * const args )
 	{
 		args->GetArgument()->Accept( this );
-		visitChild(args->GetArgumentList().get());
-		
+		visitChild( args->GetArgumentList().get() );
+
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CAssignmentListStatement * const statements )
@@ -119,7 +119,7 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassDeclarationList * const classlist )
 	{
 		classlist->GetClassDeclaration()->Accept( this );
-		visitChild(classlist->GetClassDeclarationList().get());		
+		visitChild( classlist->GetClassDeclarationList().get() );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassExtend * const classExtend )
@@ -204,8 +204,8 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CLastExpressionList * const expression )
 	{
 		expression->GetExp()->Accept( this );
-		visitChild(expression->GetExpression().get());
-		
+		visitChild( expression->GetExpression().get() );
+
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CLengthExpression * const expression )
@@ -258,8 +258,8 @@ namespace SymbolTable {
 			throw new CTypeException( method->GetCol(), method->GetRow(), "Multiple argument definition" );
 		}
 
-		visitChild(method->GetVarDeclarationList().get());
-		visitChild(method->GetStatementList().get());
+		visitChild( method->GetVarDeclarationList().get() );
+		visitChild( method->GetStatementList().get() );
 
 		// Return value type check
 		int type = method->GetType()->GetType();
@@ -322,7 +322,7 @@ namespace SymbolTable {
 						break;
 					}
 					default: {
-						throw new std::logic_error( "Incorrect return value: bool required but method returns int" );
+						throw new CTypeException( operation->GetCol(), operation->GetRow(), "Incorrect return value: bool required but method returns int" );
 					}
 				}
 				break;
@@ -357,7 +357,7 @@ namespace SymbolTable {
 				break;
 			}
 			default: {
-				throw new std::logic_error( "Incorrect return type" );
+				throw new CTypeException( operation->GetCol(), operation->GetRow(), "Incorrect return type" );
 				break;
 			}
 		}
@@ -393,14 +393,14 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CProgram * const program )
 	{
-		visitChild( program->GetClassDeclarationList().get());
+		visitChild( program->GetClassDeclarationList().get() );
 		program->GetMainClass()->Accept( this );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CStatementList * const statement )
 	{
 		statement->GetStatement()->Accept( this );
-		visitChild(statement->GetStatementList().get());
+		visitChild( statement->GetStatementList().get() );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CBasicType * const )
@@ -435,7 +435,7 @@ namespace SymbolTable {
 		if( vartype >= 0 ) {
 			int id = vartype;
 			if( lookingType != classes.GetClassInfo( id ) ) {
-				throw new std::logic_error( "Incorrect return value: no such class" );
+				throw new CTypeException( var->GetCol(), var->GetRow(), "Incorrect return value: no such class" );
 			} else {
 				state = None;
 				lookingType = -4;
@@ -447,7 +447,7 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CVarDeclarationList * const vars )
 	{
 		vars->GetVarDeclaration()->Accept( this );
-		visitChild(vars->GetVarDeclarationList().get());
+		visitChild( vars->GetVarDeclarationList().get() );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CTrueExpression * const )
