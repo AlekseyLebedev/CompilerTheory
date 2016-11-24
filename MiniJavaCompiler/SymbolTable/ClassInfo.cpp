@@ -1,11 +1,12 @@
 #include "ClassInfo.h"
+#include "TypeException.h"
 
 namespace SymbolTable {
 	CClassInfo::CClassInfo() : extend( CClassInfo::NothingExtend )
 	{
 
 	}
-	CClassInfo::CClassInfo( int name_ ) : name(name_)
+	CClassInfo::CClassInfo( int name_ ) : name( name_ )
 	{
 	}
 	void CClassInfo::InsertMethod( int id, const CMethodInfo& theMethodInfo )
@@ -19,20 +20,20 @@ namespace SymbolTable {
 		variables[id] = theVariableInfo;
 	}
 
-	const CVariableInfo & CClassInfo::GetVarInfo( const int id ) const
+	const CVariableInfo & CClassInfo::GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const
 	{
 		auto info = variables.find( id );
 		if( info == variables.end() )
-			throw new  std::logic_error( "Variable not found" );
+			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Variable not found" );
 		else
 			return info->second;
 	}
 
-	const CMethodInfo & CClassInfo::GetMethodInfo( const int id ) const
+	const CMethodInfo & CClassInfo::GetMethodInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const
 	{
 		auto info = methods.find( id );
 		if( info == methods.end() )
-			throw new  std::logic_error( "Method not found" );
+			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Method not found" );
 		else
 			return info->second;
 	}

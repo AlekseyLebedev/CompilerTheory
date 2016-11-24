@@ -6,6 +6,8 @@
 #include <map>
 #include "MethodInfo.h"
 #include "VariableInfo.h"
+#include "..\AbstractTreeGenerator\INode.h"
+#include "TypeException.h"
 
 namespace SymbolTable {
 	// информация о классе
@@ -18,8 +20,8 @@ namespace SymbolTable {
 		// добавить информацию о поле класса 
 		void InsertVariableInfo( int id, const CVariableInfo & theVariableInfo );
 
-		const CVariableInfo& GetVarInfo( const int id )const;
-		const CMethodInfo& GetMethodInfo( const int id ) const;
+		const CVariableInfo& GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode )const;
+		const CMethodInfo& GetMethodInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const;
 		const std::vector<CMethodInfo>& GetMethods() const;
 
 		int GetExtend();
