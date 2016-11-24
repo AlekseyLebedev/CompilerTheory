@@ -156,7 +156,7 @@ namespace SymbolTable {
 			throw new CTypeException( expression->GetCol(), expression->GetRow(),
 				"Incorrect return value: basic type required but method returns custom" );
 		} else {
-			if( classes.GetClassInfo( id, expression ) != classes.GetClassInfo( lookingType, expression ) ) {
+			if( id != lookingType ) {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
 					"Incorrect return value: no such class" );
 			} else {
@@ -454,12 +454,10 @@ namespace SymbolTable {
 		}
 		int vartype = varinfo.GetType();
 		if( vartype >= 0 ) {
-			int id = vartype;
-			if( lookingType != classes.GetClassInfo( id, var ) ) {
-				throw new CTypeException( var->GetCol(), var->GetRow(), "Incorrect return value: no such class" );
-			} else {
-				state = None;
-				lookingType = -4;
+			classes.GetClassInfo( vartype, var );
+		} else {
+			if( vartype <= stdtype::ST_Void ) {
+				throw new CTypeException( var->GetCol(), var->GetRow(), "Wrong type" );
 			}
 		}
 
