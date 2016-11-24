@@ -567,17 +567,21 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CGetFieldExpression * const expression )
 	{
-		int id = expression->GetIdExpression()->GetName();		
-		std::shared_ptr<AbstractTreeGenerator::CIdExpression> var;
-		std::shared_ptr<AbstractTreeGenerator::CThisExpression> var1;
-		var = std::dynamic_pointer_cast<AbstractTreeGenerator::CIdExpression>(expression->GetExpression());
+		int id = expression->GetIdExpression()->GetName();	
+		CMethodInfo methinfo;
+		std::shared_ptr<AbstractTreeGenerator::CIdExpression> var 
+			= std::dynamic_pointer_cast<AbstractTreeGenerator::CIdExpression>(expression->GetExpression());
 		if( var == nullptr) {
-			var1 = std::dynamic_pointer_cast<AbstractTreeGenerator::CThisExpression>(expression->GetExpression());		
+			std::shared_ptr<AbstractTreeGenerator::CThisExpression> var1 
+				= std::dynamic_pointer_cast<AbstractTreeGenerator::CThisExpression>(expression->GetExpression());
 			if( var1 ) {
-				currentClass.GetMethodInfo( id, expression );
+				methinfo = currentClass.GetMethodInfo( id, expression );
 			} else {
-				throw new CTypeException( expression->GetCol(), expression->GetRow(),
-					"Can't call method from not variable or this" );
+				std::shared_ptr<AbstractTreeGenerator::CConstructorExpression> var2 
+					= std::dynamic_pointer_cast<AbstractTreeGenerator::CConstructorExpression>(expression->GetExpression());
+				int clasname = var2->GetIdExpression()->GetName();
+				CClassInfo cl = classes.GetClassInfo( clasname, expression );
+				methinfo = cl.GetMethodInfo( id, expression );
 			}
 		} else {
 			int	var_name = var->GetName();
@@ -618,8 +622,15 @@ namespace SymbolTable {
 			}
 			int type = varinfo.GetType();
 			CClassInfo cl = classes.GetClassInfo( type, expression );
-			CMethodInfo methinfo = cl.GetMethodInfo( id, expression );
-		}		
+			methinfo = cl.GetMethodInfo( id, expression );
+		}	
+		// Checking return value
+		if( state == LookingType ) {
+			if( lookingType != methinfo.GetReturnType() ) {
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"Bad return value" );
+			}			
+		}
 		/*CMethodInfo methinfo = currentClass.GetMethodInfo( id, expression );*/
 		//auto kek = expression->GetExpressionList();
 		//while( kek != nullptr ) {
