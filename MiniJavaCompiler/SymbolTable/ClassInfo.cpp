@@ -24,7 +24,7 @@ namespace SymbolTable {
 	{
 		auto info = variables.find( id );
 		if( info == variables.end() )
-			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Field not found" );
+			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Field not declarated" );
 		else
 			return info->second;
 	}
@@ -33,7 +33,7 @@ namespace SymbolTable {
 	{
 		auto info = methods.find( id );
 		if( info == methods.end() )
-			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Method not found" );
+			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Method not declarated" );
 		else
 			return info->second;
 	}
