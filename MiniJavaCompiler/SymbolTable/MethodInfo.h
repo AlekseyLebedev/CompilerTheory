@@ -2,6 +2,8 @@
 #include "VariableInfo.h"
 #include <vector>
 #include <map>
+#include "..\AbstractTreeGenerator\INode.h"
+
 
 namespace SymbolTable {
 

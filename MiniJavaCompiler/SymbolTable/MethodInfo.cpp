@@ -1,6 +1,5 @@
 #include "MethodInfo.h"
 #include "TypeException.h"
-#include "..\AbstractTreeGenerator\INode.h"
 
 namespace SymbolTable {
 

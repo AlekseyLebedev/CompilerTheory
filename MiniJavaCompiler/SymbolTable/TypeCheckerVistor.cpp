@@ -60,9 +60,9 @@ namespace SymbolTable {
 		indexexp->Accept( this );
 		CVariableInfo varinfo;
 		if( methodExist ) {
-			varinfo = currentMethod.GetVarInfo( assignexp->GetName() );
+			varinfo = currentMethod.GetVarInfo( assignexp->GetName(), statements );
 		} else {
-			varinfo = currentClass.GetVarInfo( assignexp->GetName() );
+			varinfo = currentClass.GetVarInfo( assignexp->GetName(), statements );
 		}
 		int vartype = varinfo.GetType();
 		state = LookingType;
@@ -78,9 +78,9 @@ namespace SymbolTable {
 		int id = statement->GetIdExpression()->GetName();
 		CVariableInfo varinfo;
 		if( methodExist ) {
-			varinfo = currentMethod.GetVarInfo( id );
+			varinfo = currentMethod.GetVarInfo( id, statement );
 		} else {
-			varinfo = currentClass.GetVarInfo( id );
+			varinfo = currentClass.GetVarInfo( id, statement );
 		}
 		int vartype = varinfo.GetType();
 		state = LookingType;
@@ -98,7 +98,7 @@ namespace SymbolTable {
 		currentClass = classes.GetClassInfo( id );
 		methodExist = false;
 		std::vector<CMethodInfo> methods_infos = currentClass.GetMethods();
-		if( methods_infos.size() != currentClass.GetUniqueMethodsCount() ) {			
+		if( methods_infos.size() != currentClass.GetUniqueMethodsCount() ) {
 			throw new CTypeException( CClass->GetCol(), CClass->GetRow(), "Multiple method definition" );
 		}
 
@@ -152,11 +152,11 @@ namespace SymbolTable {
 			// no such class
 			throw;
 		}
-		if( lookingType < 0 ) {			
-			throw new CTypeException( expression->GetCol(), expression->GetRow(), 
+		if( lookingType < 0 ) {
+			throw new CTypeException( expression->GetCol(), expression->GetRow(),
 				"Incorrect return value: basic type required but method returns custom" );
 		} else {
-			if( classes.GetClassInfo( id ) != classes.GetClassInfo( lookingType ) ) {				
+			if( classes.GetClassInfo( id ) != classes.GetClassInfo( lookingType ) ) {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
 					"Incorrect return value: no such class" );
 			} else {
@@ -178,9 +178,9 @@ namespace SymbolTable {
 		if( state != None ) {
 			CVariableInfo varinfo;
 			if( methodExist ) {
-				varinfo = currentMethod.GetVarInfo( id );
+				varinfo = currentMethod.GetVarInfo( id, expression );
 			} else {
-				varinfo = currentClass.GetVarInfo( id );
+				varinfo = currentClass.GetVarInfo( id, expression );
 			}
 			int vartype = varinfo.GetType();
 			if( vartype != lookingType ) {
@@ -250,7 +250,7 @@ namespace SymbolTable {
 			// a. Multiple arguments definition
 		// maybe it's good to check in first run
 		int id = method->GetIdExpression()->GetName();
-		currentMethod = currentClass.GetMethodInfo( id );
+		currentMethod = currentClass.GetMethodInfo( id , method );
 		methodExist = true;
 		if( currentMethod.GetAllArgsCount() != currentMethod.GetUniqueArgsCount() ) {
 			throw new CTypeException( method->GetCol(), method->GetRow(), "Multiple argument definition" );
@@ -286,7 +286,7 @@ namespace SymbolTable {
 				// OK
 				state = None;
 				lookingType;
-			} else {				
+			} else {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
 					"Incorrect type" );
 			}
@@ -349,7 +349,7 @@ namespace SymbolTable {
 						break;
 					}
 					default: {
-						throw new CTypeException( operation->GetCol(), operation->GetRow(), 
+						throw new CTypeException( operation->GetCol(), operation->GetRow(),
 							"Incorrect return value: int required but method returns bool" );
 						break;
 					}
@@ -427,9 +427,9 @@ namespace SymbolTable {
 		int id = var->GetIdExpression()->GetName();
 		CVariableInfo varinfo;
 		if( methodExist ) {
-			varinfo = currentMethod.GetVarInfo( id );
+			varinfo = currentMethod.GetVarInfo( id, var );
 		} else {
-			varinfo = currentClass.GetVarInfo( id );
+			varinfo = currentClass.GetVarInfo( id, var );
 		}
 		int vartype = varinfo.GetType();
 		if( vartype >= 0 ) {
@@ -450,7 +450,7 @@ namespace SymbolTable {
 		visitChild( vars->GetVarDeclarationList().get() );
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CTrueExpression * const expression)
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CTrueExpression * const expression )
 	{
 		// Checking return value type
 		if( state == LookingType ) {
@@ -458,14 +458,14 @@ namespace SymbolTable {
 				// OK
 				state = None;
 				lookingType = -4;
-			} else {				
+			} else {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
 					"Incorrect return value: method returns bool" );
 			}
 		}
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CFalseExpression * const expression)
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CFalseExpression * const expression )
 	{
 		// Checking return value type
 		if( state == LookingType ) {
@@ -484,12 +484,12 @@ namespace SymbolTable {
 	{
 		int id = expression->GetIdExpression()->GetName();
 
-		CVariableInfo varinfo = currentClass.GetVarInfo( id );
+		CVariableInfo varinfo = currentClass.GetVarInfo( id, expression );
 		int vartype = varinfo.GetType();
 		if( vartype >= 0 ) {
 			int id = vartype;
 			CTable classes;
-			if( classes.GetClassInfo( lookingType ) != classes.GetClassInfo( id ) ) {				
+			if( classes.GetClassInfo( lookingType ) != classes.GetClassInfo( id ) ) {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
 					"Incorrect return value: no such class" );
 			} else {
