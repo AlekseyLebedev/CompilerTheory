@@ -23,7 +23,7 @@ namespace SymbolTable {
 	{
 		auto info = variables.find( id );
 		if( info == variables.end() )
-			throw std::logic_error( "Variable not found" );
+			throw new  std::logic_error( "Variable not found" );
 		else
 			return info->second;
 	}
@@ -32,7 +32,7 @@ namespace SymbolTable {
 	{
 		auto info = methods.find( id );
 		if( info == methods.end() )
-			throw std::logic_error( "Method not found" );
+			throw new  std::logic_error( "Method not found" );
 		else
 			return info->second;
 	}

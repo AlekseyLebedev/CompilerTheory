@@ -16,7 +16,7 @@ namespace SymbolTable {
 	{
 		auto info = vars.find( id );
 		if( info == vars.end() )
-			throw std::logic_error( "Variable not found" );
+			throw new std::logic_error( "Variable not found" );
 		else
 			return info->second;
 	}

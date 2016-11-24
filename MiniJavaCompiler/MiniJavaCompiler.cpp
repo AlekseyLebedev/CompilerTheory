@@ -49,8 +49,8 @@ int main( int argc, char** argv )
 				typeChecker.visit( root.get() );
 				GraphvizOutput::CGraphvizLauncher::Launch( root.get(), i );
 			}
-			catch( std::exception& e ) {
-				std::cerr << e.what() << std::endl;
+			catch( std::exception* e ) {
+				std::cerr << e->what() << std::endl;
 			}
 		}
 	}
