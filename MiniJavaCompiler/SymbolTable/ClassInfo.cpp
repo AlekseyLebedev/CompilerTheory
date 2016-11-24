@@ -24,7 +24,7 @@ namespace SymbolTable {
 	{
 		auto info = variables.find( id );
 		if( info == variables.end() )
-			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Variable not found" );
+			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Field not found" );
 		else
 			return info->second;
 	}
