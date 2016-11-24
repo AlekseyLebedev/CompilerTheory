@@ -5,15 +5,11 @@ class BubbleSort{
     }
 }
 
-class B {
-	public int BS(int a) {
-		A kek;
-		kek = new A();
-		return kek.PS(2);
-	}
-}
 class A {
-	public int PS(int a) {
-		return a;
+	public int B(int sz) {
+		int[] a;
+		a = new int[sz];
+		a[0] = 4;
+		return a[0];
 	}
 }

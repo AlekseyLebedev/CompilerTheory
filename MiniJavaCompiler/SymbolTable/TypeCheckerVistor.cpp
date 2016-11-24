@@ -91,9 +91,14 @@ namespace SymbolTable {
 			varinfo = currentClass.GetVarInfo( assignexp->GetName(), statement );
 		}
 		int vartype = varinfo.GetType();
-		state = LookingType;
-		lookingType = vartype;
-		exp->Accept( this );
+		if( vartype == stdtype::ST_Intlist ) {
+			state = LookingType;
+			lookingType = stdtype::ST_Int;
+			exp->Accept( this );
+		} else {
+			throw new CTypeException( statement->GetCol(), statement->GetRow(),
+				"Not Int list" );
+		}
 
 	}
 
