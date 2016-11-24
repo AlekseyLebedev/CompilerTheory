@@ -579,10 +579,14 @@ namespace SymbolTable {
 			} else {
 				std::shared_ptr<AbstractTreeGenerator::CConstructorExpression> var2 
 					= std::dynamic_pointer_cast<AbstractTreeGenerator::CConstructorExpression>(expression->GetExpression());
+				if( var2 == nullptr ) {
+					throw new CTypeException( expression->GetCol(), expression->GetRow(),
+						"It's not callable" );
+				}
 				int clasname = var2->GetIdExpression()->GetName();
 				CClassInfo cl = classes.GetClassInfo( clasname, expression );
-				methinfo = cl.GetMethodInfo( id, expression );
-			}
+				methinfo = cl.GetMethodInfo( id, expression );				
+			} 
 		} else {
 			int	var_name = var->GetName();
 			//CVariableInfo varinfo = currentMethod.GetVarInfo( var_name, expression );
