@@ -1,7 +1,7 @@
 #include "VariableInfo.h"
 
 namespace SymbolTable {
-	int CVariableInfo::GetType()
+	int CVariableInfo::GetType() const
 	{
 		return type;
 	}

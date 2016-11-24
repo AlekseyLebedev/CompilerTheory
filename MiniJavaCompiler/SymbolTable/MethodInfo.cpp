@@ -39,7 +39,7 @@ namespace SymbolTable {
 
 	void CMethodInfo::AddArgInfo( const int id, const CVariableInfo & info )
 	{
-		argsCount++;
+		argsTypes.push_back( info.GetType() );
 		args[id] = info;
 	}
 
@@ -54,10 +54,14 @@ namespace SymbolTable {
 	}
 	int CMethodInfo::GetAllArgsCount()
 	{
-		return argsCount;
+		return argsTypes.size();
 	}
 	int CMethodInfo::GetAllVarsCount()
 	{
 		return vars.size();
+	}
+	int CMethodInfo::GetArgType( const int num ) const
+	{
+		return argsTypes[num];
 	}
 }

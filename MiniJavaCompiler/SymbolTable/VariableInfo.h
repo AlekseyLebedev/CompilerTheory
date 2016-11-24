@@ -5,7 +5,7 @@ namespace SymbolTable {
 	// информация о переменной
 	class CVariableInfo {
 	public:
-		int GetType();
+		int GetType() const;
 		CVariableInfo();
 		CVariableInfo( int );
 

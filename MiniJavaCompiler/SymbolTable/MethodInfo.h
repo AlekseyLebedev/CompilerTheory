@@ -22,12 +22,13 @@ namespace SymbolTable {
 		int GetUniqueVarsCount();
 		int GetAllArgsCount();
 		int GetAllVarsCount();
+		int GetArgType( const int num ) const;
 
 	private:
 		int returnType;
 		std::map<int, CVariableInfo> vars;
 		std::map<int, CVariableInfo> args;
 		int varsCount;
-		int argsCount;
+		std::vector<int> argsTypes;
 	};
 }
