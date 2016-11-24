@@ -17,6 +17,14 @@ namespace SymbolTable {
 	{
 	}
 
+
+	void CTypeCheckerVistor::visitChild( AbstractTreeGenerator::INode* node )
+	{
+		if( node != 0 ) {
+			node->Accept( this );
+		}
+	}
+
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CArgument * const argument )
 	{
 		// 4. Argument definition
@@ -103,8 +111,9 @@ namespace SymbolTable {
 			}
 		}
 
-		CClass->GetMethodDeclarationList()->Accept( this );
-		CClass->GetVarDeclarationList()->Accept( this );
+
+		visitChild( CClass->GetMethodDeclarationList().get() );
+		visitChild( CClass->GetVarDeclarationList().get() );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassDeclarationList * const classlist )
