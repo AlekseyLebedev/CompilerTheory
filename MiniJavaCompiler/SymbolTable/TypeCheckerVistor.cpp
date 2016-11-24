@@ -560,9 +560,14 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CGetFieldExpression * const expression )
 	{
-		int id = expression->GetIdExpression()->GetName();
-
-		CMethodInfo methinfo = currentClass.GetMethodInfo( id, expression );
+		int id = expression->GetIdExpression()->GetName();		
+		auto var = std::dynamic_pointer_cast<AbstractTreeGenerator::CIdExpression>(expression->GetExpression());
+		int var_name = var->GetName();
+		CVariableInfo var_info = currentMethod.GetVarInfo( var_name, expression );
+		int type = var_info.GetType();
+		CClassInfo cl = classes.GetClassInfo( type, expression);
+		CMethodInfo methinfo  = cl.GetMethodInfo( id, expression );
+		/*CMethodInfo methinfo = currentClass.GetMethodInfo( id, expression );*/
 		//auto kek = expression->GetExpressionList();
 		//while( kek != nullptr ) {
 		//	auto keks = kek->GetExpression();

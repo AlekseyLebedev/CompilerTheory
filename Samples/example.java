@@ -1,23 +1,19 @@
 class BubbleSort{
     public static void main(String[] a){
-	System.out.println(new BBS().Start(10));
+	
+	System.out.println(3);
     }
 }
 
-class BBS{
-    
-    int[] number ;
-    int size ;		
-    public int Start(int sz){	
-	return sz ;
-    } 
-    
-    public int Sort(){	
-		int i;
-		i = size - 1;
-		while (i < size) {
-			i = 1;
-		} 
-		return 0 ;
-    }
+class B {
+	public int BS(int a) {
+		A kek;
+		kek = new A();
+		return kek.PS(2);
+	}
+}
+class A {
+	public int PS(int a) {
+		return a;
+	}
 }
