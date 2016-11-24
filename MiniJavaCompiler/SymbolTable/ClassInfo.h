@@ -14,7 +14,7 @@ namespace SymbolTable {
 	class CClassInfo {
 	public:
 		CClassInfo();
-		CClassInfo(int name_);
+		CClassInfo( int name_ );
 		// добавить информацию о методе класса
 		void InsertMethod( int id, const CMethodInfo & theMethodInfo );
 		// добавить информацию о поле класса 
@@ -24,8 +24,8 @@ namespace SymbolTable {
 		const CMethodInfo& GetMethodInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const;
 		const std::vector<CMethodInfo>& GetMethods() const;
 
-		int GetExtend();
-		void SetExtend(const int id);
+		int GetExtend() const;
+		void SetExtend( const int id );
 
 
 		int GetUniqueMethodsCount();

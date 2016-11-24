@@ -6,7 +6,7 @@ namespace SymbolTable {
 	{
 
 	}
-	CClassInfo::CClassInfo( int name_ ) : name( name_ )
+	CClassInfo::CClassInfo( int name_ ) : name( name_ ), extend( CClassInfo::NothingExtend )
 	{
 	}
 	void CClassInfo::InsertMethod( int id, const CMethodInfo& theMethodInfo )
@@ -42,7 +42,7 @@ namespace SymbolTable {
 	{
 		return allMethods;
 	}
-	int CClassInfo::GetExtend()
+	int CClassInfo::GetExtend() const
 	{
 		return extend;
 	}

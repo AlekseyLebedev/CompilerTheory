@@ -3,6 +3,7 @@
 #include <set>
 #include <memory>
 #include "TypeException.h"
+#include <vector>
 
 extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 namespace SymbolTable {
@@ -102,15 +103,17 @@ namespace SymbolTable {
 			throw new CTypeException( CClass->GetCol(), CClass->GetRow(), "Multiple method definition" );
 		}
 
-		if( CClass->GetClassExtend().get() != 0 ) {
-			// Class Extend checking(simple)
-			int class_extend = CClass->GetClassExtend()->GetIdExpression()->GetName();
-			CClassInfo extend_info = classes.GetClassInfo( class_extend, CClass );
-			if( id == extend_info.GetExtend() ) {
-				throw new CTypeException( CClass->GetCol(), CClass->GetRow(), "circular dependency" );
+		// Class Extend checking
+		int current = id;
+		std::vector<int> lastId;
+		while( current != CClassInfo::NothingExtend ) {
+			for( size_t i = 0; i < lastId.size(); i++ ) {
+				if( lastId[i] == current ) {
+					throw new CTypeException( CClass->GetCol(), CClass->GetRow(), "Circular dependency in extend class" );
+				}
 			}
+			current = classes.GetClassInfo( current, CClass ).GetExtend();
 		}
-
 
 		visitChild( CClass->GetMethodDeclarationList().get() );
 		visitChild( CClass->GetVarDeclarationList().get() );
@@ -441,7 +444,7 @@ namespace SymbolTable {
 					currentMethod.GetArgInfo( id, var );
 					secondExist = true;
 				}
-				catch(std::exception* e ) {
+				catch( std::exception* e ) {
 
 				}
 				if( secondExist ) {
