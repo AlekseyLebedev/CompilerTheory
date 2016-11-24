@@ -11,7 +11,7 @@ int row=1;
 static void updateLocation(bool needLocation = true)
 {
 	if(needLocation) {
-		std::cout << "{" << row << "," << col << "}";
+		//std::cout << "{" << row << "," << col << "}";
 	}
 	col += strlen(yytext);
 }
@@ -19,11 +19,11 @@ static void updateLocation(bool needLocation = true)
 void newLine(){
 	++row;
 	col=1;
-	std::cout<<"\n";
+	//std::cout<<"\n";
 }
 
 void debugOutput(const char* text){
-	std::cout << text;
+	//std::cout << text;
 }
 %}
 
