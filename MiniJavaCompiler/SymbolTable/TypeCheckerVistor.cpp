@@ -575,6 +575,9 @@ namespace SymbolTable {
 			var1 = std::dynamic_pointer_cast<AbstractTreeGenerator::CThisExpression>(expression->GetExpression());		
 			if( var1 ) {
 				currentClass.GetMethodInfo( id, expression );
+			} else {
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"Can't call method from not variable or this" );
 			}
 		} else {
 			int	var_name = var->GetName();
