@@ -98,8 +98,8 @@ namespace SymbolTable {
 		currentClass = classes.GetClassInfo( id );
 		methodExist = false;
 		std::vector<CMethodInfo> methods_infos = currentClass.GetMethods();
-		if( methods_infos.size() != currentClass.GetUniqueMethodsCount() ) {
-			throw new std::logic_error( "Multiple method definition" );
+		if( methods_infos.size() != currentClass.GetUniqueMethodsCount() ) {			
+			throw new CTypeException( CClass->GetCol(), CClass->GetRow(), "Multiple method definition" );
 		}
 
 		if( CClass->GetClassExtend().get() != 0 ) {
@@ -107,7 +107,7 @@ namespace SymbolTable {
 			int class_extend = CClass->GetClassExtend()->GetIdExpression()->GetName();
 			CClassInfo extend_info = classes.GetClassInfo( class_extend );
 			if( id == extend_info.GetExtend() ) {
-				throw new std::logic_error( "circular dependency" );
+				throw new CTypeException( CClass->GetCol(), CClass->GetRow(), "circular dependency" );
 			}
 		}
 
@@ -152,11 +152,13 @@ namespace SymbolTable {
 			// no such class
 			throw;
 		}
-		if( lookingType < 0 ) {
-			throw new std::logic_error( "Incorrect return value: basic type required but method returns custom" );
+		if( lookingType < 0 ) {			
+			throw new CTypeException( expression->GetCol(), expression->GetRow(), 
+				"Incorrect return value: basic type required but method returns custom" );
 		} else {
-			if( classes.GetClassInfo( id ) != classes.GetClassInfo( lookingType ) ) {
-				throw new std::logic_error( "Incorrect return value: no such class" );
+			if( classes.GetClassInfo( id ) != classes.GetClassInfo( lookingType ) ) {				
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"Incorrect return value: no such class" );
 			} else {
 				lookingType = -4;
 				state = None;
@@ -182,7 +184,8 @@ namespace SymbolTable {
 			}
 			int vartype = varinfo.GetType();
 			if( vartype != lookingType ) {
-				throw new std::logic_error( "Incorrect return value" );
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"Incorrect return value" );
 			} else {
 				state = None;
 				lookingType = -4;
@@ -283,8 +286,9 @@ namespace SymbolTable {
 				// OK
 				state = None;
 				lookingType;
-			} else {
-				throw new std::logic_error( "Incorrect type" );
+			} else {				
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"Incorrect type" );
 			}
 		}
 	}
@@ -345,7 +349,8 @@ namespace SymbolTable {
 						break;
 					}
 					default: {
-						throw new std::logic_error( "Incorrect return value: int required but method returns bool" );
+						throw new CTypeException( operation->GetCol(), operation->GetRow(), 
+							"Incorrect return value: int required but method returns bool" );
 						break;
 					}
 				}
@@ -445,7 +450,7 @@ namespace SymbolTable {
 		visitChild( vars->GetVarDeclarationList().get() );
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CTrueExpression * const )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CTrueExpression * const expression)
 	{
 		// Checking return value type
 		if( state == LookingType ) {
@@ -453,13 +458,14 @@ namespace SymbolTable {
 				// OK
 				state = None;
 				lookingType = -4;
-			} else {
-				throw new std::logic_error( "Incorrect return value: method returns bool" );
+			} else {				
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"Incorrect return value: method returns bool" );
 			}
 		}
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CFalseExpression * const )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CFalseExpression * const expression)
 	{
 		// Checking return value type
 		if( state == LookingType ) {
@@ -468,7 +474,8 @@ namespace SymbolTable {
 				state = None;
 				lookingType = -4;
 			} else {
-				std::logic_error( "Incorrect return value: method returns bool" );
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"Incorrect return value: method returns bool" );
 			}
 		}
 	}
@@ -482,8 +489,9 @@ namespace SymbolTable {
 		if( vartype >= 0 ) {
 			int id = vartype;
 			CTable classes;
-			if( classes.GetClassInfo( lookingType ) != classes.GetClassInfo( id ) ) {
-				throw new std::logic_error( "Incorrect return value: no such class" );
+			if( classes.GetClassInfo( lookingType ) != classes.GetClassInfo( id ) ) {				
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"Incorrect return value: no such class" );
 			} else {
 				// OK
 				state = None;
