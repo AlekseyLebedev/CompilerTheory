@@ -1,11 +1,11 @@
 #include "INode.h"
 
-int AbstractTreeGenerator::INode::GetCol()
+int AbstractTreeGenerator::INode::GetCol() const
 {
 	return startCol;
 }
 
-int AbstractTreeGenerator::INode::GetRow()
+int AbstractTreeGenerator::INode::GetRow() const
 {
 	return startRow;
 }

@@ -12,9 +12,9 @@ namespace SymbolTable {
 	public:
 		int GetReturnType() const;
 		void SetReturnType( const int id );
-		const CVariableInfo& GetVarInfo( const int id ) const;
+		const CVariableInfo & GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const;
 		void AddVariableInfo( const int id, const CVariableInfo& info );
-		const CVariableInfo& GetArgInfo( const int id ) const;
+		const CVariableInfo & GetArgInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const;
 		void AddArgInfo( const int id, const CVariableInfo& info );
 		int GetUniqueArgsCount();
 		int GetUniqueVarsCount();

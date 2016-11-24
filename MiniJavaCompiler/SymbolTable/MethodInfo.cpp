@@ -1,4 +1,6 @@
 #include "MethodInfo.h"
+#include "TypeException.h"
+#include "..\AbstractTreeGenerator\INode.h"
 
 namespace SymbolTable {
 
@@ -12,11 +14,11 @@ namespace SymbolTable {
 		returnType = id;
 	}
 
-	const CVariableInfo & CMethodInfo::GetVarInfo( const int id ) const
+	const CVariableInfo & CMethodInfo::GetVarInfo( const int id, const AbstractTreeGenerator::INode* brokenNode ) const
 	{
 		auto info = vars.find( id );
 		if( info == vars.end() )
-			throw new std::logic_error( "Variable not found" );
+			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Variable not found" );
 		else
 			return info->second;
 	}
@@ -27,11 +29,11 @@ namespace SymbolTable {
 		vars[id] = info;
 	}
 
-	const CVariableInfo & CMethodInfo::GetArgInfo( const int id ) const
+	const CVariableInfo & CMethodInfo::GetArgInfo( const int id, const AbstractTreeGenerator::INode* brokenNode ) const
 	{
 		auto info = args.find( id );
 		if( info == args.end() )
-			throw new std::logic_error( "Args not found" );
+			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Args not found" );
 		else
 			return info->second;
 	}
