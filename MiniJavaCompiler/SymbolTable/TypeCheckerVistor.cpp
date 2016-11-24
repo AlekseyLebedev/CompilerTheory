@@ -427,7 +427,28 @@ namespace SymbolTable {
 		int id = var->GetIdExpression()->GetName();
 		CVariableInfo varinfo;
 		if( methodExist ) {
-			varinfo = currentMethod.GetVarInfo( id, var );
+			bool varExist = false;
+			try {
+				varinfo = currentMethod.GetVarInfo( id, var );
+				varExist = true;
+			}
+			catch( std::exception* e ) {
+				varinfo = currentMethod.GetArgInfo( id, var );
+			}
+			if( varExist ) {
+				bool secondExist = false;
+				try {
+					currentMethod.GetArgInfo( id, var );
+					secondExist = true;
+				}
+				catch(std::exception* e ) {
+
+				}
+				if( secondExist ) {
+					throw new CTypeException( var->GetCol(), var->GetRow(),
+						"There are args and vars with same name" );
+				}
+			}
 		} else {
 			varinfo = currentClass.GetVarInfo( id, var );
 		}
