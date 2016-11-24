@@ -50,20 +50,39 @@ namespace SymbolTable {
 
 	}
 
-	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CAssignmentListStatement * const statements )
+	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CAssignmentListStatement * const statement )
 	{
-		std::shared_ptr<AbstractTreeGenerator::CIdExpression> assignexp = statements->GetIdExpression();
-		std::shared_ptr<AbstractTreeGenerator::IExpression> indexexp = statements->GetExpressionFirst();
-		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = statements->GetExpressionSecond();
+		std::shared_ptr<AbstractTreeGenerator::CIdExpression> assignexp = statement->GetIdExpression();
+		std::shared_ptr<AbstractTreeGenerator::IExpression> indexexp = statement->GetExpressionFirst();
+		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = statement->GetExpressionSecond();
 
+		// Checking index type is int
 		state = LookingType;
 		lookingType = stdtype::ST_Int;
 		indexexp->Accept( this );
+
+		// Trying getting variable type
 		CVariableInfo varinfo;
 		if( methodExist ) {
-			varinfo = currentMethod.GetVarInfo( assignexp->GetName(), statements );
+			bool assign = false;			
+			try {
+				varinfo = currentMethod.GetVarInfo( assignexp->GetName(), statement );
+				assign = true;
+			}
+			catch( std::exception* e ) {
+				varinfo = currentClass.GetVarInfo( assignexp->GetName(), statement );
+			}
+			if( assign ) {
+				try {
+					currentClass.GetVarInfo( assignexp->GetName(), statement );
+				}
+				catch( ... ) {
+					throw new CTypeException( statement->GetCol(), statement->GetRow(),
+						"Multiple definition");
+				}
+			}
 		} else {
-			varinfo = currentClass.GetVarInfo( assignexp->GetName(), statements );
+			varinfo = currentClass.GetVarInfo( assignexp->GetName(), statement );
 		}
 		int vartype = varinfo.GetType();
 		state = LookingType;
@@ -79,7 +98,23 @@ namespace SymbolTable {
 		int id = statement->GetIdExpression()->GetName();
 		CVariableInfo varinfo;
 		if( methodExist ) {
-			varinfo = currentMethod.GetVarInfo( id, statement );
+			bool assign = false;
+			try {
+				varinfo = currentMethod.GetVarInfo( id, statement );
+				assign = true;
+			}
+			catch( std::exception* e ) {
+				varinfo = currentClass.GetVarInfo( id, statement );
+			}
+			if( assign ) {
+				try {
+					currentClass.GetVarInfo( id, statement );
+				}
+				catch( ... ) {
+					throw new CTypeException( statement->GetCol(), statement->GetRow(),
+						"Multiple definition" );
+				}
+			}
 		} else {
 			varinfo = currentClass.GetVarInfo( id, statement );
 		}
@@ -181,17 +216,36 @@ namespace SymbolTable {
 		if( state != None ) {
 			CVariableInfo varinfo;
 			if( methodExist ) {
-				varinfo = currentMethod.GetVarInfo( id, expression );
+				bool assign = false;
+				try {
+					varinfo = currentMethod.GetVarInfo( id, expression );
+					assign = true;
+				}
+				catch( std::exception* e ) {
+					varinfo = currentClass.GetVarInfo( id, expression );
+				}
+				if( assign ) {
+					try {
+						currentClass.GetVarInfo( id, expression );
+					}
+					catch( ... ) {
+						throw new CTypeException( expression->GetCol(), expression->GetRow(),
+							"Multiple definition" );
+					}
+				}
 			} else {
 				varinfo = currentClass.GetVarInfo( id, expression );
 			}
-			int vartype = varinfo.GetType();
-			if( vartype != lookingType ) {
-				throw new CTypeException( expression->GetCol(), expression->GetRow(),
-					"Incorrect return value" );
-			} else {
-				state = None;
-				lookingType = -4;
+			
+			if( state == LookingType ) {
+				int vartype = varinfo.GetType();
+				if( vartype != lookingType ) {
+					throw new CTypeException( expression->GetCol(), expression->GetRow(),
+						"Incorrect return value" );
+				} else {
+					state = None;
+					lookingType = -4;
+				}
 			}
 		}
 	}
@@ -324,7 +378,8 @@ namespace SymbolTable {
 						break;
 					}
 					default: {
-						throw new CTypeException( operation->GetCol(), operation->GetRow(), "Incorrect return value: bool required but method returns int" );
+						throw new CTypeException( operation->GetCol(), operation->GetRow(), 
+							"Incorrect return value: bool required but method returns int" );
 					}
 				}
 				break;
@@ -373,6 +428,7 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CParenExpression * const expression )
 	{
+		// what is this?
 		expression->GetExpression()->Accept( this );
 	}
 
@@ -427,35 +483,8 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CVarDeclaration * const var )
 	{
 		std::shared_ptr<AbstractTreeGenerator::IType> type = var->GetType();
-		int id = var->GetIdExpression()->GetName();
-		CVariableInfo varinfo;
-		if( methodExist ) {
-			bool varExist = false;
-			try {
-				varinfo = currentMethod.GetVarInfo( id, var );
-				varExist = true;
-			}
-			catch( std::exception* e ) {
-				varinfo = currentMethod.GetArgInfo( id, var );
-			}
-			if( varExist ) {
-				bool secondExist = false;
-				try {
-					currentMethod.GetArgInfo( id, var );
-					secondExist = true;
-				}
-				catch( std::exception* e ) {
-
-				}
-				if( secondExist ) {
-					throw new CTypeException( var->GetCol(), var->GetRow(),
-						"There are args and vars with same name" );
-				}
-			}
-		} else {
-			varinfo = currentClass.GetVarInfo( id, var );
-		}
-		int vartype = varinfo.GetType();
+		int vartype = type->GetType();
+		
 		if( vartype >= 0 ) {
 			classes.GetClassInfo( vartype, var );
 		} else {

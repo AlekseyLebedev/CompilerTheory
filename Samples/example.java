@@ -4,8 +4,10 @@ class BinarySearch{
     }
 }
 
-class BS{    
-    public int Start(int sz){	
-	return 999 ;
-    }
+class BS{   
+	int[] ban; 
+    public int Start(int sz) {	
+	
+	return 999;
+    }	
 }
