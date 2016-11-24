@@ -12,8 +12,9 @@ namespace SymbolTable {
 		} state;
 		
 		int lookingType;
-		std::shared_ptr<CClassInfo> currentClass;
-		std::shared_ptr<CMethodInfo> currentMethod;
+		bool methodExist;
+		CClassInfo currentClass;
+		CMethodInfo currentMethod;
 		CTable classes;
 		CTypeCheckerVistor(CTable classes_);
 		virtual ~CTypeCheckerVistor();
