@@ -23,16 +23,32 @@ namespace SymbolTable {
 
 	void CMethodInfo::AddVariableInfo( const int id, const CVariableInfo & info )
 	{
+		varsCount++;
 		vars[id] = info;
 	}
 
-	const std::vector<int>& CMethodInfo::GetArguments() const
+	const CVariableInfo & CMethodInfo::GetArgInfo( const int id ) const
 	{
-		return argments;
+		auto info = args.find( id );
+		if( info == args.end() )
+			throw new std::logic_error( "Args not found" );
+		else
+			return info->second;
 	}
 
-	void CMethodInfo::SetArguments( const std::vector<int>& args )
+	void CMethodInfo::AddArgInfo( const int id, const CVariableInfo & info )
 	{
-		argments = args;
+		argsCount++;
+		args[id] = info;
+	}
+
+	int CMethodInfo::GetUniqueArgsCount()
+	{
+		return argsCount;
+	}
+
+	int CMethodInfo::GetUniqueVarsCount()
+	{
+		return varsCount;
 	}
 }

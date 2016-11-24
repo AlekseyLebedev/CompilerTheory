@@ -14,11 +14,16 @@ namespace SymbolTable {
 		void SetReturnType( const int id );
 		const CVariableInfo& GetVarInfo( const int id ) const;
 		void AddVariableInfo( const int id, const CVariableInfo& info );
-		const std::vector<int>& GetArguments() const;
-		void SetArguments( const std::vector<int>& args );
+		const CVariableInfo& GetArgInfo( const int id ) const;
+		void AddArgInfo( const int id, const CVariableInfo& info );
+		int GetUniqueArgsCount();
+		int GetUniqueVarsCount();
+
 	private:
 		int returnType;
 		std::map<int, CVariableInfo> vars;
-		std::vector<int> argments;
+		std::map<int, CVariableInfo> args;
+		int varsCount;
+		int argsCount;
 	};
 }
