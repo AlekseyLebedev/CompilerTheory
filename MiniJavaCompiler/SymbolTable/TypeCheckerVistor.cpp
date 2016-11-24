@@ -44,9 +44,8 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CArgumentList * const args )
 	{
 		args->GetArgument()->Accept( this );
-		if( args->GetArgumentList() != nullptr ) {
-			args->GetArgumentList()->Accept( this );
-		}
+		visitChild(args->GetArgumentList().get());
+		
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CAssignmentListStatement * const statements )
@@ -119,9 +118,7 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassDeclarationList * const classlist )
 	{
 		classlist->GetClassDeclaration()->Accept( this );
-		if( classlist->GetClassDeclarationList() != nullptr ) {
-			classlist->GetClassDeclarationList()->Accept( this );
-		}
+		visitChild(classlist->GetClassDeclarationList().get());		
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassExtend * const classExtend )
@@ -169,9 +166,7 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CExpressionList * const expressionlist )
 	{
 		expressionlist->GetExpression()->Accept( this );
-		if( expressionlist->GetExpressionList() != nullptr ) {
-			expressionlist->GetExpressionList()->Accept( this );
-		}
+		visitChild( expressionlist->GetExpressionList().get() );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CIdExpression * const expression )
@@ -208,9 +203,8 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CLastExpressionList * const expression )
 	{
 		expression->GetExp()->Accept( this );
-		if( expression->GetExpression() != nullptr ) {
-			expression->GetExpression()->Accept( this );
-		}
+		visitChild(expression->GetExpression().get());
+		
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CLengthExpression * const expression )
@@ -263,8 +257,8 @@ namespace SymbolTable {
 			throw std::logic_error( "Multiple argument definition" );
 		}
 
-		method->GetVarDeclarationList()->Accept( this );
-		method->GetStatementList()->Accept( this );
+		visitChild(method->GetVarDeclarationList().get());
+		visitChild(method->GetStatementList().get());
 
 		// Return value type check
 		int type = method->GetType()->GetType();
@@ -276,9 +270,7 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CMethodDeclarationList * const methods )
 	{
 		methods->GetMethodDeclaration()->Accept( this );
-		if( methods->GetMethodDeclarationList() != nullptr ) {
-			methods->GetMethodDeclarationList()->Accept( this );
-		}
+		visitChild( methods->GetMethodDeclarationList().get() );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CNegationExpression * const expression )
@@ -400,14 +392,14 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CProgram * const program )
 	{
-		program->GetClassDeclarationList()->Accept( this );
+		visitChild( program->GetClassDeclarationList().get());
 		program->GetMainClass()->Accept( this );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CStatementList * const statement )
 	{
 		statement->GetStatement()->Accept( this );
-		statement->GetStatementList()->Accept( this );
+		visitChild(statement->GetStatementList().get());
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CBasicType * const )
@@ -435,7 +427,6 @@ namespace SymbolTable {
 		CVariableInfo varinfo;
 		if( methodExist ) {
 			varinfo = currentMethod.GetVarInfo( id );
-
 		} else {
 			varinfo = currentClass.GetVarInfo( id );
 		}
@@ -455,8 +446,7 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CVarDeclarationList * const vars )
 	{
 		vars->GetVarDeclaration()->Accept( this );
-		if( vars->GetVarDeclarationList() != nullptr )
-			vars->GetVarDeclarationList()->Accept( this );
+		visitChild(vars->GetVarDeclarationList().get());
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CTrueExpression * const )
