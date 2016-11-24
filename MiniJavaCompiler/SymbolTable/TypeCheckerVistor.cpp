@@ -506,20 +506,26 @@ namespace SymbolTable {
 	{
 		int id = expression->GetIdExpression()->GetName();
 
-		CVariableInfo varinfo = currentClass.GetVarInfo( id, expression );
-		int vartype = varinfo.GetType();
-		if( vartype >= 0 ) {
-			int id = vartype;
-			CTable classes;
-			if( classes.GetClassInfo( lookingType, expression ) != classes.GetClassInfo( id, expression ) ) {
-				throw new CTypeException( expression->GetCol(), expression->GetRow(),
-					"Incorrect return value: no such class" );
-			} else {
-				// OK
-				state = None;
-				lookingType = -4;
-			}
-		}
+		CMethodInfo methinfo = currentClass.GetMethodInfo( id, expression );
+		//auto kek = expression->GetExpressionList();
+		//while( kek != nullptr ) {
+		//	auto keks = kek->GetExpression();
+		//	kek = kek->GetExpressionList();
+		//}
+		//int args = methinfo.;
+		//int vartype = methinfo.GetReturnType();
+		//if( vartype >= 0 ) {
+		//	int id = vartype;
+		//	CTable classes;
+		//	if( classes.GetClassInfo( lookingType, expression ) != classes.GetClassInfo( id, expression ) ) {
+		//		throw new CTypeException( expression->GetCol(), expression->GetRow(),
+		//			"Incorrect return value: no such class" );
+		//	} else {
+		//		// OK
+		//		state = None;
+		//		lookingType = -4;
+		//	}
+		//}
 		//expression->GetExpression();
 		// TODO: so complex case
 	}

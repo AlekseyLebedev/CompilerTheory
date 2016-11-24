@@ -17,7 +17,7 @@ namespace SymbolTable {
 	{
 		auto info = vars.find( id );
 		if( info == vars.end() )
-			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Variable not found" );
+			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Variable not declarated" );
 		else
 			return info->second;
 	}
@@ -32,7 +32,7 @@ namespace SymbolTable {
 	{
 		auto info = args.find( id );
 		if( info == args.end() )
-			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Args not found" );
+			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Variable not declarated" );
 		else
 			return info->second;
 	}
