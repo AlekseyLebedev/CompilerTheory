@@ -56,8 +56,9 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CClassDeclaration* const classDeclaration )
 	{
-		currentClassInfo = CClassInfo();
-
+		int id = classDeclaration->GetIdExpression()->GetName();
+		currentClassInfo = CClassInfo( id );
+		
 		if( classDeclaration->GetClassExtend() != 0 ) {
 			currentClassInfo.SetExtend( classDeclaration->GetClassExtend()->GetIdExpression()->GetName() );
 		}

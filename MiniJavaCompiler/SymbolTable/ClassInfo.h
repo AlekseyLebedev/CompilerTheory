@@ -12,7 +12,7 @@ namespace SymbolTable {
 	class CClassInfo {
 	public:
 		CClassInfo();
-
+		CClassInfo(int name_);
 		// добавить информацию о методе класса
 		void InsertMethod( int id, const CMethodInfo & theMethodInfo );
 		// добавить информацию о поле класса 
@@ -27,10 +27,11 @@ namespace SymbolTable {
 
 
 		int GetUniqueMethodsCount();
-
-
+		friend bool operator ==( CClassInfo a, CClassInfo b );
+		friend bool operator !=( CClassInfo a, CClassInfo b );
 		static const int NothingExtend;
 	private:
+		int name;
 		// информация о методах
 		std::vector<CMethodInfo> allMethods;
 		std::map<int, CMethodInfo> methods;

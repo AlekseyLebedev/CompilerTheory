@@ -5,6 +5,9 @@ namespace SymbolTable {
 	{
 
 	}
+	CClassInfo::CClassInfo( int name_ ) : name(name_)
+	{
+	}
 	void CClassInfo::InsertMethod( int id, const CMethodInfo& theMethodInfo )
 	{
 		allMethods.push_back( theMethodInfo );
@@ -52,4 +55,12 @@ namespace SymbolTable {
 	}
 
 	const int CClassInfo::NothingExtend = -10;
+	bool operator==( CClassInfo a, CClassInfo b )
+	{
+		return a.name == b.name;
+	}
+	bool operator!=( CClassInfo a, CClassInfo b )
+	{
+		return a.name != b.name;
+	}
 }
