@@ -10,6 +10,8 @@
 #include "AbstractTreeGenerator\GraphvizLauncher.h"
 #include "AbstractTreeGenerator\StringTable.h"
 #include <assert.h>
+#include "SymbolTable\FillTableVisitor.h"
+#include "SymbolTable\TypeCheckerVistor.h"
 
 int yyparse();
 extern FILE* yyin, *yyout;
@@ -40,7 +42,16 @@ int main( int argc, char** argv )
 			fclose( yyin );
 			buffer.str( "" );
 			std::shared_ptr<AbstractTreeGenerator::CProgram> root( rootNode ); //set from bison
-			GraphvizOutput::CGraphvizLauncher::Launch( root.get(), i );
+			SymbolTable::CFillTableVisitor fillTable;
+			fillTable.visit( root.get() );
+			try {
+				SymbolTable::CTypeCheckerVistor typeChecker( fillTable.GetTable() );
+				typeChecker.visit( root.get() );
+				GraphvizOutput::CGraphvizLauncher::Launch( root.get(), i );
+			}
+			catch( std::exception e ) {
+				std::cerr << e.what() << std::endl;
+			}
 		}
 	}
 	return 0;
