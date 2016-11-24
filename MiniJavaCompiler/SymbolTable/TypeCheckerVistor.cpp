@@ -2,6 +2,7 @@
 #include "Table.h"
 #include <set>
 #include <memory>
+#include "TypeException.h"
 
 extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 namespace SymbolTable {
@@ -260,7 +261,7 @@ namespace SymbolTable {
 			args_set.insert( arg );
 		}
 		if( args.size() != args_set.size() ) {
-			throw std::logic_error( "Multiple argument definition" );
+			throw CTypeException( method->GetCol(), method->GetRow(), "Multiple argument definition" );
 		}
 
 		method->GetVarDeclarationList()->Accept( this );

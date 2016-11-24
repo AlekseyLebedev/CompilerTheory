@@ -205,6 +205,9 @@
     <ClInclude Include="SymbolTable\Table.h">
       <Filter>SymbolTable\h</Filter>
     </ClInclude>
+    <ClInclude Include="SymbolTable\TypeException.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -345,8 +348,14 @@
     <ClCompile Include="SymbolTable\FillTableVisitor.cpp">
       <Filter>SymbolTable\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="SymbolTable\TypeException.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\INode.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
     <ClCompile Include="SymbolTable\Table.cpp">
-      <Filter>global cpp</Filter>
+      <Filter>SymbolTable\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
