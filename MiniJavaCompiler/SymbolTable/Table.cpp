@@ -15,7 +15,7 @@ namespace SymbolTable {
 	{
 		auto info = classesInfos.find( id );
 		if( info == classesInfos.end() )
-			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Class not found" );
+			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Class not declarated" );
 		else
 			return info->second;
 	}
