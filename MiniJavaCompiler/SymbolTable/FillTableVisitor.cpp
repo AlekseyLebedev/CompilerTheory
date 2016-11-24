@@ -56,7 +56,7 @@ namespace SymbolTable
 	{
 		int id = classDeclaration->GetIdExpression()->GetName();
 		currentClassInfo = CClassInfo( id );
-		
+
 		if( classDeclaration->GetClassExtend() != 0 ) {
 			currentClassInfo.SetExtend( classDeclaration->GetClassExtend()->GetIdExpression()->GetName() );
 		}
@@ -167,12 +167,10 @@ namespace SymbolTable
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )
 	{
 		currentMethodInfo = CMethodInfo();
-		currentArguments.clear();
 		visitChild( method->GetArgumentList().get() );
-		currentMethodInfo.SetArguments( currentArguments );
 		currentMethodInfo.SetReturnType( method->GetType()->GetType() );
 		visitChild( method->GetVarDeclarationList().get() );
-		currentClassInfo.InsertMethod( method->GetIdExpression()->GetName() , currentMethodInfo );
+		currentClassInfo.InsertMethod( method->GetIdExpression()->GetName(), currentMethodInfo );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const  list )
@@ -224,9 +222,7 @@ namespace SymbolTable
 	{
 		currentClassInfo = CClassInfo();
 		currentMethodInfo = CMethodInfo();
-		currentArguments.clear();
-		currentArguments.push_back( AbstractTreeGenerator::TStandardType::ST_StringList );
-		currentMethodInfo.SetArguments( currentArguments );
+		currentMethodInfo.AddArgInfo( main->GetArgv()->GetName(), CVariableInfo( AbstractTreeGenerator::TStandardType::ST_StringList ) );
 		currentMethodInfo.SetReturnType( AbstractTreeGenerator::TStandardType::ST_Void );
 		assert( glabalStringTable->insert( "main" ) == 0 );
 		currentClassInfo.InsertMethod( 0, currentMethodInfo );
@@ -235,7 +231,7 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CArgument* const argument )
 	{
-		currentArguments.push_back( argument->GetType()->GetType() );
+		currentMethodInfo.AddArgInfo( argument->GetIdExpression()->GetName(), CVariableInfo( argument->GetType()->GetType() ) );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CArgumentList* const list )
