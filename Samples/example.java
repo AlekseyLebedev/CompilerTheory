@@ -1,13 +1,14 @@
-class BinarySearch{
-    public static void main(String[] a){	
-	System.out.println(5);
+class BubbleSort{
+    public static void main(String[] a){
+	System.out.println(new BBS().Start(10));
     }
 }
 
-class BS{   
-	int[] ban; 
-    public int Start(int sz) {	
-	
-	return 999;
-    }	
+class BBS{
+    
+    int[] number ;
+    int size ;
+    public int Start(int sz){	
+	return 0 ;
+    } 
 }

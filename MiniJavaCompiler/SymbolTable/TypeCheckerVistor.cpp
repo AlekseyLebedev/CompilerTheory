@@ -73,12 +73,17 @@ namespace SymbolTable {
 				varinfo = currentClass.GetVarInfo( assignexp->GetName(), statement );
 			}
 			if( assign ) {
+				bool bothassign = false;
 				try {
 					currentClass.GetVarInfo( assignexp->GetName(), statement );
+					bothassign = true;
 				}
 				catch( ... ) {
+					
+				}
+				if( bothassign ) {
 					throw new CTypeException( statement->GetCol(), statement->GetRow(),
-						"Multiple definition");
+						"Multiple definition" );
 				}
 			}
 		} else {
@@ -107,10 +112,15 @@ namespace SymbolTable {
 				varinfo = currentClass.GetVarInfo( id, statement );
 			}
 			if( assign ) {
+				bool bothassign = false;
 				try {
 					currentClass.GetVarInfo( id, statement );
+					bothassign = true;
 				}
 				catch( ... ) {
+					
+				}
+				if( bothassign ) {
 					throw new CTypeException( statement->GetCol(), statement->GetRow(),
 						"Multiple definition" );
 				}
@@ -225,10 +235,15 @@ namespace SymbolTable {
 					varinfo = currentClass.GetVarInfo( id, expression );
 				}
 				if( assign ) {
+					bool bothassign = false;
 					try {
 						currentClass.GetVarInfo( id, expression );
+						bothassign = true;
 					}
 					catch( ... ) {
+						
+					} 
+					if( bothassign ) {
 						throw new CTypeException( expression->GetCol(), expression->GetRow(),
 							"Multiple definition" );
 					}
