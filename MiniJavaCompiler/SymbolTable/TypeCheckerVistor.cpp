@@ -94,7 +94,7 @@ namespace SymbolTable {
 			throw std::logic_error( "Multiple method definition" );
 		}
 
-		if( !CClass->GetClassExtend() ) {
+		if( CClass->GetClassExtend().get() != 0 ) {
 			// Class Extend checking(simple)
 			int class_extend = CClass->GetClassExtend()->GetIdExpression()->GetName();
 			CClassInfo extend_info = classes.GetClassInfo( class_extend );
