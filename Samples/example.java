@@ -11,4 +11,10 @@ class BBS{
     public int Start(int sz){	
 	return 0 ;
     } 
+    
+    public int Sort(){	
+		int i;
+		i = size - 1;
+		return 0 ;
+    }
 }

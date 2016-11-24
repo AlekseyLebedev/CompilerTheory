@@ -8,7 +8,7 @@ extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 namespace SymbolTable
 {
 
-	CFillTableVisitor::CFillTableVisitor()
+	CFillTableVisitor::CFillTableVisitor() : fillingClass(false)
 	{
 	}
 
@@ -62,8 +62,9 @@ namespace SymbolTable
 		}
 
 		visitChild( classDeclaration->GetMethodDeclarationList().get() );
+		fillingClass = true;
 		visitChild( classDeclaration->GetVarDeclarationList().get() );
-
+		fillingClass = false;
 		table.AddClassInfo( classDeclaration->GetIdExpression()->GetName(), currentClassInfo );
 	}
 
@@ -114,8 +115,13 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CVarDeclarationList* const list )
 	{
-		currentMethodInfo.AddVariableInfo( list->GetVarDeclaration()->GetIdExpression()->GetName(),
-			list->GetVarDeclaration()->GetType()->GetType() );
+		if( fillingClass ) {
+			currentClassInfo.InsertVariableInfo( list->GetVarDeclaration()->GetIdExpression()->GetName(),
+				list->GetVarDeclaration()->GetType()->GetType() );
+		} else {
+			currentMethodInfo.AddVariableInfo( list->GetVarDeclaration()->GetIdExpression()->GetName(),
+				list->GetVarDeclaration()->GetType()->GetType() );
+		}
 		visitChild( list->GetVarDeclarationList().get() );
 	}
 

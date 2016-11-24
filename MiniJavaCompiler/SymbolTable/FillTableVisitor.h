@@ -24,7 +24,7 @@ namespace SymbolTable
 		CMethodInfo currentMethodInfo;
 		CVariableInfo currentVariableInfo;
 		CTable table;
-
+		bool fillingClass;
 		void visitChild( AbstractTreeGenerator::INode* node );
 		void visitUnaryNode( AbstractTreeGenerator::INode* children );
 		void visitBinaryNode( AbstractTreeGenerator::INode* left, AbstractTreeGenerator::INode* right );
