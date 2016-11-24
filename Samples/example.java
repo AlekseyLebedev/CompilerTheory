@@ -15,6 +15,9 @@ class BBS{
     public int Sort(){	
 		int i;
 		i = size - 1;
+		while (i < size) {
+			i = 1;
+		} 
 		return 0 ;
     }
 }

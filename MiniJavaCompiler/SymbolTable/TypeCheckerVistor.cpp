@@ -391,12 +391,12 @@ namespace SymbolTable {
 					}
 					case OperationType::Less: {
 						state = LookingType;
-						lookingType = stdtype::ST_Bool;
+						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Mod: {
 						state = LookingType;
-						lookingType = stdtype::ST_Bool;
+						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Or: {
