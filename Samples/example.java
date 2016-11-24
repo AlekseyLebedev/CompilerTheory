@@ -5,14 +5,12 @@ class BubbleSort{
     }
 }
 
-class A {
-	public int B(C yu) {		
-		return yu.D();
-	}
+class A extends B {
+	
 }
+class B extends C {
 
-class C {
-	public int D() {
-		return 0;
-	}
+}
+class C extends A {
+
 }

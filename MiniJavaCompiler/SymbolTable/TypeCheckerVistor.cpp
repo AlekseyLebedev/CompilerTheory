@@ -163,6 +163,7 @@ namespace SymbolTable {
 					throw new CTypeException( CClass->GetCol(), CClass->GetRow(), "Circular dependency in extend class" );
 				}
 			}
+			lastId.push_back( current );
 			current = classes.GetClassInfo( current, CClass ).GetExtend();
 		}
 
