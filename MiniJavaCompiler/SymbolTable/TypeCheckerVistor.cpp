@@ -33,7 +33,7 @@ namespace SymbolTable {
 		int type = argument->GetType()->GetType();
 		if( type >= 0 ) {
 			try {
-				classes.GetClassInfo( type );
+				classes.GetClassInfo( type, argument );
 			}
 			catch( std::exception& e ) {
 				// no such class;
@@ -95,7 +95,7 @@ namespace SymbolTable {
 			// a. Multiple method definition
 		// maybe it's good to check in first run
 		int id = CClass->GetIdExpression()->GetName();
-		currentClass = classes.GetClassInfo( id );
+		currentClass = classes.GetClassInfo( id, CClass );
 		methodExist = false;
 		std::vector<CMethodInfo> methods_infos = currentClass.GetMethods();
 		if( methods_infos.size() != currentClass.GetUniqueMethodsCount() ) {
@@ -105,7 +105,7 @@ namespace SymbolTable {
 		if( CClass->GetClassExtend().get() != 0 ) {
 			// Class Extend checking(simple)
 			int class_extend = CClass->GetClassExtend()->GetIdExpression()->GetName();
-			CClassInfo extend_info = classes.GetClassInfo( class_extend );
+			CClassInfo extend_info = classes.GetClassInfo( class_extend, CClass );
 			if( id == extend_info.GetExtend() ) {
 				throw new CTypeException( CClass->GetCol(), CClass->GetRow(), "circular dependency" );
 			}
@@ -127,7 +127,7 @@ namespace SymbolTable {
 		int id = classExtend->GetIdExpression()->GetName();
 
 		try {
-			classes.GetClassInfo( id );
+			classes.GetClassInfo( id, classExtend );
 		}
 		catch( std::exception& e ) {
 			// no such class;
@@ -146,7 +146,7 @@ namespace SymbolTable {
 			// a.
 		int id = expression->GetIdExpression()->GetName();
 		try {
-			classes.GetClassInfo( id );
+			classes.GetClassInfo( id, expression );
 		}
 		catch( std::exception& e ) {
 			// no such class
@@ -156,7 +156,7 @@ namespace SymbolTable {
 			throw new CTypeException( expression->GetCol(), expression->GetRow(),
 				"Incorrect return value: basic type required but method returns custom" );
 		} else {
-			if( classes.GetClassInfo( id ) != classes.GetClassInfo( lookingType ) ) {
+			if( classes.GetClassInfo( id, expression ) != classes.GetClassInfo( lookingType, expression ) ) {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
 					"Incorrect return value: no such class" );
 			} else {
@@ -238,7 +238,7 @@ namespace SymbolTable {
 		if( method->GetType()->GetType() >= 0 ) {
 			int id = method->GetType()->GetType();
 			try {
-				classes.GetClassInfo( id );
+				classes.GetClassInfo( id, method );
 			}
 			catch( std::exception& e ) {
 				// no such class;
@@ -250,7 +250,7 @@ namespace SymbolTable {
 			// a. Multiple arguments definition
 		// maybe it's good to check in first run
 		int id = method->GetIdExpression()->GetName();
-		currentMethod = currentClass.GetMethodInfo( id , method );
+		currentMethod = currentClass.GetMethodInfo( id, method );
 		methodExist = true;
 		if( currentMethod.GetAllArgsCount() != currentMethod.GetUniqueArgsCount() ) {
 			throw new CTypeException( method->GetCol(), method->GetRow(), "Multiple argument definition" );
@@ -413,7 +413,7 @@ namespace SymbolTable {
 			// a. Availability of classes
 		int id = idType->GetIdExpression()->GetName();
 		try {
-			classes.GetClassInfo( id );
+			classes.GetClassInfo( id, idType );
 		}
 		catch( std::exception& e ) {
 			// no such class;
@@ -434,7 +434,7 @@ namespace SymbolTable {
 		int vartype = varinfo.GetType();
 		if( vartype >= 0 ) {
 			int id = vartype;
-			if( lookingType != classes.GetClassInfo( id ) ) {
+			if( lookingType != classes.GetClassInfo( id, var ) ) {
 				throw new CTypeException( var->GetCol(), var->GetRow(), "Incorrect return value: no such class" );
 			} else {
 				state = None;
@@ -489,7 +489,7 @@ namespace SymbolTable {
 		if( vartype >= 0 ) {
 			int id = vartype;
 			CTable classes;
-			if( classes.GetClassInfo( lookingType ) != classes.GetClassInfo( id ) ) {
+			if( classes.GetClassInfo( lookingType, expression ) != classes.GetClassInfo( id, expression ) ) {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
 					"Incorrect return value: no such class" );
 			} else {

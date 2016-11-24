@@ -10,7 +10,7 @@ namespace SymbolTable {
 	CTypeException::CTypeException( int col, int row, const std::string & msg )
 	{
 		message = std::stringstream();
-		message << "Col: " << col << " row: " << row << " Error: " << msg;
+		message << "Raw: " << row << " Col: " << col << " Error: " << msg;
 		msgresult = message.str();
 	}
 }
