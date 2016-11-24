@@ -18,6 +18,8 @@ namespace SymbolTable {
 		void AddArgInfo( const int id, const CVariableInfo& info );
 		int GetUniqueArgsCount();
 		int GetUniqueVarsCount();
+		int GetAllArgsCount();
+		int GetAllVarsCount();
 
 	private:
 		int returnType;

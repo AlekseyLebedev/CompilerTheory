@@ -44,11 +44,19 @@ namespace SymbolTable {
 
 	int CMethodInfo::GetUniqueArgsCount()
 	{
-		return argsCount;
+		return args.size();
 	}
 
 	int CMethodInfo::GetUniqueVarsCount()
 	{
 		return varsCount;
+	}
+	int CMethodInfo::GetAllArgsCount()
+	{
+		return argsCount;
+	}
+	int CMethodInfo::GetAllVarsCount()
+	{
+		return vars.size();
 	}
 }

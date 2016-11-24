@@ -249,12 +249,7 @@ namespace SymbolTable {
 		int id = method->GetIdExpression()->GetName();
 		currentMethod = currentClass.GetMethodInfo( id );
 		methodExist = true;
-		std::vector<int> args = currentMethod.GetArguments();
-		std::set<int> args_set;
-		for( auto arg : args ) {
-			args_set.insert( arg );
-		}
-		if( args.size() != args_set.size() ) {
+		if( currentMethod.GetAllArgsCount() != currentMethod.GetUniqueArgsCount() ) {
 			throw new CTypeException( method->GetCol(), method->GetRow(), "Multiple argument definition" );
 		}
 
