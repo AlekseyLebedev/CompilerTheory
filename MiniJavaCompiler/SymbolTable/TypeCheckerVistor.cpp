@@ -577,8 +577,42 @@ namespace SymbolTable {
 			}
 		} else {
 			int	var_name = var->GetName();
-			CVariableInfo var_info = currentMethod.GetVarInfo( var_name, expression );
-			int type = var_info.GetType();
+			//CVariableInfo varinfo = currentMethod.GetVarInfo( var_name, expression );
+			CVariableInfo varinfo;
+			bool assign[3] = { false, false, false };
+			try {
+				varinfo = currentMethod.GetVarInfo( var_name, expression );
+				assign[0] = true;
+			}
+			catch( ... ) {
+
+			}
+			try {
+				varinfo = currentMethod.GetArgInfo( var_name, expression );
+				assign[1] = true;
+			}
+			catch( ... ) {
+
+			}
+			try {
+				varinfo = currentClass.GetVarInfo( var_name, expression );
+				assign[2] = true;
+			}
+			catch( ... ) {
+
+			}
+			int sum = 0;
+			for( int i = 0; i < 3; i++ ) {
+				sum += assign[i];
+			}
+			if( sum == 0 ) {
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"No such variable" );
+			} else if( sum > 1 ) {
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"Multiple declaration" );
+			}
+			int type = varinfo.GetType();
 			CClassInfo cl = classes.GetClassInfo( type, expression );
 			CMethodInfo methinfo = cl.GetMethodInfo( id, expression );
 		}		

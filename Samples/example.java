@@ -6,10 +6,13 @@ class BubbleSort{
 }
 
 class A {
-	public int B(int sz) {
-		int[] a;
-		a = new int[sz];
-		a[0] = 4;
-		return a[0];
+	public int B(C yu) {		
+		return yu.D();
+	}
+}
+
+class C {
+	public int D() {
+		return 0;
 	}
 }
