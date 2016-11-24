@@ -49,21 +49,16 @@ namespace SymbolTable {
 		state = LookingType;
 		lookingType = stdtype::ST_Int;
 		indexexp->Accept( this );
-
+		CVariableInfo varinfo;
 		if( currentMethod != nullptr ) {
-			CVariableInfo varinfo = currentMethod->GetVarInfo( assignexp->GetName() );
-			int vartype = varinfo.GetType();
-			state = LookingType;
-			lookingType = vartype;
-			exp->Accept( this );
+			varinfo = currentMethod->GetVarInfo( assignexp->GetName() );			
 		} else {
-			CVariableInfo varinfo = currentClass->GetVarInfo( assignexp->GetName() );
-			int vartype = varinfo.GetType();
-			state = LookingType;
-			lookingType = vartype;
-			exp->Accept( this );
+			varinfo = currentClass->GetVarInfo( assignexp->GetName() );
 		}			
-		
+		int vartype = varinfo.GetType();
+		state = LookingType;
+		lookingType = vartype;
+		exp->Accept( this );
 		
 	}
 
@@ -72,21 +67,16 @@ namespace SymbolTable {
 		// 7. Assignment
 			// b. both expressions have the same type
 		int id = statement->GetIdExpression()->GetName();			
-
+		CVariableInfo varinfo;
 		if( currentMethod != nullptr ) {
-			CVariableInfo varinfo = currentMethod->GetVarInfo( id );
-			int vartype = varinfo.GetType();
-			state = LookingType;
-			lookingType = vartype;
-			statement->GetExpression()->Accept( this );
+			varinfo = currentMethod->GetVarInfo( id );			
 		} else {
-			CVariableInfo varinfo = currentClass->GetVarInfo( id );
-			int vartype = varinfo.GetType();
-			state = LookingType;
-			lookingType = vartype;
-			statement->GetExpression()->Accept( this );
+			varinfo = currentClass->GetVarInfo( id );			
 		}
-		
+		int vartype = varinfo.GetType();
+		state = LookingType;
+		lookingType = vartype;
+		statement->GetExpression()->Accept( this );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassDeclaration * const CClass)
@@ -180,27 +170,19 @@ namespace SymbolTable {
 	{
 		int id = expression->GetName();
 		if( state != None ) {	
-
+			CVariableInfo varinfo;
 			if( currentMethod != nullptr ) {
-				CVariableInfo varinfo = currentMethod->GetVarInfo( id );
-				int vartype = varinfo.GetType();
-				if( vartype != lookingType ) {
-					throw "Incorrect return value";
-				} else {
-					state = None;
-					lookingType = -4;
-				}
+				varinfo = currentMethod->GetVarInfo( id );				
 			} else {
-				CVariableInfo varinfo = currentClass->GetVarInfo( id );
-				int vartype = varinfo.GetType();
-				if( vartype != lookingType ) {
-					throw "Incorrect return value";
-				} else {
-					state = None;
-					lookingType = -4;
-				}
+				varinfo = currentClass->GetVarInfo( id );				
 			}
-			
+			int vartype = varinfo.GetType();
+			if( vartype != lookingType ) {
+				throw "Incorrect return value";
+			} else {
+				state = None;
+				lookingType = -4;
+			}
 		}
 	}
 
@@ -440,32 +422,23 @@ namespace SymbolTable {
 	{
 		std::shared_ptr<AbstractTreeGenerator::IType> type = var->GetType();
 		int id = var->GetIdExpression()->GetName();	
-
+		CVariableInfo varinfo;
 		if( currentMethod != nullptr ) {
-			CVariableInfo varinfo = currentMethod->GetVarInfo( id );
-			int vartype = varinfo.GetType();
-			if( vartype >= 0 ) {
-				int id = vartype;
-				if( lookingType != classes.GetClassInfo( id ) ) {
-					throw "Incorrect return value: no such class";
-				} else {
-					state = None;
-					lookingType = -4;
-				}
-			}
+			varinfo = currentMethod->GetVarInfo( id );
+			
 		} else {
-			CVariableInfo varinfo = currentClass->GetVarInfo( id );
-			int vartype = varinfo.GetType();
-			if( vartype >= 0 ) {
-				int id = vartype;
-				if( lookingType != classes.GetClassInfo( id ) ) {
-					throw "Incorrect return value: no such class";
-				} else {
-					state = None;
-					lookingType = -4;
-				}
+			varinfo = currentClass->GetVarInfo( id );			
+		}
+		int vartype = varinfo.GetType();
+		if( vartype >= 0 ) {
+			int id = vartype;
+			if( lookingType != classes.GetClassInfo( id ) ) {
+				throw "Incorrect return value: no such class";
+			} else {
+				state = None;
+				lookingType = -4;
 			}
-		}	
+		}
 
 	}
 
