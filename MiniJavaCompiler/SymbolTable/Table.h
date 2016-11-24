@@ -16,8 +16,7 @@ namespace SymbolTable {
 		const CClassInfo& GetClassInfo( const int& id ) const;
 		void AddClassInfo(const int id, const CClassInfo& info );
 		int TotalAdditionCount() const ;
-		int UniqueClassesCount() const ;
-		CTable operator =( CTable a );
+		int UniqueClassesCount() const ;		
 	private:
 		int additionCount;
 		std::map<int, CClassInfo> classesInfos;

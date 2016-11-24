@@ -7,11 +7,8 @@ extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 namespace SymbolTable {
 	typedef AbstractTreeGenerator::TStandardType stdtype;
 
-	CTypeCheckerVistor::CTypeCheckerVistor(CTable classes_)
+	CTypeCheckerVistor::CTypeCheckerVistor(CTable classes_) : state(None), lookingType(-4), classes(classes_)
 	{
-		state = None;
-		lookingType = -4;
-		classes = classes_;
 	}
 
 
