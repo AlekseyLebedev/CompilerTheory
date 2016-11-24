@@ -10,12 +10,10 @@ namespace SymbolTable
 
 	CFillTableVisitor::CFillTableVisitor()
 	{
-		assert( false );
 	}
 
 	CFillTableVisitor::~CFillTableVisitor()
 	{
-		assert( false );
 	}
 
 	const CTable& CFillTableVisitor::GetTable() const
