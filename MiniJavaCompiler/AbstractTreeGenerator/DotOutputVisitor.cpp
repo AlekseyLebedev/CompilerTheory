@@ -280,7 +280,7 @@ namespace GraphvizOutput {
 		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
 	}
 
-	void CDotOutputVisitor::addSubNode( size_t id, const size_t label, const std::string& postfix )
+	void CDotOutputVisitor::addSubNode( size_t id, const int label, const std::string& postfix )
 	{
 		dotFile << "\tn" << id << postfix << "[label=\"" << label << "\"]" << std::endl;
 		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;

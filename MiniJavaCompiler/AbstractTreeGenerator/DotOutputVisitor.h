@@ -20,7 +20,7 @@ namespace GraphvizOutput {
 
 		size_t enterNode( const std::string & label );
 		void addSubNode( size_t id, const std::string & label, const std::string & postfix = "v" );
-		void addSubNode( size_t id, const size_t label, const std::string & postfix = "v" );
+		void addSubNode( size_t id, const int label, const std::string & postfix = "v" );
 		//Эта штука может заработать, если будут реализован метод GetString у таблицы строк
 		//void addSubNodeWithStringTable( size_t id, const size_t label, const std::string & postfix = "v" );
 		void addArrow( const size_t from, const size_t to );
