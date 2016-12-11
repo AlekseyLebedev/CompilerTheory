@@ -1,0 +1,7 @@
+namespace IRTree {
+
+	class IRTreeVisitor {
+
+	};
+
+}
