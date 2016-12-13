@@ -7,15 +7,15 @@ namespace IRTree {
 	class IRTSMove : public IRTStatement {
 	public:
 		
-		IRTSMove( const IRTExression* _dst, const IRTExression* _src );
+		IRTSMove( const IRTExpression* _dst, const IRTExpression* _src );
 
-		const IRTExression* GetExrDst() const;
-		const IRTExression* GetExrSrc() const;
+		const IRTExpression* GetExrDst() const;
+		const IRTExpression* GetExrSrc() const;
 		
 	private:
 
-		const IRTExression* dst;
-		const IRTStatement* src;
+		const IRTExpression* dst;
+		const IRTExpression* src;
 
 	};
 }

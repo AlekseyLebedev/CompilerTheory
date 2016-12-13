@@ -1,6 +1,7 @@
 #include "IRTSMove.h"
 
-IRTree::IRTSMove::IRTSMove( unsigned int _value ) : value( _value )
+IRTree::IRTSMove::IRTSMove( const IRTExpression* _dst, const IRTExpression* _src )
+	: dst( _dst ), src( _src )
 {
 }
 
