@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IRTreeVisitor.h"
-#include "IRTExpression.h"
-#include "IRTStatement.h"
+#include "..\IRTreeVisitor.h"
+#include "..\IRTExpression.h"
+#include "..\IRTStatement.h"
 
 	namespace IRTree {
 
