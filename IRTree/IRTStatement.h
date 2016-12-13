@@ -1,8 +1,16 @@
+#pragma once
+
 #include "IRTreeVisitor.h"
+#include "IRTExpList.h"
 
 	namespace IRTree {
 
-		class IRTStatement : public IRTreeVisitor {
+		class IRTStatement {
+		public:
+			
+			virtual ~IRTStatement() {};
+			virtual void Accept( IRTreeVisitor* visitor ) const = 0;
+			virtual const IRTExpList* children() const = 0;
 
 	};
 }
