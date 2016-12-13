@@ -1,19 +1,17 @@
 #pragma once
 
 #include "..\IRTreeVisitor.h"
-#include "..\IRTExpression.h"
 
-	namespace IRTree {
+namespace IRTree {
 
-		class IRTETemp : public IRTExpression {
-		public:
-			
-			//TO DO
-			IRTETemp();
-			
-		private:
+	class IRTETemp : public IRTExpression {
+	public:
+		
+		//TO DO
+		
+	private:
 
-			//TO DO
+		//TO DO
 
 	};
 }

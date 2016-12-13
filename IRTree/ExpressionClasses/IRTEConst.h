@@ -1,20 +1,19 @@
 #pragma once
 
 #include "..\IRTreeVisitor.h"
-#include "..\IRTExpression.h"
 
-	namespace IRTree {
+namespace IRTree {
 
-		class IRTEConst : public IRTExpression {
-		public:
-			
-			IRTEConst(unsigned int _value);
+	class IRTEConst : public IRTExpression {
+	public:
 
-			unsigned int GetValue() const;
-			
-		private:
+		IRTEConst(unsigned int _value);
 
-			const unsigned int value;
+		unsigned int GetValue() const;
+
+	private:
+
+		const unsigned int value;
 
 	};
 }

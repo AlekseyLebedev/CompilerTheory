@@ -1,20 +1,19 @@
 #pragma once
 
 #include "..\IRTreeVisitor.h"
-#include "..\IRTExpression.h"
 
-	namespace IRTree {
+namespace IRTree {
 
-		class IRTEMem : public IRTExpression {
-		public:
-			
-			IRTEMem( IRTExpression* _expr );
+	class IRTEMem : public IRTExpression {
+	public:
+		
+		IRTEMem( IRTExpression* _expr );
 
-			const IRTExpression* GetExp() const;
-			
-		private:
+		const IRTExpression* GetExp() const;
+		
+	private:
 
-			const IRTExpression* expr;
+		const IRTExpression* expr;
 
 	};
 }
