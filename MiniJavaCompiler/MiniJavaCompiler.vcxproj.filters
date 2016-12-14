@@ -268,7 +268,7 @@
     <ClInclude Include="IRTree\IRTLabel.h">
       <Filter>IRTree</Filter>
     </ClInclude>
-    <ClInclude Include="IRTree\IRTree.h">
+    <ClInclude Include="IRTree\IRTreeClasses.h">
       <Filter>IRTree</Filter>
     </ClInclude>
   </ItemGroup>

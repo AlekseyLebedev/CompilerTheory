@@ -1,6 +1,6 @@
 #include "IRTSLabel.h"
 
-IRTree::IRTSLabel::IRTSLabel( const Label* label ) : label( _label )
+IRTree::IRTSLabel::IRTSLabel( const Label* _label ) : label( _label )
 {
 }
 

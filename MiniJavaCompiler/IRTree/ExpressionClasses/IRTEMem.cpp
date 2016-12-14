@@ -16,5 +16,5 @@ void IRTree::IRTEMem::Accept( IRTreeVisitor* visitor ) const
 
 const IRTree::IRTExpList* IRTree::IRTEMem::children() const
 {
-	return new CExpList( exp, nullptr );
+	return new IRTExpList( exp, nullptr );
 }

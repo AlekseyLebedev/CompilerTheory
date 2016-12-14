@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\IRTree.h"
+#include "..\IRTreeClasses.h"
 
 namespace IRTree {
 
