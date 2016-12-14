@@ -1,7 +1,7 @@
 #include "IRTECall.h"
 
 IRTree::IRTECall::IRTECall( const IRTExpression* _func, const IRTExpList* _args )
-	func( _func ), args( _args )
+	: func( _func ), args( _args )
 {
 }
 
@@ -15,7 +15,7 @@ const IRTree::IRTExpList* IRTree::IRTECall::GetExpList() const
 	return args;
 }
 
-void IRTree::IRTECall::Accept( IIRTreeVisitor *visitor ) const
+void IRTree::IRTECall::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

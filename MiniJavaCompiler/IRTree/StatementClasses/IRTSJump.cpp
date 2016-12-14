@@ -1,6 +1,6 @@
 #include "IRTSJump.h"
 
-IRTree::IRTSJump::IRTSJump( const IRTExression* _exp, const Label* _label )
+IRTree::IRTSJump::IRTSJump( const IRTExpression* _exp, const Label* _label )
 	: exp( _exp ), label( _label )
 {
 }
@@ -15,7 +15,7 @@ const IRTree::Label* IRTree::IRTSJump::GetLabel() const
 	return label;
 }
 
-void IRTree::IRTSJump::Accept( IIRTreeVisitor *visitor ) const
+void IRTree::IRTSJump::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

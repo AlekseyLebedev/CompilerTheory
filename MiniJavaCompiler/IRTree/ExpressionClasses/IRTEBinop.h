@@ -1,20 +1,23 @@
 #pragma once
 
-#include "..\IRTreeVisitor.h"
+#include "..\IRTree.h"
 
 namespace IRTree {
 
 	class IRTEBinop : public IRTExpression {
 	public:
 		
-		IRTEBinop( TBinop _binop, const IRTExpression* _left, const IRTExpression* _right );
+		IRTEBinop( RELOP _binop, const IRTExpression* _left, const IRTExpression* _right );
 
 		const IRTExpression* GetLeft() const;
 		const IRTExpression* GetRight() const;
+
+        void Accept( IRTreeVisitor* visitor ) const override;
+        const IRTExpList* children() const override;
 		
 	private:
 
-		const TBinop binop;
+		const RELOP binop;
 		const IRTExpression* left;
 		const IRTExpression* right;
 

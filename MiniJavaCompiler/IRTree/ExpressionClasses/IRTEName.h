@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\IRTreeVisitor.h"
+#include "..\IRTree.h"
 
 namespace IRTree {
 
@@ -9,7 +9,10 @@ namespace IRTree {
 		
 		IRTEName( const Label* _label );
 
-		Label* GetLabel() const;
+		const Label* GetLabel() const;
+
+        void Accept( IRTreeVisitor* visitor ) const override;
+        const IRTExpList* children() const override;
 		
 	private:
 

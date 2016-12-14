@@ -1,16 +1,19 @@
 #pragma once
 
-#include "..\IRTreeVisitor.h"
+#include "..\IRTree.h"
 
 namespace IRTree {
 
 	class IRTSJump : public IRTStatement {
 	public:
 		
-		IRTSJump( const IRTExression* _exp, const Label* _label );
+		IRTSJump( const IRTExpression* _exp, const Label* _label );
 
 		const IRTExpression* GetExp() const;
 		const Label* GetLabel() const;
+
+        void Accept( IRTreeVisitor* visitor ) const override;
+        const IRTExpList* children() const override;
 		
 	private:
 

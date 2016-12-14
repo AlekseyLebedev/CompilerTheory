@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\IRTreeVisitor.h"
+#include "..\IRTree.h"
 
 namespace IRTree {
 
@@ -11,6 +11,9 @@ namespace IRTree {
 
 		const IRTExpression* GetExrDst() const;
 		const IRTExpression* GetExrSrc() const;
+
+        void Accept( IRTreeVisitor* visitor ) const override;
+        const IRTExpList* children() const override;
 		
 	private:
 

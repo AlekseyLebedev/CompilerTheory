@@ -1,14 +1,22 @@
 #pragma once
 
-#include "IRTConstants.h"
-#include "IRTExpression.h"
-#include "IRTStatement.h"
-#include "IRTExpList.h"
-#include "IRTreeLabel.h"
+#include "IRTree.h"
 
 namespace IRTree {
 
 	class IRTreeVisitor {
+    public:
+
+        // TO DO
+        void Visit( const IRTExpression* exp )
+        {
+
+        }
+
+        void Visit( const IRTStatement* exp )
+        {
+
+        }
 
 	};
 

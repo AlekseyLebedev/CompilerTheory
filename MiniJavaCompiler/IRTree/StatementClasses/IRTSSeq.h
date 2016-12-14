@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\IRTreeVisitor.h"
+#include "..\IRTree.h"
 
 namespace IRTree {
 
@@ -10,7 +10,10 @@ namespace IRTree {
 		IRTSSeq( const IRTStatement* _left, const IRTStatement* _right );
 
 		const IRTStatement* GetStmLeft() const;
-		const IRTStatement* GetStmLeft() const;
+		const IRTStatement* GetStmRight() const;
+
+        void Accept( IRTreeVisitor* visitor ) const override;
+        const IRTExpList* children() const override;
 		
 	private:
 

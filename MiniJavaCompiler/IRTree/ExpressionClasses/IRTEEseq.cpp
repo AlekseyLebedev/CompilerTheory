@@ -1,7 +1,7 @@
 #include "IRTEEseq.h"
 
-IRTree::IRTEEseq::IRTEEseq( cconst IRTStatement* _stm, const IRTExpression* _exp )
-	stm( _stm ), exp( _exp )
+IRTree::IRTEEseq::IRTEEseq( const IRTStatement* _stm, const IRTExpression* _exp )
+	: stm( _stm ), exp( _exp )
 {
 }
 
@@ -15,7 +15,7 @@ const IRTree::IRTExpression* IRTree::IRTEEseq::GetExp() const
 	return exp;
 }
 
-void IRTree::IRTEEseq::Accept( IIRTreeVisitor *visitor ) const
+void IRTree::IRTEEseq::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

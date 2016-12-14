@@ -5,7 +5,7 @@ IRTree::IRTETemp::IRTETemp( )
 {
 }
 
-void IRTree::IRTETemp::Accept( IIRTreeVisitor *visitor ) const
+void IRTree::IRTETemp::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

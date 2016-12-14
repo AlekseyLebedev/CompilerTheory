@@ -4,12 +4,12 @@ IRTree::IRTEName::IRTEName( const Label* _label ) : label( _label )
 {
 }
 
-unsigned int IRTree::IRTEName::GetLabel() const
+const IRTree::Label* IRTree::IRTEName::GetLabel() const
 {
 	return label;
 }
 
-void IRTree::IRTEName::Accept( IIRTreeVisitor *visitor ) const
+void IRTree::IRTEName::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

@@ -5,17 +5,17 @@ IRTree::IRTSMove::IRTSMove( const IRTExpression* _dst, const IRTExpression* _src
 {
 }
 
-const IRTree::IRTExression* IRTree::IRTSMove::GetExrDst() const
+const IRTree::IRTExpression* IRTree::IRTSMove::GetExrDst() const
 {
 	return dst;
 }
 
-const IRTree::IRTExression* IRTree::IRTSMove::GetExrSrc() const
+const IRTree::IRTExpression* IRTree::IRTSMove::GetExrSrc() const
 {
 	return src;
 }
 
-void IRTree::IRTSMove::Accept( IIRTreeVisitor *visitor ) const
+void IRTree::IRTSMove::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

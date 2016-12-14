@@ -9,7 +9,7 @@ const IRTree::Label* IRTree::IRTSLabel::GetLabel() const
 	return label;
 }
 
-void IRTree::IRTSLabel::Accept( IIRTreeVisitor *visitor ) const
+void IRTree::IRTSLabel::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

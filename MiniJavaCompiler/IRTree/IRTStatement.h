@@ -1,5 +1,7 @@
 #pragma once
 
+#include "IRTree.h"
+
 namespace IRTree {
 
 	class IRTStatement {

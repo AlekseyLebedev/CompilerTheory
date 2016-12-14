@@ -1,22 +1,24 @@
 #pragma once
 
-#include "..\IRTreeVisitor.h"
-#include "..\IRTExpression.h"
+#include "..\IRTree.h"
 
-	namespace IRTree {
+namespace IRTree {
 
-		class IRTECall : public IRTExpression {
-		public:
+	class IRTECall : public IRTExpression {
+	public:
 			
-			IRTECall( const IRTExpression* _func, const IRTExpList* _args );
+		IRTECall( const IRTExpression* _func, const IRTExpList* _args );
 
-			const IRTExpression* GetExp() const;
-			const IRTExpList* GetExpList() const;
+		const IRTExpression* GetExp() const;
+		const IRTExpList* GetExpList() const;
+
+        void Accept( IRTreeVisitor* visitor ) const override;
+        const IRTExpList* children() const override;
 			
-		private:
+	private:
 
-			const IRTExpression* func;
-			const IRTExpList* args;
+		const IRTExpression* func;
+		const IRTExpList* args;
 
-	};
+    };
 }
