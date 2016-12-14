@@ -108,32 +108,51 @@ namespace SymbolTable {
 			// b. both expressions have the same type
 		int id = statement->GetIdExpression()->GetName();
 		CVariableInfo varinfo;
+		bool assign[3] = { false,false, false };
 		if( methodExist ) {
-			bool assign = false;
 			try {
 				varinfo = currentMethod.GetVarInfo( id, statement );
-				assign = true;
+				assign[0] = true;
+			}
+			catch( ... ) {
+
+			}
+		}
+		try {
+			varinfo = currentClass.GetVarInfo( id, statement );
+			assign[1] = true;
+		}
+		catch( ... ) {
+
+		}
+
+		int extend = currentClass.GetExtend();
+		while( extend != CClassInfo::NothingExtend ) {
+			CClassInfo extendClass = classes.GetClassInfo( extend, statement );
+			try {
+				varinfo = extendClass.GetVarInfo( id, statement );
+				assign[2] = true;
 			}
 			catch( std::exception* e ) {
-				varinfo = currentClass.GetVarInfo( id, statement );
+				int extend = extendClass.GetExtend();
 			}
-			if( assign ) {
-				bool bothassign = false;
-				try {
-					currentClass.GetVarInfo( id, statement );
-					bothassign = true;
-				}
-				catch( ... ) {
-
-				}
-				if( bothassign ) {
-					throw new CTypeException( statement->GetCol(), statement->GetRow(),
-						"Multiple definition" );
-				}
+			if( assign[2] ) {
+				break;
 			}
-		} else {
-			varinfo = currentClass.GetVarInfo( id, statement );
 		}
+
+		int sum = 0;
+		for( int i = 0; i < 3; i++ ) {
+			sum += assign[i];
+		}
+		if( sum == 0 ) {
+			throw new CTypeException( statement->GetCol(), statement->GetRow(),
+				"No such variable" );
+		} else if( sum > 1 ) {
+			throw new CTypeException( statement->GetCol(), statement->GetRow(),
+				"Multiple declaration" );
+		}
+
 		int vartype = varinfo.GetType();
 		state = LookingType;
 		lookingType = vartype;
@@ -232,8 +251,8 @@ namespace SymbolTable {
 		int id = expression->GetName();
 		if( state != None ) {
 			CVariableInfo varinfo;
+			bool assign[4] = { false, false, false, false };
 			if( methodExist ) {
-				bool assign[3] = { false, false, false };
 				try {
 					varinfo = currentMethod.GetVarInfo( id, expression );
 					assign[0] = true;
@@ -241,45 +260,65 @@ namespace SymbolTable {
 				catch( ... ) {
 
 				}
-				try {
-					varinfo = currentMethod.GetArgInfo( id, expression );
-					assign[1] = true;
-				}
-				catch( ... ) {
+			}
 
-				}
-				try {
-					varinfo = currentClass.GetVarInfo( id, expression );
-					assign[2] = true;
-				}
-				catch( ... ) {
+			try {
+				varinfo = currentMethod.GetArgInfo( id, expression );
+				assign[1] = true;
+			}
+			catch( ... ) {
 
-				}
-				int sum = 0;
-				for( int i = 0; i < 3; i++ ) {
-					sum += assign[i];
-				}
-				if( sum == 0 ) {
-					throw new CTypeException( expression->GetCol(), expression->GetRow(),
-						"No such variable" );
-				} else if( sum > 1 ) {
-					throw new CTypeException( expression->GetCol(), expression->GetRow(),
-						"Multiple declaration" );
-				}
-			} else {
+			}
+			try {
 				varinfo = currentClass.GetVarInfo( id, expression );
+				assign[2] = true;
+			}
+			catch( ... ) {
+
+			}
+
+			int extend = currentClass.GetExtend();
+			while( extend != CClassInfo::NothingExtend ) {
+				CClassInfo extendClass = classes.GetClassInfo( extend, expression );
+				try {
+					varinfo = extendClass.GetVarInfo( id, expression );
+					assign[3] = true;
+				}
+				catch( std::exception* e ) {
+					int extend = extendClass.GetExtend();
+				}
+				if( assign[3] ) {
+					break;
+				}
+			}
+
+			int sum = 0;
+			for( int i = 0; i < 4; i++ ) {
+				sum += assign[i];
+			}
+			if( sum == 0 ) {
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"No such variable" );
+			} else if( sum > 1 ) {
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"Multiple declaration" );
 			}
 
 			if( state == LookingType ) {
 				int vartype = varinfo.GetType();
-				if( vartype != lookingType ) {
-					throw new CTypeException( expression->GetCol(), expression->GetRow(),
-						"Incorrect return value" );
-				} else {
-					state = None;
-					lookingType = -4;
+				bool f;
+				while( vartype != lookingType ) {
+					int extend = classes.GetClassInfo( vartype, expression ).GetExtend();
+					if( extend == CClassInfo::NothingExtend ) {
+						throw new CTypeException( expression->GetCol(), expression->GetRow(),
+							"Incorrect return value" );
+					} else {
+						vartype = extend;						
+					}
 				}
-			}
+				state = None;
+				lookingType = -4;
+			} 
 		}
 	}
 
@@ -590,7 +629,7 @@ namespace SymbolTable {
 			int	var_name = var->GetName();
 			//CVariableInfo varinfo = currentMethod.GetVarInfo( var_name, expression );
 			CVariableInfo varinfo;
-			bool assign[3] = { false, false, false };
+			bool assign[4] = { false, false, false, false };
 			try {
 				varinfo = currentMethod.GetVarInfo( var_name, expression );
 				assign[0] = true;
@@ -612,8 +651,25 @@ namespace SymbolTable {
 			catch( ... ) {
 
 			}
+
+			int extend = currentClass.GetExtend();
+			while( extend != CClassInfo::NothingExtend ) {
+				CClassInfo extendClass = classes.GetClassInfo( extend, expression );
+				try {
+					varinfo = extendClass.GetVarInfo( id, expression );
+					assign[3] = true;
+				}
+				catch( std::exception* e ) {
+					int extend = extendClass.GetExtend();
+				}
+				if( assign[3] ) {
+					break;
+				}
+			}
+
+
 			int sum = 0;
-			for( int i = 0; i < 3; i++ ) {
+			for( int i = 0; i < 4; i++ ) {
 				sum += assign[i];
 			}
 			if( sum == 0 ) {
