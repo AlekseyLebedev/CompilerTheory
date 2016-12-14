@@ -3,7 +3,6 @@
 namespace IRTree {
 
     class IRTExpList;
-    class IRTStmList;
 
     // Expressions
     class IRTExpression;
