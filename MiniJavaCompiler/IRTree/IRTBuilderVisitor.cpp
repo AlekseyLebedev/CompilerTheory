@@ -110,8 +110,26 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPrintStatement* c
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CProgram* const )
 {}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CStatementList* const )
-{}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CStatementList* const stmList )
+{
+    std::shared_ptr<AbstractTreeGenerator::IStatement> head = stmList->GetStatement();
+    std::shared_ptr<AbstractTreeGenerator::CStatementList> tail = stmList->GetStatementList();
+
+    IRTStatement* headNode = visitChild( head.get() );
+
+    IRTStatement* root;
+
+    if( tail != nullptr ) {
+        tail->Accept( this );
+
+        IRTStatement* tailNode = nodesStmStack.top();
+        root = new IRTSSeq( headNode, tailNode );
+    } else {
+        root = new IRTSSeq( headNode, nullptr );
+    }
+
+    nodesStmStack.push( root );
+}
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CBasicType* const )
 {}
