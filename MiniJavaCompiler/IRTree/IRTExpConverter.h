@@ -10,7 +10,7 @@ namespace Translate {
         IRTExpConverter( const IRTree::IRTExpression* _exp );
         const IRTree::IRTExpression* ToExpression() const override;
         const IRTree::IRTStatement* ToStatement() const override;
-        const IRTree::IRTStatement* ToConditional() const override;
+        const IRTree::IRTStatement* ToConditional( const IRTree::Label* t, const IRTree::Label* f ) const override;
 
     private:
         const IRTree::IRTExpression* exp;
