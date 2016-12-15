@@ -1,8 +1,12 @@
 #include "IRTETemp.h"
 
-//TO DO
-IRTree::IRTETemp::IRTETemp( )
+IRTree::IRTETemp::IRTETemp( const Temp* _temp ) : temp( _temp )
 {
+}
+
+const IRTree::Temp* IRTree::IRTETemp::GetTemp() const
+{
+    return temp;
 }
 
 void IRTree::IRTETemp::Accept( IRTreeVisitor* visitor ) const

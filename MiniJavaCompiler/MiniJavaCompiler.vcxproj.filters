@@ -271,6 +271,9 @@
     <ClInclude Include="IRTree\IRTreeClasses.h">
       <Filter>IRTree</Filter>
     </ClInclude>
+    <ClInclude Include="IRTree\IRTTemp.h">
+      <Filter>IRTree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -460,6 +463,9 @@
       <Filter>IRTree</Filter>
     </ClCompile>
     <ClCompile Include="IRTree\IRTExpList.cpp">
+      <Filter>IRTree</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTreeVisitor.cpp">
       <Filter>IRTree</Filter>
     </ClCompile>
   </ItemGroup>

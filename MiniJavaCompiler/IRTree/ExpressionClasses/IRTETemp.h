@@ -7,7 +7,9 @@ namespace IRTree {
 	class IRTETemp : public IRTExpression {
 	public:
 		
-		//TO DO
+        IRTETemp( const Temp* _temp );
+
+        const Temp* GetTemp() const;
 
         void Accept( IRTreeVisitor* visitor ) const override;
 
@@ -15,7 +17,7 @@ namespace IRTree {
 		
 	private:
 
-		//TO DO
+        const Temp* temp;
 
 	};
 }

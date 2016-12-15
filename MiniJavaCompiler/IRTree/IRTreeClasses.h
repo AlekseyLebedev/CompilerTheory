@@ -23,6 +23,9 @@ namespace IRTree {
     class IRTSSeq;
     class IRTSLabel;
 
+    // Что такое Temp ??? (См. презентацию.)
+    class Temp;
+    class Label;
 }
 
 #include "IRTreeVisitor.h"
@@ -34,3 +37,4 @@ namespace IRTree {
 #include "IRTStatement.h"
 
 #include "IRTLabel.h"
+#include "IRTTemp.h"

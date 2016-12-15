@@ -210,6 +210,7 @@
     <ClInclude Include="IRTree\IRTreeClasses.h" />
     <ClInclude Include="IRTree\IRTreeVisitor.h" />
     <ClInclude Include="IRTree\IRTStatement.h" />
+    <ClInclude Include="IRTree\IRTTemp.h" />
     <ClInclude Include="IRTree\StatementClasses\IRTSCjump.h" />
     <ClInclude Include="IRTree\StatementClasses\IRTSExp.h" />
     <ClInclude Include="IRTree\StatementClasses\IRTSJump.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="IRTree\ExpressionClasses\IRTEName.cpp" />
     <ClCompile Include="IRTree\ExpressionClasses\IRTETemp.cpp" />
     <ClCompile Include="IRTree\IRTExpList.cpp" />
+    <ClCompile Include="IRTree\IRTreeVisitor.cpp" />
     <ClCompile Include="IRTree\StatementClasses\IRTSCjump.cpp" />
     <ClCompile Include="IRTree\StatementClasses\IRTSExp.cpp" />
     <ClCompile Include="IRTree\StatementClasses\IRTSJump.cpp" />
