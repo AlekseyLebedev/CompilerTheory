@@ -5,6 +5,7 @@
 #include <stack>
 #include <vector>
 #include <utility>
+#include <map>
 
 #include "IRTreeClasses.h"
 
@@ -55,7 +56,7 @@ namespace IRTree {
         std::stack<unsigned int> nodesStack;
 
         std::vector<std::pair<unsigned int, unsigned int>> edges;
-        std::vector<std::pair<unsigned int, std::string>> nodeLables;
+        std::map<unsigned int, std::string> nodeLables;
 
 	};
 }
