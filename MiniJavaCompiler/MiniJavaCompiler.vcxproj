@@ -275,7 +275,9 @@
     <ClCompile Include="IRTree\ExpressionClasses\IRTEName.cpp" />
     <ClCompile Include="IRTree\ExpressionClasses\IRTETemp.cpp" />
     <ClCompile Include="IRTree\IRTExpList.cpp" />
+    <ClCompile Include="IRTree\IRTLabel.cpp" />
     <ClCompile Include="IRTree\IRTreeVisitor.cpp" />
+    <ClCompile Include="IRTree\IRTTemp.cpp" />
     <ClCompile Include="IRTree\StatementClasses\IRTSCjump.cpp" />
     <ClCompile Include="IRTree\StatementClasses\IRTSExp.cpp" />
     <ClCompile Include="IRTree\StatementClasses\IRTSJump.cpp" />

@@ -468,6 +468,12 @@
     <ClCompile Include="IRTree\IRTreeVisitor.cpp">
       <Filter>IRTree</Filter>
     </ClCompile>
+    <ClCompile Include="IRTree\IRTLabel.cpp">
+      <Filter>IRTree</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTTemp.cpp">
+      <Filter>IRTree</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="LexicParser\grammar.l">
