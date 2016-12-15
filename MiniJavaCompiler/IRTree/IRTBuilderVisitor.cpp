@@ -27,8 +27,26 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CCompoundStatement
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConstructorExpression* const )
 {}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CExpressionList* const )
-{}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CExpressionList* const expList )
+{
+    std::shared_ptr<AbstractTreeGenerator::IExpression> head = expList->GetExpression();
+    std::shared_ptr<AbstractTreeGenerator::CExpressionList> tail = expList->GetExpressionList();
+
+    IRTExpression* headNode = visitChild( head.get() );
+
+    IRTExpression* root;
+
+    if( tail != nullptr ) {
+        tail->Accept( this );
+
+        IRTExpression* tailNode = nodesExpStack.top();
+        root = new IRTEEseq( new IRTSExp( headNode ), tailNode );
+    } else {
+        root = new IRTEEseq( new IRTSExp( headNode ), nullptr );
+    }
+
+    nodesExpStack.push( root );
+}
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdExpression* const )
 {}
