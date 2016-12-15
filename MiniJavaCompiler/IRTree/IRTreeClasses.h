@@ -3,6 +3,7 @@
 namespace IRTree {
 
     class IRTreeVisitor;
+    class IRTBuilderVisitor;
 
     class IRTExpList;
 
@@ -31,6 +32,7 @@ namespace IRTree {
 }
 
 #include "IRTreeVisitor.h"
+#include "IRTBuilderVisitor.h"
 
 #include "IRTConstants.h"
 
