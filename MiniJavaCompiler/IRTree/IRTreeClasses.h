@@ -2,6 +2,8 @@
 
 namespace IRTree {
 
+    class IRTreeVisitor;
+
     class IRTExpList;
 
     // Expressions
