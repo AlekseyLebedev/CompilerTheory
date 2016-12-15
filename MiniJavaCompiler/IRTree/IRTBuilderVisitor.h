@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <stack>
+
 #include "IRTreeClasses.h"
 #include "Translate.h"
 
@@ -85,11 +87,11 @@ namespace IRTree {
 
     private:
 
-        IRTNode* visitChild( AbstractTreeGenerator::INode* const child );
+        IRTExpression* visitChildExp( AbstractTreeGenerator::INode* const child );
+        IRTStatement* visitChildStm( AbstractTreeGenerator::INode* const child );
 
-        IRTNode* returnValue;
-
-        IRTNode* currentNode;
+        std::stack<IRTExpression*> nodesExpStack;
+        std::stack<IRTStatement*> nodesStmStack;
+        
     };
-
 }

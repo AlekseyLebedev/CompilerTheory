@@ -1,4 +1,4 @@
-#include "IRTBuilderVisitor.h"
+п»ї#include "IRTBuilderVisitor.h"
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgument* const cArgument )
 {
@@ -75,30 +75,49 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConditionStatemen
     const std::shared_ptr<AbstractTreeGenerator::IStatement> first = condStm->GetStatementFirst();
     const std::shared_ptr<AbstractTreeGenerator::IStatement> second = condStm->GetStatementSecond();
 
-    IRTree::IRTNode* labelLeft = visitChild( first.get() );
-    IRTree::IRTNode* labelRight = visitChild( second.get() );
+    IRTExpression* expNode = visitChildExp( exp.get() );
+    IRTStatement* leftNode = visitChildStm( first.get() );
+    IRTStatement* rightNode = visitChildStm( second.get() );
 
-    // Пока один
+    Label* trueLabel = new Label();
+    Label* falseLabel = new Label();
+    Label* endLabel = new Label();
+    
+    IRTSSeq* root = new IRTSSeq( new IRTSCjump( CJUMP_NE,
+                                                expNode,
+                                                new IRTEConst( 0 ),
+                                                trueLabel,
+                                                falseLabel ),
+                                 new IRTSSeq( new IRTSSeq( new IRTSSeq( new IRTSLabel(trueLabel),
+                                     leftNode ),
+                                                           new IRTSJump( endLabel ) ),
+                                              new IRTSSeq( new IRTSSeq( new IRTSLabel( falseLabel ),
+                                                                        rightNode ),
+                                                           new IRTSLabel( endLabel ) ) ) );
 
-    //Translate::IRTExpConverter expConverter( exp );
-
-    //IRTree::IRTSSeq* root = new
-
-    // label left - t
-
-    // label right - f
-
-    // IRTree::IRTNode* node = expConverter.ToConditional( t, f );
-
+    nodesStmStack.push(root);
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CThisExpression* const ) {}
 
-IRTree::IRTNode* IRTree::IRTBuilderVisitor::visitChild( AbstractTreeGenerator::INode* const child )
+IRTree::IRTExpression* IRTree::IRTBuilderVisitor::visitChildExp( AbstractTreeGenerator::INode* const child )
 {
     if( child != nullptr ) {
         child->Accept( this );
-        return returnValue;
+        IRTExpression* returnedValue = nodesExpStack.top();
+        nodesExpStack.pop();
+        return returnedValue;
+    }
+    return nullptr;
+}
+
+IRTree::IRTStatement* IRTree::IRTBuilderVisitor::visitChildStm( AbstractTreeGenerator::INode* const child )
+{
+    if( child != nullptr ) {
+        child->Accept( this );
+        IRTStatement* returnedValue = nodesStmStack.top();
+        nodesStmStack.pop();
+        return returnedValue;
     }
     return nullptr;
 }

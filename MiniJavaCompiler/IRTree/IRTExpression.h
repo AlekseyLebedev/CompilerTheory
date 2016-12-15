@@ -4,7 +4,7 @@
 
 namespace IRTree {
 
-	class IRTExpression : public IRTNode
+	class IRTExpression
     {
 	public:
 		
