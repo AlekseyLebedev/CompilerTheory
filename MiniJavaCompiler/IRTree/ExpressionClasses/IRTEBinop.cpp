@@ -5,6 +5,11 @@ IRTree::IRTEBinop::IRTEBinop( RELOP _binop, const IRTExpression* _left, const IR
 {
 }
 
+const IRTree::RELOP IRTree::IRTEBinop::GetBinop() const
+{
+    return binop;
+}
+
 const IRTree::IRTExpression* IRTree::IRTEBinop::GetLeft() const
 {
 	return left;

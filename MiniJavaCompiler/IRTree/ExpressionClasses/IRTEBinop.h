@@ -9,6 +9,7 @@ namespace IRTree {
 		
 		IRTEBinop( RELOP _binop, const IRTExpression* _left, const IRTExpression* _right );
 
+        const RELOP GetBinop() const;
 		const IRTExpression* GetLeft() const;
 		const IRTExpression* GetRight() const;
 

@@ -9,8 +9,8 @@ namespace IRTree {
 			
 		IRTECall( const IRTExpression* _func, const IRTExpList* _args );
 
-		const IRTExpression* GetExp() const;
-		const IRTExpList* GetExpList() const;
+		const IRTExpression* GetFunc() const;
+		const IRTExpList* GetArgs() const;
 
         void Accept( IRTreeVisitor* visitor ) const override;
         const IRTExpList* children() const override;

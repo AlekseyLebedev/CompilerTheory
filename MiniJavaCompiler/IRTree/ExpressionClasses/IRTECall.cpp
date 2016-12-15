@@ -5,12 +5,12 @@ IRTree::IRTECall::IRTECall( const IRTExpression* _func, const IRTExpList* _args 
 {
 }
 
-const IRTree::IRTExpression* IRTree::IRTECall::GetExp() const
+const IRTree::IRTExpression* IRTree::IRTECall::GetFunc() const
 {
 	return func;
 }
 
-const IRTree::IRTExpList* IRTree::IRTECall::GetExpList() const
+const IRTree::IRTExpList* IRTree::IRTECall::GetArgs() const
 {
 	return args;
 }
