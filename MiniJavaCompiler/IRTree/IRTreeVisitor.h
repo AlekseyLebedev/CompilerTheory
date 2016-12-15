@@ -9,7 +9,6 @@
 
 #include "IRTreeClasses.h"
 
-
 // Разобраться, как работает graphviz, а пока создадим текстовый файл.
 
 namespace IRTree {
@@ -45,6 +44,7 @@ namespace IRTree {
         void leaveNode();
 
         void addEdge( unsigned int from, unsigned int to );
+        unsigned int createNode();
 
         void writeGraphToFile();
 
