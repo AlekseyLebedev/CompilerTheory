@@ -1,4 +1,4 @@
-#include "IRTBuilderVisitor.h"
+﻿#include "IRTBuilderVisitor.h"
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgument* const cArgument )
 {
@@ -69,6 +69,36 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CFalseExpression* 
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CGetFieldExpression* const ) {}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConditionStatement* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConditionStatement* const condStm )
+{
+    const std::shared_ptr<AbstractTreeGenerator::IExpression> exp = condStm->GetExpression();
+    const std::shared_ptr<AbstractTreeGenerator::IStatement> first = condStm->GetStatementFirst();
+    const std::shared_ptr<AbstractTreeGenerator::IStatement> second = condStm->GetStatementSecond();
+
+    IRTree::INode* labelLeft = visitChild( first );
+    IRTree::INode* labelRight = visitChild( second );
+
+    // Пока один
+
+    //Translate::IRTExpConverter expConverter( exp );
+
+    //IRTree::IRTSSeq* root = new
+
+    // label left - t
+    
+    // label right - f
+
+    IRTree::IRTNode* node = expConverter.ToConditional( t, f );
+
+}
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CThisExpression* const ) {}
+
+IRTree::IRTNode* IRTree::IRTBuilderVisitor::visitChild( AbstractTreeGenerator::INode* const child )
+{
+    if( child != nullptr ) {
+        child->Accept( this );
+        return returnValue;
+    }
+    return nullptr;
+}

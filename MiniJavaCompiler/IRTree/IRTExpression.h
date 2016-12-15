@@ -4,7 +4,8 @@
 
 namespace IRTree {
 
-	class IRTExpression {
+	class IRTExpression : public IRTNode
+    {
 	public:
 		
         virtual ~IRTExpression() {};

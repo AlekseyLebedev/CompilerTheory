@@ -1,6 +1,7 @@
-#pragma once
+п»ї#pragma once
 
 #include "IRTreeClasses.h"
+#include "Translate.h"
 
 #include "..\AbstractTreeGenerator\IVisitor.h"
 #include "..\AbstractTreeGenerator\AllNodes.h"
@@ -11,8 +12,8 @@ namespace IRTree {
     {
     public:
 
-        // Унаследовано через IVisitor
-        virtual void visit( AbstractTreeGenerator::CArgument* const ) override;
+        // РЈРЅР°СЃР»РµРґРѕРІР°РЅРѕ С‡РµСЂРµР· IVisitor
+        virtual void visit( AbstractTreeGenerator::CArgument* const cArgument ) override;
 
         virtual void visit( AbstractTreeGenerator::CArgumentList* const ) override;
 
@@ -78,10 +79,18 @@ namespace IRTree {
 
         virtual void visit( AbstractTreeGenerator::CGetFieldExpression* const ) override;
 
-        virtual void visit( AbstractTreeGenerator::CConditionStatement* const ) override;
+        virtual void visit( AbstractTreeGenerator::CConditionStatement* const condStm ) override;
 
         virtual void visit( AbstractTreeGenerator::CThisExpression* const ) override;
 
+    private:
+
+
+        IRTNode* visitChild( AbstractTreeGenerator::INode* const child );
+
+        IRTNode* returnValue;
+
+        IRTNode* currentNode;
     };
 
 }
