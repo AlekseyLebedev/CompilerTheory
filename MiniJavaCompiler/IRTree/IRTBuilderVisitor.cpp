@@ -78,8 +78,31 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CParenExpression* 
     nodesExpStack.push( root );
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPreconditionStatement* const )
-{}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPreconditionStatement* const precondStm )
+{
+    std::shared_ptr<AbstractTreeGenerator::IExpression> exp = precondStm->GetExpression();
+    std::shared_ptr<AbstractTreeGenerator::IStatement> stm = precondStm->GetStatement();
+
+    IRTExpression* expNode = visitChild( exp.get() );
+    IRTStatement* stmNode = visitChild( stm.get() );
+
+    IRTree::Label* beginLabel = new Label();
+    IRTree::Label* trueLabel = new Label();
+    IRTree::Label* falseLabel = new Label();
+
+    IRTSSeq* root = new IRTSSeq( new IRTSSeq( new IRTSLabel( beginLabel ),
+                                              new IRTSCjump( CJUMP_NE,
+                                                             expNode,
+                                                             new IRTEConst( 0 ),
+                                                             trueLabel,
+                                                             falseLabel ) ),
+                                 new IRTSSeq( new IRTSSeq( new IRTSSeq( new IRTSLabel( trueLabel ),
+                                                                        stmNode ),
+                                                           new IRTSJump( beginLabel ) ),
+                                              new IRTSLabel( falseLabel ) ) );
+
+    nodesStmStack.push( root );
+}
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPrintStatement* const )
 {}
