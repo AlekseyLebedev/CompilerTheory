@@ -2,8 +2,14 @@
 
 #include <string>
 #include <fstream>
+#include <stack>
+#include <vector>
+#include <utility>
 
 #include "IRTreeClasses.h"
+
+
+// Разобраться, как работает graphviz, а пока создадим текстовый файл.
 
 namespace IRTree {
 
@@ -37,8 +43,19 @@ namespace IRTree {
         void visitNode();
         void leaveNode();
 
+        void addEdge( unsigned int from, unsigned int to );
+
+        void writeGraphToFile();
+
         std::ofstream graphvizOutputFile;
 
-	};
+        unsigned int currentNodeID;
+        unsigned int lastNodeID;
+        unsigned int numberOfVisitedNodes;
+        std::stack<unsigned int> nodesStack;
 
+        std::vector<std::pair<unsigned int, unsigned int>> edges;
+        std::vector<std::pair<unsigned int, std::string>> nodeLables;
+
+	};
 }

@@ -1,12 +1,17 @@
 #include "IRTreeVisitor.h"
 
+const std::string SOMETEXT = "NODELABEL";
+
 IRTree::IRTreeVisitor::IRTreeVisitor( const std::string& outputIRTFileName )
+    : currentNodeID( 0 ), numberOfVisitedNodes( 0 ), lastNodeID( 0 )
 {
     graphvizOutputFile = std::ofstream( outputIRTFileName );
 }
 
 IRTree::IRTreeVisitor::~IRTreeVisitor()
 {
+    writeGraphToFile();
+
     graphvizOutputFile.close();
 }
 
@@ -138,10 +143,40 @@ void IRTree::IRTreeVisitor::Visit( const IRTSLabel* node )
 
 void IRTree::IRTreeVisitor::visitNode()
 {
-    // TO DO
+    lastNodeID = currentNodeID;
+
+    nodesStack.push( currentNodeID = ++numberOfVisitedNodes );
+
+    addEdge( lastNodeID, currentNodeID );
 }
 
 void IRTree::IRTreeVisitor::leaveNode()
 {
-    // TO DO
+    lastNodeID = currentNodeID;
+
+    nodesStack.pop();
+
+    currentNodeID = nodesStack.top();
+}
+
+void IRTree::IRTreeVisitor::addEdge( unsigned int from, unsigned int to )
+{
+    edges.push_back( std::make_pair( from, to ) );
+}
+
+void IRTree::IRTreeVisitor::writeGraphToFile()
+{
+    graphvizOutputFile << "digraph { \nnode [shape\"box\"]\n";
+
+    // edges
+    for( unsigned int i = 0; i < edges.size(); ++i ) {
+        graphvizOutputFile << edges[i].first << " -> " << edges[i].second << "\n";
+    }
+
+    // nodes
+    for( unsigned int i = 0; i < numberOfVisitedNodes; ++i ) {
+        graphvizOutputFile << i << "[ label \"" << SOMETEXT << "\" ]\n";
+    }
+
+    graphvizOutputFile << "}\n";
 }
