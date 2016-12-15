@@ -1,13 +1,7 @@
 #include "IRTSJump.h"
 
-IRTree::IRTSJump::IRTSJump( const IRTExpression* _exp, const Label* _label )
-	: exp( _exp ), label( _label )
+IRTree::IRTSJump::IRTSJump( const Label* _label ) : label( _label )
 {
-}
-
-const IRTree::IRTExpression* IRTree::IRTSJump::GetExp() const
-{
-	return exp;
 }
 
 const IRTree::Label* IRTree::IRTSJump::GetLabel() const

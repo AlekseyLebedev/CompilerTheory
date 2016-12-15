@@ -7,9 +7,8 @@ namespace IRTree {
 	class IRTSJump : public IRTStatement {
 	public:
 		
-		IRTSJump( const IRTExpression* _exp, const Label* _label );
+		IRTSJump( const Label* _label );
 
-		const IRTExpression* GetExp() const;
 		const Label* GetLabel() const;
 
         void Accept( IRTreeVisitor* visitor ) const override;
@@ -17,7 +16,6 @@ namespace IRTree {
 		
 	private:
 
-		const IRTExpression* exp;
 		const Label* label;
 
 	};
