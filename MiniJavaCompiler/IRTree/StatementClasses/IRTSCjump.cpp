@@ -35,9 +35,3 @@ void IRTree::IRTSCjump::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }
-
-const IRTree::IRTExpList* IRTree::IRTSCjump::children() const
-{
-	//TO DO
-	return nullptr;
-}

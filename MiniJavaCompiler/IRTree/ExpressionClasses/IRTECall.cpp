@@ -19,8 +19,3 @@ void IRTree::IRTECall::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }
-
-const IRTree::IRTExpList* IRTree::IRTECall::children() const
-{
-	return new IRTExpList( func, args );
-}

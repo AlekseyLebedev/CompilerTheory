@@ -19,8 +19,3 @@ void IRTree::IRTEEseq::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }
-
-const IRTree::IRTExpList* IRTree::IRTEEseq::children() const
-{
-	return nullptr;
-}

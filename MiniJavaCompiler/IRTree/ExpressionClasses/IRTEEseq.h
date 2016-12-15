@@ -13,7 +13,6 @@ namespace IRTree {
 		const IRTExpression* GetExp() const;
 
         void Accept( IRTreeVisitor* visitor ) const override;
-        const IRTExpList* children() const override;
 		
 	private:
 

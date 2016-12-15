@@ -17,7 +17,6 @@ namespace IRTree {
 		const Label* GetLabelRight() const;
 
         void Accept( IRTreeVisitor* visitor ) const override;
-        const IRTExpList* children() const override;
 		
 	private:
 

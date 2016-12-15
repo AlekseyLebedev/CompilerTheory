@@ -13,8 +13,3 @@ void IRTree::IRTEMem::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }
-
-const IRTree::IRTExpList* IRTree::IRTEMem::children() const
-{
-	return new IRTExpList( exp, nullptr );
-}

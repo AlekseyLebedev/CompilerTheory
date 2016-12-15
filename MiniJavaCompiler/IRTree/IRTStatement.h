@@ -10,7 +10,6 @@ namespace IRTree {
 		
 		virtual ~IRTStatement() {};
 		virtual void Accept( IRTreeVisitor* visitor ) const = 0;
-		virtual const IRTExpList* children() const = 0;
 
 	};
 }

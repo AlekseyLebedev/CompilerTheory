@@ -24,8 +24,3 @@ void IRTree::IRTEBinop::Accept( IRTreeVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }
-
-const IRTree::IRTExpList* IRTree::IRTEBinop::children() const
-{
-    return new IRTExpList( left, new IRTExpList( right, nullptr ) );
-}

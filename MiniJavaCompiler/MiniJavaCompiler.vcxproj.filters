@@ -286,9 +286,6 @@
     <ClInclude Include="IRTree\IRTBuilderVisitor.h">
       <Filter>IRTree</Filter>
     </ClInclude>
-    <ClInclude Include="IRTree\IRTNode.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
