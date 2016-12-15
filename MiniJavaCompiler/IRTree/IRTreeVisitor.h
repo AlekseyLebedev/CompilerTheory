@@ -1,11 +1,17 @@
 ﻿#pragma once
 
+#include <string>
+#include <fstream>
+
 #include "IRTreeClasses.h"
 
 namespace IRTree {
 
 	class IRTreeVisitor {
     public:
+
+        IRTreeVisitor( const std::string& outputIRTFileName );
+        ~IRTreeVisitor();   
 
         virtual void Visit( const IRTExpList* node );
 
@@ -25,6 +31,13 @@ namespace IRTree {
         virtual void Visit( const IRTSCjump* node );
         virtual void Visit( const IRTSSeq* node );
         virtual void Visit( const IRTSLabel* node );
+
+    private:
+
+        void visitNode();
+        void leaveNode();
+
+        std::ofstream graphvizOutputFile;
 
 	};
 
