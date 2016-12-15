@@ -7,9 +7,13 @@ class Main{
 class A {
 
 	public int A1() {
-		B a;
-		int[] lol;
-		lol[a] = 8;
+		int[] a;
+		int b;
+		if (3<5) {
+			a[b] = 9;
+		} else {
+			a[b] = 9;
+		}
 		return 0;
 	}
 }

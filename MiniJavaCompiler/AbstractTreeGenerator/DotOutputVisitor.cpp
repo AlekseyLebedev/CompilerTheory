@@ -59,8 +59,7 @@ namespace GraphvizOutput {
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CCompoundStatement *const compoundStatement )
 	{
-		visitBinaryNode( "CompoundStatement", compoundStatement->GetLeftChild().get(),
-			compoundStatement->GetRightChild().get() );
+		visitUnaryNode( "CompoundStatement", compoundStatement->GetStatementList().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CConstructorExpression * const сonstructorExpression )

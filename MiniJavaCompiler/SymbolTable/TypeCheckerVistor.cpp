@@ -715,9 +715,13 @@ namespace SymbolTable {
 		// 5. if-while statement
 		// a. exp is boolean
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = condition->GetExpression();
+		std::shared_ptr<AbstractTreeGenerator::IStatement> stfirst = condition->GetStatementFirst();
+		std::shared_ptr<AbstractTreeGenerator::IStatement> stsecond = condition->GetStatementSecond();
 		state = LookingType;
 		lookingType = stdtype::ST_Bool;
 		exp->Accept( this );
+		stfirst->Accept( this );
+		stsecond->Accept( this );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CThisExpression * const expression )
