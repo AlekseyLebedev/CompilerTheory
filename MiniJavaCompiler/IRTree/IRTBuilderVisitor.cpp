@@ -1,73 +1,123 @@
 ﻿#include "IRTBuilderVisitor.h"
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgument* const cArgument )
-{
+{}
 
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgumentList* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CAssignmentListStatement* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CAssignmentStatement* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassDeclaration* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassDeclarationList* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassExtend* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CCompoundStatement* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConstructorExpression* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CExpressionList* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdExpression* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIndexExpression* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CLastExpressionList* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CLengthExpression* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CListConstructorExpression* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMainClass* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CNegationExpression* const )
+{}
+
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CNumberExpr* const numerExp )
+{
+    IRTEConst* root = new IRTEConst( numerExp->GetValue() );
+
+    nodesExpStack.push( root );
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgumentList* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::COperationExpression* const )
+{}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CAssignmentListStatement* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CParenExpression* const parenExpression )
+{
+    std::shared_ptr<AbstractTreeGenerator::IExpression> exp = parenExpression->GetExpression();
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CAssignmentStatement* const ) {}
+    IRTExpression* expNode = visitChild( exp.get() );
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassDeclaration* const ) {}
+    IRTEMem* root = new IRTEMem( expNode );
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassDeclarationList* const ) {}
+    nodesExpStack.push( root );
+}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassExtend* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPreconditionStatement* const )
+{}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CCompoundStatement* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPrintStatement* const )
+{}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConstructorExpression* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CProgram* const )
+{}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CExpressionList* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CStatementList* const )
+{}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdExpression* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CBasicType* const )
+{}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIndexExpression* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdType* const )
+{}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CLastExpressionList* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclaration* const )
+{}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CLengthExpression* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclarationList* const )
+{}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CListConstructorExpression* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CTrueExpression* const trueExp )
+{
+    IRTEConst* root = new IRTEConst( IRT_TRUE );
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMainClass* const ) {}
+    nodesExpStack.push( root );
+}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CFalseExpression* const falseExp )
+{
+    IRTEConst* root = new IRTEConst( IRT_FALSE );
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const ) {}
+    nodesExpStack.push( root );
+}
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CNegationExpression* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CNumberExpr* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::COperationExpression* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CParenExpression* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPreconditionStatement* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPrintStatement* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CProgram* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CStatementList* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CBasicType* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdType* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclaration* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclarationList* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CTrueExpression* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CFalseExpression* const ) {}
-
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CGetFieldExpression* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CGetFieldExpression* const )
+{}
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConditionStatement* const condStm )
 {
@@ -75,9 +125,9 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConditionStatemen
     const std::shared_ptr<AbstractTreeGenerator::IStatement> first = condStm->GetStatementFirst();
     const std::shared_ptr<AbstractTreeGenerator::IStatement> second = condStm->GetStatementSecond();
 
-    IRTExpression* expNode = visitChildExp( exp.get() );
-    IRTStatement* leftNode = visitChildStm( first.get() );
-    IRTStatement* rightNode = visitChildStm( second.get() );
+    IRTExpression* expNode = visitChild( exp.get() );
+    IRTStatement* leftNode = visitChild( first.get() );
+    IRTStatement* rightNode = visitChild( second.get() );
 
     Label* trueLabel = new Label();
     Label* falseLabel = new Label();
@@ -88,19 +138,20 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConditionStatemen
                                                 new IRTEConst( 0 ),
                                                 trueLabel,
                                                 falseLabel ),
-                                 new IRTSSeq( new IRTSSeq( new IRTSSeq( new IRTSLabel(trueLabel),
-                                     leftNode ),
+                                 new IRTSSeq( new IRTSSeq( new IRTSSeq( new IRTSLabel( trueLabel ),
+                                                                                       leftNode ),
                                                            new IRTSJump( endLabel ) ),
                                               new IRTSSeq( new IRTSSeq( new IRTSLabel( falseLabel ),
-                                                                        rightNode ),
+                                                                                       rightNode ),
                                                            new IRTSLabel( endLabel ) ) ) );
 
     nodesStmStack.push(root);
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CThisExpression* const ) {}
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CThisExpression* const )
+{}
 
-IRTree::IRTExpression* IRTree::IRTBuilderVisitor::visitChildExp( AbstractTreeGenerator::INode* const child )
+IRTree::IRTExpression* IRTree::IRTBuilderVisitor::visitChild( AbstractTreeGenerator::IExpression* const child )
 {
     if( child != nullptr ) {
         child->Accept( this );
@@ -111,7 +162,7 @@ IRTree::IRTExpression* IRTree::IRTBuilderVisitor::visitChildExp( AbstractTreeGen
     return nullptr;
 }
 
-IRTree::IRTStatement* IRTree::IRTBuilderVisitor::visitChildStm( AbstractTreeGenerator::INode* const child )
+IRTree::IRTStatement* IRTree::IRTBuilderVisitor::visitChild( AbstractTreeGenerator::IStatement* const child )
 {
     if( child != nullptr ) {
         child->Accept( this );

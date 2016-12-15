@@ -81,14 +81,14 @@ namespace IRTree {
 
         virtual void visit( AbstractTreeGenerator::CGetFieldExpression* const ) override;
 
-        virtual void visit( AbstractTreeGenerator::CConditionStatement* const condStm ) override;
+        virtual void visit( AbstractTreeGenerator::CConditionStatement* const ) override;
 
         virtual void visit( AbstractTreeGenerator::CThisExpression* const ) override;
 
     private:
 
-        IRTExpression* visitChildExp( AbstractTreeGenerator::INode* const child );
-        IRTStatement* visitChildStm( AbstractTreeGenerator::INode* const child );
+        IRTExpression* visitChild( AbstractTreeGenerator::IExpression* const child );
+        IRTStatement* visitChild( AbstractTreeGenerator::IStatement* const child );
 
         std::stack<IRTExpression*> nodesExpStack;
         std::stack<IRTStatement*> nodesStmStack;

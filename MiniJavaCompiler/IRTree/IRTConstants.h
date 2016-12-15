@@ -28,7 +28,11 @@ namespace IRTree {
         CJUMP_ULT,
         CJUMP_ULE,
         CJUMP_UGT,
-        CJUMP_UGE
+        CJUMP_UGE,
+
+        // Bool
+        IRT_TRUE,
+        IRT_FALSE
 
     };
 }
