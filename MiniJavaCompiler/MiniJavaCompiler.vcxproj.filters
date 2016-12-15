@@ -274,6 +274,21 @@
     <ClInclude Include="IRTree\IRTTemp.h">
       <Filter>IRTree</Filter>
     </ClInclude>
+    <ClInclude Include="IRTree\Translate.h">
+      <Filter>IRTree</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTExpConverter.h">
+      <Filter>IRTree</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTStmConverter.h">
+      <Filter>IRTree</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTBuilderVisitor.h">
+      <Filter>IRTree</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTNode.h">
+      <Filter>IRTree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -472,6 +487,18 @@
       <Filter>IRTree</Filter>
     </ClCompile>
     <ClCompile Include="IRTree\IRTTemp.cpp">
+      <Filter>IRTree</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTExpConverter.cpp">
+      <Filter>IRTree</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTStmConverter.cpp">
+      <Filter>IRTree</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTBuilderVisitor.cpp">
+      <Filter>IRTree</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTBuilderVisitor.cpp">
       <Filter>IRTree</Filter>
     </ClCompile>
   </ItemGroup>

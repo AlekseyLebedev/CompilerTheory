@@ -85,7 +85,6 @@ namespace IRTree {
 
     private:
 
-
         IRTNode* visitChild( AbstractTreeGenerator::INode* const child );
 
         IRTNode* returnValue;

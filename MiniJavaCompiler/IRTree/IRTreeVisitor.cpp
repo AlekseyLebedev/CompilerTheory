@@ -159,7 +159,6 @@ void IRTree::IRTreeVisitor::Visit( const IRTSJump* node )
     visitNode();
 
     nodeLables.insert( std::make_pair( currentNodeID, "JUMP" ) );
-    node->GetExp()->Accept( this );
 
     unsigned int tempNode = createNode();
     nodeLables.insert( std::make_pair( tempNode, "LABEL " + node->GetLabel()->GetName() ) );
