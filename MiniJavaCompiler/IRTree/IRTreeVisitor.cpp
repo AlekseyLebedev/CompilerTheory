@@ -1,4 +1,4 @@
-#include "IRTreeVisitor.h"
+﻿#include "IRTreeVisitor.h"
 
 const std::string SOMETEXT = "NODELABEL";
 
@@ -17,18 +17,27 @@ IRTree::IRTreeVisitor::~IRTreeVisitor()
 
 void IRTree::IRTreeVisitor::Visit( const IRTExpList* node )
 {
-    visitNode();
+    //visitNode(); - вспомогательный
 
-    // TO DO
+    const IRTExpression* head = node->GetHead();
+    const IRTExpList* tail = node->GetTail();
 
-    leaveNode();
+    if( head ) {
+        head->Accept( this );
+    }
+
+    if( tail ) {
+        tail->Accept( this );
+    }
+
+    //leaveNode(); - вспомогательный
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTEConst* node )
 {
     visitNode();
 
-    // TO DO
+    nodeLables.insert( std::make_pair( currentNodeID, "CONST " + std::to_string( node->GetValue() ) ) );
 
     leaveNode();
 }
@@ -37,7 +46,7 @@ void IRTree::IRTreeVisitor::Visit( const IRTEName* node )
 {
     visitNode();
 
-    // TO DO
+    nodeLables.insert( std::make_pair( currentNodeID, "NAME " + node->GetLabel()->GetName() ) );
 
     leaveNode();
 }
@@ -46,7 +55,7 @@ void IRTree::IRTreeVisitor::Visit( const IRTETemp* node )
 {
     visitNode();
 
-    // TO DO
+    nodeLables.insert( std::make_pair( currentNodeID, "TEMP " + node->GetTemp()->GetName() ) );
 
     leaveNode();
 }
@@ -64,7 +73,8 @@ void IRTree::IRTreeVisitor::Visit( const IRTEMem* node )
 {
     visitNode();
 
-    // TO DO
+    nodeLables.insert( std::make_pair( currentNodeID, "MEM" ) );
+    node->GetExp()->Accept( this );
 
     leaveNode();
 }
@@ -82,7 +92,11 @@ void IRTree::IRTreeVisitor::Visit( const IRTEEseq* node )
 {
     visitNode();
 
-    // TO DO
+    nodeLables.insert( std::make_pair( currentNodeID, "ESEQ" ) );
+    // left
+    node->GetStm()->Accept( this );
+    // right
+    node->GetExp()->Accept( this );
 
     leaveNode();
 }
@@ -91,7 +105,11 @@ void IRTree::IRTreeVisitor::Visit( const IRTSMove* node )
 {
     visitNode();
 
-    // TO DO
+    nodeLables.insert( std::make_pair( currentNodeID, "MOVE" ) );
+    // left
+    node->GetExrDst()->Accept( this );
+    // right
+    node->GetExrSrc()->Accept( this );
 
     leaveNode();
 }
@@ -100,7 +118,8 @@ void IRTree::IRTreeVisitor::Visit( const IRTSExp* node )
 {
     visitNode();
 
-    // TO DO
+    nodeLables.insert( std::make_pair( currentNodeID, "EXP" ) );
+    node->GetExp()->Accept( this );
 
     leaveNode();
 }
@@ -136,7 +155,7 @@ void IRTree::IRTreeVisitor::Visit( const IRTSLabel* node )
 {
     visitNode();
 
-    // TO DO
+    nodeLables.insert( std::make_pair( currentNodeID, "LABEL " + node->GetLabel()->GetName() ) );
 
     leaveNode();
 }
