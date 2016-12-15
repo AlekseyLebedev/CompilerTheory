@@ -238,7 +238,7 @@ void IRTree::IRTreeVisitor::Visit( const IRTSSeq* node )
 
     nodeLables.insert( std::make_pair( currentNodeID, "SEQ" ) );
     // left
-    node->GetStmLeft->Accept( this );
+    node->GetStmLeft()->Accept( this );
     // right
     node->GetStmRight()->Accept( this );
 
