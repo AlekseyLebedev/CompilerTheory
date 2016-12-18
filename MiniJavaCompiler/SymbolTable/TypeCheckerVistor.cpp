@@ -63,7 +63,7 @@ namespace SymbolTable {
 				assign[3] = true;
 			}
 			catch( std::exception* e ) {
-				int extend = extendClass.GetExtend();
+				extend = extendClass.GetExtend();
 			}
 			if( assign[3] ) {
 				break;
@@ -213,7 +213,7 @@ namespace SymbolTable {
 				assign[2] = true;
 			}
 			catch( std::exception* e ) {
-				int extend = extendClass.GetExtend();
+				extend = extendClass.GetExtend();
 			}
 			if( assign[2] ) {
 				break;
@@ -366,7 +366,7 @@ namespace SymbolTable {
 					assign[3] = true;
 				}
 				catch( std::exception* e ) {
-					int extend = extendClass.GetExtend();
+					extend = extendClass.GetExtend();
 				}
 				if( assign[3] ) {
 					break;
