@@ -6,9 +6,9 @@ namespace SymbolTable {
 	class CTypeCheckerVistor : public AbstractTreeGenerator::IVisitor {
 	public:
 		enum TypeCheckerState {
-			LookingType,
-			LookingGet,
-			None
+			TS_LookingType,
+			TS_LookingGet,
+			TS_None
 		} state;
 
 	private:

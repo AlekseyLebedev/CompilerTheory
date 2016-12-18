@@ -11,7 +11,7 @@ namespace SymbolTable {
 	typedef AbstractTreeGenerator::TStandardType stdtype;
 
 	CTypeCheckerVistor::CTypeCheckerVistor( CTable classes_ ) :
-		state( None ), lookingType( stdtype::ST_Void ), classes( classes_ ), methodExist( false )
+		state( TS_None ), lookingType( stdtype::ST_Void ), classes( classes_ ), methodExist( false )
 	{
 
 	}
@@ -132,9 +132,12 @@ namespace SymbolTable {
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = statement->GetExpressionSecond();
 
 		// Checking index type is int
-		state = LookingType;
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Int;
 		indexexp->Accept( this );
+		state = oldState;
 
 		// Trying getting variable type
 		CVariableInfo varinfo;
@@ -166,9 +169,11 @@ namespace SymbolTable {
 		}
 		int vartype = varinfo.GetType();
 		if( vartype == stdtype::ST_Intlist ) {
-			state = LookingType;
+			TypeCheckerState oldState = state;
+			state = TS_LookingType;
 			lookingType = stdtype::ST_Int;
 			exp->Accept( this );
+			state = oldState;
 		} else {
 			throw new CTypeException( statement->GetCol(), statement->GetRow(),
 				"Not Int list" );
@@ -228,9 +233,11 @@ namespace SymbolTable {
 		}
 
 		int vartype = varinfo.GetType();
-		state = LookingType;
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = vartype;
 		statement->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassDeclaration * const CClass )
@@ -309,7 +316,7 @@ namespace SymbolTable {
 					"Incorrect return value: no such class" );
 			} else {
 				lookingType = -4;
-				state = None;
+				state = TS_None;
 			}
 		}
 	}
@@ -323,7 +330,7 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CIdExpression * const expression )
 	{
 		int id = expression->GetName();
-		if( state != None ) {
+		if( state != TS_None ) {
 			CVariableInfo varinfo;
 			bool assign[4] = { false, false, false, false };
 			if( methodExist ) {
@@ -378,7 +385,7 @@ namespace SymbolTable {
 					"Multiple declaration" );
 			}
 
-			if( state == LookingType ) {
+			if( state == TS_LookingType ) {
 				int vartype = varinfo.GetType();
 				bool f;
 				while( vartype != lookingType ) {
@@ -390,7 +397,7 @@ namespace SymbolTable {
 						vartype = extend;
 					}
 				}
-				state = None;
+				state = TS_None;
 				lookingType = -4;
 			}
 		}
@@ -401,10 +408,13 @@ namespace SymbolTable {
 		// 10. IndexExpression
 			// a. must be int
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = expression->GetExpressionSecond();
-		state = LookingType;
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 
 		lookingType = stdtype::ST_Int;
 		exp->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CLastExpressionList * const expression )
@@ -416,16 +426,21 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CLengthExpression * const expression )
 	{
-		state = LookingType;
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 
 		lookingType = stdtype::ST_Intlist;
 		expression->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CListConstructorExpression * const expression )
 	{
-		state = LookingType;
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Int;
+		state = oldState;
 		expression->GetExpression()->Accept( this );
 	}
 
@@ -464,9 +479,11 @@ namespace SymbolTable {
 
 		// Return value type check
 		int type = method->GetType()->GetType();
-		state = LookingType;
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = type;
 		method->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CMethodDeclarationList * const methods )
@@ -477,17 +494,19 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CNegationExpression * const expression )
 	{
-		state = LookingType;
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Bool;
 		expression->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CNumberExpr * const expression )
 	{
-		if( state == LookingType ) {
+		if( state == TS_LookingType ) {
 			if( lookingType == stdtype::ST_Int ) {
 				// OK
-				state = None;
+				state = TS_None;
 				lookingType;
 			} else {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
@@ -500,26 +519,25 @@ namespace SymbolTable {
 	{
 		// checking result type
 		typedef AbstractTreeGenerator::COperationExpression::TOperationType OperationType;
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		switch( lookingType ) {
 			case stdtype::ST_Bool: {
 				switch( operation->GetOperationType() ) {
 					case OperationType::And: {
-						state = LookingType;
 						lookingType = stdtype::ST_Bool;
 						break;
 					}
 					case OperationType::Less: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Mod: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Or: {
-						state = LookingType;
 						lookingType = stdtype::ST_Bool;
 						break;
 					}
@@ -533,22 +551,18 @@ namespace SymbolTable {
 			case stdtype::ST_Int: {
 				switch( operation->GetOperationType() ) {
 					case OperationType::Plus: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Minus: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Times: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Divide: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
@@ -570,6 +584,7 @@ namespace SymbolTable {
 		operation->GetLeftOperand()->Accept( this );
 		operation->GetRightOperand()->Accept( this );
 
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CParenExpression * const expression )
@@ -582,18 +597,24 @@ namespace SymbolTable {
 	{
 		// 5. if-while statement
 			// a. exp is boolean
-		state = LookingType;
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Bool;
 		condition->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CPrintStatement * const statement )
 	{
+
+		TypeCheckerState oldState = state;
 		// 6. print statement
 			// a. exp is int
-		state = LookingType;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Int;
 		statement->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CProgram * const program )
@@ -650,10 +671,10 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CTrueExpression * const expression )
 	{
 		// Checking return value type
-		if( state == LookingType ) {
+		if( state == TS_LookingType ) {
 			if( lookingType == stdtype::ST_Bool ) {
 				// OK
-				state = None;
+				state = TS_None;
 				lookingType = -4;
 			} else {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
@@ -665,10 +686,10 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CFalseExpression * const expression )
 	{
 		// Checking return value type
-		if( state == LookingType ) {
+		if( state == TS_LookingType ) {
 			if( lookingType == stdtype::ST_Bool ) {
 				// OK
-				state = None;
+				state = TS_None;
 				lookingType = -4;
 			} else {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
@@ -696,13 +717,15 @@ namespace SymbolTable {
 					methinfo = checkMethodExists( classname, id, expression );
 				} else {
 					TypeCheckerState oldState = state;
-					state = LookingGet;
+					state = TS_LookingGet;
 					int oldLookingGet = lookingGet;
 					lookingGet = expression->GetIdExpression()->GetName();
 
 					try {
 						visitChild( expression->GetExpression().get() );
 						methinfo = returnMethodInfo;
+						state = oldState;
+						lookingGet = oldLookingGet;
 					}
 					catch( ... ) {
 						state = oldState;
@@ -717,13 +740,13 @@ namespace SymbolTable {
 			methinfo = checkGetField( varName, expression, id );
 		}
 		// Checking return value
-		if( state == LookingType ) {
+		if( state == TS_LookingType ) {
 			if( lookingType != methinfo.GetReturnType() ) {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
 					"Bad return value" );
 			}
 		}
-		if( state == TypeCheckerState::LookingGet ) {
+		if( state == TypeCheckerState::TS_LookingGet ) {
 			int type = methinfo.GetReturnType();
 			returnMethodInfo = checkMethodExists( type, lookingGet, expression );
 		}
@@ -734,7 +757,7 @@ namespace SymbolTable {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(), "Too much argumentas in method call" );
 			}
 			TypeCheckerState oldState = state;
-			state = TypeCheckerState::LookingType;
+			state = TypeCheckerState::TS_LookingType;
 			int oldLookingType = lookingType;
 			lookingType = methinfo.GetArgType( i );
 			visitChild( arg->GetExpression().get() );
@@ -754,11 +777,14 @@ namespace SymbolTable {
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = condition->GetExpression();
 		std::shared_ptr<AbstractTreeGenerator::IStatement> stfirst = condition->GetStatementFirst();
 		std::shared_ptr<AbstractTreeGenerator::IStatement> stsecond = condition->GetStatementSecond();
-		state = LookingType;
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Bool;
 		exp->Accept( this );
 		stfirst->Accept( this );
 		stsecond->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CThisExpression * const expression )
