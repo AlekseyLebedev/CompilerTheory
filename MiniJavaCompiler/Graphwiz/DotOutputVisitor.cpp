@@ -2,8 +2,7 @@
 #include <cassert>
 
 #include "DotOutputVisitor.h"
-#include "INode.h"
-#include "AllNodes.h"
+#include "..\AbstractTreeGenerator\AllNodes.h"
 
 extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 

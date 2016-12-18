@@ -1,7 +1,6 @@
 ﻿#pragma once
-#include "IVisitor.h"
-#include "AllNodes.h"
-#include "INode.h"
+#include "..\AbstractTreeGenerator\IVisitor.h"
+#include "..\AbstractTreeGenerator\AllNodes.h"
 #include <string>
 #include <fstream>
 
