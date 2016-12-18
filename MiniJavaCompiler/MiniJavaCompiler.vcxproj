@@ -195,6 +195,7 @@
     <ClInclude Include="AbstractTreeGenerator\VarDeclarationList.h" />
     <ClInclude Include="AbstractTreeGenerator\VariablesTable.h" />
     <ClInclude Include="Graphwiz\BaseDotOutput.h" />
+    <ClInclude Include="Graphwiz\IRTDotOutputVisitor.h" />
     <ClInclude Include="IRTree\ExpressionClasses\IRTEBinop.h" />
     <ClInclude Include="IRTree\ExpressionClasses\IRTECall.h" />
     <ClInclude Include="IRTree\ExpressionClasses\IRTEConst.h" />
@@ -202,6 +203,7 @@
     <ClInclude Include="IRTree\ExpressionClasses\IRTEMem.h" />
     <ClInclude Include="IRTree\ExpressionClasses\IRTEName.h" />
     <ClInclude Include="IRTree\ExpressionClasses\IRTETemp.h" />
+    <ClInclude Include="IRTree\INode.h" />
     <ClInclude Include="IRTree\IRTBuilderVisitor.h" />
     <ClInclude Include="IRTree\IRTConstants.h" />
     <ClInclude Include="IRTree\IRTExpConverter.h" />
@@ -213,6 +215,7 @@
     <ClInclude Include="IRTree\IRTStatement.h" />
     <ClInclude Include="IRTree\IRTStmConverter.h" />
     <ClInclude Include="IRTree\IRTTemp.h" />
+    <ClInclude Include="IRTree\IVisitor.h" />
     <ClInclude Include="IRTree\StatementClasses\IRTSCjump.h" />
     <ClInclude Include="IRTree\StatementClasses\IRTSExp.h" />
     <ClInclude Include="IRTree\StatementClasses\IRTSJump.h" />
@@ -270,6 +273,7 @@
     <ClCompile Include="AbstractTreeGenerator\VarDeclaration.cpp" />
     <ClCompile Include="AbstractTreeGenerator\VarDeclarationList.cpp" />
     <ClCompile Include="AbstractTreeGenerator\VariablesTable.cpp" />
+    <ClCompile Include="Graphwiz\IRTDotOutputVisitor.cpp" />
     <ClCompile Include="IRTree\ExpressionClasses\IRTEBinop.cpp" />
     <ClCompile Include="IRTree\ExpressionClasses\IRTECall.cpp" />
     <ClCompile Include="IRTree\ExpressionClasses\IRTEConst.cpp" />

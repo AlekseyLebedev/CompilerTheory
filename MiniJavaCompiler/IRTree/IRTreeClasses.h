@@ -34,8 +34,6 @@ namespace IRTree {
 
 #include "IRTreeVisitor.h"
 
-#include "IRTBuilderVisitor.h"
-
 #include "IRTConstants.h"
 
 #include "IRTExpList.h"

@@ -1,10 +1,8 @@
-#pragma once
 #include <string>
 #include <fstream>
 
 namespace GraphvizOutput {
 
-	//template <typename TVistor, typename TNode>
 	class CBaseDotOutput {
 	public:
 		CBaseDotOutput() : id( 0 )

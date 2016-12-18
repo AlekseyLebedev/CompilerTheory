@@ -7,13 +7,13 @@
 #include <utility>
 #include <map>
 
-#include "IRTreeClasses.h"
+#include "IVisitor.h"
 
 // Разобраться, как работает graphviz, а пока создадим текстовый файл.
 
 namespace IRTree {
 
-	class IRTreeVisitor {
+	class IRTreeVisitor : public IVisitor {
     public:
 
         IRTreeVisitor( const std::string& outputIRTFileName );

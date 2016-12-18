@@ -9,7 +9,7 @@ typedef AbstractTreeGenerator::INode TNode;
 
 namespace GraphvizOutput {
 
-	class CDotOutputVisitor : public AbstractTreeGenerator::IVisitor, public CBaseDotOutput/*<AbstractTreeGenerator::IVisitor, AbstractTreeGenerator::INode>*/ {
+	class CDotOutputVisitor : public AbstractTreeGenerator::IVisitor, public CBaseDotOutput {
 	public:
 		CDotOutputVisitor();
 		virtual ~CDotOutputVisitor();

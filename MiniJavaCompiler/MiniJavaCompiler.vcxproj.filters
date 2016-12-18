@@ -304,6 +304,15 @@
     <ClInclude Include="Graphwiz\BaseDotOutput.h">
       <Filter>Graphwiz\h</Filter>
     </ClInclude>
+    <ClInclude Include="IRTree\INode.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphwiz\IRTDotOutputVisitor.h">
+      <Filter>Graphwiz\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IVisitor.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -514,6 +523,9 @@
       <Filter>Graphwiz\cpp</Filter>
     </ClCompile>
     <ClCompile Include="Graphwiz\DotOutputVisitor.cpp">
+      <Filter>Graphwiz\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphwiz\IRTDotOutputVisitor.cpp">
       <Filter>Graphwiz\cpp</Filter>
     </ClCompile>
   </ItemGroup>

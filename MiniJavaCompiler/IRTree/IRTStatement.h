@@ -1,10 +1,11 @@
 #pragma once
 
+#include "INode.h"
 #include "IRTreeClasses.h"
 
 namespace IRTree {
 
-	class IRTStatement
+	class IRTStatement : public INode
     {
 	public:
 		
