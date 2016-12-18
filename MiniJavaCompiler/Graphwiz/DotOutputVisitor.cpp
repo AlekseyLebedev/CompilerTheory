@@ -2,8 +2,9 @@
 #include <cassert>
 
 #include "DotOutputVisitor.h"
-#include "INode.h"
-#include "AllNodes.h"
+#include "..\AbstractTreeGenerator\AllNodes.h"
+
+extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 
 namespace GraphvizOutput {
 
@@ -57,8 +58,7 @@ namespace GraphvizOutput {
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CCompoundStatement *const compoundStatement )
 	{
-		visitBinaryNode( "CompoundStatement", compoundStatement->GetLeftChild().get(),
-			compoundStatement->GetRightChild().get() );
+		visitUnaryNode( "CompoundStatement", compoundStatement->GetStatementList().get() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CConstructorExpression * const сonstructorExpression )
@@ -131,13 +131,13 @@ namespace GraphvizOutput {
 		enterNode( "ThisExpression" );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CBasicType * const type)
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CBasicType * const type )
 	{
 		size_t id = enterNode( "BasicType" );
-		addSubNode( id, type->GetName() );
+		addSubNode( id, type->GetValue() );
 	}
 
-	void CDotOutputVisitor::visit( AbstractTreeGenerator::CIdType * const type)
+	void CDotOutputVisitor::visit( AbstractTreeGenerator::CIdType * const type )
 	{
 		visitUnaryNode( "IdType", type->GetIdExpression().get() );
 	}
@@ -217,7 +217,8 @@ namespace GraphvizOutput {
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CIdExpression *const idExpression )
 	{
-		visitValueNode( "IdExpression", idExpression->GetName() );
+		size_t current = enterNode( "IdExpression" );
+		addSubNodeWithStringTable( current, idExpression->GetName() );
 	}
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CIndexExpression * const index )
@@ -278,9 +279,15 @@ namespace GraphvizOutput {
 		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
 	}
 
-	void CDotOutputVisitor::addSubNode( size_t id, const size_t label, const std::string& postfix )
+	void CDotOutputVisitor::addSubNode( size_t id, const int label, const std::string& postfix )
 	{
 		dotFile << "\tn" << id << postfix << "[label=\"" << label << "\"]" << std::endl;
+		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
+	}
+
+	void CDotOutputVisitor::addSubNodeWithStringTable( size_t id, const size_t label, const std::string & postfix )
+	{
+		dotFile << "\tn" << id << postfix << "[label=\"(" << label << "): '" << glabalStringTable->find( label ) << "'\"]" << std::endl;
 		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
 	}
 

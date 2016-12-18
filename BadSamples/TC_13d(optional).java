@@ -15,7 +15,7 @@ class QS{
 
     // Invoke the Initialization, Sort and Printing
     // Methods
-    public int Start(int sz){
+    private int Start(int sz){
 	int aux01 ;
 	aux01 = this.Init(sz);
 	aux01 = this.Print();
@@ -39,7 +39,7 @@ class QS{
 	int aux03 ;
 	t = 0 ;
 	if (left < right){
-	    v = number[cont01] ;
+	    v = number[right] ;
 	    i = left - 1 ;
 	    j = right ;
 	    cont01 = true ;

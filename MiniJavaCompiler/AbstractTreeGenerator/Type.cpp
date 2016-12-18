@@ -1,7 +1,12 @@
 #include "Type.h"
 
-AbstractTreeGenerator::CBasicType::CBasicType( const char * _name ) : name( _name )
+AbstractTreeGenerator::CBasicType::CBasicType( AbstractTreeGenerator::TStandardType value ) : value( value )
 {
+}
+
+int AbstractTreeGenerator::CBasicType::GetType() const
+{
+	return GetValue();
 }
 
 void AbstractTreeGenerator::CBasicType::Accept( IVisitor * v )
@@ -9,13 +14,18 @@ void AbstractTreeGenerator::CBasicType::Accept( IVisitor * v )
 	v->visit( this );
 }
 
-const char * AbstractTreeGenerator::CBasicType::GetName() const
+AbstractTreeGenerator::TStandardType AbstractTreeGenerator::CBasicType::GetValue() const
 {
-	return name;
+	return value;
 }
 
 AbstractTreeGenerator::CIdType::CIdType( CIdExpression * theIdExpression ) : idExpression( theIdExpression )
 {
+}
+
+int AbstractTreeGenerator::CIdType::GetType() const
+{
+	return idExpression->GetName();
 }
 
 void AbstractTreeGenerator::CIdType::Accept( IVisitor * v )

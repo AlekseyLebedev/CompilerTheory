@@ -1,6 +1,6 @@
 class QuickSort{
     public static void main(String[] a){
-	System.out.println(new QS().Start(10));
+	System.out.println(new QS().Start(10));      // HERE
     }
 }
 
@@ -15,7 +15,7 @@ class QS{
 
     // Invoke the Initialization, Sort and Printing
     // Methods
-    public int Start(int sz){
+    public QS Start(int sz){ 	// HERE
 	int aux01 ;
 	aux01 = this.Init(sz);
 	aux01 = this.Print();
@@ -23,7 +23,7 @@ class QS{
 	aux01 = size - 1 ;
 	aux01 = this.Sort(0,aux01);
 	aux01 = this.Print();
-	return 0 ;
+	return new QS();
     }
 
  
@@ -39,7 +39,7 @@ class QS{
 	int aux03 ;
 	t = 0 ;
 	if (left < right){
-	    v = number[cont01] ;
+	    v = number[right] ;
 	    i = left - 1 ;
 	    j = right ;
 	    cont01 = true ;

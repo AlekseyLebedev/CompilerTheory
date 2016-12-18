@@ -37,9 +37,9 @@ class QS{
 	boolean cont01;
 	boolean cont02;
 	int aux03 ;
-	t = 0 ;
+	Start(0) = 0 ;	// HERE
 	if (left < right){
-	    v = number[cont01] ;
+	    v = number[right] ;
 	    i = left - 1 ;
 	    j = right ;
 	    cont01 = true ;

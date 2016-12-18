@@ -36,6 +36,26 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="SymbolTable">
+      <UniqueIdentifier>{0598a9ed-f520-44fa-9ca2-e809bfc50988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SymbolTable\cpp">
+      <UniqueIdentifier>{ccd32ac9-0c51-4271-aa55-895a7eb588c3}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="SymbolTable\h">
+      <UniqueIdentifier>{c198b089-5870-4901-b5c0-367c862445e4}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Graphwiz">
+      <UniqueIdentifier>{350aff1b-b6d6-465a-b311-329e1d2844d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphwiz\h">
+      <UniqueIdentifier>{08875ac6-c1bd-4f6d-8ba2-e123900290fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphwiz\cpp">
+      <UniqueIdentifier>{0b9497f8-9b32-4d1c-8426-2d0d1f6cacc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -101,9 +121,6 @@
     <ClInclude Include="AbstractTreeGenerator\ExpressionList.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractTreeGenerator\DotOutputVisitor.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\ConstructorExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
@@ -143,9 +160,6 @@
     <ClInclude Include="AbstractTreeGenerator\IExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractTreeGenerator\GraphvizLauncher.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\VarDeclarationList.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
@@ -172,6 +186,36 @@
     </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\ConditionStatement.h">
       <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractTreeGenerator\StringTable.h">
+      <Filter>AbstractTreeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\ClassInfo.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\MethodInfo.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\VariableInfo.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\TypeCheckerVistor.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\FillTableVisitor.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\Table.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable\TypeException.h">
+      <Filter>SymbolTable\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphwiz\GraphvizLauncher.h">
+      <Filter>Graphwiz\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphwiz\DotOutputVisitor.h">
+      <Filter>Graphwiz\h</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -244,13 +288,7 @@
     <ClCompile Include="AbstractTreeGenerator\IdExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractTreeGenerator\GraphvizLauncher.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\ExpressionList.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="AbstractTreeGenerator\DotOutputVisitor.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\ConstructorExpression.cpp">
@@ -294,6 +332,39 @@
     </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\ConditionStatement.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\StringTable.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\ClassInfo.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\MethodInfo.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\VariableInfo.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\TypeCheckerVistor.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\FillTableVisitor.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\TypeException.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractTreeGenerator\INode.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable\Table.cpp">
+      <Filter>SymbolTable\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphwiz\GraphvizLauncher.cpp">
+      <Filter>Graphwiz\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphwiz\DotOutputVisitor.cpp">
+      <Filter>Graphwiz\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

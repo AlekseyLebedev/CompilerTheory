@@ -1,6 +1,6 @@
 class QuickSort{
     public static void main(String[] a){
-	System.out.println(new QS().Start(10));
+	System.out.println(new QS().Start(10, 5)); // HERE
     }
 }
 
@@ -39,7 +39,7 @@ class QS{
 	int aux03 ;
 	t = 0 ;
 	if (left < right){
-	    v = number[cont01] ;
+	    v = number[right] ;
 	    i = left - 1 ;
 	    j = right ;
 	    cont01 = true ;

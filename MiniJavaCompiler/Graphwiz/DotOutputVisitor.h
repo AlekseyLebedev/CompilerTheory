@@ -1,7 +1,6 @@
-#pragma once
-#include "IVisitor.h"
-#include "AllNodes.h"
-#include "INode.h"
+п»ї#pragma once
+#include "..\AbstractTreeGenerator\IVisitor.h"
+#include "..\AbstractTreeGenerator\AllNodes.h"
 #include <string>
 #include <fstream>
 
@@ -20,7 +19,8 @@ namespace GraphvizOutput {
 
 		size_t enterNode( const std::string & label );
 		void addSubNode( size_t id, const std::string & label, const std::string & postfix = "v" );
-		void addSubNode( size_t id, const size_t label, const std::string & postfix = "v" );
+		void addSubNode( size_t id, const int label, const std::string & postfix = "v" );
+		void addSubNodeWithStringTable( size_t id, const size_t label, const std::string & postfix = "v" );
 		void addArrow( const size_t from, const size_t to );
 		void addChild( const size_t id, AbstractTreeGenerator::INode* node );
 		void visitBinaryNode( const std::string& name, AbstractTreeGenerator::INode* left, AbstractTreeGenerator::INode* right );
@@ -32,7 +32,7 @@ namespace GraphvizOutput {
 		size_t nextId();
 
 	public:
-		// Унаследовано через IVisitor
+		// РЈРЅР°СЃР»РµРґРѕРІР°РЅРѕ С‡РµСЂРµР· IVisitor
 		virtual void visit( AbstractTreeGenerator::CArgument * const ) override;
 		virtual void visit( AbstractTreeGenerator::CArgumentList * const ) override;
 		virtual void visit( AbstractTreeGenerator::CAssignmentListStatement * const ) override;

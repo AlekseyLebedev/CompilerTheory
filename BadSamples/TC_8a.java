@@ -39,8 +39,8 @@ class QS{
 	int aux03 ;
 	t = 0 ;
 	if (left < right){
-	    v = number[cont01] ;
-	    i = left - 1 ;
+	    v = number[right] ;
+	    i = cont01 - 1 ;
 	    j = right ;
 	    cont01 = true ;
 	    while (cont01){

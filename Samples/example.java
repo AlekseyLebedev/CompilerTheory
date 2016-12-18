@@ -1,27 +1,23 @@
-class BinarySearch{
-    public static void main(String[] a){
-	System.out.println(a);
+class Main{
+    public static void main(String[] a){	
+	System.out.println(3);
     }
 }
 
-class MyVisitor extends Visitor {
+class A {
 
-    public int visit(Tree n){
-	int nti ;
+	public int A1() {
+		int[] a;
+		int b;
+		if (3<5) {
+			a[b] = 9;
+		} else {
+			a[b] = 9;
+		}
+		return 0;
+	}
+}
 
-	if (n.GetHas_Right()){
-	    r = n.GetRight() ;
-	    nti = r.accept(this) ; }
-	else nti = 0 ;
-
-	System.out.println(n.GetKey());
-
-	if (n.GetHas_Left()) {
-	    l = n.GetLeft(); 
-	    nti =l.accept(this) ; }
-	else nti = 0 ;
-
-	return 0;
-    }
+class B {
 
 }

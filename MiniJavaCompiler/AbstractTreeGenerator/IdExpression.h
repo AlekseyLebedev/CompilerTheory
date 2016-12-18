@@ -6,12 +6,12 @@ namespace AbstractTreeGenerator {
 	class CIdExpression : public IExpression
 	{
 	public:
-		CIdExpression(std::string theName);
+		CIdExpression(int theName);
 		virtual ~CIdExpression();
 		virtual void Accept(IVisitor*) override;
 
-		const std::string GetName() const;
+		const int GetName() const;
 	private:
-		std::string name;
+		int name;
 	};
 }
