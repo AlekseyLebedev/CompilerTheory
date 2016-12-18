@@ -2,7 +2,7 @@
 
 #include <stack>
 
-#include "IRTreeClasses.h"
+#include "IRTreeAllClasses.h"
 #include "Translate.h"
 
 #include "..\AbstractTreeGenerator\IVisitor.h"

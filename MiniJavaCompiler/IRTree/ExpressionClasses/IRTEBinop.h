@@ -1,6 +1,7 @@
 #pragma once
 
-#include "..\IRTreeClasses.h"
+#include "..\IRTExpression.h"
+#include "..\IRTConstants.h"
 
 namespace IRTree {
 
@@ -13,7 +14,7 @@ namespace IRTree {
 		const IRTExpression* GetLeft() const;
 		const IRTExpression* GetRight() const;
 
-        void Accept( IRTreeVisitor* visitor ) const override;
+        void Accept( IVisitor* visitor ) const override;
 		
 	private:
 

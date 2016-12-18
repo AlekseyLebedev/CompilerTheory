@@ -1,6 +1,7 @@
 #pragma once
 
-#include "..\IRTreeClasses.h"
+#include "..\IRTExpression.h"
+#include "..\IRTTemp.h"
 
 namespace IRTree {
 
@@ -11,7 +12,7 @@ namespace IRTree {
 
         const Temp* GetTemp() const;
 
-        void Accept( IRTreeVisitor* visitor ) const override;
+        void Accept( IVisitor* visitor ) const override;
 		
 	private:
 

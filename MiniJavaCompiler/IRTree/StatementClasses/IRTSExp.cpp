@@ -9,7 +9,7 @@ const IRTree::IRTExpression* IRTree::IRTSExp::GetExp() const
 	return exp;
 }
 
-void IRTree::IRTSExp::Accept( IRTreeVisitor* visitor ) const
+void IRTree::IRTSExp::Accept( IVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

@@ -14,7 +14,7 @@ const IRTree::IRTStatement* IRTree::IRTSSeq::GetStmRight() const
 	return right;
 }
 
-void IRTree::IRTSSeq::Accept( IRTreeVisitor* visitor ) const
+void IRTree::IRTSSeq::Accept( IVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

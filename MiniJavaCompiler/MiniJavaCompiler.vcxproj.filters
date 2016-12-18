@@ -259,9 +259,6 @@
     <ClInclude Include="IRTree\IRTLabel.h">
       <Filter>IRTree\h</Filter>
     </ClInclude>
-    <ClInclude Include="IRTree\IRTreeClasses.h">
-      <Filter>IRTree\h</Filter>
-    </ClInclude>
     <ClInclude Include="IRTree\IRTreeVisitor.h">
       <Filter>IRTree\h</Filter>
     </ClInclude>
@@ -311,6 +308,9 @@
       <Filter>Graphwiz\h</Filter>
     </ClInclude>
     <ClInclude Include="IRTree\IVisitor.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTreeAllClasses.h">
       <Filter>IRTree\h</Filter>
     </ClInclude>
   </ItemGroup>

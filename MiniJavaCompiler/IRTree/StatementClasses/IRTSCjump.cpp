@@ -31,7 +31,7 @@ const IRTree::Label* IRTree::IRTSCjump::GetLabelRight() const
 	return labelRight;
 }
 
-void IRTree::IRTSCjump::Accept( IRTreeVisitor* visitor ) const
+void IRTree::IRTSCjump::Accept( IVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

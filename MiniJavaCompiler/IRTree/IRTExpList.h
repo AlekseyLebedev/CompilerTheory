@@ -1,10 +1,10 @@
 #pragma once
 
-#include "IRTreeClasses.h"
+#include "IRTExpression.h"
 
 namespace IRTree {
 
-    class IRTExpList
+    class IRTExpList : public IRTExpression
     {
     public:
 
@@ -13,7 +13,7 @@ namespace IRTree {
         const IRTExpression* GetHead() const;
         const IRTExpList* GetTail() const;
 
-        void Accept( IRTreeVisitor* visitor ) const;
+        void Accept( IVisitor* visitor ) const;
 
     private:
 

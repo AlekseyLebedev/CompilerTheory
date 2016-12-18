@@ -1,9 +1,27 @@
 #pragma once
-#include "INode.h"
-
-#include "IRTreeClasses.h"
 
 namespace IRTree {
+	class IRTExpList;
+
+	// Expressions
+	class IRTExpression;
+	class IRTEConst;
+	class IRTEName;
+	class IRTETemp;
+	class IRTEBinop;
+	class IRTEMem;
+	class IRTECall;
+	class IRTEEseq;
+
+	// Statements
+	class IRTStatement;
+	class IRTSMove;
+	class IRTSExp;
+	class IRTSJump;
+	class IRTSCjump;
+	class IRTSSeq;
+	class IRTSLabel;
+
 	class IVisitor {
 	public:
 		virtual void Visit( const IRTExpList* node ) = 0;

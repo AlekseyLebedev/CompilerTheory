@@ -15,7 +15,7 @@ const IRTree::IRTExpression* IRTree::IRTEEseq::GetExp() const
 	return exp;
 }
 
-void IRTree::IRTEEseq::Accept( IRTreeVisitor* visitor ) const
+void IRTree::IRTEEseq::Accept( IVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

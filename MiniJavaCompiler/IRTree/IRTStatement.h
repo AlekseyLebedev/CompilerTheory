@@ -1,7 +1,6 @@
 #pragma once
 
 #include "INode.h"
-#include "IRTreeClasses.h"
 
 namespace IRTree {
 
@@ -10,7 +9,7 @@ namespace IRTree {
 	public:
 		
 		virtual ~IRTStatement() {};
-		virtual void Accept( IRTreeVisitor* visitor ) const = 0;
+		virtual void Accept( IVisitor* visitor ) const = 0;
 
 	};
 }

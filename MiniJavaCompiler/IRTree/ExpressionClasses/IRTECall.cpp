@@ -15,7 +15,7 @@ const IRTree::IRTExpList* IRTree::IRTECall::GetArgs() const
 	return args;
 }
 
-void IRTree::IRTECall::Accept( IRTreeVisitor* visitor ) const
+void IRTree::IRTECall::Accept( IVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

@@ -210,7 +210,7 @@
     <ClInclude Include="IRTree\IRTExpList.h" />
     <ClInclude Include="IRTree\IRTExpression.h" />
     <ClInclude Include="IRTree\IRTLabel.h" />
-    <ClInclude Include="IRTree\IRTreeClasses.h" />
+    <ClInclude Include="IRTree\IRTreeAllClasses.h" />
     <ClInclude Include="IRTree\IRTreeVisitor.h" />
     <ClInclude Include="IRTree\IRTStatement.h" />
     <ClInclude Include="IRTree\IRTStmConverter.h" />

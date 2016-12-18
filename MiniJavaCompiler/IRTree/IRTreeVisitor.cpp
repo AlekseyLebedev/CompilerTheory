@@ -1,4 +1,5 @@
 ﻿#include "IRTreeVisitor.h"
+#include "IRTreeAllClasses.h"
 
 const std::string SOMETEXT = "NODELABEL";
 

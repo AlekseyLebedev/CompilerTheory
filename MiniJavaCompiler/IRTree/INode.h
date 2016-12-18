@@ -1,9 +1,10 @@
 #pragma once
+
+#include "IVisitor.h"
+
 namespace IRTree {
-	class IRTreeVisitor;
-	
 	class INode {
 	public:
-		virtual void Accept( IRTreeVisitor* visitor ) const = 0;
+		virtual void Accept( IVisitor* visitor ) const = 0;
 	};
 }

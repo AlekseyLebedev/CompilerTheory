@@ -15,7 +15,7 @@ const IRTree::IRTExpression* IRTree::IRTSMove::GetExrSrc() const
 	return src;
 }
 
-void IRTree::IRTSMove::Accept( IRTreeVisitor* visitor ) const
+void IRTree::IRTSMove::Accept( IVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

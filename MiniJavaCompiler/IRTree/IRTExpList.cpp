@@ -14,7 +14,7 @@ const IRTree::IRTExpList* IRTree::IRTExpList::GetTail() const
     return tail;
 }
 
-void IRTree::IRTExpList::Accept( IRTreeVisitor* visitor ) const
+void IRTree::IRTExpList::Accept( IVisitor* visitor ) const
 {
     visitor->Visit( this );
 }

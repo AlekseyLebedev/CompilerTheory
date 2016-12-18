@@ -1,5 +1,7 @@
 #pragma once
 #include "..\IRTree\IRTreeVisitor.h"
+#include "..\IRTree\INode.h"
+#include "..\IRTree\IRTreeAllClasses.h"
 
 typedef IRTree::IRTreeVisitor TVisitor;
 typedef IRTree::INode TNode;

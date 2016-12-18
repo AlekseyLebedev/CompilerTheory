@@ -20,7 +20,7 @@ const IRTree::IRTExpression* IRTree::IRTEBinop::GetRight() const
 	return right;
 }
 
-void IRTree::IRTEBinop::Accept( IRTreeVisitor* visitor ) const 
+void IRTree::IRTEBinop::Accept( IVisitor* visitor ) const 
 {
 	visitor->Visit( this );
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\IRTreeClasses.h"
+#include "..\IRTStatement.h"
 
 namespace IRTree {
 
@@ -12,7 +12,7 @@ namespace IRTree {
 		const IRTExpression* GetExrDst() const;
 		const IRTExpression* GetExrSrc() const;
 
-        void Accept( IRTreeVisitor* visitor ) const override;
+        void Accept( IVisitor* visitor ) const override;
 		
 	private:
 

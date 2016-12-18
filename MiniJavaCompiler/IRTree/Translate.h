@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IRTreeClasses.h"
+#include "IRTreeAllClasses.h"
 
 namespace Translate {
 
