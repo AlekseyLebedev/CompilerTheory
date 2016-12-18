@@ -1,4 +1,4 @@
 @for /r %%i in (BadSamples\*) do @(
 		@echo %%i
-		@x64\Debug\MiniJavaCompiler.exe %%i > Outputs\%%~ni.txt
+		@x64\Release\MiniJavaCompiler.exe %%i > Outputs\%%~ni.txt
 	)
