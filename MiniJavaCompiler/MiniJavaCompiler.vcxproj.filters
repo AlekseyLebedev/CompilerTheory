@@ -47,16 +47,14 @@
       <UniqueIdentifier>{c198b089-5870-4901-b5c0-367c862445e4}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-	 <Filter Include="Graphwiz">
-      <UniqueIdentifier>{350aff1b-b6d6-465a-b311-329e1d2844d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphwiz\h">
-      <UniqueIdentifier>{08875ac6-c1bd-4f6d-8ba2-e123900290fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphwiz\cpp">
-      <UniqueIdentifier>{0b9497f8-9b32-4d1c-8426-2d0d1f6cacc7}</UniqueIdentifier>
-    </Filter> <Filter Include="IRTree">
+    <Filter Include="IRTree">
       <UniqueIdentifier>{9bf865d7-60d3-47fc-8179-04ff6e85acbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IRTree\h">
+      <UniqueIdentifier>{4786d84f-8fb7-4351-a8a0-bc7c273a4174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IRTree\cpp">
+      <UniqueIdentifier>{a9995e68-6bc3-440b-adee-4a3369abc334}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -213,86 +211,86 @@
     <ClInclude Include="SymbolTable\TypeException.h">
       <Filter>SymbolTable\h</Filter>
     </ClInclude>
-    <ClInclude Include="IRTree\IRTConstants.h">
-      <Filter>IRTree</Filter>
+    <ClInclude Include="Graphwiz\DotOutputVisitor.h">
+      <Filter>Global h</Filter>
     </ClInclude>
-    <ClInclude Include="IRTree\IRTExpression.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\IRTreeVisitor.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\IRTStatement.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\StatementClasses\IRTSCjump.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\StatementClasses\IRTSExp.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\StatementClasses\IRTSJump.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\StatementClasses\IRTSLabel.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\StatementClasses\IRTSMove.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\StatementClasses\IRTSSeq.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\ExpressionClasses\IRTEBinop.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\ExpressionClasses\IRTECall.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\ExpressionClasses\IRTEConst.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\ExpressionClasses\IRTEEseq.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\ExpressionClasses\IRTEMem.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\ExpressionClasses\IRTEName.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\ExpressionClasses\IRTETemp.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\IRTExpList.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\IRTLabel.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\IRTreeClasses.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\IRTTemp.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\Translate.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\IRTExpConverter.h">
-      <Filter>IRTree</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTree\IRTStmConverter.h">
-      <Filter>IRTree</Filter>
+    <ClInclude Include="Graphwiz\GraphvizLauncher.h">
+      <Filter>Global h</Filter>
     </ClInclude>
     <ClInclude Include="IRTree\IRTBuilderVisitor.h">
-      <Filter>IRTree</Filter>
+      <Filter>IRTree\h</Filter>
     </ClInclude>
-	 <ClInclude Include="Graphwiz\GraphvizLauncher.h">
-      <Filter>Graphwiz\h</Filter>
+    <ClInclude Include="IRTree\IRTConstants.h">
+      <Filter>IRTree\h</Filter>
     </ClInclude>
-    <ClInclude Include="Graphwiz\DotOutputVisitor.h">
-      <Filter>Graphwiz\h</Filter>
+    <ClInclude Include="IRTree\ExpressionClasses\IRTEBinop.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\ExpressionClasses\IRTECall.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\ExpressionClasses\IRTEConst.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\ExpressionClasses\IRTEEseq.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\ExpressionClasses\IRTEMem.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\ExpressionClasses\IRTEName.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\ExpressionClasses\IRTETemp.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTExpConverter.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTExpList.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTExpression.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTLabel.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTreeClasses.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTreeVisitor.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\StatementClasses\IRTSCjump.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\StatementClasses\IRTSExp.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\StatementClasses\IRTSJump.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\StatementClasses\IRTSLabel.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\StatementClasses\IRTSMove.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\StatementClasses\IRTSSeq.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTStatement.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTStmConverter.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\IRTTemp.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTree\Translate.h">
+      <Filter>IRTree\h</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -437,74 +435,74 @@
     <ClCompile Include="SymbolTable\Table.cpp">
       <Filter>SymbolTable\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="IRTree\StatementClasses\IRTSCjump.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\StatementClasses\IRTSExp.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\StatementClasses\IRTSJump.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\StatementClasses\IRTSLabel.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\StatementClasses\IRTSMove.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\StatementClasses\IRTSSeq.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\ExpressionClasses\IRTEBinop.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\ExpressionClasses\IRTECall.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\ExpressionClasses\IRTEConst.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\ExpressionClasses\IRTEEseq.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\ExpressionClasses\IRTEMem.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\ExpressionClasses\IRTEName.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\ExpressionClasses\IRTETemp.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\IRTExpList.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\IRTreeVisitor.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\IRTLabel.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\IRTTemp.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\IRTExpConverter.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\IRTStmConverter.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
     <ClCompile Include="IRTree\IRTBuilderVisitor.cpp">
       <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\IRTBuilderVisitor.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-	<ClCompile Include="Graphwiz\GraphvizLauncher.cpp">
-      <Filter>Graphwiz\cpp</Filter>
     </ClCompile>
     <ClCompile Include="Graphwiz\DotOutputVisitor.cpp">
-      <Filter>Graphwiz\cpp</Filter>
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphwiz\GraphvizLauncher.cpp">
+      <Filter>AbstractTreeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTBuilderVisitor.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\ExpressionClasses\IRTEBinop.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\ExpressionClasses\IRTECall.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\ExpressionClasses\IRTEConst.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\ExpressionClasses\IRTEEseq.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\ExpressionClasses\IRTEMem.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\ExpressionClasses\IRTEName.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\ExpressionClasses\IRTETemp.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTExpConverter.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTExpList.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTLabel.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTreeVisitor.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\StatementClasses\IRTSCjump.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\StatementClasses\IRTSJump.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\StatementClasses\IRTSExp.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\StatementClasses\IRTSLabel.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\StatementClasses\IRTSMove.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\StatementClasses\IRTSSeq.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTStmConverter.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTTemp.cpp">
+      <Filter>IRTree\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
