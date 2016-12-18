@@ -13,6 +13,7 @@ namespace SymbolTable {
 	CTypeCheckerVistor::CTypeCheckerVistor( CTable classes_ ) :
 		state( None ), lookingType( stdtype::ST_Void ), classes( classes_ ), methodExist( false )
 	{
+
 	}
 
 
@@ -26,6 +27,64 @@ namespace SymbolTable {
 		if( node != 0 ) {
 			node->Accept( this );
 		}
+	}
+
+	CMethodInfo CTypeCheckerVistor::checkGetField( int varName, AbstractTreeGenerator::CGetFieldExpression * const expression, int id )
+	{
+		CVariableInfo varinfo;
+		bool assign[4] = { false, false, false, false };
+		try {
+			varinfo = currentMethod.GetVarInfo( varName, expression );
+			assign[0] = true;
+		}
+		catch( ... ) {
+
+		}
+		try {
+			varinfo = currentMethod.GetArgInfo( varName, expression );
+			assign[1] = true;
+		}
+		catch( ... ) {
+
+		}
+		try {
+			varinfo = currentClass.GetVarInfo( varName, expression );
+			assign[2] = true;
+		}
+		catch( ... ) {
+
+		}
+
+		int extend = currentClass.GetExtend();
+		while( extend != CClassInfo::NothingExtend ) {
+			CClassInfo extendClass = classes.GetClassInfo( extend, expression );
+			try {
+				varinfo = extendClass.GetVarInfo( id, expression );
+				assign[3] = true;
+			}
+			catch( std::exception* e ) {
+				int extend = extendClass.GetExtend();
+			}
+			if( assign[3] ) {
+				break;
+			}
+		}
+
+
+		int sum = 0;
+		for( int i = 0; i < 4; i++ ) {
+			sum += assign[i];
+		}
+		if( sum == 0 ) {
+			throw new CTypeException( expression->GetCol(), expression->GetRow(),
+				"No such variable" );
+		} else if( sum > 1 ) {
+			throw new CTypeException( expression->GetCol(), expression->GetRow(),
+				"Multiple declaration" );
+		}
+		int type = varinfo.GetType();
+		CClassInfo cl = classes.GetClassInfo( type, expression );
+		return cl.GetMethodInfo( id, expression );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CArgument * const argument )
@@ -313,12 +372,12 @@ namespace SymbolTable {
 						throw new CTypeException( expression->GetCol(), expression->GetRow(),
 							"Incorrect return value" );
 					} else {
-						vartype = extend;						
+						vartype = extend;
 					}
 				}
 				state = None;
 				lookingType = -4;
-			} 
+			}
 		}
 	}
 
@@ -607,81 +666,43 @@ namespace SymbolTable {
 	{
 		int id = expression->GetIdExpression()->GetName();
 		CMethodInfo methinfo;
-		std::shared_ptr<AbstractTreeGenerator::CIdExpression> var
+		std::shared_ptr<AbstractTreeGenerator::CIdExpression> idVar
 			= std::dynamic_pointer_cast<AbstractTreeGenerator::CIdExpression>(expression->GetExpression());
-		if( var == nullptr ) {
-			std::shared_ptr<AbstractTreeGenerator::CThisExpression> var1
+		if( idVar == nullptr ) {
+			std::shared_ptr<AbstractTreeGenerator::CThisExpression> thisVar
 				= std::dynamic_pointer_cast<AbstractTreeGenerator::CThisExpression>(expression->GetExpression());
-			if( var1 ) {
+			if( thisVar ) {
 				methinfo = currentClass.GetMethodInfo( id, expression );
 			} else {
-				std::shared_ptr<AbstractTreeGenerator::CConstructorExpression> var2
+				std::shared_ptr<AbstractTreeGenerator::CConstructorExpression> ctorVar
 					= std::dynamic_pointer_cast<AbstractTreeGenerator::CConstructorExpression>(expression->GetExpression());
-				if( var2 == nullptr ) {
-					throw new CTypeException( expression->GetCol(), expression->GetRow(),
-						"It's not callable" );
+				if( ctorVar != 0 ) {
+					int clasname = ctorVar->GetIdExpression()->GetName();
+					CClassInfo cl = classes.GetClassInfo( clasname, expression );
+					methinfo = cl.GetMethodInfo( id, expression );
+				} else {
+
+					TypeCheckerState oldState = state;
+					state == LookingGet;
+					int oldLookingGet = lookingGet;
+					lookingGet = expression->GetIdExpression()->GetName();
+
+					try {
+						visitChild( expression->GetExpression().get() );
+					}
+					catch( ... ) {
+						state = oldState;
+						lookingGet = oldLookingGet;
+						throw;
+					}
+					//throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					//	"It's not callable" );
 				}
-				int clasname = var2->GetIdExpression()->GetName();
-				CClassInfo cl = classes.GetClassInfo( clasname, expression );
-				methinfo = cl.GetMethodInfo( id, expression );
+
 			}
 		} else {
-			int	var_name = var->GetName();
-			//CVariableInfo varinfo = currentMethod.GetVarInfo( var_name, expression );
-			CVariableInfo varinfo;
-			bool assign[4] = { false, false, false, false };
-			try {
-				varinfo = currentMethod.GetVarInfo( var_name, expression );
-				assign[0] = true;
-			}
-			catch( ... ) {
-
-			}
-			try {
-				varinfo = currentMethod.GetArgInfo( var_name, expression );
-				assign[1] = true;
-			}
-			catch( ... ) {
-
-			}
-			try {
-				varinfo = currentClass.GetVarInfo( var_name, expression );
-				assign[2] = true;
-			}
-			catch( ... ) {
-
-			}
-
-			int extend = currentClass.GetExtend();
-			while( extend != CClassInfo::NothingExtend ) {
-				CClassInfo extendClass = classes.GetClassInfo( extend, expression );
-				try {
-					varinfo = extendClass.GetVarInfo( id, expression );
-					assign[3] = true;
-				}
-				catch( std::exception* e ) {
-					int extend = extendClass.GetExtend();
-				}
-				if( assign[3] ) {
-					break;
-				}
-			}
-
-
-			int sum = 0;
-			for( int i = 0; i < 4; i++ ) {
-				sum += assign[i];
-			}
-			if( sum == 0 ) {
-				throw new CTypeException( expression->GetCol(), expression->GetRow(),
-					"No such variable" );
-			} else if( sum > 1 ) {
-				throw new CTypeException( expression->GetCol(), expression->GetRow(),
-					"Multiple declaration" );
-			}
-			int type = varinfo.GetType();
-			CClassInfo cl = classes.GetClassInfo( type, expression );
-			methinfo = cl.GetMethodInfo( id, expression );
+			int	varName = idVar->GetName();
+			methinfo = checkGetField( varName, expression, id );
 		}
 		// Checking return value
 		if( state == LookingType ) {
@@ -689,6 +710,9 @@ namespace SymbolTable {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
 					"Bad return value" );
 			}
+		}
+		if( state == lookingGet ) {
+
 		}
 		int i = 0;
 
