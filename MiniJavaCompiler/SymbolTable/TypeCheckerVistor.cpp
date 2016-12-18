@@ -29,7 +29,7 @@ namespace SymbolTable {
 		}
 	}
 
-	CMethodInfo CTypeCheckerVistor::checkGetField( int varName, AbstractTreeGenerator::CGetFieldExpression * const expression, int id )
+	CMethodInfo CTypeCheckerVistor::checkGetField( int varName, AbstractTreeGenerator::IExpression * const expression, int id )
 	{
 		CVariableInfo varinfo;
 		bool assign[4] = { false, false, false, false };
@@ -85,6 +85,21 @@ namespace SymbolTable {
 		int type = varinfo.GetType();
 		CClassInfo cl = classes.GetClassInfo( type, expression );
 		return cl.GetMethodInfo( id, expression );
+	}
+
+	CMethodInfo CTypeCheckerVistor::checkMethodExists( int classname, int id, const AbstractTreeGenerator::IExpression* expression )
+	{
+		int currentClass = classname;
+		while( currentClass != CClassInfo::NothingExtend ) {
+			CClassInfo cl = classes.GetClassInfo( currentClass, expression );
+			try {
+				return cl.GetMethodInfo( id, expression );
+			}
+			catch( ... ) {
+				currentClass = cl.GetExtend();
+			}
+		}
+		throw new CTypeException( expression->GetCol(), expression->GetRow(), "Method doesn't exist." );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CArgument * const argument )
@@ -677,26 +692,23 @@ namespace SymbolTable {
 				std::shared_ptr<AbstractTreeGenerator::CConstructorExpression> ctorVar
 					= std::dynamic_pointer_cast<AbstractTreeGenerator::CConstructorExpression>(expression->GetExpression());
 				if( ctorVar != 0 ) {
-					int clasname = ctorVar->GetIdExpression()->GetName();
-					CClassInfo cl = classes.GetClassInfo( clasname, expression );
-					methinfo = cl.GetMethodInfo( id, expression );
+					int classname = ctorVar->GetIdExpression()->GetName();
+					methinfo = checkMethodExists( classname, id, expression );
 				} else {
-
 					TypeCheckerState oldState = state;
-					state == LookingGet;
+					state = LookingGet;
 					int oldLookingGet = lookingGet;
 					lookingGet = expression->GetIdExpression()->GetName();
 
 					try {
 						visitChild( expression->GetExpression().get() );
+						methinfo = returnMethodInfo;
 					}
 					catch( ... ) {
 						state = oldState;
 						lookingGet = oldLookingGet;
 						throw;
 					}
-					//throw new CTypeException( expression->GetCol(), expression->GetRow(),
-					//	"It's not callable" );
 				}
 
 			}
@@ -711,8 +723,9 @@ namespace SymbolTable {
 					"Bad return value" );
 			}
 		}
-		if( state == lookingGet ) {
-
+		if( state == TypeCheckerState::LookingGet ) {
+			int type = methinfo.GetReturnType();
+			returnMethodInfo = checkMethodExists( type, lookingGet, expression );
 		}
 		int i = 0;
 
