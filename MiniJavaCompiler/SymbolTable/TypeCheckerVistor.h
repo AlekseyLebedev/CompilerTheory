@@ -5,23 +5,29 @@
 namespace SymbolTable {
 	class CTypeCheckerVistor : public AbstractTreeGenerator::IVisitor {
 	public:
-
 		enum TypeCheckerState {
-			LookingType,
-			None
+			TS_LookingType,
+			TS_LookingGet,
+			TS_None
 		} state;
 
 	private:
 		int lookingType;
 		bool methodExist;
 		CClassInfo currentClass;
+		int currentClassId;
 		CMethodInfo currentMethod;
 		void visitChild( AbstractTreeGenerator::INode * node );
+		CMethodInfo checkGetField( int varName, AbstractTreeGenerator::IExpression * const expression, int id );
+		CMethodInfo checkMethodExists( int classname, int id, const AbstractTreeGenerator::IExpression * expression );
 		CTable classes;
+		int lookingGet;
+		CMethodInfo returnMethodInfo;
 
 	public:
 		CTypeCheckerVistor( CTable classes_ );
 		virtual ~CTypeCheckerVistor();
+
 
 		virtual void visit( AbstractTreeGenerator::CArgument * const ) override;
 		virtual void visit( AbstractTreeGenerator::CArgumentList * const ) override;

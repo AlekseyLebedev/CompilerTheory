@@ -1,5 +1,5 @@
 #pragma once
-#include "INode.h"
+#include "..\AbstractTreeGenerator\INode.h"
 
 namespace GraphvizOutput {
 	class CGraphvizLauncher {

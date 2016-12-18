@@ -7,7 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
-#include "AbstractTreeGenerator\GraphvizLauncher.h"
+#include "Graphwiz\GraphvizLauncher.h"
 #include "AbstractTreeGenerator\StringTable.h"
 #include <assert.h>
 #include "SymbolTable\FillTableVisitor.h"

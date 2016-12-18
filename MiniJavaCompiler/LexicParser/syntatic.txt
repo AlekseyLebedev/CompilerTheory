@@ -209,7 +209,7 @@ Statement: T_lbrace StatementList T_rbrace {
 		$$ =  new CAssignmentListStatement((CIdExpression*)$1, $3, $6);
 		//AssignmentListStatement(Identifier, Expression, Expression)
 	}
-
+	
 Expression: Expression T_and Expression {
 		$$ = new COperationExpression($1, $3, COperationExpression::TOperationType::And);
 		//OperationExpression(Expression, Expression, And)

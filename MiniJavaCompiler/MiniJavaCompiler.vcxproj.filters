@@ -47,7 +47,15 @@
       <UniqueIdentifier>{c198b089-5870-4901-b5c0-367c862445e4}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="IRTree">
+	 <Filter Include="Graphwiz">
+      <UniqueIdentifier>{350aff1b-b6d6-465a-b311-329e1d2844d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphwiz\h">
+      <UniqueIdentifier>{08875ac6-c1bd-4f6d-8ba2-e123900290fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphwiz\cpp">
+      <UniqueIdentifier>{0b9497f8-9b32-4d1c-8426-2d0d1f6cacc7}</UniqueIdentifier>
+    </Filter> <Filter Include="IRTree">
       <UniqueIdentifier>{9bf865d7-60d3-47fc-8179-04ff6e85acbd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -115,9 +123,6 @@
     <ClInclude Include="AbstractTreeGenerator\ExpressionList.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractTreeGenerator\DotOutputVisitor.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\ConstructorExpression.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
@@ -155,9 +160,6 @@
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\IExpression.h">
-      <Filter>AbstractTreeGenerator\h</Filter>
-    </ClInclude>
-    <ClInclude Include="AbstractTreeGenerator\GraphvizLauncher.h">
       <Filter>AbstractTreeGenerator\h</Filter>
     </ClInclude>
     <ClInclude Include="AbstractTreeGenerator\VarDeclarationList.h">
@@ -286,6 +288,12 @@
     <ClInclude Include="IRTree\IRTBuilderVisitor.h">
       <Filter>IRTree</Filter>
     </ClInclude>
+	 <ClInclude Include="Graphwiz\GraphvizLauncher.h">
+      <Filter>Graphwiz\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphwiz\DotOutputVisitor.h">
+      <Filter>Graphwiz\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -357,13 +365,7 @@
     <ClCompile Include="AbstractTreeGenerator\IdExpression.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractTreeGenerator\GraphvizLauncher.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\ExpressionList.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="AbstractTreeGenerator\DotOutputVisitor.cpp">
       <Filter>AbstractTreeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="AbstractTreeGenerator\ConstructorExpression.cpp">
@@ -497,6 +499,12 @@
     </ClCompile>
     <ClCompile Include="IRTree\IRTBuilderVisitor.cpp">
       <Filter>IRTree</Filter>
+    </ClCompile>
+	<ClCompile Include="Graphwiz\GraphvizLauncher.cpp">
+      <Filter>Graphwiz\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphwiz\DotOutputVisitor.cpp">
+      <Filter>Graphwiz\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

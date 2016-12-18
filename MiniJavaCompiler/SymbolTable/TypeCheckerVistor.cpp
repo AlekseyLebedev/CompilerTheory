@@ -11,8 +11,9 @@ namespace SymbolTable {
 	typedef AbstractTreeGenerator::TStandardType stdtype;
 
 	CTypeCheckerVistor::CTypeCheckerVistor( CTable classes_ ) :
-		state( None ), lookingType( stdtype::ST_Void ), classes( classes_ ), methodExist( false )
+		state( TS_None ), lookingType( stdtype::ST_Void ), classes( classes_ ), methodExist( false )
 	{
+
 	}
 
 
@@ -26,6 +27,78 @@ namespace SymbolTable {
 		if( node != 0 ) {
 			node->Accept( this );
 		}
+	}
+
+	CMethodInfo CTypeCheckerVistor::checkGetField( int varName, AbstractTreeGenerator::IExpression * const expression, int id )
+	{
+		CVariableInfo varinfo;
+		bool assign[4] = { false, false, false, false };
+		try {
+			varinfo = currentMethod.GetVarInfo( varName, expression );
+			assign[0] = true;
+		}
+		catch( ... ) {
+
+		}
+		try {
+			varinfo = currentMethod.GetArgInfo( varName, expression );
+			assign[1] = true;
+		}
+		catch( ... ) {
+
+		}
+		try {
+			varinfo = currentClass.GetVarInfo( varName, expression );
+			assign[2] = true;
+		}
+		catch( ... ) {
+
+		}
+
+		int extend = currentClass.GetExtend();
+		while( extend != CClassInfo::NothingExtend ) {
+			CClassInfo extendClass = classes.GetClassInfo( extend, expression );
+			try {
+				varinfo = extendClass.GetVarInfo( varName, expression );
+				assign[3] = true;
+			}
+			catch( std::exception* e ) {
+			}
+			if( assign[3] ) {
+				break;
+			}
+			extend = extendClass.GetExtend();
+		}
+
+
+		int sum = 0;
+		for( int i = 0; i < 4; i++ ) {
+			sum += assign[i];
+		}
+		if( sum == 0 ) {
+			throw new CTypeException( expression->GetCol(), expression->GetRow(),
+				"No such variable" );
+		} else if( sum > 1 ) {
+			throw new CTypeException( expression->GetCol(), expression->GetRow(),
+				"Multiple declaration" );
+		}
+		int type = varinfo.GetType();
+		return checkMethodExists( type, id, expression );
+	}
+
+	CMethodInfo CTypeCheckerVistor::checkMethodExists( int classname, int id, const AbstractTreeGenerator::IExpression* expression )
+	{
+		int currentClass = classname;
+		while( currentClass != CClassInfo::NothingExtend ) {
+			CClassInfo cl = classes.GetClassInfo( currentClass, expression );
+			try {
+				return cl.GetMethodInfo( id, expression );
+			}
+			catch( ... ) {
+				currentClass = cl.GetExtend();
+			}
+		}
+		throw new CTypeException( expression->GetCol(), expression->GetRow(), "Method doesn't exist." );
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CArgument * const argument )
@@ -58,9 +131,12 @@ namespace SymbolTable {
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = statement->GetExpressionSecond();
 
 		// Checking index type is int
-		state = LookingType;
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Int;
 		indexexp->Accept( this );
+		state = oldState;
 
 		// Trying getting variable type
 		CVariableInfo varinfo;
@@ -92,9 +168,11 @@ namespace SymbolTable {
 		}
 		int vartype = varinfo.GetType();
 		if( vartype == stdtype::ST_Intlist ) {
-			state = LookingType;
+			TypeCheckerState oldState = state;
+			state = TS_LookingType;
 			lookingType = stdtype::ST_Int;
 			exp->Accept( this );
+			state = oldState;
 		} else {
 			throw new CTypeException( statement->GetCol(), statement->GetRow(),
 				"Not Int list" );
@@ -108,36 +186,57 @@ namespace SymbolTable {
 			// b. both expressions have the same type
 		int id = statement->GetIdExpression()->GetName();
 		CVariableInfo varinfo;
+		bool assign[3] = { false,false, false };
 		if( methodExist ) {
-			bool assign = false;
 			try {
 				varinfo = currentMethod.GetVarInfo( id, statement );
-				assign = true;
+				assign[0] = true;
+			}
+			catch( ... ) {
+
+			}
+		}
+		try {
+			varinfo = currentClass.GetVarInfo( id, statement );
+			assign[1] = true;
+		}
+		catch( ... ) {
+
+		}
+
+		int extend = currentClass.GetExtend();
+		while( extend != CClassInfo::NothingExtend ) {
+			CClassInfo extendClass = classes.GetClassInfo( extend, statement );
+			try {
+				varinfo = extendClass.GetVarInfo( id, statement );
+				assign[2] = true;
 			}
 			catch( std::exception* e ) {
-				varinfo = currentClass.GetVarInfo( id, statement );
+				extend = extendClass.GetExtend();
 			}
-			if( assign ) {
-				bool bothassign = false;
-				try {
-					currentClass.GetVarInfo( id, statement );
-					bothassign = true;
-				}
-				catch( ... ) {
-
-				}
-				if( bothassign ) {
-					throw new CTypeException( statement->GetCol(), statement->GetRow(),
-						"Multiple definition" );
-				}
+			if( assign[2] ) {
+				break;
 			}
-		} else {
-			varinfo = currentClass.GetVarInfo( id, statement );
 		}
+
+		int sum = 0;
+		for( int i = 0; i < 3; i++ ) {
+			sum += assign[i];
+		}
+		if( sum == 0 ) {
+			throw new CTypeException( statement->GetCol(), statement->GetRow(),
+				"No such variable" );
+		} else if( sum > 1 ) {
+			throw new CTypeException( statement->GetCol(), statement->GetRow(),
+				"Multiple declaration" );
+		}
+
 		int vartype = varinfo.GetType();
-		state = LookingType;
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = vartype;
 		statement->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CClassDeclaration * const CClass )
@@ -148,6 +247,7 @@ namespace SymbolTable {
 		// maybe it's good to check in first run
 		int id = CClass->GetIdExpression()->GetName();
 		currentClass = classes.GetClassInfo( id, CClass );
+		currentClassId = id;
 		methodExist = false;
 		std::vector<CMethodInfo> methods_infos = currentClass.GetMethods();
 		if( methods_infos.size() != currentClass.GetUniqueMethodsCount() ) {
@@ -216,7 +316,7 @@ namespace SymbolTable {
 					"Incorrect return value: no such class" );
 			} else {
 				lookingType = -4;
-				state = None;
+				state = TS_None;
 			}
 		}
 	}
@@ -230,10 +330,10 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CIdExpression * const expression )
 	{
 		int id = expression->GetName();
-		if( state != None ) {
+		if( state != TS_None ) {
 			CVariableInfo varinfo;
+			bool assign[4] = { false, false, false, false };
 			if( methodExist ) {
-				bool assign[3] = { false, false, false };
 				try {
 					varinfo = currentMethod.GetVarInfo( id, expression );
 					assign[0] = true;
@@ -241,44 +341,64 @@ namespace SymbolTable {
 				catch( ... ) {
 
 				}
-				try {
-					varinfo = currentMethod.GetArgInfo( id, expression );
-					assign[1] = true;
-				}
-				catch( ... ) {
-
-				}
-				try {
-					varinfo = currentClass.GetVarInfo( id, expression );
-					assign[2] = true;
-				}
-				catch( ... ) {
-
-				}
-				int sum = 0;
-				for( int i = 0; i < 3; i++ ) {
-					sum += assign[i];
-				}
-				if( sum == 0 ) {
-					throw new CTypeException( expression->GetCol(), expression->GetRow(),
-						"No such variable" );
-				} else if( sum > 1 ) {
-					throw new CTypeException( expression->GetCol(), expression->GetRow(),
-						"Multiple declaration" );
-				}
-			} else {
-				varinfo = currentClass.GetVarInfo( id, expression );
 			}
 
-			if( state == LookingType ) {
-				int vartype = varinfo.GetType();
-				if( vartype != lookingType ) {
-					throw new CTypeException( expression->GetCol(), expression->GetRow(),
-						"Incorrect return value" );
-				} else {
-					state = None;
-					lookingType = -4;
+			try {
+				varinfo = currentMethod.GetArgInfo( id, expression );
+				assign[1] = true;
+			}
+			catch( ... ) {
+
+			}
+			try {
+				varinfo = currentClass.GetVarInfo( id, expression );
+				assign[2] = true;
+			}
+			catch( ... ) {
+
+			}
+
+			int extend = currentClass.GetExtend();
+			while( extend != CClassInfo::NothingExtend ) {
+				CClassInfo extendClass = classes.GetClassInfo( extend, expression );
+				try {
+					varinfo = extendClass.GetVarInfo( id, expression );
+					assign[3] = true;
 				}
+				catch( std::exception* e ) {
+					extend = extendClass.GetExtend();
+				}
+				if( assign[3] ) {
+					break;
+				}
+			}
+
+			int sum = 0;
+			for( int i = 0; i < 4; i++ ) {
+				sum += assign[i];
+			}
+			if( sum == 0 ) {
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"No such variable" );
+			} else if( sum > 1 ) {
+				throw new CTypeException( expression->GetCol(), expression->GetRow(),
+					"Multiple declaration" );
+			}
+
+			if( state == TS_LookingType ) {
+				int vartype = varinfo.GetType();
+				bool f;
+				while( vartype != lookingType ) {
+					int extend = classes.GetClassInfo( vartype, expression ).GetExtend();
+					if( extend == CClassInfo::NothingExtend ) {
+						throw new CTypeException( expression->GetCol(), expression->GetRow(),
+							"Incorrect return value" );
+					} else {
+						vartype = extend;
+					}
+				}
+				state = TS_None;
+				lookingType = -4;
 			}
 		}
 	}
@@ -288,10 +408,13 @@ namespace SymbolTable {
 		// 10. IndexExpression
 			// a. must be int
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = expression->GetExpressionSecond();
-		state = LookingType;
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 
 		lookingType = stdtype::ST_Int;
 		exp->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CLastExpressionList * const expression )
@@ -303,16 +426,21 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CLengthExpression * const expression )
 	{
-		state = LookingType;
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 
 		lookingType = stdtype::ST_Intlist;
 		expression->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CListConstructorExpression * const expression )
 	{
-		state = LookingType;
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Int;
+		state = oldState;
 		expression->GetExpression()->Accept( this );
 	}
 
@@ -351,9 +479,11 @@ namespace SymbolTable {
 
 		// Return value type check
 		int type = method->GetType()->GetType();
-		state = LookingType;
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = type;
 		method->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CMethodDeclarationList * const methods )
@@ -364,17 +494,19 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CNegationExpression * const expression )
 	{
-		state = LookingType;
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Bool;
 		expression->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CNumberExpr * const expression )
 	{
-		if( state == LookingType ) {
+		if( state == TS_LookingType ) {
 			if( lookingType == stdtype::ST_Int ) {
 				// OK
-				state = None;
+				state = TS_None;
 				lookingType;
 			} else {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
@@ -387,26 +519,25 @@ namespace SymbolTable {
 	{
 		// checking result type
 		typedef AbstractTreeGenerator::COperationExpression::TOperationType OperationType;
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		switch( lookingType ) {
 			case stdtype::ST_Bool: {
 				switch( operation->GetOperationType() ) {
 					case OperationType::And: {
-						state = LookingType;
 						lookingType = stdtype::ST_Bool;
 						break;
 					}
 					case OperationType::Less: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Mod: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Or: {
-						state = LookingType;
 						lookingType = stdtype::ST_Bool;
 						break;
 					}
@@ -420,22 +551,18 @@ namespace SymbolTable {
 			case stdtype::ST_Int: {
 				switch( operation->GetOperationType() ) {
 					case OperationType::Plus: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Minus: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Times: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
 					case OperationType::Divide: {
-						state = LookingType;
 						lookingType = stdtype::ST_Int;
 						break;
 					}
@@ -457,6 +584,7 @@ namespace SymbolTable {
 		operation->GetLeftOperand()->Accept( this );
 		operation->GetRightOperand()->Accept( this );
 
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CParenExpression * const expression )
@@ -469,18 +597,24 @@ namespace SymbolTable {
 	{
 		// 5. if-while statement
 			// a. exp is boolean
-		state = LookingType;
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Bool;
 		condition->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CPrintStatement * const statement )
 	{
+
+		TypeCheckerState oldState = state;
 		// 6. print statement
 			// a. exp is int
-		state = LookingType;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Int;
 		statement->GetExpression()->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CProgram * const program )
@@ -537,10 +671,10 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CTrueExpression * const expression )
 	{
 		// Checking return value type
-		if( state == LookingType ) {
+		if( state == TS_LookingType ) {
 			if( lookingType == stdtype::ST_Bool ) {
 				// OK
-				state = None;
+				state = TS_None;
 				lookingType = -4;
 			} else {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
@@ -552,10 +686,10 @@ namespace SymbolTable {
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CFalseExpression * const expression )
 	{
 		// Checking return value type
-		if( state == LookingType ) {
+		if( state == TS_LookingType ) {
 			if( lookingType == stdtype::ST_Bool ) {
 				// OK
-				state = None;
+				state = TS_None;
 				lookingType = -4;
 			} else {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
@@ -568,71 +702,53 @@ namespace SymbolTable {
 	{
 		int id = expression->GetIdExpression()->GetName();
 		CMethodInfo methinfo;
-		std::shared_ptr<AbstractTreeGenerator::CIdExpression> var
+		std::shared_ptr<AbstractTreeGenerator::CIdExpression> idVar
 			= std::dynamic_pointer_cast<AbstractTreeGenerator::CIdExpression>(expression->GetExpression());
-		if( var == nullptr ) {
-			std::shared_ptr<AbstractTreeGenerator::CThisExpression> var1
+		if( idVar == nullptr ) {
+			std::shared_ptr<AbstractTreeGenerator::CThisExpression> thisVar
 				= std::dynamic_pointer_cast<AbstractTreeGenerator::CThisExpression>(expression->GetExpression());
-			if( var1 ) {
-				methinfo = currentClass.GetMethodInfo( id, expression );
+			if( thisVar ) {
+				methinfo = checkMethodExists( currentClassId, id, expression );
 			} else {
-				std::shared_ptr<AbstractTreeGenerator::CConstructorExpression> var2
+				std::shared_ptr<AbstractTreeGenerator::CConstructorExpression> ctorVar
 					= std::dynamic_pointer_cast<AbstractTreeGenerator::CConstructorExpression>(expression->GetExpression());
-				if( var2 == nullptr ) {
-					throw new CTypeException( expression->GetCol(), expression->GetRow(),
-						"It's not callable" );
+				if( ctorVar != 0 ) {
+					int classname = ctorVar->GetIdExpression()->GetName();
+					methinfo = checkMethodExists( classname, id, expression );
+				} else {
+					TypeCheckerState oldState = state;
+					state = TS_LookingGet;
+					int oldLookingGet = lookingGet;
+					lookingGet = expression->GetIdExpression()->GetName();
+
+					try {
+						visitChild( expression->GetExpression().get() );
+						methinfo = returnMethodInfo;
+						state = oldState;
+						lookingGet = oldLookingGet;
+					}
+					catch( ... ) {
+						state = oldState;
+						lookingGet = oldLookingGet;
+						throw;
+					}
 				}
-				int clasname = var2->GetIdExpression()->GetName();
-				CClassInfo cl = classes.GetClassInfo( clasname, expression );
-				methinfo = cl.GetMethodInfo( id, expression );
+
 			}
 		} else {
-			int	var_name = var->GetName();
-			//CVariableInfo varinfo = currentMethod.GetVarInfo( var_name, expression );
-			CVariableInfo varinfo;
-			bool assign[3] = { false, false, false };
-			try {
-				varinfo = currentMethod.GetVarInfo( var_name, expression );
-				assign[0] = true;
-			}
-			catch( ... ) {
-
-			}
-			try {
-				varinfo = currentMethod.GetArgInfo( var_name, expression );
-				assign[1] = true;
-			}
-			catch( ... ) {
-
-			}
-			try {
-				varinfo = currentClass.GetVarInfo( var_name, expression );
-				assign[2] = true;
-			}
-			catch( ... ) {
-
-			}
-			int sum = 0;
-			for( int i = 0; i < 3; i++ ) {
-				sum += assign[i];
-			}
-			if( sum == 0 ) {
-				throw new CTypeException( expression->GetCol(), expression->GetRow(),
-					"No such variable" );
-			} else if( sum > 1 ) {
-				throw new CTypeException( expression->GetCol(), expression->GetRow(),
-					"Multiple declaration" );
-			}
-			int type = varinfo.GetType();
-			CClassInfo cl = classes.GetClassInfo( type, expression );
-			methinfo = cl.GetMethodInfo( id, expression );
+			int	varName = idVar->GetName();
+			methinfo = checkGetField( varName, expression, id );
 		}
 		// Checking return value
-		if( state == LookingType ) {
+		if( state == TS_LookingType ) {
 			if( lookingType != methinfo.GetReturnType() ) {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(),
 					"Bad return value" );
 			}
+		}
+		if( state == TypeCheckerState::TS_LookingGet ) {
+			int type = methinfo.GetReturnType();
+			returnMethodInfo = checkMethodExists( type, lookingGet, expression );
 		}
 		int i = 0;
 
@@ -641,7 +757,7 @@ namespace SymbolTable {
 				throw new CTypeException( expression->GetCol(), expression->GetRow(), "Too much argumentas in method call" );
 			}
 			TypeCheckerState oldState = state;
-			state = TypeCheckerState::LookingType;
+			state = TypeCheckerState::TS_LookingType;
 			int oldLookingType = lookingType;
 			lookingType = methinfo.GetArgType( i );
 			visitChild( arg->GetExpression().get() );
@@ -659,14 +775,31 @@ namespace SymbolTable {
 		// 5. if-while statement
 		// a. exp is boolean
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = condition->GetExpression();
-		state = LookingType;
+		std::shared_ptr<AbstractTreeGenerator::IStatement> stfirst = condition->GetStatementFirst();
+		std::shared_ptr<AbstractTreeGenerator::IStatement> stsecond = condition->GetStatementSecond();
+
+		TypeCheckerState oldState = state;
+		state = TS_LookingType;
 		lookingType = stdtype::ST_Bool;
 		exp->Accept( this );
+		stfirst->Accept( this );
+		stsecond->Accept( this );
+		state = oldState;
 	}
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CThisExpression * const expression )
 	{
-		//expression
-		// TODO: so complex case
+		if( state == TypeCheckerState::TS_LookingType ) {
+			int currtype = currentClassId;
+			while( currtype != CClassInfo::NothingExtend ) {
+				if( currtype == lookingType ) {
+					state == TypeCheckerState::TS_None;
+					lookingType = stdtype::ST_Void;
+					return;
+				}
+				currtype = classes.GetClassInfo( currtype, expression ).GetExtend();
+			}
+			throw new CTypeException( expression->GetCol(), expression->GetRow(), "Invalide type" );
+		}
 	}
 }
