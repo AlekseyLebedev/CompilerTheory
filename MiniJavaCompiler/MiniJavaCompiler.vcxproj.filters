@@ -56,6 +56,15 @@
     <Filter Include="IRTree\cpp">
       <UniqueIdentifier>{a9995e68-6bc3-440b-adee-4a3369abc334}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphwiz">
+      <UniqueIdentifier>{7a9a7749-5edc-4d02-bc99-d640ab4bfb4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphwiz\h">
+      <UniqueIdentifier>{fb7a5da2-51ee-49a9-9bf9-3c7f53c2dfff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphwiz\cpp">
+      <UniqueIdentifier>{e99a7503-3228-454d-ac35-46e30bad05b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -211,12 +220,6 @@
     <ClInclude Include="SymbolTable\TypeException.h">
       <Filter>SymbolTable\h</Filter>
     </ClInclude>
-    <ClInclude Include="Graphwiz\DotOutputVisitor.h">
-      <Filter>Global h</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphwiz\GraphvizLauncher.h">
-      <Filter>Global h</Filter>
-    </ClInclude>
     <ClInclude Include="IRTree\IRTBuilderVisitor.h">
       <Filter>IRTree\h</Filter>
     </ClInclude>
@@ -291,6 +294,12 @@
     </ClInclude>
     <ClInclude Include="IRTree\Translate.h">
       <Filter>IRTree\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphwiz\DotOutputVisitor.h">
+      <Filter>Graphwiz\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphwiz\GraphvizLauncher.h">
+      <Filter>Graphwiz\h</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -438,12 +447,6 @@
     <ClCompile Include="IRTree\IRTBuilderVisitor.cpp">
       <Filter>IRTree</Filter>
     </ClCompile>
-    <ClCompile Include="Graphwiz\DotOutputVisitor.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphwiz\GraphvizLauncher.cpp">
-      <Filter>AbstractTreeGenerator\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="IRTree\IRTBuilderVisitor.cpp">
       <Filter>IRTree\cpp</Filter>
     </ClCompile>
@@ -503,6 +506,12 @@
     </ClCompile>
     <ClCompile Include="IRTree\IRTTemp.cpp">
       <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphwiz\GraphvizLauncher.cpp">
+      <Filter>Graphwiz\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphwiz\DotOutputVisitor.cpp">
+      <Filter>Graphwiz\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
