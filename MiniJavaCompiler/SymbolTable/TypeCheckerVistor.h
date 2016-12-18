@@ -15,6 +15,7 @@ namespace SymbolTable {
 		int lookingType;
 		bool methodExist;
 		CClassInfo currentClass;
+		int currentClassId;
 		CMethodInfo currentMethod;
 		void visitChild( AbstractTreeGenerator::INode * node );
 		CMethodInfo checkGetField( int varName, AbstractTreeGenerator::IExpression * const expression, int id );

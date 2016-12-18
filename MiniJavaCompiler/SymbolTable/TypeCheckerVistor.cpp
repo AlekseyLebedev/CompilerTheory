@@ -59,15 +59,15 @@ namespace SymbolTable {
 		while( extend != CClassInfo::NothingExtend ) {
 			CClassInfo extendClass = classes.GetClassInfo( extend, expression );
 			try {
-				varinfo = extendClass.GetVarInfo( id, expression );
+				varinfo = extendClass.GetVarInfo( varName, expression );
 				assign[3] = true;
 			}
 			catch( std::exception* e ) {
-				extend = extendClass.GetExtend();
 			}
 			if( assign[3] ) {
 				break;
 			}
+			extend = extendClass.GetExtend();
 		}
 
 
@@ -83,8 +83,7 @@ namespace SymbolTable {
 				"Multiple declaration" );
 		}
 		int type = varinfo.GetType();
-		CClassInfo cl = classes.GetClassInfo( type, expression );
-		return cl.GetMethodInfo( id, expression );
+		return checkMethodExists( type, id, expression );
 	}
 
 	CMethodInfo CTypeCheckerVistor::checkMethodExists( int classname, int id, const AbstractTreeGenerator::IExpression* expression )
@@ -248,6 +247,7 @@ namespace SymbolTable {
 		// maybe it's good to check in first run
 		int id = CClass->GetIdExpression()->GetName();
 		currentClass = classes.GetClassInfo( id, CClass );
+		currentClassId = id;
 		methodExist = false;
 		std::vector<CMethodInfo> methods_infos = currentClass.GetMethods();
 		if( methods_infos.size() != currentClass.GetUniqueMethodsCount() ) {
@@ -708,7 +708,7 @@ namespace SymbolTable {
 			std::shared_ptr<AbstractTreeGenerator::CThisExpression> thisVar
 				= std::dynamic_pointer_cast<AbstractTreeGenerator::CThisExpression>(expression->GetExpression());
 			if( thisVar ) {
-				methinfo = currentClass.GetMethodInfo( id, expression );
+				methinfo = checkMethodExists( currentClassId, id, expression );
 			} else {
 				std::shared_ptr<AbstractTreeGenerator::CConstructorExpression> ctorVar
 					= std::dynamic_pointer_cast<AbstractTreeGenerator::CConstructorExpression>(expression->GetExpression());
@@ -789,7 +789,17 @@ namespace SymbolTable {
 
 	void CTypeCheckerVistor::visit( AbstractTreeGenerator::CThisExpression * const expression )
 	{
-		//expression
-		// TODO: so complex case
+		if( state == TypeCheckerState::TS_LookingType ) {
+			int currtype = currentClassId;
+			while( currtype != CClassInfo::NothingExtend ) {
+				if( currtype == lookingType ) {
+					state == TypeCheckerState::TS_None;
+					lookingType = stdtype::ST_Void;
+					return;
+				}
+				currtype = classes.GetClassInfo( currtype, expression ).GetExtend();
+			}
+			throw new CTypeException( expression->GetCol(), expression->GetRow(), "Invalide type" );
+		}
 	}
 }
