@@ -301,6 +301,9 @@
     <ClInclude Include="Graphwiz\GraphvizLauncher.h">
       <Filter>Graphwiz\h</Filter>
     </ClInclude>
+    <ClInclude Include="Graphwiz\BaseDotOutput.h">
+      <Filter>Graphwiz\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">

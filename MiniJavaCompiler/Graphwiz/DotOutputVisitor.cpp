@@ -8,23 +8,9 @@ extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 
 namespace GraphvizOutput {
 
-	CDotOutputVisitor::CDotOutputVisitor() : id( 0 )
+	CDotOutputVisitor::CDotOutputVisitor() 
 	{
 	}
-
-	void CDotOutputVisitor::Start( std::string filename )
-	{
-		dotFile.open( filename, std::ios_base::out | std::ios_base::trunc );
-		dotFile << "digraph G{" << std::endl;
-		id = 0;
-	}
-
-	void CDotOutputVisitor::Close()
-	{
-		dotFile << "}" << std::endl;
-		dotFile.close();
-	}
-
 
 	CDotOutputVisitor::~CDotOutputVisitor()
 	{
@@ -266,84 +252,9 @@ namespace GraphvizOutput {
 
 	}
 
-	size_t CDotOutputVisitor::enterNode( const std::string& label )
-	{
-		++id;
-		dotFile << "\tn" << id << "[label=\"" << label << "\"]" << std::endl;
-		return id;
-	}
-
-	void CDotOutputVisitor::addSubNode( size_t id, const std::string& label, const std::string& postfix )
-	{
-		dotFile << "\tn" << id << postfix << "[label=\"" << label << "\"]" << std::endl;
-		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
-	}
-
-	void CDotOutputVisitor::addSubNode( size_t id, const int label, const std::string& postfix )
-	{
-		dotFile << "\tn" << id << postfix << "[label=\"" << label << "\"]" << std::endl;
-		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
-	}
-
 	void CDotOutputVisitor::addSubNodeWithStringTable( size_t id, const size_t label, const std::string & postfix )
 	{
 		dotFile << "\tn" << id << postfix << "[label=\"(" << label << "): '" << glabalStringTable->find( label ) << "'\"]" << std::endl;
 		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
-	}
-
-	void CDotOutputVisitor::addArrow( const size_t from, const size_t to )
-	{
-		dotFile << "\tn" << from << " -> n" << to << ";" << std::endl;
-	}
-
-	void CDotOutputVisitor::addChild( const size_t id, AbstractTreeGenerator::INode * node )
-	{
-		size_t next = nextId();
-		if( node == 0 ) {
-			enterNode( "nullptr" );
-		} else {
-			node->Accept( this );
-		}
-		addArrow( id, next );
-	}
-
-	void CDotOutputVisitor::visitBinaryNode( const std::string & name, AbstractTreeGenerator::INode * left, AbstractTreeGenerator::INode * right )
-	{
-		size_t current = enterNode( name );
-		addChild( current, left );
-		addChild( current, right );
-	}
-
-	void CDotOutputVisitor::visitUnaryNode( const std::string & name, AbstractTreeGenerator::INode * children )
-	{
-		size_t current = enterNode( name );
-		addChild( current, children );
-
-	}
-
-	void CDotOutputVisitor::visitTripleNode( const std::string & name, AbstractTreeGenerator::INode * left, AbstractTreeGenerator::INode * center, AbstractTreeGenerator::INode * right )
-	{
-		size_t current = enterNode( name );
-		addChild( current, left );
-		addChild( current, center );
-		addChild( current, right );
-	}
-
-	void CDotOutputVisitor::visitValueNode( const std::string & name, const std::string & value )
-	{
-		size_t current = enterNode( name );
-		addSubNode( current, value );
-	}
-
-
-	void CDotOutputVisitor::visitValueNode( const std::string & name, const int value )
-	{
-		size_t current = enterNode( name );
-		addSubNode( current, value );
-	}
-
-	size_t CDotOutputVisitor::nextId()
-	{
-		return id + 1;
 	}
 }
