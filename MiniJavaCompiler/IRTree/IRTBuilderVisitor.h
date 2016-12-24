@@ -10,7 +10,7 @@
 #include "..\AbstractTreeGenerator\IVisitor.h"
 #include "..\AbstractTreeGenerator\AllNodes.h"
 #include "Frame.h"
-
+//#include "../SymbolTable/Table.h"
 namespace IRTree {
 
     class IRTBuilderVisitor : public AbstractTreeGenerator::IVisitor
@@ -18,7 +18,7 @@ namespace IRTree {
     public:
 
         // Унаследовано через IVisitor
-        virtual void visit( AbstractTreeGenerator::CArgument* const ) override;
+        virtual void visit( AbstractTreeGenerator::CArgument* const cArgument ) override;
 
         virtual void visit( AbstractTreeGenerator::CArgumentList* const ) override;
 
@@ -100,5 +100,7 @@ namespace IRTree {
 		CCodeFragment* code;
 		CCodeFragment* startPoint;
 		CFrame* currentFrame;
+		int currentClass;
+		//SymbolTable::CTable table;
     };
 }

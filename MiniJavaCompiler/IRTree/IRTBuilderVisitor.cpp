@@ -26,6 +26,7 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassDeclaration*
 	/*auto g = classdeclaration->GetVarDeclarationList();
 	auto j = classdeclaration->GetIdExpression();*/
 	//CCodeFragment* bufferFragment =  new CCodeFragment(visitChild(classdeclaration->))
+	currentClass = classdeclaration->GetIdExpression()->GetName();
 	visitChild( classdeclaration->GetMethodDeclarationList().get() );
 }
 
@@ -91,6 +92,7 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CListConstructorEx
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMainClass* const mainclass )
 {
+	currentClass = mainclass->GetClassName()->GetName();
 	startPoint = new CCodeFragment( visitChild( mainclass->GetStatement().get() ) );
 	code = startPoint;
 }
@@ -103,6 +105,7 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration
 				method->GetStatementList().get() ) ) );
 	code->SetNext( bufferFragment );
 	code = bufferFragment;
+	currentFrame = new CFrame(currentClass);
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const methodList )
@@ -202,12 +205,16 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdType* const )
 {
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclaration* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclaration* const variable)
 {
-}
+	int name = variable->GetIdExpression()->GetName();
+	currentFrame->InsertVariable( name, new IAccess( name ) );
+}	
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclarationList* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclarationList* const variables)
 {
+	visitChild( variables->GetVarDeclaration().get() );
+	visitChild( variables->GetVarDeclarationList().get() );
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CTrueExpression* const trueExp )

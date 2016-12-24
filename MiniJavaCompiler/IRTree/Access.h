@@ -6,7 +6,7 @@ namespace IRTree {
 	class IAccess : INode {
 	public:
 		IAccess( int name );
-		virtual void Accept( IVisitor* visitor ) override;
+		void Accept( IVisitor* visitor ) const override;
 	private:
 		int name;
 	};
