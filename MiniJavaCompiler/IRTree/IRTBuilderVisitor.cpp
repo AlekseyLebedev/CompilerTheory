@@ -74,12 +74,16 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdExpression* con
 {
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIndexExpression* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIndexExpression* const indexExp )
 {
-}
+    std::shared_ptr<AbstractTreeGenerator::IExpression> first = indexExp->GetExpressionFirst();
+    std::shared_ptr<AbstractTreeGenerator::IExpression> second = indexExp->GetExpressionSecond();
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CLastExpressionList* const )
-{
+    IRTExpression* firstNode = visitChild( first.get() );
+    IRTExpression* secondNode = visitChild( second.get() );
+
+    // ???
+    // returnedExpression = ...
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CLengthExpression* const )
@@ -220,12 +224,23 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CStatementList* co
 	returnedStatement = root;
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CBasicType* const bType )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CBasicType* const basicType )
 {
+    int type = basicType->GetType();
+    AbstractTreeGenerator::TStandardType value = basicType->GetValue();
+    // ...
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdType* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdType* const idType )
 {
+    int type = idType->GetType();
+    std::shared_ptr<AbstractTreeGenerator::IExpression> exp = idType->GetIdExpression();
+
+    IRTExpression* expNode = visitChild( exp.get() );
+
+    // ...
+    // IRTStatement* root = new IRTSExp( expNode );
+    // returnedStatement = root
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclaration* const variable)
