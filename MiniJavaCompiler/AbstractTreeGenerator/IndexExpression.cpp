@@ -2,7 +2,7 @@
 
 AbstractTreeGenerator::CIndexExpression::CIndexExpression( IExpression* theExpressionFirst,
 	IExpression* theExpressionSecond ) : 
-	epressionFirst( theExpressionFirst ), expressionSecond( theExpressionSecond )
+	expressionFirst( theExpressionFirst ), expressionSecond( theExpressionSecond )
 {
 }
 
