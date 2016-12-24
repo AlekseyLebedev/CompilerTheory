@@ -9,6 +9,7 @@
 
 #include "..\AbstractTreeGenerator\IVisitor.h"
 #include "..\AbstractTreeGenerator\AllNodes.h"
+#include "Frame.h"
 
 namespace IRTree {
 
@@ -98,6 +99,6 @@ namespace IRTree {
 		IRTStatement* returnedStatement;
 		CCodeFragment* code;
 		CCodeFragment* startPoint;
-        
+		CFrame* currentFrame;
     };
 }

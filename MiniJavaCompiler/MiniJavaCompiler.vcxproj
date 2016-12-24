@@ -196,6 +196,7 @@
     <ClInclude Include="AbstractTreeGenerator\VariablesTable.h" />
     <ClInclude Include="Graphwiz\BaseDotOutput.h" />
     <ClInclude Include="Graphwiz\IRTDotOutputVisitor.h" />
+    <ClInclude Include="IRTree\Access.h" />
     <ClInclude Include="IRTree\CodeFragment.h" />
     <ClInclude Include="IRTree\ExpressionClasses\IRTEBinop.h" />
     <ClInclude Include="IRTree\ExpressionClasses\IRTECall.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="AbstractTreeGenerator\VarDeclarationList.cpp" />
     <ClCompile Include="AbstractTreeGenerator\VariablesTable.cpp" />
     <ClCompile Include="Graphwiz\IRTDotOutputVisitor.cpp" />
+    <ClCompile Include="IRTree\Access.cpp" />
     <ClCompile Include="IRTree\CodeFragment.cpp" />
     <ClCompile Include="IRTree\ExpressionClasses\IRTEBinop.cpp" />
     <ClCompile Include="IRTree\ExpressionClasses\IRTECall.cpp" />

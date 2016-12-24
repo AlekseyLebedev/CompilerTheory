@@ -1,11 +1,15 @@
 ﻿#include "IRTBuilderVisitor.h"
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgument* const cArgument )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgument* const argument )
 {
+	int name = argument->GetIdExpression()->GetName();
+	currentFrame->InsertVariable( name, new IAccess( name ) );
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgumentList* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgumentList* const arguments)
 {
+	visitChild( arguments->GetArgument().get() );
+	visitChild( arguments->GetArgumentList().get() );
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CAssignmentListStatement* const )

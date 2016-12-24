@@ -319,6 +319,9 @@
     <ClInclude Include="IRTree\CodeFragment.h">
       <Filter>IRTree\h</Filter>
     </ClInclude>
+    <ClInclude Include="IRTree\Access.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -538,6 +541,9 @@
       <Filter>IRTree\cpp</Filter>
     </ClCompile>
     <ClCompile Include="IRTree\CodeFragment.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\Access.cpp">
       <Filter>IRTree\cpp</Filter>
     </ClCompile>
   </ItemGroup>
