@@ -457,9 +457,6 @@
       <Filter>SymbolTable\cpp</Filter>
     </ClCompile>
     <ClCompile Include="IRTree\IRTBuilderVisitor.cpp">
-      <Filter>IRTree</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTree\IRTBuilderVisitor.cpp">
       <Filter>IRTree\cpp</Filter>
     </ClCompile>
     <ClCompile Include="IRTree\ExpressionClasses\IRTEBinop.cpp">
@@ -527,6 +524,9 @@
     </ClCompile>
     <ClCompile Include="Graphwiz\IRTDotOutputVisitor.cpp">
       <Filter>Graphwiz\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\IRTBuilderVisitor.cpp">
+      <Filter>IRTree\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
