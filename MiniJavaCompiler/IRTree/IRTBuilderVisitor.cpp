@@ -35,8 +35,9 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassExtend* cons
 {
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CCompoundStatement* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CCompoundStatement* const statement )
 {
+	visitChild( statement->GetStatementList().get() );
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConstructorExpression* const )
@@ -55,13 +56,13 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CExpressionList* c
 	if( tail != nullptr ) {
 		tail->Accept( this );
 
-		IRTExpression* tailNode = nodesExpStack.top();
+		IRTExpression* tailNode = returnedExpression;
 		root = new IRTEEseq( new IRTSExp( headNode ), tailNode );
 	} else {
 		root = new IRTEEseq( new IRTSExp( headNode ), nullptr );
 	}
 
-	nodesExpStack.push( root );
+	returnedExpression = root;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdExpression* const )
@@ -86,8 +87,8 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CListConstructorEx
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMainClass* const mainclass )
 {
-	root = new CCodeFragment( visitChild( mainclass->GetStatement().get() ) );
-	code = root;
+	startPoint = new CCodeFragment( visitChild( mainclass->GetStatement().get() ) );
+	code = startPoint;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )
@@ -114,7 +115,7 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CNumberExpr* const
 {
 	IRTEConst* root = new IRTEConst( numerExp->GetValue() );
 
-	nodesExpStack.push( root );
+	returnedExpression = root;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::COperationExpression* const )
@@ -129,7 +130,7 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CParenExpression* 
 
 	IRTEMem* root = new IRTEMem( expNode );
 
-	nodesExpStack.push( root );
+	returnedExpression = root;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPreconditionStatement* const precondStm )
@@ -155,7 +156,7 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPreconditionState
 			new IRTSJump( beginLabel ) ),
 			new IRTSLabel( falseLabel ) ) );
 
-	nodesStmStack.push( root );
+	returnedStatement = root;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPrintStatement* const )
@@ -180,13 +181,13 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CStatementList* co
 	if( tail != nullptr ) {
 		tail->Accept( this );
 
-		IRTStatement* tailNode = nodesStmStack.top();
+		IRTStatement* tailNode = returnedStatement;
 		root = new IRTSSeq( headNode, tailNode );
 	} else {
 		root = new IRTSSeq( headNode, nullptr );
 	}
 
-	nodesStmStack.push( root );
+	returnedStatement = root;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CBasicType* const )
@@ -209,14 +210,14 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CTrueExpression* c
 {
 	IRTEConst* root = new IRTEConst( IRT_TRUE );
 
-	nodesExpStack.push( root );
+	returnedExpression = root;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CFalseExpression* const falseExp )
 {
 	IRTEConst* root = new IRTEConst( IRT_FALSE );
 
-	nodesExpStack.push( root );
+	returnedExpression = root;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CGetFieldExpression* const )
@@ -249,7 +250,7 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConditionStatemen
 				rightNode ),
 				new IRTSLabel( endLabel ) ) ) );
 
-	nodesStmStack.push( root );
+	returnedStatement = root;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CThisExpression* const )
@@ -267,9 +268,7 @@ IRTree::IRTExpression* IRTree::IRTBuilderVisitor::visitChild( AbstractTreeGenera
 {
 	if( child != nullptr ) {
 		child->Accept( this );
-		IRTExpression* returnedValue = nodesExpStack.top();
-		nodesExpStack.pop();
-		return returnedValue;
+		return returnedExpression;
 	}
 	return nullptr;
 }
@@ -278,9 +277,7 @@ IRTree::IRTStatement* IRTree::IRTBuilderVisitor::visitChild( AbstractTreeGenerat
 {
 	if( child != nullptr ) {
 		child->Accept( this );
-		IRTStatement* returnedValue = nodesStmStack.top();
-		nodesStmStack.pop();
-		return returnedValue;
+		return returnedStatement;
 	}
 	return nullptr;
 }

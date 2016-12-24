@@ -94,10 +94,10 @@ namespace IRTree {
         IRTExpression* visitChild( AbstractTreeGenerator::IExpression* const child );
         IRTStatement* visitChild( AbstractTreeGenerator::IStatement* const child );
 		
-        std::stack<IRTExpression*> nodesExpStack;
-        std::stack<IRTStatement*> nodesStmStack;
+		IRTExpression* returnedExpression;
+		IRTStatement* returnedStatement;
 		CCodeFragment* code;
-		CCodeFragment* root;
+		CCodeFragment* startPoint;
         
     };
 }
