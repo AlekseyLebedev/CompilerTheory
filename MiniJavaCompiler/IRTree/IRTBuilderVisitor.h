@@ -88,7 +88,6 @@ namespace IRTree {
 
         virtual void visit( AbstractTreeGenerator::CThisExpression* const ) override;
 
-
     private:
 
 		void visitChild( AbstractTreeGenerator::INode * const child );

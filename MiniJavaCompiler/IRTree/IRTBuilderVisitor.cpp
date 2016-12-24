@@ -111,8 +111,15 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration
 	visitChild( methodList->GetMethodDeclarationList().get() );
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CNegationExpression* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CNegationExpression* const negExp )
 {
+    std::shared_ptr<AbstractTreeGenerator::IExpression> exp = negExp->GetExpression();
+
+    IRTExpression* expNode = visitChild( exp.get() );
+
+    IRTStatement* root = new IRTSExp( expNode );
+
+    returnedStatement = root;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CNumberExpr* const numerExp )
@@ -122,8 +129,17 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CNumberExpr* const
 	returnedExpression = root;
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::COperationExpression* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::COperationExpression* const operExp )
 {
+    std::shared_ptr<AbstractTreeGenerator::IExpression> left = operExp->GetLeftOperand();
+    AbstractTreeGenerator::COperationExpression::TOperationType operType = operExp->GetOperationType();
+    std::shared_ptr<AbstractTreeGenerator::IExpression> right = operExp->GetRightOperand();
+
+    // operType ...
+
+    IRTExpression* leftNode = visitChild( left.get() );
+    IRTExpression* rightNode = visitChild( right.get() );
+    // ...
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CParenExpression* const parenExpression )
@@ -163,8 +179,15 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPreconditionState
 	returnedStatement = root;
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPrintStatement* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CPrintStatement* const printStm )
 {
+    std::shared_ptr<AbstractTreeGenerator::IExpression> exp = printStm->GetExpression();
+
+    IRTExpression* expNode = visitChild( exp.get() );
+
+    IRTStatement* root = new IRTSExp( expNode );
+
+    returnedStatement = root;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CProgram* const program )
@@ -194,7 +217,7 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CStatementList* co
 	returnedStatement = root;
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CBasicType* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CBasicType* const bType )
 {
 }
 
@@ -206,8 +229,13 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclaration* c
 {
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclarationList* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclarationList* const varDecList )
 {
+    std::shared_ptr<AbstractTreeGenerator::CVarDeclaration> head = varDecList->GetVarDeclaration();
+    std::shared_ptr<AbstractTreeGenerator::CVarDeclarationList> tail = varDecList->GetVarDeclarationList();
+
+    visitChild( head.get() );
+    visitChild( tail.get() );
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CTrueExpression* const trueExp )
@@ -224,8 +252,21 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CFalseExpression* 
 	returnedExpression = root;
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CGetFieldExpression* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CGetFieldExpression* const fieldExp )
 {
+    std::shared_ptr<AbstractTreeGenerator::IExpression> exp = fieldExp->GetExpression();
+    std::shared_ptr<AbstractTreeGenerator::CExpressionList> expList = fieldExp->GetExpressionList();
+    std::shared_ptr<AbstractTreeGenerator::CIdExpression> idExp =  fieldExp->GetIdExpression();
+
+    IRTExpression* expNode = visitChild( exp.get() );
+
+    IRTStatement* root = new IRTSExp( expNode );
+
+    // idExp ...
+    // expList ...
+
+    // ???
+    returnedStatement = root;
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConditionStatement* const condStm )
@@ -257,7 +298,7 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CConditionStatemen
 	returnedStatement = root;
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CThisExpression* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CThisExpression* const thisExp )
 {
 }
 
