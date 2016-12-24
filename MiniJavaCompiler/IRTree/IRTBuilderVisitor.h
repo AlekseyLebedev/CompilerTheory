@@ -1,9 +1,11 @@
 ﻿#pragma once
 
 #include <stack>
+#include <map>
 
 #include "IRTreeAllClasses.h"
 #include "Translate.h"
+#include "CodeFragment.h"
 
 #include "..\AbstractTreeGenerator\IVisitor.h"
 #include "..\AbstractTreeGenerator\AllNodes.h"
@@ -91,10 +93,11 @@ namespace IRTree {
 		void visitChild( AbstractTreeGenerator::INode * const child );
         IRTExpression* visitChild( AbstractTreeGenerator::IExpression* const child );
         IRTStatement* visitChild( AbstractTreeGenerator::IStatement* const child );
-
+		
         std::stack<IRTExpression*> nodesExpStack;
         std::stack<IRTStatement*> nodesStmStack;
-		//std::map<std::string, IRTree::IRT
+		CCodeFragment* code;
+		CCodeFragment* root;
         
     };
 }

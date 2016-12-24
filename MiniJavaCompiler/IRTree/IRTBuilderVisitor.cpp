@@ -16,12 +16,19 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CAssignmentStateme
 {
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassDeclaration* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassDeclaration* const classdeclaration )
 {
+	//CFrame* bufferFrame;
+	/*auto g = classdeclaration->GetVarDeclarationList();
+	auto j = classdeclaration->GetIdExpression();*/
+	//CCodeFragment* bufferFragment =  new CCodeFragment(visitChild(classdeclaration->))
+	visitChild( classdeclaration->GetMethodDeclarationList().get() );
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassDeclarationList* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassDeclarationList* const classlist )
 {
+	visitChild( classlist->GetClassDeclaration().get() );
+	visitChild( classlist->GetClassDeclarationList().get() );
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassExtend* const )
@@ -77,16 +84,26 @@ void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CListConstructorEx
 {
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMainClass* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMainClass* const mainclass )
 {
+	root = new CCodeFragment( visitChild( mainclass->GetStatement().get() ) );
+	code = root;
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )
 {
+	CCodeFragment* bufferFragment = new CCodeFragment(
+		visitChild(
+			new AbstractTreeGenerator::CCompoundStatement(
+				method->GetStatementList().get() ) ) );
+	code->SetNext( bufferFragment );
+	code = bufferFragment;
 }
 
-void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const )
+void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const methodList )
 {
+	visitChild( methodList->GetMethodDeclaration().get() );
+	visitChild( methodList->GetMethodDeclarationList().get() );
 }
 
 void IRTree::IRTBuilderVisitor::visit( AbstractTreeGenerator::CNegationExpression* const )
