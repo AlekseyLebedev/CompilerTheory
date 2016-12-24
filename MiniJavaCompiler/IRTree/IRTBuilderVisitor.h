@@ -18,7 +18,7 @@ namespace IRTree {
     public:
 
         // Унаследовано через IVisitor
-        virtual void visit( AbstractTreeGenerator::CArgument* const cArgument ) override;
+        virtual void visit( AbstractTreeGenerator::CArgument* const ) override;
 
         virtual void visit( AbstractTreeGenerator::CArgumentList* const ) override;
 

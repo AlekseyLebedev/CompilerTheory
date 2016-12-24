@@ -9,6 +9,7 @@ namespace IRTree {
     {
     public:
 
+        Label();
         Label( const std::string _name );
 
         const std::string GetName() const;
