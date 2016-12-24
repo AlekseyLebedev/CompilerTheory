@@ -2,7 +2,6 @@
 #include "IExpression.h"
 #include <memory>
 
-
 namespace AbstractTreeGenerator {
 	class CIndexExpression : public IExpression {
 	public:
@@ -11,10 +10,10 @@ namespace AbstractTreeGenerator {
 		virtual ~CIndexExpression();
 
 		virtual void Accept( IVisitor* ) override;
-		const std::shared_ptr<IExpression> GetEpressionFirst() const;
+		const std::shared_ptr<IExpression> GetExpressionFirst() const;
 		const std::shared_ptr<IExpression> GetExpressionSecond() const;
 	private:
-		std::shared_ptr<IExpression> epressionFirst;
+		std::shared_ptr<IExpression> expressionFirst;
 		std::shared_ptr<IExpression> expressionSecond;
 	};
 }
