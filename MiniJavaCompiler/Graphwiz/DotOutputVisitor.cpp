@@ -209,7 +209,7 @@ namespace GraphvizOutput {
 
 	void CDotOutputVisitor::visit( AbstractTreeGenerator::CIndexExpression * const index )
 	{
-		visitBinaryNode( "IndexExpression", index->GetEpressionFirst().get(),
+		visitBinaryNode( "IndexExpression", index->GetExpressionFirst().get(),
 			index->GetExpressionSecond().get() );
 	}
 
