@@ -10,6 +10,8 @@
 #include "TypeException.h"
 
 namespace SymbolTable {
+	class CTable;
+
 	// информация о классе
 	class CClassInfo {
 	public:
@@ -27,6 +29,9 @@ namespace SymbolTable {
 		int GetExtend() const;
 		void SetExtend( const int id );
 
+		// Размеры в байтах
+		int GetSize( const CTable* ) const;
+		int GetOffsetForField( const int id, const CTable* ) const;
 
 		int GetUniqueMethodsCount();
 		friend bool operator ==( CClassInfo a, CClassInfo b );
@@ -39,7 +44,12 @@ namespace SymbolTable {
 		std::map<int, CMethodInfo> methods;
 		// инфомрация о полях
 		std::map<int, CVariableInfo> variables; // возможно здесь следует ссылаться на VarDeclaration но хз
-
+		std::vector<int> allVariables; // Храним порядок в названиях
 		int extend;
+
+		static const int machineWordSize;
+		static int offset( const int size );
+		static int getSizeOfType( const int type, const CTable * table );
+		int addVairableToSize( int index, int size, const CTable * table ) const;
 	};
 }
