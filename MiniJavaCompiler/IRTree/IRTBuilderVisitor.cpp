@@ -170,15 +170,18 @@ namespace IRTree {
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )
 	{
 		// what about type of method
+		
+		Label* label = table->GetClassInfo( currentClass ).GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
+		currentFrame = new CFrame( currentClass, label );
+		returnValueType = TStdType::ST_Void;
+		visitChild( method->GetArgumentList().get() );
+		visitChild( method->GetVarDeclarationList().get() );
 		CCodeFragment* bufferFragment = new CCodeFragment(
 			visitChild(
 				new AbstractTreeGenerator::CCompoundStatement(
 					method->GetStatementList().get() ) ) );
 		codeFragment->SetNext( bufferFragment );
 		codeFragment = bufferFragment;
-		Label* label = table->GetClassInfo( currentClass ).GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
-		currentFrame = new CFrame( currentClass, label );
-		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const methodList )
@@ -219,8 +222,9 @@ namespace IRTree {
 
 		IRTExpression* leftNode = visitChild( left.get() );
 		int leftType = returnValueType;
-		IRTExpression* rightNode = visitChild( right.get() );		
-		
+		IRTExpression* rightNode = visitChild( right.get() );
+
+
 		assert( leftType == returnValueType );
 		assert( returnValueType == TStdType::ST_Int || returnValueType == TStdType::ST_Bool );
 		// returnValueType same
@@ -491,5 +495,10 @@ namespace IRTree {
 			return returnedStatement;
 		}
 		return nullptr;
+	}
+
+	CCodeFragment* IRTBuilderVisitor::GetCode()
+	{
+		return startPoint;
 	}
 }

@@ -31,7 +31,7 @@ namespace IRTree {
         virtual void Visit( const IRTEEseq* node );
 
         // Statements
-        virtual void Visit( const IRTSMove* node );
+		virtual void Visit( const IRTSMove* node );
         virtual void Visit( const IRTSExp* node );
         virtual void Visit( const IRTSJump* node );
         virtual void Visit( const IRTSCjump* node );

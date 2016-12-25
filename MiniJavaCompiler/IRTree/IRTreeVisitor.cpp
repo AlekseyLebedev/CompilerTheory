@@ -240,7 +240,8 @@ void IRTree::IRTreeVisitor::Visit( const IRTSSeq* node )
     // left
     node->GetStmLeft()->Accept( this );
     // right
-    node->GetStmRight()->Accept( this );
+	if ( node->GetStmRight() )
+		node->GetStmRight()->Accept( this );
 
     leaveNode();
 }
