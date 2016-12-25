@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 #include "..\AbstractTreeGenerator\INode.h"
-
+#include "..\IRTree\IRTLabel.h"
 
 namespace SymbolTable {
 
@@ -23,6 +23,7 @@ namespace SymbolTable {
 		int GetAllArgsCount();
 		int GetAllVarsCount();
 		int GetArgType( const int num ) const;
+		IRTree::Label* GetLabel();
 
 	private:
 		int returnType;
@@ -30,5 +31,7 @@ namespace SymbolTable {
 		std::map<int, CVariableInfo> args;
 		int varsCount;
 		std::vector<int> argsTypes;
+		IRTree::Label* label;
+		static int methodCount;
 	};
 }

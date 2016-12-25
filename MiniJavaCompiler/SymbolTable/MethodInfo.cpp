@@ -52,16 +52,30 @@ namespace SymbolTable {
 	{
 		return varsCount;
 	}
+
 	int CMethodInfo::GetAllArgsCount()
 	{
 		return argsTypes.size();
 	}
+
 	int CMethodInfo::GetAllVarsCount()
 	{
 		return vars.size();
 	}
+
 	int CMethodInfo::GetArgType( const int num ) const
 	{
 		return argsTypes[num];
 	}
+
+	IRTree::Label * CMethodInfo::GetLabel()
+	{
+		if( label = 0 ) {
+			++methodCount;
+			label = new IRTree::Label( -methodCount );
+		}
+		return label;
+	}
+
+	int CMethodInfo::methodCount = 0;
 }
