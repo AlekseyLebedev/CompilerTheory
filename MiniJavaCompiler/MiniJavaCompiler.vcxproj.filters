@@ -525,9 +525,6 @@
     <ClCompile Include="IRTree\IRTTemp.cpp">
       <Filter>IRTree\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Graphwiz\GraphvizLauncher.cpp">
-      <Filter>Graphwiz\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="Graphwiz\DotOutputVisitor.cpp">
       <Filter>Graphwiz\cpp</Filter>
     </ClCompile>

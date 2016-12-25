@@ -8,6 +8,8 @@ IRTree::IRTreeVisitor::IRTreeVisitor( const std::string& outputIRTFileName )
 	: currentNodeID( 0 ), numberOfVisitedNodes( 0 ), lastNodeID( 0 )
 {
 	graphvizOutputFile = std::ofstream( outputIRTFileName );
+	nodesStack.push( currentNodeID );
+	nodeLables.insert( std::make_pair( currentNodeID, "Frame" ) );
 }
 
 IRTree::IRTreeVisitor::~IRTreeVisitor()
@@ -248,9 +250,8 @@ void IRTree::IRTreeVisitor::Visit( const IAccess* node )
 void IRTree::IRTreeVisitor::visitNode()
 {
 	lastNodeID = currentNodeID;
-
-	nodesStack.push( currentNodeID = ++numberOfVisitedNodes );
-
+	currentNodeID = ++numberOfVisitedNodes;
+	nodesStack.push( currentNodeID );
 	addEdge( lastNodeID, currentNodeID );
 }
 
