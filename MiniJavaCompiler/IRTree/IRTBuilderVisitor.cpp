@@ -258,6 +258,7 @@ namespace IRTree {
 				assert( false );
 		}
 		IRTEBinop* root = new IRTEBinop( IRToperationType, leftNode, rightNode );
+		
 		returnedExpression = root;
 		// ...
 	}

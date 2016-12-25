@@ -78,6 +78,18 @@ namespace IRTree {
 			case BINOP_DIV:
 				nodeLables.insert( std::make_pair( currentNodeID, "DIV" ) );
 				break;
+			case BINOP_AND:
+				nodeLables.insert( std::make_pair( currentNodeID, "AND" ) );
+				break;
+			case CJUMP_LT:
+				nodeLables.insert( std::make_pair( currentNodeID, "LESS" ) );
+				break;
+			case BINOP_MOD:
+				nodeLables.insert( std::make_pair( currentNodeID, "MOD" ) );
+				break;
+			case BINOP_OR:
+				nodeLables.insert( std::make_pair( currentNodeID, "OR" ) );
+				break;
 			default:
 				assert( false );
 				break;
