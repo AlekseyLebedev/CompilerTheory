@@ -1,301 +1,282 @@
-﻿#include "IRTreeVisitor.h"
+﻿#include <cassert>
+#include "IRTreeVisitor.h"
 #include "IRTreeAllClasses.h"
 
 const std::string SOMETEXT = "NODELABEL";
 
 IRTree::IRTreeVisitor::IRTreeVisitor( const std::string& outputIRTFileName )
-    : currentNodeID( 0 ), numberOfVisitedNodes( 0 ), lastNodeID( 0 )
+	: currentNodeID( 0 ), numberOfVisitedNodes( 0 ), lastNodeID( 0 )
 {
-    graphvizOutputFile = std::ofstream( outputIRTFileName );
+	graphvizOutputFile = std::ofstream( outputIRTFileName );
 }
 
 IRTree::IRTreeVisitor::~IRTreeVisitor()
 {
-    writeGraphToFile();
+	writeGraphToFile();
 
-    graphvizOutputFile.close();
+	graphvizOutputFile.close();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTExpList* node )
 {
-    //visitNode(); - вспомогательный
+	//visitNode(); - вспомогательный
 
-    const IRTExpression* head = node->GetHead();
-    const IRTExpList* tail = node->GetTail();
+	const IRTExpression* head = node->GetHead();
+	const IRTExpList* tail = node->GetTail();
 
-    if( head ) {
-        head->Accept( this );
-    }
+	if( head ) {
+		head->Accept( this );
+	}
 
-    if( tail ) {
-        tail->Accept( this );
-    }
+	if( tail ) {
+		tail->Accept( this );
+	}
 
-    //leaveNode(); - вспомогательный
+	//leaveNode(); - вспомогательный
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTEConst* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "CONST " + std::to_string( node->GetValue() ) ) );
+	nodeLables.insert( std::make_pair( currentNodeID, "CONST " + std::to_string( node->GetValue() ) ) );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTEName* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "NAME " + node->GetLabel()->GetName() ) );
+	nodeLables.insert( std::make_pair( currentNodeID, "NAME " + node->GetLabel()->GetName() ) );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTETemp* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "TEMP " + node->GetTemp()->GetName() ) );
+	nodeLables.insert( std::make_pair( currentNodeID, "TEMP " + node->GetTemp()->GetName() ) );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTEBinop* node )
 {
-    visitNode();
+	visitNode();
 
-    switch( node->GetBinop() )
-    {
-        case BINOP_PLUS:
-        {
-            nodeLables.insert( std::make_pair( currentNodeID, "PLUS" ) );
-        }
-        case BINOP_MINUS:
-        {
-            nodeLables.insert( std::make_pair( currentNodeID, "MINUS" ) );
-        }
-        case BINOP_MUL:
-        {
-            nodeLables.insert( std::make_pair( currentNodeID, "MUL" ) );
-        }
-        case BINOP_DIV:
-        {
-            nodeLables.insert( std::make_pair( currentNodeID, "DIV" ) );
-        }
-        default:
-        {
-            // ???
-        }
-    }
+	switch( node->GetBinop() ) {
+		case BINOP_PLUS:
+			nodeLables.insert( std::make_pair( currentNodeID, "PLUS" ) );
+			break;
+		case BINOP_MINUS:
+			nodeLables.insert( std::make_pair( currentNodeID, "MINUS" ) );
+			break;
+		case BINOP_MUL:
+			nodeLables.insert( std::make_pair( currentNodeID, "MUL" ) );
+			break;
+		case BINOP_DIV:
+			nodeLables.insert( std::make_pair( currentNodeID, "DIV" ) );
+			break;
+		default:
+			assert( false );
+			break;
+	}
 
-    node->GetLeft()->Accept( this );
-    node->GetRight()->Accept( this );
+	node->GetLeft()->Accept( this );
+	node->GetRight()->Accept( this );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTEMem* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "MEM" ) );
-    node->GetExp()->Accept( this );
+	nodeLables.insert( std::make_pair( currentNodeID, "MEM" ) );
+	node->GetExp()->Accept( this );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTECall* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "CALL" ) );
-    node->GetFunc()->Accept( this );
+	nodeLables.insert( std::make_pair( currentNodeID, "CALL" ) );
+	node->GetFunc()->Accept( this );
 
-    if( node->GetArgs() ) {
-        node->GetArgs()->Accept( this );
-    }
+	if( node->GetArgs() ) {
+		node->GetArgs()->Accept( this );
+	}
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTEEseq* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "ESEQ" ) );
-    // left
-    node->GetStm()->Accept( this );
-    // right
-    node->GetExp()->Accept( this );
+	nodeLables.insert( std::make_pair( currentNodeID, "ESEQ" ) );
+	// left
+	node->GetStm()->Accept( this );
+	// right
+	node->GetExp()->Accept( this );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTSMove* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "MOVE" ) );
-    // left
-    node->GetExrDst()->Accept( this );
-    // right
-    node->GetExrSrc()->Accept( this );
+	nodeLables.insert( std::make_pair( currentNodeID, "MOVE" ) );
+	// left
+	node->GetExrDst()->Accept( this );
+	// right
+	node->GetExrSrc()->Accept( this );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTSExp* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "EXP" ) );
-    node->GetExp()->Accept( this );
+	nodeLables.insert( std::make_pair( currentNodeID, "EXP" ) );
+	node->GetExp()->Accept( this );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTSJump* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "JUMP" ) );
+	nodeLables.insert( std::make_pair( currentNodeID, "JUMP" ) );
 
-    unsigned int tempNode = createNode();
-    nodeLables.insert( std::make_pair( tempNode, "LABEL " + node->GetLabel()->GetName() ) );
-    addEdge( currentNodeID, tempNode );
+	unsigned int tempNode = createNode();
+	nodeLables.insert( std::make_pair( tempNode, "LABEL " + node->GetLabel()->GetName() ) );
+	addEdge( currentNodeID, tempNode );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTSCjump* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "CJUMP" ) );
+	nodeLables.insert( std::make_pair( currentNodeID, "CJUMP" ) );
 
-    unsigned int tempNode = createNode();
+	unsigned int tempNode = createNode();
 
-    switch( node->GetRelop() )
-    {
-        case CJUMP_EQ:
-        {
-            nodeLables.insert( std::make_pair( currentNodeID, "==" ) );
-            break;
-        }
-        case CJUMP_GE:
-        {
-            nodeLables.insert( std::make_pair( currentNodeID, ">=" ) );
-            break;
-        }
-        case CJUMP_GT:
-        {
-            nodeLables.insert( std::make_pair( currentNodeID, ">" ) );
-            break;
-        }
-        case CJUMP_LE:
-        {
-            nodeLables.insert( std::make_pair( currentNodeID, "<=" ) );
-            break;
-        }
-        case CJUMP_LT:
-        {
-            nodeLables.insert( std::make_pair( currentNodeID, "<" ) );
-            break;
-        }
-        case CJUMP_NE:
-        {
-            nodeLables.insert( std::make_pair( currentNodeID, "!=" ) );
-            break;
-        }
-        default:
-        {
-            // ???
-        }
-    }
+	switch( node->GetRelop() ) {
+		case CJUMP_EQ:
+			nodeLables.insert( std::make_pair( currentNodeID, "==" ) );
+			break;
+		case CJUMP_GE:
+			nodeLables.insert( std::make_pair( currentNodeID, ">=" ) );
+			break;
+		case CJUMP_GT:
+			nodeLables.insert( std::make_pair( currentNodeID, ">" ) );
+			break;
+		case CJUMP_LE:
+			nodeLables.insert( std::make_pair( currentNodeID, "<=" ) );
+			break;
+		case CJUMP_LT:
+			nodeLables.insert( std::make_pair( currentNodeID, "<" ) );
+			break;
+		case CJUMP_NE:
+			nodeLables.insert( std::make_pair( currentNodeID, "!=" ) );
+			break;
+		default:
+			assert( false );
+			break;
+	}
 
-    addEdge( currentNodeID, tempNode );
+	addEdge( currentNodeID, tempNode );
 
-    node->GetExpLeft()->Accept( this );
-    node->GetExpRight()->Accept( this );
+	node->GetExpLeft()->Accept( this );
+	node->GetExpRight()->Accept( this );
 
-    // left label, true
-    tempNode = createNode();
-    nodeLables.insert( std::make_pair( tempNode, "LABEL " + node->GetLabelLeft()->GetName() ) );
-    addEdge( currentNodeID, tempNode );
+	// left label, true
+	tempNode = createNode();
+	nodeLables.insert( std::make_pair( tempNode, "LABEL " + node->GetLabelLeft()->GetName() ) );
+	addEdge( currentNodeID, tempNode );
 
-    // right label, false
-    tempNode = createNode();
-    nodeLables.insert( std::make_pair( tempNode, "LABEL " + node->GetLabelRight()->GetName() ) );
-    addEdge( currentNodeID, tempNode );
+	// right label, false
+	tempNode = createNode();
+	nodeLables.insert( std::make_pair( tempNode, "LABEL " + node->GetLabelRight()->GetName() ) );
+	addEdge( currentNodeID, tempNode );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTSSeq* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "SEQ" ) );
-    // left
-    node->GetStmLeft()->Accept( this );
-    // right
-	if ( node->GetStmRight() )
+	nodeLables.insert( std::make_pair( currentNodeID, "SEQ" ) );
+	// left
+	node->GetStmLeft()->Accept( this );
+	// right
+	if( node->GetStmRight() )
 		node->GetStmRight()->Accept( this );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTSLabel* node )
 {
-    visitNode();
+	visitNode();
 
-    nodeLables.insert( std::make_pair( currentNodeID, "LABEL " + node->GetLabel()->GetName() ) );
+	nodeLables.insert( std::make_pair( currentNodeID, "LABEL " + node->GetLabel()->GetName() ) );
 
-    leaveNode();
+	leaveNode();
 }
 
 void IRTree::IRTreeVisitor::visitNode()
 {
-    lastNodeID = currentNodeID;
+	lastNodeID = currentNodeID;
 
-    nodesStack.push( currentNodeID = ++numberOfVisitedNodes );
+	nodesStack.push( currentNodeID = ++numberOfVisitedNodes );
 
-    addEdge( lastNodeID, currentNodeID );
+	addEdge( lastNodeID, currentNodeID );
 }
 
 void IRTree::IRTreeVisitor::leaveNode()
 {
-    lastNodeID = currentNodeID;
+	lastNodeID = currentNodeID;
 
-    nodesStack.pop();
+	nodesStack.pop();
 
-    currentNodeID = nodesStack.top();
+	currentNodeID = nodesStack.top();
 }
 
 void IRTree::IRTreeVisitor::addEdge( unsigned int from, unsigned int to )
 {
-    edges.push_back( std::make_pair( from, to ) );
+	edges.push_back( std::make_pair( from, to ) );
 }
 
 void IRTree::IRTreeVisitor::writeGraphToFile()
 {
-    graphvizOutputFile << "digraph { \nnode [shape\"box\"]\n";
+	graphvizOutputFile << "digraph { \nnode [shape\"box\"]\n";
 
-    // edges
-    for( unsigned int i = 0; i < edges.size(); ++i ) {
-        graphvizOutputFile << edges[i].first << " -> " << edges[i].second << "\n";
-    }
+	// edges
+	for( unsigned int i = 0; i < edges.size(); ++i ) {
+		graphvizOutputFile << edges[i].first << " -> " << edges[i].second << "\n";
+	}
 
-    // nodes
-    for( unsigned int i = 0; i < numberOfVisitedNodes; ++i ) {
-        graphvizOutputFile << i << "[ label \"" << SOMETEXT << "\" ]\n";
-    }
+	// nodes
+	for( unsigned int i = 0; i < numberOfVisitedNodes; ++i ) {
+		graphvizOutputFile << i << "[ label \"" << SOMETEXT << "\" ]\n";
+	}
 
-    graphvizOutputFile << "}\n";
+	graphvizOutputFile << "}\n";
 }
 
 unsigned int IRTree::IRTreeVisitor::createNode()
 {
-    return (++numberOfVisitedNodes);
+	return (++numberOfVisitedNodes);
 }

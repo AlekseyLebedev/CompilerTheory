@@ -5,7 +5,7 @@
 
 namespace IRTree {
 
-	CFrame::CFrame( int className, Label* _label ) : className( className ), label( _label ), thisAccess( new IAccess( ThisName ) )
+	CFrame::CFrame( int className, Label* _label ) : className( className ), label( _label ), thisAccess( new IAccess( ThisName, className ) )
 	{
 	}
 
