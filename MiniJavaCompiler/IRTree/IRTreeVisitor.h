@@ -50,6 +50,8 @@ namespace IRTree {
 		void addEdge( unsigned int from, unsigned int to );
 		unsigned int createNode();
 
+		std::string concat( const std::string & str, const int n );
+
 		void writeGraphToFile();
 
 		std::ofstream graphvizOutputFile;
