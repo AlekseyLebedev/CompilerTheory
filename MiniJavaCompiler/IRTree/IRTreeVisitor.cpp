@@ -184,22 +184,22 @@ namespace IRTree {
 
 		switch( node->GetRelop() ) {
 			case CJUMP_EQ:
-				nodeLables.insert( std::make_pair( currentNodeID, "==" ) );
+				nodeLables.insert( std::make_pair( tempNode, "==" ) );
 				break;
 			case CJUMP_GE:
-				nodeLables.insert( std::make_pair( currentNodeID, ">=" ) );
+				nodeLables.insert( std::make_pair( tempNode, ">=" ) );
 				break;
 			case CJUMP_GT:
-				nodeLables.insert( std::make_pair( currentNodeID, ">" ) );
+				nodeLables.insert( std::make_pair( tempNode, ">" ) );
 				break;
 			case CJUMP_LE:
-				nodeLables.insert( std::make_pair( currentNodeID, "<=" ) );
+				nodeLables.insert( std::make_pair( tempNode, "<=" ) );
 				break;
 			case CJUMP_LT:
-				nodeLables.insert( std::make_pair( currentNodeID, "<" ) );
+				nodeLables.insert( std::make_pair( tempNode, "<" ) );
 				break;
 			case CJUMP_NE:
-				nodeLables.insert( std::make_pair( currentNodeID, "!=" ) );
+				nodeLables.insert( std::make_pair( tempNode, "!=" ) );
 				break;
 			default:
 				assert( false );
