@@ -9,6 +9,7 @@ namespace IRTree {
         BINOP_MINUS,
         BINOP_MUL,
         BINOP_DIV,
+		BINOP_MOD,
 
         // Bool
         BINOP_AND,
