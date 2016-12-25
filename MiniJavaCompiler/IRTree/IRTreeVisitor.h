@@ -46,6 +46,7 @@ namespace IRTree {
 
 		void visitNode();
 		void leaveNode();
+		void nullNode();
 
 		void addEdge( unsigned int from, unsigned int to );
 		unsigned int createNode();

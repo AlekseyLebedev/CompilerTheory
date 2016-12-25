@@ -232,8 +232,11 @@ namespace IRTree {
 		// left
 		node->GetStmLeft()->Accept( this );
 		// right
-		if( node->GetStmRight() )
+		if( node->GetStmRight() ) {
 			node->GetStmRight()->Accept( this );
+		} else {
+			nullNode();
+		}
 
 		leaveNode();
 	}
@@ -282,6 +285,13 @@ namespace IRTree {
 		nodesStack.pop();
 
 		currentNodeID = nodesStack.top();
+	}
+
+	void IRTreeVisitor::nullNode()
+	{
+		visitNode();
+		nodeLables.insert( std::make_pair( currentNodeID, "NULL" ) );
+		leaveNode();
 	}
 
 	void IRTreeVisitor::addEdge( unsigned int from, unsigned int to )
