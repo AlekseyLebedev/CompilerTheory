@@ -21,7 +21,7 @@ namespace IRTree {
 	class IRTSCjump;
 	class IRTSSeq;
 	class IRTSLabel;
-
+	class IAccess;
 	class IVisitor {
 	public:
 		virtual void Visit( const IRTExpList* node ) = 0;
@@ -42,5 +42,7 @@ namespace IRTree {
 		virtual void Visit( const IRTSCjump* node ) = 0;
 		virtual void Visit( const IRTSSeq* node ) = 0;
 		virtual void Visit( const IRTSLabel* node ) = 0;
+
+		virtual void Visit( const IAccess* node ) = 0;
 	};
 }

@@ -9,12 +9,12 @@ void IRTree::IAccess::Accept( IVisitor * visitor ) const
 	//visitor->Visit( this );
 }
 
-int IRTree::IAccess::GetName()
+const int IRTree::IAccess::GetName() const
 {
 	return name;
 }
 
-int IRTree::IAccess::GetType()
+const int IRTree::IAccess::GetType() const
 {
 	return type;
 }

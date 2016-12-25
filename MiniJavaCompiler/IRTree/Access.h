@@ -7,10 +7,10 @@ namespace IRTree {
 	public:
 		IAccess( int name, int type );
 		void Accept( IVisitor* visitor ) const override;
-		int GetName();
-		int GetType();
+		const int GetName() const;
+		const int GetType() const;
 	private:
-		int name;
-		int type;
+		const int name;
+		const int type;
 	};
 }

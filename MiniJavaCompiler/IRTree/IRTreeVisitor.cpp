@@ -255,6 +255,15 @@ void IRTree::IRTreeVisitor::Visit( const IRTSLabel* node )
     leaveNode();
 }
 
+void IRTree::IRTreeVisitor::Visit( const IAccess* node )
+{
+	visitNode();
+
+	nodeLables.insert( std::make_pair( currentNodeID, "ACCESS " + node->GetName() ) );
+
+	leaveNode();
+}
+
 void IRTree::IRTreeVisitor::visitNode()
 {
     lastNodeID = currentNodeID;

@@ -22,7 +22,7 @@ namespace IRTree {
         virtual void Visit( const IRTExpList* node );
 
         // Expressions
-        virtual void Visit( const IRTEConst* node );
+		virtual void Visit( const IRTEConst* node );
         virtual void Visit( const IRTEName* node );
         virtual void Visit( const IRTETemp* node );
         virtual void Visit( const IRTEBinop* node );
@@ -37,6 +37,8 @@ namespace IRTree {
         virtual void Visit( const IRTSCjump* node );
         virtual void Visit( const IRTSSeq* node );
         virtual void Visit( const IRTSLabel* node );
+
+		virtual void Visit( const IAccess* node );
 
     private:
 
