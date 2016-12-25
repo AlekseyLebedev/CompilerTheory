@@ -3,6 +3,7 @@
 #include <map>
 
 #include "IRTBuilderVisitor.h"
+#include "..\SymbolTable\ClassInfo.h"
 #include "..\AbstractTreeGenerator\Type.h"
 
 using TStdType = AbstractTreeGenerator::TStandardType;
@@ -343,19 +344,39 @@ namespace IRTree {
 	{
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = fieldExp->GetExpression();
 		std::shared_ptr<AbstractTreeGenerator::CExpressionList> expList = fieldExp->GetExpressionList();
-		std::shared_ptr<AbstractTreeGenerator::CIdExpression> idExp = fieldExp->GetIdExpression();
+		int methodName = fieldExp->GetIdExpression()->GetName();
 
 		IRTExpression* expNode = visitChild( exp.get() );
-
+		int expressionType = returnValueType;
+		assert( expressionType != TStdType::ST_Void );
 		IRTStatement* root = new IRTSExp( expNode );
 
-		// idExp ...
-		// expList ...
+		int currentSearchType = expressionType;
+		int methodReturnType = TStdType::ST_Void;
+		Label* methodLabel = 0;
+		do {
+			SymbolTable::CClassInfo info = table->GetClassInfo( currentSearchType );
+			if( info.ContainsMethod( methodName ) ) {
+				SymbolTable::CMethodInfo methodInfo = info.GetMethodInfo( methodName );
+				methodLabel = methodInfo.GetLabel();
+				methodReturnType = methodInfo.GetReturnType();
+			} else {
+				currentSearchType = info.GetExtend();
+				assert( currentSearchType != SymbolTable::CClassInfo::NothingExtend );
+			}
+		} while( methodLabel == 0 );
 
-		// ???
-		returnedStatement = root;
-		assert( false ); // TODO
-		returnValueType = TStdType::ST_Void;
+		IRTEName* name = new IRTEName( methodLabel );
+		IRTExpList* arguments = 0;
+		if( expList != 0 ) {
+			expList->Accept( this );
+			arguments = dynamic_cast<IRTExpList*>(returnedExpression);
+			assert( arguments != 0 );
+		}
+		IRTECall* call = new IRTECall( name, arguments );
+
+		returnedExpression = call;
+		returnValueType = methodReturnType;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CConditionStatement* const condStm )

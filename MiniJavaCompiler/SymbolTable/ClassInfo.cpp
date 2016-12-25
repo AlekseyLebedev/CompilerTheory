@@ -45,6 +45,12 @@ namespace SymbolTable {
 		}
 	}
 
+	bool CClassInfo::ContainsMethod( const int id )
+	{
+		auto info = methods.find( id );
+		return (info != methods.end());
+	}
+
 	const std::vector<CMethodInfo>& CClassInfo::GetMethods() const
 	{
 		return allMethods;

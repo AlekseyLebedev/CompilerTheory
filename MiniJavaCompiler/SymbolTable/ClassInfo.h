@@ -24,6 +24,7 @@ namespace SymbolTable {
 
 		const CVariableInfo& GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode = 0 )const;
 		const CMethodInfo& GetMethodInfo( const int id, const AbstractTreeGenerator::INode * brokenNode = 0 ) const;
+		bool ContainsMethod( const int id );
 		const std::vector<CMethodInfo>& GetMethods() const;
 
 		int GetExtend() const;
