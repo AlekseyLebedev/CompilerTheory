@@ -1,20 +1,23 @@
-﻿#include "IRTBuilderVisitor.h"
-#include "..\AbstractTreeGenerator\Type.h"
-
+﻿#include <cassert>
 #include <stack>
 #include <map>
+
+#include "IRTBuilderVisitor.h"
+#include "..\AbstractTreeGenerator\Type.h"
+
+using TStdType = AbstractTreeGenerator::TStandardType;
 
 namespace IRTree {
 
 	IRTBuilderVisitor::IRTBuilderVisitor( const SymbolTable::CTable * _table ) : table( _table )
 	{
-		returnedExpression;
-		returnedStatement;
-		code;
-		startPoint;
-		currentFrame;
-		currentClass;
-		returnValueType;
+		returnedExpression = 0;
+		returnedStatement = 0;
+		codeFragment = 0;
+		startPoint = 0;
+		currentFrame = 0;
+		currentClass = TStdType::ST_Void;
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgument* const argument )
@@ -31,10 +34,14 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CAssignmentListStatement* const )
 	{
+		assert( false ); // TODO
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CAssignmentStatement* const )
 	{
+		assert( false ); // TODO
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassDeclaration* const classdeclaration )
@@ -45,12 +52,15 @@ namespace IRTree {
 		//CCodeFragment* bufferFragment =  new CCodeFragment(visitChild(classdeclaration->))
 		currentClass = classdeclaration->GetIdExpression()->GetName();
 		visitChild( classdeclaration->GetMethodDeclarationList().get() );
+
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassDeclarationList* const classlist )
 	{
 		visitChild( classlist->GetClassDeclaration().get() );
 		visitChild( classlist->GetClassDeclarationList().get() );
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CClassExtend* const )
@@ -60,10 +70,14 @@ namespace IRTree {
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CCompoundStatement* const statement )
 	{
 		visitChild( statement->GetStatementList().get() );
+		returnValueType = TStdType::ST_Void;
 	}
 
-	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CConstructorExpression* const )
+	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CConstructorExpression* const ctor )
 	{
+
+		assert( false ); // TODO
+		returnValueType = ctor->GetIdExpression()->GetName();
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CExpressionList* const expList )
@@ -89,6 +103,7 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdExpression* const )
 	{
+		assert( false ); // TODO
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CIndexExpression* const indexExp )
@@ -97,29 +112,40 @@ namespace IRTree {
 		std::shared_ptr<AbstractTreeGenerator::IExpression> second = indexExp->GetExpressionSecond();
 
 		IRTExpression* firstNode = visitChild( first.get() );
+		int returnType = returnValueType;
 		IRTExpression* secondNode = visitChild( second.get() );
+		assert( returnType == TStdType::ST_Int );
 
 		// ???
 		// returnedExpression = ...
+		assert( false ); // TODO
+		returnValueType = returnType;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CLastExpressionList * const )
 	{
+		assert( false ); // TODO
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CLengthExpression* const )
 	{
+		assert( false ); // TODO
+		returnValueType = TStdType::ST_Int;
 	}
 
-	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CListConstructorExpression* const )
+	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CListConstructorExpression* const expression )
 	{
+		assert( false ); // TODO
+		returnValueType = TStdType::ST_Intlist;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMainClass* const mainclass )
 	{
 		currentClass = mainclass->GetClassName()->GetName();
 		startPoint = new CCodeFragment( visitChild( mainclass->GetStatement().get() ) );
-		code = startPoint;
+		codeFragment = startPoint;
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )
@@ -128,16 +154,19 @@ namespace IRTree {
 			visitChild(
 				new AbstractTreeGenerator::CCompoundStatement(
 					method->GetStatementList().get() ) ) );
-		code->SetNext( bufferFragment );
-		code = bufferFragment;
+		codeFragment->SetNext( bufferFragment );
+		codeFragment = bufferFragment;
 		Label* label = table->GetClassInfo( currentClass ).GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
 		currentFrame = new CFrame( currentClass, label );
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const methodList )
 	{
 		visitChild( methodList->GetMethodDeclaration().get() );
+		assert( returnValueType == TStdType::ST_Void );
 		visitChild( methodList->GetMethodDeclarationList().get() );
+		assert( returnValueType == TStdType::ST_Void );
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CNegationExpression* const negExp )
@@ -148,13 +177,14 @@ namespace IRTree {
 
 		IRTStatement* root = new IRTSExp( expNode );
 
+		assert( returnValueType == TStdType::ST_Int );
 		returnedStatement = root;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CNumberExpr* const numerExp )
 	{
 		IRTEConst* root = new IRTEConst( numerExp->GetValue() );
-
+		returnValueType = AbstractTreeGenerator::TStandardType::ST_Int;
 		returnedExpression = root;
 	}
 
@@ -167,7 +197,12 @@ namespace IRTree {
 		// operType ...
 
 		IRTExpression* leftNode = visitChild( left.get() );
+		int leftType = returnValueType;
 		IRTExpression* rightNode = visitChild( right.get() );
+		assert( leftType == returnValueType );
+		assert( returnValueType == TStdType::ST_Int || returnValueType == TStdType::ST_Bool );
+		// returnValueType same
+
 		// ...
 	}
 
@@ -180,6 +215,8 @@ namespace IRTree {
 		IRTEMem* root = new IRTEMem( expNode );
 
 		returnedExpression = root;
+		assert( false ); // TODO return type
+		//returnValueType = ???;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CPreconditionStatement* const precondStm )
@@ -206,6 +243,7 @@ namespace IRTree {
 				new IRTSLabel( falseLabel ) ) );
 
 		returnedStatement = root;
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CPrintStatement* const printStm )
@@ -217,12 +255,14 @@ namespace IRTree {
 		IRTStatement* root = new IRTSExp( expNode );
 
 		returnedStatement = root;
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CProgram* const program )
 	{
 		visitChild( program->GetMainClass().get() );
 		visitChild( program->GetClassDeclarationList().get() );
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CStatementList* const stmList )
@@ -244,6 +284,7 @@ namespace IRTree {
 		}
 
 		returnedStatement = root;
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CBasicType* const basicType )
@@ -251,6 +292,8 @@ namespace IRTree {
 		int type = basicType->GetType();
 		AbstractTreeGenerator::TStandardType value = basicType->GetValue();
 		// ...
+		assert( false ); // TODO
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdType* const idType )
@@ -263,31 +306,36 @@ namespace IRTree {
 		// ...
 		// IRTStatement* root = new IRTSExp( expNode );
 		// returnedStatement = root
+
+		assert( false ); // TODO
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclaration* const variable )
 	{
 		int name = variable->GetIdExpression()->GetName();
 		currentFrame->InsertVariable( name, new IAccess( name ) );
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CVarDeclarationList* const variables )
 	{
 		visitChild( variables->GetVarDeclaration().get() );
 		visitChild( variables->GetVarDeclarationList().get() );
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CTrueExpression* const trueExp )
 	{
 		IRTEConst* root = new IRTEConst( IRT_TRUE );
-
+		returnValueType = TStdType::ST_Bool;
 		returnedExpression = root;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CFalseExpression* const falseExp )
 	{
 		IRTEConst* root = new IRTEConst( IRT_FALSE );
-
+		returnValueType = TStdType::ST_Bool;
 		returnedExpression = root;
 	}
 
@@ -306,6 +354,8 @@ namespace IRTree {
 
 		// ???
 		returnedStatement = root;
+		assert( false ); // TODO
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CConditionStatement* const condStm )
@@ -335,10 +385,12 @@ namespace IRTree {
 					new IRTSLabel( endLabel ) ) ) );
 
 		returnedStatement = root;
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CThisExpression* const thisExp )
 	{
+		returnValueType = currentClass;
 	}
 
 	void IRTBuilderVisitor::visitChild( AbstractTreeGenerator::INode* const child )

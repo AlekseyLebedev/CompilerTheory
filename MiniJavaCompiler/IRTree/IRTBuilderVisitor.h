@@ -97,7 +97,7 @@ namespace IRTree {
 		
 		IRTExpression* returnedExpression;
 		IRTStatement* returnedStatement;
-		CCodeFragment* code;
+		CCodeFragment* codeFragment;
 		CCodeFragment* startPoint;
 		CFrame* currentFrame;
 		int currentClass;
