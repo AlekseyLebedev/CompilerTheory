@@ -15,8 +15,11 @@ namespace IRTree {
 		void InsertVariable(int name, IAccess* access);
 		IAccess* GetDataInfo( int name );
 		Label* GetLabel();
+		IAccess* GetThisAccess();
+		static const int ThisName;
 
 	private:
+		IAccess* thisAccess;
 		std::map<int, IAccess*> variables;
 		int className;
 		Label* label;
