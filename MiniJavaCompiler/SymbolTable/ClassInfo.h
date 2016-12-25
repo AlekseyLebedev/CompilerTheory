@@ -22,8 +22,8 @@ namespace SymbolTable {
 		// добавить информацию о поле класса 
 		void InsertVariableInfo( int id, const CVariableInfo & theVariableInfo );
 
-		const CVariableInfo& GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode )const;
-		const CMethodInfo& GetMethodInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const;
+		const CVariableInfo& GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode = 0 )const;
+		const CMethodInfo& GetMethodInfo( const int id, const AbstractTreeGenerator::INode * brokenNode = 0 ) const;
 		const std::vector<CMethodInfo>& GetMethods() const;
 
 		int GetExtend() const;

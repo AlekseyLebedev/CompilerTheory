@@ -26,19 +26,23 @@ namespace SymbolTable {
 	const CVariableInfo & CClassInfo::GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const
 	{
 		auto info = variables.find( id );
-		if( info == variables.end() )
+		if( info == variables.end() ) {
+			assert( brokenNode != 0 );
 			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Field not declarated" );
-		else
+		} else {
 			return info->second;
+		}
 	}
 
 	const CMethodInfo & CClassInfo::GetMethodInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const
 	{
 		auto info = methods.find( id );
-		if( info == methods.end() )
+		if( info == methods.end() ) {
+			assert( brokenNode != 0 );
 			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Method not declarated" );
-		else
+		} else {
 			return info->second;
+		}
 	}
 
 	const std::vector<CMethodInfo>& CClassInfo::GetMethods() const
@@ -58,7 +62,7 @@ namespace SymbolTable {
 	{
 		int size = 0;
 		if( extend != NothingExtend ) {
-			size = table->GetClassInfo( extend, 0 ).GetSize( table );
+			size = table->GetClassInfo( extend ).GetSize( table );
 		}
 		for( size_t i = 0; i < allVariables.size(); i++ ) {
 			size = addVairableToSize( i, size, table );
@@ -76,11 +80,11 @@ namespace SymbolTable {
 	{
 		auto info = variables.find( id );
 		if( info == variables.end() ) {
-			return table->GetClassInfo( extend, 0 ).GetOffsetForField( id, table );
+			return table->GetClassInfo( extend ).GetOffsetForField( id, table );
 		} else {
 			int position = 0;
 			if( extend != NothingExtend ) {
-				position = table->GetClassInfo( extend, 0 ).GetSize( table );
+				position = table->GetClassInfo( extend ).GetSize( table );
 			}
 			for( size_t i = 0; i < allVariables.size(); i++ ) {
 				position = addVairableToSize( i, position, table );
@@ -120,7 +124,7 @@ namespace SymbolTable {
 				assert( false );
 				return -1;
 			default:
-				return table->GetClassInfo( type, 0 ).GetSize( table );
+				return table->GetClassInfo( type ).GetSize( table );
 		}
 	}
 

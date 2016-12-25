@@ -14,7 +14,7 @@ namespace SymbolTable {
 	class CTable {
 	public:
 		CTable();
-		const CClassInfo& GetClassInfo( const int& id , const AbstractTreeGenerator::INode * brokenNode ) const;
+		const CClassInfo& GetClassInfo( const int& id , const AbstractTreeGenerator::INode * brokenNode = 0 ) const;
 		void AddClassInfo(const int id, const CClassInfo& info );
 		int TotalAdditionCount() const ;
 		int UniqueClassesCount() const ;		

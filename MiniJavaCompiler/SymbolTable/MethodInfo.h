@@ -14,16 +14,16 @@ namespace SymbolTable {
 	public:
 		int GetReturnType() const;
 		void SetReturnType( const int id );
-		const CVariableInfo & GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const;
+		const CVariableInfo & GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode = 0 ) const;
 		void AddVariableInfo( const int id, const CVariableInfo& info );
-		const CVariableInfo & GetArgInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const;
+		const CVariableInfo & GetArgInfo( const int id, const AbstractTreeGenerator::INode * brokenNode = 0 ) const;
 		void AddArgInfo( const int id, const CVariableInfo& info );
-		int GetUniqueArgsCount();
-		int GetUniqueVarsCount();
-		int GetAllArgsCount();
-		int GetAllVarsCount();
+		int GetUniqueArgsCount() const;
+		int GetUniqueVarsCount() const;
+		int GetAllArgsCount() const;
+		int GetAllVarsCount() const;
 		int GetArgType( const int num ) const;
-		IRTree::Label* GetLabel();
+		IRTree::Label* GetLabel() const;
 
 	private:
 		int returnType;
@@ -31,7 +31,7 @@ namespace SymbolTable {
 		std::map<int, CVariableInfo> args;
 		int varsCount;
 		std::vector<int> argsTypes;
-		IRTree::Label* label;
+		mutable IRTree::Label* label;
 		static int methodCount;
 	};
 }

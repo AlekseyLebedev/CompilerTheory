@@ -1,3 +1,4 @@
+#include <cassert>
 #include "Table.h"
 
 namespace SymbolTable {
@@ -14,10 +15,12 @@ namespace SymbolTable {
 	const CClassInfo & CTable::GetClassInfo( const int & id, const AbstractTreeGenerator::INode * brokenNode ) const
 	{
 		auto info = classesInfos.find( id );
-		if( info == classesInfos.end() )
+		if( info == classesInfos.end() ) {
+			assert( brokenNode != 0 );
 			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Class not declarated" );
-		else
+		} else {
 			return info->second;
+		}
 	}
 	int CTable::TotalAdditionCount() const
 	{

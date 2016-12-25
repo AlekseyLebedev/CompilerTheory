@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <stack>
-#include <map>
 
 #include "IRTreeAllClasses.h"
 #include "Translate.h"
@@ -10,12 +8,14 @@
 #include "..\AbstractTreeGenerator\IVisitor.h"
 #include "..\AbstractTreeGenerator\AllNodes.h"
 #include "Frame.h"
-//#include "../SymbolTable/Table.h"
+#include "..\SymbolTable\Table.h"
+
 namespace IRTree {
 
     class IRTBuilderVisitor : public AbstractTreeGenerator::IVisitor
     {
     public:
+		IRTBuilderVisitor( const SymbolTable::CTable* table );
 
         // Унаследовано через IVisitor
         virtual void visit( AbstractTreeGenerator::CArgument* const cArgument ) override;
@@ -88,6 +88,7 @@ namespace IRTree {
 
         virtual void visit( AbstractTreeGenerator::CThisExpression* const ) override;
 
+
     private:
 
 		void visitChild( AbstractTreeGenerator::INode * const child );
@@ -100,6 +101,7 @@ namespace IRTree {
 		CCodeFragment* startPoint;
 		CFrame* currentFrame;
 		int currentClass;
-		//SymbolTable::CTable table;
+		int returnValueType;
+		const SymbolTable::CTable* table;
     };
 }
