@@ -5,17 +5,17 @@
 //TO DO
 namespace IRTree {
 
-    class Label
-    {
-    public:
+	class Label {
+	public:
 
-        Label();
-        Label( const std::string _name );
+		Label();
+		Label( const int _name );
 
-        const std::string GetName() const;
+		const int GetName() const;
 
-    private:
+	private:
 
-        const std::string name;
-    };
+		static int counter;
+		int name;
+	};
 }

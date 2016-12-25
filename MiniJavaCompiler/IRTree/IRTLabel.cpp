@@ -1,16 +1,18 @@
 ﻿#include "IRTLabel.h"
 
-// Временно
-// Исправить (то есть убрать, добавив генерацию имён)
-IRTree::Label::Label() : name( "abracadabra" )
-{
-}
+namespace IRTree {
+	Label::Label() : name( counter++ )
+	{
+	}
 
-IRTree::Label::Label( const std::string _name ) : name( _name )
-{
-}
+	Label::Label( const int _name ) : name( _name )
+	{
+	}
 
-const std::string IRTree::Label::GetName() const
-{
-    return name;
+	const int Label::GetName() const
+	{
+		return name;
+	}
+
+	int Label::counter = 0;
 }
