@@ -4,19 +4,15 @@
 
 const std::string SOMETEXT = "NODELABEL";
 
-IRTree::IRTreeVisitor::IRTreeVisitor( const std::string& outputIRTFileName )
+IRTree::IRTreeVisitor::IRTreeVisitor()
 	: currentNodeID( 0 ), numberOfVisitedNodes( 0 ), lastNodeID( 0 )
 {
-	graphvizOutputFile = std::ofstream( outputIRTFileName );
 	nodesStack.push( currentNodeID );
 	nodeLables.insert( std::make_pair( currentNodeID, "Frame" ) );
 }
 
 IRTree::IRTreeVisitor::~IRTreeVisitor()
 {
-	writeGraphToFile();
-
-	graphvizOutputFile.close();
 }
 
 void IRTree::IRTreeVisitor::Visit( const IRTExpList* node )
@@ -245,6 +241,17 @@ void IRTree::IRTreeVisitor::Visit( const IAccess* node )
 	nodeLables.insert( std::make_pair( currentNodeID, "ACCESS " + node->GetName() ) );
 
 	leaveNode();
+}
+
+void IRTree::IRTreeVisitor::Start( const std::string & filename )
+{
+	graphvizOutputFile = std::ofstream( filename );
+}
+
+void IRTree::IRTreeVisitor::Close()
+{
+	writeGraphToFile();
+	graphvizOutputFile.close();
 }
 
 void IRTree::IRTreeVisitor::visitNode()
