@@ -1,9 +1,9 @@
 #pragma once
 #include "IVisitor.h"
-#include "IRTStatement.h"
+#include "IRTExpression.h"
 
 namespace IRTree {
-	class IAccess : INode {
+	class IAccess : public IRTExpression {
 	public:
 		IAccess( int name );
 		void Accept( IVisitor* visitor ) const override;

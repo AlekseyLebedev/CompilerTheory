@@ -411,6 +411,7 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CThisExpression* const thisExp )
 	{
+		returnedExpression = new IRTEMem( currentFrame->GetThisAccess() );
 		returnValueType = currentClass;
 	}
 
