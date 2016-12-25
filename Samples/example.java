@@ -7,17 +7,8 @@ class Main{
 class A {
 
 	public int A1() {
-		int[] a;
-		int b;
-		if (3<5) {
-			a[b] = 9;
-		} else {
-			a[b] = 9;
-		}
+		int a;
+		a = 0; 
 		return 0;
 	}
-}
-
-class B {
-
 }

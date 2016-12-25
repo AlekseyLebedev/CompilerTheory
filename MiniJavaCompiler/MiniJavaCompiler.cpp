@@ -12,6 +12,8 @@
 #include <assert.h>
 #include "SymbolTable\FillTableVisitor.h"
 #include "SymbolTable\TypeCheckerVistor.h"
+#include "IRTree\IRTBuilderVisitor.h"
+#include "IRTree\IRTreeVisitor.h"
 
 int yyparse();
 extern FILE* yyin, *yyout;
@@ -52,6 +54,19 @@ int main( int argc, char** argv )
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;
 			}
+			try {
+				IRTree::IRTBuilderVisitor irtree( &fillTable.GetTable() );
+				irtree.visit( root.get() );
+				IRTree::IRTreeVisitor iroutput( "kek.txt" );
+				const IRTree::CCodeFragment* code = irtree.GetCode()->GetNext();
+				const IRTree::IRTStatement* tree = code->GetTree();
+				tree->Accept( &iroutput );
+			}
+			catch( std::exception* e ) {
+				std::cerr << e->what() << std::endl;
+				
+			}
+
 		}
 	}
 	return 0;

@@ -16,7 +16,7 @@ namespace IRTree {
     {
     public:
 		IRTBuilderVisitor( const SymbolTable::CTable* table );
-
+		CCodeFragment* GetCode();
         // Унаследовано через IVisitor
         virtual void visit( AbstractTreeGenerator::CArgument* const cArgument ) override;
 
