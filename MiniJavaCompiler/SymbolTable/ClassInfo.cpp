@@ -63,7 +63,13 @@ namespace SymbolTable {
 		for( size_t i = 0; i < allVariables.size(); i++ ) {
 			size = addVairableToSize( i, size, table );
 		}
-		return offset( size );
+		if( size == 0 ) {
+			size = 1; // Иначе будут проблемы с массивами
+		}
+		if( size >= machineWordSize ) {
+			size = offset( size );
+		}
+		return size;
 	}
 
 	int CClassInfo::GetOffsetForField( const int id, const CTable* table ) const
