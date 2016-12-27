@@ -7,13 +7,16 @@ class Main{
 class A {
 
 	public int A1() {
-		int a;
-		a = 0;
-	 	if (a < 0) {
-			a = 1;
+		int a;					
+		a = 5;
+		if (a<4) {
+			while (a < 8){
+				a = a+1;
+			}
+			a = 9;
 		} else {
-			a = 2;
-		}	  
+			a = 8;
+		}
 		return 0;
 	}
 }
