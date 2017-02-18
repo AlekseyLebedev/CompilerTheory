@@ -16,7 +16,7 @@ namespace IRTree {
     {
     public:
 		IRTBuilderVisitor( const SymbolTable::CTable* table );
-		CCodeFragment* GetCode();
+		std::shared_ptr<CCodeFragment> GetCode();
         // Унаследовано через IVisitor
         virtual void visit( AbstractTreeGenerator::CArgument* const cArgument ) override;
 
@@ -91,9 +91,12 @@ namespace IRTree {
 
     private:
 
+		void visitChild( AbstractTreeGenerator::INode* const child );
+		std::shared_ptr<IRTExpression> visitChild( AbstractTreeGenerator::IExpression* const child );
+		std::shared_ptr<IRTStatement> visitChild( AbstractTreeGenerator::IStatement* const child );
 		void visitChild( std::shared_ptr<AbstractTreeGenerator::INode> const child );
-        std::shared_ptr<IRTExpression> visitChild( std::shared_ptr<AbstractTreeGenerator::IExpression> const child );
-        std::shared_ptr<IRTStatement> visitChild( std::shared_ptr<AbstractTreeGenerator::IStatement> const child );
+		std::shared_ptr<IRTExpression> visitChild( std::shared_ptr<AbstractTreeGenerator::IExpression> const child );
+		std::shared_ptr<IRTStatement> visitChild( std::shared_ptr<AbstractTreeGenerator::IStatement> const child );
 		void insertMethodExecution();
 		
 		std::shared_ptr<IRTExpression> returnedExpression;
@@ -103,6 +106,6 @@ namespace IRTree {
 		std::shared_ptr<CFrame> currentFrame;
 		int currentClass;
 		int returnValueType;
-		const std::shared_ptr<SymbolTable::CTable> table;
+		const SymbolTable::CTable* table;
     };
 }

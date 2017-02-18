@@ -36,8 +36,8 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CAssignmentListStatement* const statement )
 	{
-		IRTExpression* src = visitChild( statement->GetExpressionSecond().get() );
-		IRTExpression* id = visitChild( statement->GetIdExpression().get() );
+		std::shared_ptr<IRTExpression> src = visitChild( statement->GetExpressionSecond().get() );
+		std::shared_ptr<IRTExpression> id = visitChild( statement->GetIdExpression().get() );
 		//IRTECall* dst = new IRTECall(id,);
 		assert( false ); // TODO
 		returnValueType = TStdType::ST_Void;
@@ -47,8 +47,8 @@ namespace IRTree {
 	{
 		statement->GetIdExpression();
 		statement->GetExpression();
-		IRTExpression* src = visitChild( statement->GetExpression().get() );
-		IRTExpression* dst = visitChild( statement->GetIdExpression().get() );
+		std::shared_ptr<IRTExpression> src = visitChild( statement->GetExpression().get() );
+		std::shared_ptr<IRTExpression> dst = visitChild( statement->GetIdExpression().get() );
 
 		IRTSMove* root = new IRTSMove( dst, src );
 		returnedStatement = root;
@@ -480,7 +480,7 @@ namespace IRTree {
 		}
 	}
 
-	IRTExpression* IRTBuilderVisitor::visitChild( AbstractTreeGenerator::IExpression* const child )
+	std::shared_ptr<IRTExpression> IRTBuilderVisitor::visitChild( AbstractTreeGenerator::IExpression* const child )
 	{
 		if( child != nullptr ) {
 			child->Accept( this );
@@ -489,13 +489,28 @@ namespace IRTree {
 		return nullptr;
 	}
 
-	std::shared_ptr<IRTStatement> IRTBuilderVisitor::visitChild( std::shared_ptr<AbstractTreeGenerator::IStatement> const child )
+	std::shared_ptr<IRTStatement> IRTBuilderVisitor::visitChild( AbstractTreeGenerator::IStatement* const child )
 	{
 		if( child != nullptr ) {
 			child->Accept( this );
 			return returnedStatement;
 		}
 		return nullptr;
+	}
+
+	void IRTBuilderVisitor::visitChild( std::shared_ptr<AbstractTreeGenerator::INode> const child )
+	{
+		visitChild( child.get() );
+	}
+
+	std::shared_ptr<IRTExpression> IRTBuilderVisitor::visitChild( std::shared_ptr<AbstractTreeGenerator::IExpression> const child )
+	{
+		visitChild( child.get() );
+	}
+
+	std::shared_ptr<IRTStatement> IRTBuilderVisitor::visitChild( std::shared_ptr<AbstractTreeGenerator::IStatement> const child )
+	{
+		visitChild( child.get() );
 	}
 
 	void IRTBuilderVisitor::insertMethodExecution()

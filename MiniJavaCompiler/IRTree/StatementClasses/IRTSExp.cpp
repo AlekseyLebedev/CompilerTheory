@@ -1,7 +1,7 @@
 #include <memory>
 #include "IRTSExp.h"
 
-IRTree::IRTSExp::IRTSExp( const IRTExpression> _exp ) : exp( _exp )
+IRTree::IRTSExp::IRTSExp( const std::shared_ptr<IRTExpression> _exp ) : exp( _exp )
 {
 }
 

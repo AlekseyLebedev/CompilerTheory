@@ -15,7 +15,7 @@ const std::shared_ptr<IRTree::IRTStatement> Translate::IRTStmConverter::ToStatem
     return stm;
 }
 
-const std::shared_ptr<IRTree::IRTStatement> Translate::IRTStmConverter::ToConditional( const std::shared_ptr<IRTree::Label> t, const std::shared_ptr<IRTree::Label f ) const
+const std::shared_ptr<IRTree::IRTStatement> Translate::IRTStmConverter::ToConditional( const std::shared_ptr<IRTree::Label> t, const std::shared_ptr<IRTree::Label> f ) const
 {
     // Исправить
     return nullptr;

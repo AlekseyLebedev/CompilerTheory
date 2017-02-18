@@ -7,7 +7,7 @@ namespace IRTree {
 	class IRTSSeq : public IRTStatement {
 	public:
 		
-		IRTSSeq( const std::shared_ptr<IRTStatemen> _left, const std::shared_ptr<IRTStatement> _right );
+		IRTSSeq( const std::shared_ptr<IRTStatement> _left, const std::shared_ptr<IRTStatement> _right );
 
 		const std::shared_ptr<IRTStatement> GetStmLeft() const;
 		const std::shared_ptr<IRTStatement> GetStmRight() const;
