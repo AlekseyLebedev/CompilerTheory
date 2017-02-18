@@ -24,8 +24,16 @@ class A {
 	}
 	
 	public int A3() {
-		int b;
-		b = 6;
+		int a;					
+		a = 5;
+		if (a<4) {
+			while (a < 8){
+				a = a+1;
+			}
+			a = 9;
+		} else {
+			a = 8;
+		}
 		return 7;
 	}
 }
