@@ -177,9 +177,24 @@ namespace IRTree {
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMainClass* const mainclass )
 	{
 		currentClass = mainclass->GetClassName()->GetName();
-		startPoint = std::make_shared<CCodeFragment>( visitChild( mainclass->GetStatement().get() ) );
+		SymbolTable::CClassInfo classInfo = table->GetClassInfo( currentClass );
+		assert( classInfo.GetMethods().size() == 1 );
+		SymbolTable::CMethodInfo methodInfo = classInfo.GetMethods()[0];
+		std::shared_ptr<Label> label = methodInfo.GetLabel();
+
+		currentFrame = std::make_shared<CFrame>( currentClass, label );
+		startPoint = startPoint = std::make_shared<CCodeFragment>( visitChild( mainclass->GetStatement().get() ) );
 		codeFragment = startPoint;
+
 		returnValueType = TStdType::ST_Void;
+		//std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>( returnedStatement );
+		//codeFragment->SetNext( bufferFragment );
+		//codeFragment = bufferFragment;
+
+		//currentClass = mainclass->GetClassName()->GetName();
+		//startPoint = std::make_shared<CCodeFragment>( visitChild( mainclass->GetStatement().get() ) );
+		//codeFragment = startPoint;
+		//returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )

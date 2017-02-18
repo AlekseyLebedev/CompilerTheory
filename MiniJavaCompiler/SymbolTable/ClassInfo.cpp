@@ -38,7 +38,7 @@ namespace SymbolTable {
 	{
 		auto info = methods.find( id );
 		if( info == methods.end() ) {
-			assert( brokenNode != 0 );
+			assert( brokenNode != nullptr );
 			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Method not declarated" );
 		} else {
 			return info->second;
