@@ -19,4 +19,8 @@ class A {
 		}
 		return 0;
 	}
+	
+	public int A2() {
+		return 7;
+	}
 }

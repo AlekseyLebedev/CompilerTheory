@@ -94,6 +94,7 @@ namespace IRTree {
 		void visitChild( AbstractTreeGenerator::INode * const child );
         IRTExpression* visitChild( AbstractTreeGenerator::IExpression* const child );
         IRTStatement* visitChild( AbstractTreeGenerator::IStatement* const child );
+		void insertMethodExecution();
 		
 		IRTExpression* returnedExpression;
 		IRTStatement* returnedStatement;

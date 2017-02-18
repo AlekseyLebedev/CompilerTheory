@@ -9,7 +9,6 @@
 using TStdType = AbstractTreeGenerator::TStandardType;
 
 namespace IRTree {
-
 	IRTBuilderVisitor::IRTBuilderVisitor( const SymbolTable::CTable * _table ) : table( _table )
 	{
 		returnedExpression = 0;
@@ -178,7 +177,7 @@ namespace IRTree {
 		visitChild( method->GetVarDeclarationList().get() );
 		CCodeFragment* bufferFragment = new CCodeFragment(
 			visitChild(
-				new AbstractTreeGenerator::CCompoundStatement(
+				new AbstractTreeGenerator::CCompoundStatement(//TODO че эт за хуйня
 					method->GetStatementList().get() ) ) );
 		codeFragment->SetNext( bufferFragment );
 		codeFragment = bufferFragment;
@@ -348,8 +347,7 @@ namespace IRTree {
 		// not used in building IRTree
 		int type = basicType->GetType();
 		AbstractTreeGenerator::TStandardType value = basicType->GetValue();
-		// ...
-		assert( false ); // TODO
+		assert( false );
 		returnValueType = TStdType::ST_Void;
 	}
 
@@ -497,6 +495,11 @@ namespace IRTree {
 			return returnedStatement;
 		}
 		return nullptr;
+	}
+
+	void IRTBuilderVisitor::insertMethodExecution()
+	{
+
 	}
 
 	CCodeFragment* IRTBuilderVisitor::GetCode()

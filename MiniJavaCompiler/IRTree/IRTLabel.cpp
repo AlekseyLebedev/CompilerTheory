@@ -14,5 +14,5 @@ namespace IRTree {
 		return name;
 	}
 
-	int Label::counter = 0;
+	int Label::counter = TStandadLabel::TSL_Count;
 }
