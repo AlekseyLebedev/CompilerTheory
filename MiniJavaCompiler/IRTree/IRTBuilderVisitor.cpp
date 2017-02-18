@@ -41,9 +41,11 @@ namespace IRTree {
 		int returnType = returnValueType;
 		std::shared_ptr<IRTExpression> ptr = visitChild( statement->GetExpressionFirst().get() );
 
-		int typesize = 4;
+		int typesize;
 		if( returnType > 0 ) {
 			typesize = table->GetClassInfo( returnType, statement->GetIdExpression().get() ).GetSize( table );
+		} else {
+			typesize = SymbolTable::CClassInfo::getSizeOfType( returnType, table );
 		}
 		std::shared_ptr<IRTSMove> root = std::make_shared<IRTSMove>( std::make_shared<IRTEBinop>(
 			RELOP::BINOP_PLUS, id, std::make_shared<IRTEBinop>(
@@ -137,9 +139,11 @@ namespace IRTree {
 		std::shared_ptr<IRTExpression> id = visitChild( indexExp->GetExpressionFirst().get() );
 		returnType = returnValueType;
 
-		int typesize = 4;
+		int typesize;
 		if( returnType > 0 ) {
 			typesize = table->GetClassInfo( returnType, indexExp->GetExpressionFirst().get() ).GetSize( table );
+		} else {
+			typesize = SymbolTable::CClassInfo::getSizeOfType( returnType, table );
 		}
 		std::shared_ptr<IRTEBinop> root = std::make_shared<IRTEBinop>(
 			RELOP::BINOP_PLUS, id, std::make_shared<IRTEBinop>( RELOP::BINOP_MUL, ptr, std::make_shared<IRTEConst>( typesize ) ) );
