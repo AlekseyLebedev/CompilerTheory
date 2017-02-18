@@ -39,6 +39,7 @@ namespace SymbolTable {
 		friend bool operator ==( CClassInfo a, CClassInfo b );
 		friend bool operator !=( CClassInfo a, CClassInfo b );
 		static const int NothingExtend;
+		static int getSizeOfType( const int type, const CTable * table );
 	private:
 		int name;
 		// информация о методах
@@ -51,7 +52,7 @@ namespace SymbolTable {
 
 		static const int machineWordSize;
 		static int offset( const int size );
-		static int getSizeOfType( const int type, const CTable * table );
+		
 		int addVairableToSize( int index, int size, const CTable * table ) const;
 	};
 }
