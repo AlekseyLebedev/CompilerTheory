@@ -4,7 +4,7 @@ IRTree::IAccess::IAccess( int name, int type ) : name(name), type(type)
 {
 }
 
-void IRTree::IAccess::Accept( IVisitor * visitor ) const
+void IRTree::IAccess::Accept( IVisitor* visitor ) const
 {
 	visitor->Visit( this );
 }

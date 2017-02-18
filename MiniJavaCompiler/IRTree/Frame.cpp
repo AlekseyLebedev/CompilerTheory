@@ -9,22 +9,22 @@ namespace IRTree {
 	{
 	}
 
-	void CFrame::InsertVariable( int name, IAccess* access )
+	void CFrame::InsertVariable( int name, std::shared_ptr<IAccess> access )
 	{
-		variables.insert( std::pair<int, IAccess*>( name, access ) );
+		variables.insert( std::pair<int, std::shared_ptr<IAccess>>( name, access ) );
 	}
 
-	IAccess* CFrame::GetDataInfo( int name )
+	std::shared_ptr<IAccess> CFrame::GetDataInfo( int name )
 	{
 		return variables.find( name )->second;
 	}
 
-	Label * CFrame::GetLabel()
+	std::shared_ptr<Label> CFrame::GetLabel()
 	{
 		return label;
 	}
 
-	IAccess * CFrame::GetThisAccess()
+	std::shared_ptr<IAccess> CFrame::GetThisAccess()
 	{
 		return thisAccess;
 	}

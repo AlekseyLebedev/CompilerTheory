@@ -1,13 +1,14 @@
+#include <memory>
 #include "CodeFragment.h"
 
 using namespace IRTree;
 
-CCodeFragment::CCodeFragment( const IRTStatement* body ) : body( body ), frame( 0 ), next( 0 )
+CCodeFragment::CCodeFragment( const std::shared_ptr<IRTStatement> body ) : body( body ), frame( 0 ), next( 0 )
 {
 	
 }
 
-void IRTree::CCodeFragment::SetNext( const CCodeFragment * next )
+void IRTree::CCodeFragment::SetNext( const std::shared_ptr<CCodeFragment> next )
 {
 	this->next = next;
 }

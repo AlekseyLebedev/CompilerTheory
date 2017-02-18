@@ -9,6 +9,7 @@
 using TStdType = AbstractTreeGenerator::TStandardType;
 
 namespace IRTree {
+	// TODO указатель на CTable
 	IRTBuilderVisitor::IRTBuilderVisitor( const SymbolTable::CTable * _table ) : table( _table )
 	{
 		returnedExpression = 0;
@@ -24,7 +25,7 @@ namespace IRTree {
 	{
 		int name = argument->GetIdExpression()->GetName();
 		int type = argument->GetType()->GetType();
-		currentFrame->InsertVariable( name, new IAccess( name, type ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type ) );
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgumentList* const arguments )
@@ -169,7 +170,7 @@ namespace IRTree {
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )
 	{
 		// what about type of method
-		
+
 		Label* label = table->GetClassInfo( currentClass ).GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
 		currentFrame = new CFrame( currentClass, label );
 		returnValueType = TStdType::ST_Void;
@@ -257,7 +258,7 @@ namespace IRTree {
 				assert( false );
 		}
 		IRTEBinop* root = new IRTEBinop( IRToperationType, leftNode, rightNode );
-		
+
 		returnedExpression = root;
 		// ...
 	}
@@ -488,7 +489,7 @@ namespace IRTree {
 		return nullptr;
 	}
 
-	IRTStatement* IRTBuilderVisitor::visitChild( AbstractTreeGenerator::IStatement* const child )
+	std::shared_ptr<IRTStatement> IRTBuilderVisitor::visitChild( std::shared_ptr<AbstractTreeGenerator::IStatement> const child )
 	{
 		if( child != nullptr ) {
 			child->Accept( this );
@@ -502,7 +503,7 @@ namespace IRTree {
 
 	}
 
-	CCodeFragment* IRTBuilderVisitor::GetCode()
+	std::shared_ptr<CCodeFragment> IRTBuilderVisitor::GetCode()
 	{
 		return startPoint;
 	}

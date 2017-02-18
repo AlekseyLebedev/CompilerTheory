@@ -7,15 +7,15 @@ namespace IRTree {
 	class IRTEMem : public IRTExpression {
 	public:
 		
-		IRTEMem( IRTExpression* _exp );
+		IRTEMem( std::shared_ptr<IRTExpression> _exp );
 
-		const IRTExpression* GetExp() const;
+		const std::shared_ptr<IRTExpression> GetExp() const;
 
         void Accept( IVisitor* visitor ) const override;
 		
 	private:
 
-		const IRTExpression* exp;
+		const std::shared_ptr<IRTExpression> exp;
 
 	};
 }

@@ -1,10 +1,11 @@
+#include <memory>
 #include "IRTEMem.h"
 
-IRTree::IRTEMem::IRTEMem( IRTExpression* _exp ) : exp( _exp )
+IRTree::IRTEMem::IRTEMem( std::shared_ptr<IRTExpression> _exp ) : exp( _exp )
 {
 }
 
-const IRTree::IRTExpression* IRTree::IRTEMem::GetExp() const
+const std::shared_ptr<IRTree::IRTExpression> IRTree::IRTEMem::GetExp() const
 {
 	return exp;
 }

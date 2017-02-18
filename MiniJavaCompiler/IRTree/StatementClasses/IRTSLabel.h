@@ -8,15 +8,15 @@ namespace IRTree {
 	class IRTSLabel : public IRTStatement {
 	public:
 
-		IRTSLabel( const Label* _label );
+		IRTSLabel( const std::shared_ptr<Label> _label );
 
-		const Label* GetLabel() const;
+		const std::shared_ptr<Label> GetLabel() const;
 
 		void Accept( IVisitor* visitor ) const override;
 
 	private:
 
-		const Label* label;
+		const std::shared_ptr<Label> label;
 
 	};
 }

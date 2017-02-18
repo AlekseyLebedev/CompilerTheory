@@ -1,15 +1,16 @@
+#include <memory>
 #include "IRTExpList.h"
 
-IRTree::IRTExpList::IRTExpList( const IRTExpression* _head, const IRTExpList* _tail ) : head( _head ), tail( _tail )
+IRTree::IRTExpList::IRTExpList( const std::shared_ptr<IRTExpression> _head, const std::shared_ptr<IRTExpList> _tail ) : head( _head ), tail( _tail )
 {
 }
 
-const IRTree::IRTExpression* IRTree::IRTExpList::GetHead() const
+const std::shared_ptr<IRTree::IRTExpression> IRTree::IRTExpList::GetHead() const
 {
     return head;
 }
 
-const IRTree::IRTExpList* IRTree::IRTExpList::GetTail() const
+const std::shared_ptr<IRTree::IRTExpList> IRTree::IRTExpList::GetTail() const
 {
     return tail;
 }

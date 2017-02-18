@@ -91,18 +91,18 @@ namespace IRTree {
 
     private:
 
-		void visitChild( AbstractTreeGenerator::INode * const child );
-        IRTExpression* visitChild( AbstractTreeGenerator::IExpression* const child );
-        IRTStatement* visitChild( AbstractTreeGenerator::IStatement* const child );
+		void visitChild( std::shared_ptr<AbstractTreeGenerator::INode> const child );
+        std::shared_ptr<IRTExpression> visitChild( std::shared_ptr<AbstractTreeGenerator::IExpression> const child );
+        std::shared_ptr<IRTStatement> visitChild( std::shared_ptr<AbstractTreeGenerator::IStatement> const child );
 		void insertMethodExecution();
 		
-		IRTExpression* returnedExpression;
-		IRTStatement* returnedStatement;
-		CCodeFragment* codeFragment;
-		CCodeFragment* startPoint;
-		CFrame* currentFrame;
+		std::shared_ptr<IRTExpression> returnedExpression;
+		std::shared_ptr<IRTStatement> returnedStatement;
+		std::shared_ptr<CCodeFragment> codeFragment;
+		std::shared_ptr<CCodeFragment> startPoint;
+		std::shared_ptr<CFrame> currentFrame;
 		int currentClass;
 		int returnValueType;
-		const SymbolTable::CTable* table;
+		const std::shared_ptr<SymbolTable::CTable> table;
     };
 }

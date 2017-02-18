@@ -1,10 +1,11 @@
+#include <memory>
 #include "IRTSJump.h"
 
-IRTree::IRTSJump::IRTSJump( const Label* _label ) : label( _label )
+IRTree::IRTSJump::IRTSJump( const std::shared_ptr<Label> _label ) : label( _label )
 {
 }
 
-const IRTree::Label* IRTree::IRTSJump::GetLabel() const
+const std::shared_ptr<IRTree::Label> IRTree::IRTSJump::GetLabel() const
 {
 	return label;
 }

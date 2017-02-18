@@ -7,17 +7,17 @@ namespace IRTree {
 	class IRTSMove : public IRTStatement {
 	public:
 		
-		IRTSMove( const IRTExpression* _dst, const IRTExpression* _src );
+		IRTSMove( const std::shared_ptr<IRTExpression> _dst, const std::shared_ptr<IRTExpression> _src );
 
-		const IRTExpression* GetExrDst() const;
-		const IRTExpression* GetExrSrc() const;
+		const std::shared_ptr<IRTExpression> GetExrDst() const;
+		const std::shared_ptr<IRTExpression> GetExrSrc() const;
 
         void Accept( IVisitor* visitor ) const override;
 		
 	private:
 
-		const IRTExpression* dst;
-		const IRTExpression* src;
+		const std::shared_ptr<IRTExpression> dst;
+		const std::shared_ptr<IRTExpression> src;
 
 	};
 }

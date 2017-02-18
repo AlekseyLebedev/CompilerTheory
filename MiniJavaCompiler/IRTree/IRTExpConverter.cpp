@@ -1,20 +1,21 @@
+#include <memory>
 #include "IRTExpConverter.h"
 
-Translate::IRTExpConverter::IRTExpConverter( const IRTree::IRTExpression* _exp ) : exp( _exp )
+Translate::IRTExpConverter::IRTExpConverter( const std::shared_ptr<IRTree::IRTExpression> _exp ) : exp( _exp )
 {
 }
 
-const IRTree::IRTExpression* Translate::IRTExpConverter::ToExpression() const
+const std::shared_ptr<IRTree::IRTExpression> Translate::IRTExpConverter::ToExpression() const
 {
     return exp;
 }
 
-const IRTree::IRTStatement* Translate::IRTExpConverter::ToStatement() const
+const std::shared_ptr<IRTree::IRTStatement> Translate::IRTExpConverter::ToStatement() const
 {
     return new IRTree::IRTSExp( exp );
 }
 
-const IRTree::IRTStatement* Translate::IRTExpConverter::ToConditional( const IRTree::Label* t, const IRTree::Label* f ) const
+const std::shared_ptr<IRTree::IRTStatement> Translate::IRTExpConverter::ToConditional( const std::shared_ptr<IRTree::Label> t, const std::shared_ptr<IRTree::Label> f ) const
 {
-    return new IRTree::IRTSCjump( IRTree::CJUMP_NE, exp, new IRTree::IRTEConst(0), t, f );
+    return std::make_shared<IRTree::IRTSCjump>( IRTree::CJUMP_NE, exp, new IRTree::IRTEConst(0), t, f );
 }

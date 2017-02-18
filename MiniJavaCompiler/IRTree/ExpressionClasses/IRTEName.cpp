@@ -1,10 +1,11 @@
+#include <memory>
 #include "IRTEName.h"
 
-IRTree::IRTEName::IRTEName( const Label* _label ) : label( _label )
+IRTree::IRTEName::IRTEName( const std::shared_ptr<Label> _label ) : label( _label )
 {
 }
 
-const IRTree::Label* IRTree::IRTEName::GetLabel() const
+const std::shared_ptr<IRTree::Label> IRTree::IRTEName::GetLabel() const
 {
 	return label;
 }

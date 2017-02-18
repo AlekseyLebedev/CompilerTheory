@@ -1,10 +1,11 @@
+#include <memory>
 #include "IRTETemp.h"
 
-IRTree::IRTETemp::IRTETemp( const Temp* _temp ) : temp( _temp )
+IRTree::IRTETemp::IRTETemp( const std::shared_ptr<Temp> _temp ) : temp( _temp )
 {
 }
 
-const IRTree::Temp* IRTree::IRTETemp::GetTemp() const
+const std::shared_ptr<IRTree::Temp> IRTree::IRTETemp::GetTemp() const
 {
     return temp;
 }

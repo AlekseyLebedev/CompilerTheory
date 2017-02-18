@@ -6,13 +6,13 @@ namespace IRTree {
 	class IRTStatement;
 	class CCodeFragment {
 	public:
-		CCodeFragment(const IRTStatement* body );
-		void SetNext( const CCodeFragment* next );
-		const IRTStatement* GetTree() const;
-		const CCodeFragment* GetNext() const;
+		CCodeFragment( const std::shared_ptr<IRTStatement> body );
+		void SetNext( const std::shared_ptr<CCodeFragment> next );
+		const std::shared_ptr<IRTStatement> GetTree() const;
+		const std::shared_ptr<CCodeFragment> GetNext() const;
 	private:
-		const CFrame* frame;
-		const IRTStatement* body;
-		const CCodeFragment* next;
+		const std::shared_ptr<CFrame> frame;
+		const std::shared_ptr<CCodeFragment> next;
+		const std::shared_ptr<IRTStatement> body;
 	};
 }

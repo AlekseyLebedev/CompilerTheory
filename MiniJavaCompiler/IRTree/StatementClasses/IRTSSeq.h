@@ -7,17 +7,17 @@ namespace IRTree {
 	class IRTSSeq : public IRTStatement {
 	public:
 		
-		IRTSSeq( const IRTStatement* _left, const IRTStatement* _right );
+		IRTSSeq( const std::shared_ptr<IRTStatemen> _left, const std::shared_ptr<IRTStatement> _right );
 
-		const IRTStatement* GetStmLeft() const;
-		const IRTStatement* GetStmRight() const;
+		const std::shared_ptr<IRTStatement> GetStmLeft() const;
+		const std::shared_ptr<IRTStatement> GetStmRight() const;
 
         void Accept( IVisitor* visitor ) const override;
 		
 	private:
 
-		const IRTStatement* left;
-		const IRTStatement* right;
+		const std::shared_ptr<IRTStatement> left;
+		const std::shared_ptr<IRTStatement> right;
 
 	};
 }

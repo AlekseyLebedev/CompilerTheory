@@ -1,6 +1,6 @@
 #include "IRTEBinop.h"
 
-IRTree::IRTEBinop::IRTEBinop( RELOP _binop, const IRTExpression* _left, const IRTExpression* _right )
+IRTree::IRTEBinop::IRTEBinop( RELOP _binop, const std::shared_ptr<IRTExpression> _left, const std::shared_ptr<IRTExpression> _right )
 	: binop( _binop ), left( _left ), right( _right )
 {
 }
@@ -10,12 +10,12 @@ const IRTree::RELOP IRTree::IRTEBinop::GetBinop() const
     return binop;
 }
 
-const IRTree::IRTExpression* IRTree::IRTEBinop::GetLeft() const
+const std::shared_ptr<IRTree::IRTExpression> IRTree::IRTEBinop::GetLeft() const
 {
 	return left;
 }
 
-const IRTree::IRTExpression* IRTree::IRTEBinop::GetRight() const
+const std::shared_ptr<IRTree::IRTExpression> IRTree::IRTEBinop::GetRight() const
 {
 	return right;
 }

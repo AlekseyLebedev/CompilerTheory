@@ -8,15 +8,15 @@ namespace IRTree {
 	class IRTETemp : public IRTExpression {
 	public:
 		
-        IRTETemp( const Temp* _temp );
+        IRTETemp( const std::shared_ptr<Temp> _temp );
 
-        const Temp* GetTemp() const;
+        const std::shared_ptr<Temp> GetTemp() const;
 
         void Accept( IVisitor* visitor ) const override;
 		
 	private:
 
-        const Temp* temp;
+        const std::shared_ptr<Temp> temp;
 
 	};
 }

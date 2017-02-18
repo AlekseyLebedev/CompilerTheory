@@ -9,24 +9,24 @@ namespace IRTree {
 	class IRTSCjump : public IRTStatement {
 	public:
 		
-		IRTSCjump( const RELOP _relop, const IRTExpression* _expLeft, const IRTExpression* _expRight,
-			const Label* _labelLeft, const Label* _labelRight );
+		IRTSCjump( const RELOP _relop, const std::shared_ptr<IRTExpression> _expLeft, const std::shared_ptr<IRTExpression> _expRight,
+			const std::shared_ptr<Label> _labelLeft, const std::shared_ptr<Label> _labelRight );
 
 		const RELOP GetRelop() const;
-		const IRTExpression* GetExpLeft() const;
-		const IRTExpression* GetExpRight() const;
-		const Label* GetLabelLeft() const;
-		const Label* GetLabelRight() const;
+		const std::shared_ptr<IRTExpression> GetExpLeft() const;
+		const std::shared_ptr<IRTExpression> GetExpRight() const;
+		const std::shared_ptr<Label> GetLabelLeft() const;
+		const std::shared_ptr<Label> GetLabelRight() const;
 
         void Accept( IVisitor* visitor ) const override;
 		
 	private:
 
 		const RELOP relop;
-		const IRTExpression* expLeft;
-		const IRTExpression* expRight;
-		const Label* labelLeft;
-		const Label* labelRight;
+		const std::shared_ptr<IRTExpression> expLeft;
+		const std::shared_ptr<IRTExpression> expRight;
+		const std::shared_ptr<Label> labelLeft;
+		const std::shared_ptr<Label> labelRight;
 
 	};
 }

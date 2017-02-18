@@ -1,16 +1,17 @@
+#include <memory>
 #include "IRTEEseq.h"
 
-IRTree::IRTEEseq::IRTEEseq( const IRTStatement* _stm, const IRTExpression* _exp )
+IRTree::IRTEEseq::IRTEEseq( const std::shared_ptr<IRTStatement> _stm, const std::shared_ptr<IRTExpression> _exp )
 	: stm( _stm ), exp( _exp )
 {
 }
 
-const IRTree::IRTStatement* IRTree::IRTEEseq::GetStm() const
+const std::shared_ptr<IRTree::IRTStatement> IRTree::IRTEEseq::GetStm() const
 {
 	return stm;
 }
 
-const IRTree::IRTExpression* IRTree::IRTEEseq::GetExp() const
+const std::shared_ptr<IRTree::IRTExpression> IRTree::IRTEEseq::GetExp() const
 {
 	return exp;
 }

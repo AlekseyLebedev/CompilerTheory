@@ -7,17 +7,17 @@ namespace IRTree {
 	class IRTECall : public IRTExpression {
 	public:
 			
-		IRTECall( const IRTExpression* _func, const IRTExpList* _args );
+		IRTECall( const std::shared_ptr<IRTExpression> _func, const std::shared_ptr<IRTExpList> _args );
 
-		const IRTExpression* GetFunc() const;
-		const IRTExpList* GetArgs() const;
+		const std::shared_ptr<IRTExpression> GetFunc() const;
+		const std::shared_ptr<IRTExpList> GetArgs() const;
 
         void Accept( IVisitor* visitor ) const override;
 			
 	private:
 
-		const IRTExpression* func;
-		const IRTExpList* args;
+		const std::shared_ptr<IRTExpression> func;
+		const std::shared_ptr<IRTExpList> args;
 
     };
 }

@@ -1,16 +1,17 @@
+#include <memory>
 #include "IRTECall.h"
 
-IRTree::IRTECall::IRTECall( const IRTExpression* _func, const IRTExpList* _args )
+IRTree::IRTECall::IRTECall( const std::shared_ptr<IRTExpression> _func, const std::shared_ptr<IRTExpList> _args )
 	: func( _func ), args( _args )
 {
 }
 
-const IRTree::IRTExpression* IRTree::IRTECall::GetFunc() const
+const std::shared_ptr<IRTree::IRTExpression> IRTree::IRTECall::GetFunc() const
 {
 	return func;
 }
 
-const IRTree::IRTExpList* IRTree::IRTECall::GetArgs() const
+const std::shared_ptr<IRTree::IRTExpList> IRTree::IRTECall::GetArgs() const
 {
 	return args;
 }

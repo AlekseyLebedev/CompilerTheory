@@ -1,16 +1,17 @@
+#include <memory>
 #include "IRTSMove.h"
 
-IRTree::IRTSMove::IRTSMove( const IRTExpression* _dst, const IRTExpression* _src )
+IRTree::IRTSMove::IRTSMove( const std::shared_ptr<IRTExpression> _dst, const std::shared_ptr<IRTExpression> _src )
 	: dst( _dst ), src( _src )
 {
 }
 
-const IRTree::IRTExpression* IRTree::IRTSMove::GetExrDst() const
+const std::shared_ptr<IRTree::IRTExpression> IRTree::IRTSMove::GetExrDst() const
 {
 	return dst;
 }
 
-const IRTree::IRTExpression* IRTree::IRTSMove::GetExrSrc() const
+const std::shared_ptr<IRTree::IRTExpression> IRTree::IRTSMove::GetExrSrc() const
 {
 	return src;
 }
