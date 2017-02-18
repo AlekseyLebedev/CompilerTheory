@@ -1,15 +1,15 @@
 ﻿#include <cassert>
 #include <sstream>
-#include "IRTreeVisitor.h"
-#include "IRTreeAllClasses.h"
+#include"IRTreeVisitor.h"
+#include"IRTreeAllClasses.h"
 
 namespace IRTree {
 
-	IRTreeVisitor::IRTreeVisitor()
-		: currentNodeID( 0 ), numberOfVisitedNodes( 0 ), lastNodeID( 0 )
+	IRTreeVisitor::IRTreeVisitor( const std::wstring& _header )
+		: currentNodeID( 0 ), numberOfVisitedNodes( 0 ), lastNodeID( 0 ), header( _header )
 	{
 		nodesStack.push( currentNodeID );
-		nodeLables.insert( std::make_pair( currentNodeID, "Frame" ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"Frame" ) );
 	}
 
 	IRTreeVisitor::~IRTreeVisitor()
@@ -38,7 +38,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, "CONST " + std::to_string( node->GetValue() ) ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"CONST " + std::to_wstring( node->GetValue() ) ) );
 
 		leaveNode();
 	}
@@ -47,7 +47,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, "NAME " + node->GetLabel()->GetName() ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"NAME " + node->GetLabel()->GetName() ) );
 
 		leaveNode();
 	}
@@ -56,7 +56,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, "TEMP " + node->GetTemp()->GetName() ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"TEMP " + node->GetTemp()->GetName() ) );
 
 		leaveNode();
 	}
@@ -67,28 +67,28 @@ namespace IRTree {
 
 		switch( node->GetBinop() ) {
 			case BINOP_PLUS:
-				nodeLables.insert( std::make_pair( currentNodeID, "PLUS" ) );
+				nodeLables.insert( std::make_pair( currentNodeID, L"PLUS" ) );
 				break;
 			case BINOP_MINUS:
-				nodeLables.insert( std::make_pair( currentNodeID, "MINUS" ) );
+				nodeLables.insert( std::make_pair( currentNodeID, L"MINUS" ) );
 				break;
 			case BINOP_MUL:
-				nodeLables.insert( std::make_pair( currentNodeID, "MUL" ) );
+				nodeLables.insert( std::make_pair( currentNodeID, L"MUL" ) );
 				break;
 			case BINOP_DIV:
-				nodeLables.insert( std::make_pair( currentNodeID, "DIV" ) );
+				nodeLables.insert( std::make_pair( currentNodeID, L"DIV" ) );
 				break;
 			case BINOP_AND:
-				nodeLables.insert( std::make_pair( currentNodeID, "AND" ) );
+				nodeLables.insert( std::make_pair( currentNodeID, L"AND" ) );
 				break;
 			case CJUMP_LT:
-				nodeLables.insert( std::make_pair( currentNodeID, "LESS" ) );
+				nodeLables.insert( std::make_pair( currentNodeID, L"LESS" ) );
 				break;
 			case BINOP_MOD:
-				nodeLables.insert( std::make_pair( currentNodeID, "MOD" ) );
+				nodeLables.insert( std::make_pair( currentNodeID, L"MOD" ) );
 				break;
 			case BINOP_OR:
-				nodeLables.insert( std::make_pair( currentNodeID, "OR" ) );
+				nodeLables.insert( std::make_pair( currentNodeID, L"OR" ) );
 				break;
 			default:
 				assert( false );
@@ -105,7 +105,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, "MEM" ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"MEM" ) );
 		node->GetExp()->Accept( this );
 
 		leaveNode();
@@ -115,7 +115,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, "CALL" ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"CALL" ) );
 		node->GetFunc()->Accept( this );
 
 		if( node->GetArgs() ) {
@@ -129,7 +129,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, "ESEQ" ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"ESEQ" ) );
 		// left
 		node->GetStm()->Accept( this );
 		// right
@@ -142,7 +142,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, "MOVE" ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"MOVE" ) );
 		// left
 		node->GetExrDst()->Accept( this );
 		// right
@@ -155,7 +155,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, "EXP" ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"EXP" ) );
 		node->GetExp()->Accept( this );
 
 		leaveNode();
@@ -165,10 +165,10 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, "JUMP" ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"JUMP" ) );
 
 		unsigned int tempNode = createNode();
-		nodeLables.insert( std::make_pair( tempNode, concat( "LABEL ", node->GetLabel()->GetName() ) ) );
+		nodeLables.insert( std::make_pair( tempNode, concat( L"LABEL ", node->GetLabel()->GetName() ) ) );
 		addEdge( currentNodeID, tempNode );
 
 		leaveNode();
@@ -178,28 +178,28 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, "CJUMP" ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"CJUMP" ) );
 
 		unsigned int tempNode = createNode();
 
 		switch( node->GetRelop() ) {
 			case CJUMP_EQ:
-				nodeLables.insert( std::make_pair( tempNode, "==" ) );
+				nodeLables.insert( std::make_pair( tempNode, L"==" ) );
 				break;
 			case CJUMP_GE:
-				nodeLables.insert( std::make_pair( tempNode, ">=" ) );
+				nodeLables.insert( std::make_pair( tempNode, L">=" ) );
 				break;
 			case CJUMP_GT:
-				nodeLables.insert( std::make_pair( tempNode, ">" ) );
+				nodeLables.insert( std::make_pair( tempNode, L">" ) );
 				break;
 			case CJUMP_LE:
-				nodeLables.insert( std::make_pair( tempNode, "<=" ) );
+				nodeLables.insert( std::make_pair( tempNode, L"<=" ) );
 				break;
 			case CJUMP_LT:
-				nodeLables.insert( std::make_pair( tempNode, "<" ) );
+				nodeLables.insert( std::make_pair( tempNode, L"<" ) );
 				break;
 			case CJUMP_NE:
-				nodeLables.insert( std::make_pair( tempNode, "!=" ) );
+				nodeLables.insert( std::make_pair( tempNode, L"!=" ) );
 				break;
 			default:
 				assert( false );
@@ -213,12 +213,12 @@ namespace IRTree {
 
 		// left label, true
 		tempNode = createNode();
-		nodeLables.insert( std::make_pair( tempNode, concat( "LABEL ", node->GetLabelLeft()->GetName() ) ) );
+		nodeLables.insert( std::make_pair( tempNode, concat( L"LABEL ", node->GetLabelLeft()->GetName() ) ) );
 		addEdge( currentNodeID, tempNode );
 
 		// right label, false
 		tempNode = createNode();
-		nodeLables.insert( std::make_pair( tempNode, concat( "LABEL ", node->GetLabelRight()->GetName() ) ) );
+		nodeLables.insert( std::make_pair( tempNode, concat( L"LABEL ", node->GetLabelRight()->GetName() ) ) );
 		addEdge( currentNodeID, tempNode );
 
 		leaveNode();
@@ -228,7 +228,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, "SEQ" ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"SEQ" ) );
 		// left
 		node->GetStmLeft()->Accept( this );
 		// right
@@ -245,7 +245,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, concat( "LABEL ", node->GetLabel()->GetName() ) ) );
+		nodeLables.insert( std::make_pair( currentNodeID, concat( L"LABEL ", node->GetLabel()->GetName() ) ) );
 
 		leaveNode();
 	}
@@ -254,14 +254,14 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, concat( "ACCESS ", node->GetName() ) ) );
+		nodeLables.insert( std::make_pair( currentNodeID, concat( L"ACCESS ", node->GetName() ) ) );
 
 		leaveNode();
 	}
 
-	void IRTreeVisitor::Start( const std::string & filename )
+	void IRTreeVisitor::Start( const std::wstring & filename )
 	{
-		graphvizOutputFile = std::ofstream( filename );
+		graphvizOutputFile = std::wofstream( filename );
 	}
 
 	void IRTreeVisitor::Close()
@@ -290,7 +290,7 @@ namespace IRTree {
 	void IRTreeVisitor::nullNode()
 	{
 		visitNode();
-		nodeLables.insert( std::make_pair( currentNodeID, "NULL" ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"NULL" ) );
 		leaveNode();
 	}
 
@@ -301,20 +301,21 @@ namespace IRTree {
 
 	void IRTreeVisitor::writeGraphToFile()
 	{
-		graphvizOutputFile << "digraph {" << std::endl;
+		graphvizOutputFile << L"digraph {" << std::endl;
+		graphvizOutputFile << L"\t label=\"" << header << L"\"" << std::endl;
 
 		// nodes
 		for( unsigned int i = 0; i < nodeLables.size(); ++i ) {
-			graphvizOutputFile << "n" << i << "[ label = \"" << nodeLables[i] << "\" ];" << std::endl;
+			graphvizOutputFile << L"n" << i << L"[ label = \"" << nodeLables[i] << L"\" ];" << std::endl;
 		}
 
 		// edges
 		for( unsigned int i = 0; i < edges.size(); ++i ) {
-			graphvizOutputFile << "n" << edges[i].first << " -> n" << edges[i].second << ";" << std::endl;
+			graphvizOutputFile << L"n" << edges[i].first << L" -> n" << edges[i].second << L";" << std::endl;
 		}
 
 
-		graphvizOutputFile << "}";
+		graphvizOutputFile << L"}";
 	}
 
 	unsigned int IRTreeVisitor::createNode()
@@ -322,9 +323,9 @@ namespace IRTree {
 		return (++numberOfVisitedNodes);
 	}
 
-	std::string IRTreeVisitor::concat( const std::string& str, const int n )
+	std::wstring IRTreeVisitor::concat( const std::wstring& str, const int n )
 	{
-		std::stringstream result;
+		std::wstringstream result;
 		result << str << n;
 		return result.str();
 	}

@@ -9,10 +9,10 @@ namespace IRTree {
     {
     public:
 
-        const std::string GetName() const;
+        const std::wstring GetName() const;
 
     private:
 
-        const std::string name;
+        const std::wstring name;
     };
 }

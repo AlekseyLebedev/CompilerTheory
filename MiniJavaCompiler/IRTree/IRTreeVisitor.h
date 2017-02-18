@@ -16,7 +16,7 @@ namespace IRTree {
 	class IRTreeVisitor : public IVisitor {
 	public:
 
-		IRTreeVisitor();
+		IRTreeVisitor(const std::wstring& header);
 		~IRTreeVisitor();
 
 		virtual void Visit( const IRTExpList* node );
@@ -40,9 +40,17 @@ namespace IRTree {
 
 		virtual void Visit( const IAccess* node );
 
-		void Start( const std::string& filename );
+		void Start( const std::wstring& filename );
 		void Close();
 	private:
+		unsigned int currentNodeID;
+		unsigned int lastNodeID;
+		unsigned int numberOfVisitedNodes;
+		std::stack<unsigned int> nodesStack;
+		std::wstring header;
+
+		std::vector<std::pair<unsigned int, unsigned int>> edges;
+		std::map<unsigned int, std::wstring> nodeLables;
 
 		void visitNode();
 		void leaveNode();
@@ -51,19 +59,12 @@ namespace IRTree {
 		void addEdge( unsigned int from, unsigned int to );
 		unsigned int createNode();
 
-		std::string concat( const std::string & str, const int n );
+		std::wstring concat( const std::wstring & str, const int n );
 
 		void writeGraphToFile();
 
-		std::ofstream graphvizOutputFile;
+		std::wofstream graphvizOutputFile;
 
-		unsigned int currentNodeID;
-		unsigned int lastNodeID;
-		unsigned int numberOfVisitedNodes;
-		std::stack<unsigned int> nodesStack;
-
-		std::vector<std::pair<unsigned int, unsigned int>> edges;
-		std::map<unsigned int, std::string> nodeLables;
 
 	};
 }

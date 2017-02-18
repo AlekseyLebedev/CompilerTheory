@@ -63,7 +63,7 @@ int main( int argc, char** argv )
 				const IRTree::CCodeFragment* code = irtree.GetCode()->GetNext();
 				const IRTree::IRTStatement* tree = code->GetTree();
 				GraphvizOutput::CGraphvizLauncher::Launch<IRTree::IRTreeVisitor,
-						const IRTree::IRTStatement>( tree, i );
+						const IRTree::IRTStatement>( tree, i, L"Test" );
 			}
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;
