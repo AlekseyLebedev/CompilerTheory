@@ -1,8 +1,6 @@
 class Main{
     public static void main(String[] a) {
-	/*	int e;
-	e = 6;*/
-	System.out.println(3);
+	System.out.println(new A().A1());
     }
 }
 

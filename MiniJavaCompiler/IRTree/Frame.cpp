@@ -2,6 +2,7 @@
 #include "IRTExpression.h"
 #include "IRTLabel.h"
 #include <memory>
+#include <cassert>
 
 namespace IRTree {
 
@@ -16,6 +17,8 @@ namespace IRTree {
 
 	std::shared_ptr<IAccess> CFrame::GetDataInfo( int name )
 	{
+		auto iter = variables.find( name );
+		assert( iter != variables.end() );
 		return variables.find( name )->second;
 	}
 

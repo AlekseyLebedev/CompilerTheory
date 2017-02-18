@@ -76,7 +76,7 @@ namespace SymbolTable {
 
 	std::shared_ptr<IRTree::Label> CMethodInfo::GetLabel() const
 	{
-		if( label = 0 ) {
+		if( label == 0 ) {
 			++methodCount;
 			label = std::make_shared<IRTree::Label>( -methodCount );
 		}
