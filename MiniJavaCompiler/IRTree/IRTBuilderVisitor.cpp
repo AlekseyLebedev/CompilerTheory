@@ -195,6 +195,7 @@ namespace IRTree {
 		visitChild( method->GetArgumentList().get() );
 		visitChild( method->GetVarDeclarationList().get() );
 		visitChild( method->GetStatementList() );
+		visitChild( method->GetExpression().get() );
 		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>( returnedStatement );
 		codeFragment->SetNext( bufferFragment );
 		codeFragment = bufferFragment;
