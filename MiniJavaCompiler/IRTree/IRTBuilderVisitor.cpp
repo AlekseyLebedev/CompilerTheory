@@ -96,9 +96,6 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CConstructorExpression* const expression )
 	{
-
-		assert( false ); // TODO
-		//ctor
 		returnedExpression = std::make_shared<IRTECall>( std::make_shared<IRTEName>( table->GetAllocLabel() ), std::make_shared<IRTExpList>( std::make_shared<IRTEConst>(
 			table->GetClassInfo( expression->GetIdExpression()->GetName() ).GetSize( table ) ), nullptr ) );
 		returnValueType = expression->GetIdExpression()->GetName();
@@ -190,14 +187,6 @@ namespace IRTree {
 		codeFragment = startPoint;
 
 		returnValueType = TStdType::ST_Void;
-		//std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>( returnedStatement );
-		//codeFragment->SetNext( bufferFragment );
-		//codeFragment = bufferFragment;
-
-		//currentClass = mainclass->GetClassName()->GetName();
-		//startPoint = std::make_shared<CCodeFragment>( visitChild( mainclass->GetStatement().get() ) );
-		//codeFragment = startPoint;
-		//returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )
@@ -449,7 +438,7 @@ namespace IRTree {
 		if( expList != 0 ) {
 			expList->Accept( this );
 			arguments = std::dynamic_pointer_cast<IRTExpList>(returnedExpression);
-			assert( arguments != 0 );
+			assert( arguments != 0 ); // TODO 
 		}
 		std::shared_ptr<IRTECall> call = std::make_shared<IRTECall>( name, arguments );
 
