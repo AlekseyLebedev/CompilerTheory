@@ -38,8 +38,18 @@ namespace IRTree {
 	{
 		std::shared_ptr<IRTExpression> src = visitChild( statement->GetExpressionSecond().get() );
 		std::shared_ptr<IRTExpression> id = visitChild( statement->GetIdExpression().get() );
-		//IRTECall* dst = new IRTECall(id,);
-		assert( false ); // TODO
+		int returnType = returnValueType;
+		std::shared_ptr<IRTExpression> ptr = visitChild( statement->GetExpressionFirst().get() );
+
+		int typesize = 4;
+		if( returnType > 0 ) {
+			typesize = table->GetClassInfo( returnType, statement->GetIdExpression().get() ).GetSize( table );
+		}
+		std::shared_ptr<IRTSMove> root = std::make_shared<IRTSMove>( std::make_shared<IRTEBinop>(
+			RELOP::BINOP_PLUS, id, std::make_shared<IRTEBinop>(
+				RELOP::BINOP_MUL,  ptr, std::make_shared<IRTEConst>(typesize) )
+			), src );
+		returnedStatement = root;
 		returnValueType = TStdType::ST_Void;
 	}
 
@@ -125,17 +135,19 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CIndexExpression* const indexExp )
 	{
-		std::shared_ptr<AbstractTreeGenerator::IExpression> first = indexExp->GetExpressionFirst();
-		std::shared_ptr<AbstractTreeGenerator::IExpression> second = indexExp->GetExpressionSecond();
-
-		std::shared_ptr<IRTExpression> firstNode = visitChild( first.get() );
+		std::shared_ptr<IRTExpression> ptr = visitChild( indexExp->GetExpressionSecond().get() );
 		int returnType = returnValueType;
-		std::shared_ptr<IRTExpression> secondNode = visitChild( second.get() );
 		assert( returnType == TStdType::ST_Int );
+		std::shared_ptr<IRTExpression> id = visitChild( indexExp->GetExpressionFirst().get() );
+		returnType = returnValueType;
 
-		// ???
-		// returnedExpression = ...
-		assert( false ); // TODO
+		int typesize = 4;
+		if( returnType > 0 ) {
+			typesize = table->GetClassInfo( returnType, indexExp->GetExpressionFirst().get() ).GetSize( table );
+		} 
+		std::shared_ptr<IRTEBinop> root = std::make_shared<IRTEBinop>(
+			RELOP::BINOP_PLUS, id, std::make_shared<IRTEBinop>( RELOP::BINOP_MUL, ptr, std::make_shared<IRTEConst>( typesize ) ) );
+		returnedExpression = root;
 		returnValueType = returnType;
 	}
 
@@ -146,7 +158,7 @@ namespace IRTree {
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CLengthExpression* const )
-	{
+	{		
 		// call something called length
 		assert( false ); // TODO
 		returnValueType = TStdType::ST_Int;
@@ -154,6 +166,8 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CListConstructorExpression* const expression )
 	{
+		/*std::shared_ptr<IRTECall> root = std::make_shared<IRTECall>( nullptr, nullptr );
+		returnedExpression = root;*/
 		assert( false ); // TODO
 		returnValueType = TStdType::ST_Intlist;
 	}

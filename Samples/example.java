@@ -7,16 +7,9 @@ class Main{
 class A {
 
 	public int A1() {
-		int a;					
-		a = 5;
-		if (a<4) {
-			while (a < 8){
-				a = a+1;
-			}
-			a = 9;
-		} else {
-			a = 8;
-		}
+		int[] a; 		
+		a = new int[4];					
+		a[1] = 5;
 		return 0;
 	}
 	
