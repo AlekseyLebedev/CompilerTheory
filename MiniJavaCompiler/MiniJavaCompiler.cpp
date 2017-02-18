@@ -65,6 +65,7 @@ int main( int argc, char** argv )
 				std::shared_ptr<IRTree::CCodeFragment> currentCodeFragment = irtree.GetCode();
 				while( currentCodeFragment != 0 ) {
 					headerBuilder << argv[i] << ", " << reinterpret_cast<size_t>(currentCodeFragment.get());
+					std::wcout << L"Printing: " << headerBuilder.str() << std::endl;
 					GraphvizOutput::CGraphvizLauncher::Launch<IRTree::IRTreeVisitor, const IRTree::IRTStatement>(
 						currentCodeFragment->GetTree().get(), fileIndex++, headerBuilder.str() );
 					currentCodeFragment = currentCodeFragment->GetNext();
