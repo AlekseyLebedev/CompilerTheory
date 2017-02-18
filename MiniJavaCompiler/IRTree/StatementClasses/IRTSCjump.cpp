@@ -1,8 +1,8 @@
 #include <memory>
 #include "IRTSCjump.h"
 
-IRTree::IRTSCjump::IRTSCjump( const RELOP _relop, const std::shared_ptr<IRTExpression> _expLeft, const std::shared_ptr<IRTExpression> _expRight,
-	const std::shared_ptr<Label> _labelLeft, const std::shared_ptr<Label> _labelRight )
+IRTree::IRTSCjump::IRTSCjump( const RELOP _relop, std::shared_ptr<IRTExpression> _expLeft, std::shared_ptr<IRTExpression> _expRight,
+	std::shared_ptr<Label> _labelLeft, std::shared_ptr<Label> _labelRight )
     : relop( _relop ), expLeft( _expLeft ), expRight( _expRight ), labelLeft( _labelLeft ), labelRight( _labelRight )
 {
 }

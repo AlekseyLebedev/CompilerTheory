@@ -17,5 +17,5 @@ const std::shared_ptr<IRTree::IRTStatement> Translate::IRTExpConverter::ToStatem
 
 const std::shared_ptr<IRTree::IRTStatement> Translate::IRTExpConverter::ToConditional( const std::shared_ptr<IRTree::Label> t, const std::shared_ptr<IRTree::Label> f ) const
 {
-	return std::make_shared<IRTree::IRTSCjump>( IRTree::CJUMP_NE, exp, new IRTree::IRTEConst( 0 ), t, f );
+	return std::make_shared<IRTree::IRTSCjump>( IRTree::CJUMP_NE, exp, std::make_shared<IRTree::IRTEConst>( 0 ), t, f );
 }

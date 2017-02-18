@@ -9,8 +9,8 @@ namespace IRTree {
 	class IRTSCjump : public IRTStatement {
 	public:
 		
-		IRTSCjump( const RELOP _relop, const std::shared_ptr<IRTExpression> _expLeft, const std::shared_ptr<IRTExpression> _expRight,
-			const std::shared_ptr<Label> _labelLeft, const std::shared_ptr<Label> _labelRight );
+		IRTSCjump( const RELOP _relop, std::shared_ptr<IRTExpression> _expLeft, std::shared_ptr<IRTExpression> _expRight,
+			std::shared_ptr<Label> _labelLeft, std::shared_ptr<Label> _labelRight );
 
 		const RELOP GetRelop() const;
 		const std::shared_ptr<IRTExpression> GetExpLeft() const;
@@ -23,10 +23,10 @@ namespace IRTree {
 	private:
 
 		const RELOP relop;
-		const std::shared_ptr<IRTExpression> expLeft;
-		const std::shared_ptr<IRTExpression> expRight;
-		const std::shared_ptr<Label> labelLeft;
-		const std::shared_ptr<Label> labelRight;
+		std::shared_ptr<IRTExpression> expLeft;
+		std::shared_ptr<IRTExpression> expRight;
+		std::shared_ptr<Label> labelLeft;
+		std::shared_ptr<Label> labelRight;
 
 	};
 }
