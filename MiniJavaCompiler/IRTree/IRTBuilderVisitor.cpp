@@ -169,9 +169,10 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CListConstructorExpression* const expression )
 	{
-		std::shared_ptr<IRTExpression> root = std::make_shared<IRTECall>( std::make_shared < Label>( SL_Alloc ) , std::make_shared<IRTEBinop>(
+		std::shared_ptr<IRTExpression> root = std::make_shared<IRTECall>( std::make_shared<IRTEName>( 
+			table->GetAllocLabel() ), std::make_shared<IRTExpList>( std::make_shared<IRTEBinop>(
 			RELOP::BINOP_MUL, visitChild( expression->GetExpression().get() ), std::make_shared<IRTEConst>( 
-				SymbolTable::CClassInfo::getSizeOfType( AbstractTreeGenerator::TStandardType::ST_Int, table )) ) );
+				SymbolTable::CClassInfo::getSizeOfType( AbstractTreeGenerator::TStandardType::ST_Int, table )) ), nullptr) );
 		returnedExpression = root;		
 		returnValueType = TStdType::ST_Intlist;
 	}
