@@ -187,14 +187,6 @@ namespace IRTree {
 		codeFragment = startPoint;
 
 		returnValueType = TStdType::ST_Void;
-		//std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>( returnedStatement );
-		//codeFragment->SetNext( bufferFragment );
-		//codeFragment = bufferFragment;
-
-		//currentClass = mainclass->GetClassName()->GetName();
-		//startPoint = std::make_shared<CCodeFragment>( visitChild( mainclass->GetStatement().get() ) );
-		//codeFragment = startPoint;
-		//returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )
