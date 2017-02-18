@@ -1,3 +1,4 @@
+#include <memory>
 #include <cassert>
 #include "MethodInfo.h"
 #include "TypeException.h"
@@ -73,11 +74,11 @@ namespace SymbolTable {
 		return argsTypes[num];
 	}
 
-	IRTree::Label * CMethodInfo::GetLabel() const
+	std::shared_ptr<IRTree::Label> CMethodInfo::GetLabel() const
 	{
 		if( label = 0 ) {
 			++methodCount;
-			label = new IRTree::Label( -methodCount );
+			label = std::make_shared<IRTree::Label>( -methodCount );
 		}
 		return label;
 	}

@@ -50,7 +50,7 @@ namespace IRTree {
 		std::shared_ptr<IRTExpression> src = visitChild( statement->GetExpression().get() );
 		std::shared_ptr<IRTExpression> dst = visitChild( statement->GetIdExpression().get() );
 
-		IRTSMove* root = new IRTSMove( dst, src );
+		std::shared_ptr<IRTSMove> root = std::make_shared<IRTSMove>( dst, src );
 		returnedStatement = root;
 		returnValueType = TStdType::ST_Void;
 	}
@@ -87,9 +87,9 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CConstructorExpression* const expression )
 	{
-		IRTExpression* exp = visitChild( expression->GetIdExpression().get() );
+		std::shared_ptr<IRTExpression> exp = visitChild( expression->GetIdExpression().get() );
 		// OR Call?
-		IRTEMem* root = new IRTEMem( exp );
+		std::shared_ptr<IRTEMem> root = std::make_shared<IRTEMem>( exp );
 		returnedExpression = root;
 		assert( false ); // TODO
 		returnValueType = expression->GetIdExpression()->GetName();
@@ -100,17 +100,16 @@ namespace IRTree {
 		std::shared_ptr<AbstractTreeGenerator::IExpression> head = expList->GetExpression();
 		std::shared_ptr<AbstractTreeGenerator::CExpressionList> tail = expList->GetExpressionList();
 
-		IRTExpression* headNode = visitChild( head.get() );
-
-		IRTExpression* root;
+		std::shared_ptr<IRTExpression> headNode = visitChild( head.get() );
+		std::shared_ptr<IRTExpression> root;
 
 		if( tail != nullptr ) {
 			tail->Accept( this );
 
-			IRTExpression* tailNode = returnedExpression;
-			root = new IRTEEseq( new IRTSExp( headNode ), tailNode );
+			std::shared_ptr<IRTExpression> tailNode = returnedExpression;
+			root = std::make_shared< IRTEEseq>( std::make_shared<IRTSExp>( headNode ), tailNode );
 		} else {
-			root = new IRTEEseq( new IRTSExp( headNode ), nullptr );
+			root = std::make_shared< IRTEEseq>( std::make_shared <IRTSExp>( headNode ), nullptr );
 		}
 
 		returnedExpression = root;
@@ -118,8 +117,8 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdExpression* const expression )
 	{
-		IAccess* access = currentFrame->GetDataInfo( expression->GetName() );
-		IRTEMem* root = new IRTEMem( access );
+		std::shared_ptr<IAccess> access = currentFrame->GetDataInfo( expression->GetName() );
+		std::shared_ptr<IRTEMem> root = std::make_shared<IRTEMem>( access );
 		returnedExpression = root;
 		returnValueType = access->GetType();
 	}
@@ -129,9 +128,9 @@ namespace IRTree {
 		std::shared_ptr<AbstractTreeGenerator::IExpression> first = indexExp->GetExpressionFirst();
 		std::shared_ptr<AbstractTreeGenerator::IExpression> second = indexExp->GetExpressionSecond();
 
-		IRTExpression* firstNode = visitChild( first.get() );
+		std::shared_ptr<IRTExpression> firstNode = visitChild( first.get() );
 		int returnType = returnValueType;
-		IRTExpression* secondNode = visitChild( second.get() );
+		std::shared_ptr<IRTExpression> secondNode = visitChild( second.get() );
 		assert( returnType == TStdType::ST_Int );
 
 		// ???
@@ -162,7 +161,7 @@ namespace IRTree {
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMainClass* const mainclass )
 	{
 		currentClass = mainclass->GetClassName()->GetName();
-		startPoint = new CCodeFragment( visitChild( mainclass->GetStatement().get() ) );
+		startPoint = std::make_shared<CCodeFragment>( visitChild( mainclass->GetStatement().get() ) );
 		codeFragment = startPoint;
 		returnValueType = TStdType::ST_Void;
 	}
@@ -171,12 +170,12 @@ namespace IRTree {
 	{
 		// what about type of method
 
-		Label* label = table->GetClassInfo( currentClass ).GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
-		currentFrame = new CFrame( currentClass, label );
+		std::shared_ptr<Label> label = table->GetClassInfo( currentClass ).GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
+		currentFrame = std::make_shared<CFrame>( currentClass, label );
 		returnValueType = TStdType::ST_Void;
 		visitChild( method->GetArgumentList().get() );
 		visitChild( method->GetVarDeclarationList().get() );
-		CCodeFragment* bufferFragment = new CCodeFragment(
+		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>(
 			visitChild(
 				new AbstractTreeGenerator::CCompoundStatement(//TODO че эт за хуйня
 					method->GetStatementList().get() ) ) );
@@ -196,9 +195,9 @@ namespace IRTree {
 	{
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = negExp->GetExpression();
 
-		IRTExpression* expNode = visitChild( exp.get() );
+		std::shared_ptr<IRTExpression> expNode = visitChild( exp.get() );
 
-		IRTStatement* root = new IRTSExp( expNode );
+		std::shared_ptr<IRTStatement> root = std::make_shared<IRTSExp>( expNode );
 
 		assert( returnValueType == TStdType::ST_Int );
 		returnedStatement = root;
@@ -206,7 +205,7 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CNumberExpr* const numerExp )
 	{
-		IRTEConst* root = new IRTEConst( numerExp->GetValue() );
+		std::shared_ptr<IRTEConst> root = std::make_shared<IRTEConst>( numerExp->GetValue() );
 		returnValueType = AbstractTreeGenerator::TStandardType::ST_Int;
 		returnedExpression = root;
 	}
@@ -220,9 +219,9 @@ namespace IRTree {
 
 		// operType ...
 
-		IRTExpression* leftNode = visitChild( left.get() );
+		std::shared_ptr<IRTExpression> leftNode = visitChild( left.get() );
 		int leftType = returnValueType;
-		IRTExpression* rightNode = visitChild( right.get() );
+		std::shared_ptr<IRTExpression> rightNode = visitChild( right.get() );
 
 
 		assert( leftType == returnValueType );
@@ -257,7 +256,7 @@ namespace IRTree {
 			default:
 				assert( false );
 		}
-		IRTEBinop* root = new IRTEBinop( IRToperationType, leftNode, rightNode );
+		std::shared_ptr<IRTEBinop> root = std::make_shared<IRTEBinop>( IRToperationType, leftNode, rightNode );
 
 		returnedExpression = root;
 		// ...
@@ -267,9 +266,9 @@ namespace IRTree {
 	{
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = parenExpression->GetExpression();
 
-		IRTExpression* expNode = visitChild( exp.get() );
+		std::shared_ptr<IRTExpression> expNode = visitChild( exp.get() );
 
-		IRTExpression* root = expNode;
+		std::shared_ptr<IRTExpression> root = expNode;
 
 		returnedExpression = root;
 		// returnValueType same
@@ -280,23 +279,23 @@ namespace IRTree {
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = precondStm->GetExpression();
 		std::shared_ptr<AbstractTreeGenerator::IStatement> stm = precondStm->GetStatement();
 
-		IRTExpression* expNode = visitChild( exp.get() );
-		IRTStatement* stmNode = visitChild( stm.get() );
+		std::shared_ptr<IRTExpression> expNode = visitChild( exp.get() );
+		std::shared_ptr<IRTStatement> stmNode = visitChild( stm.get() );
 
-		Label* beginLabel = new Label();
-		Label* trueLabel = new Label();
-		Label* falseLabel = new Label();
+		std::shared_ptr<Label> beginLabel = std::make_shared<Label>();
+		std::shared_ptr<Label> trueLabel = std::make_shared<Label>();
+		std::shared_ptr<Label> falseLabel = std::make_shared<Label>();
 
-		IRTSSeq* root = new IRTSSeq( new IRTSSeq( new IRTSLabel( beginLabel ),
-			new IRTSCjump( CJUMP_NE,
+		std::shared_ptr<IRTSSeq> root = std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( beginLabel ),
+			std::make_shared<IRTSCjump>( CJUMP_NE,
 				expNode,
-				new IRTEConst( 0 ),
+				std::make_shared<IRTEConst>( 0 ),
 				trueLabel,
 				falseLabel ) ),
-			new IRTSSeq( new IRTSSeq( new IRTSSeq( new IRTSLabel( trueLabel ),
+			std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( trueLabel ),
 				stmNode ),
-				new IRTSJump( beginLabel ) ),
-				new IRTSLabel( falseLabel ) ) );
+				std::make_shared<IRTSJump>( beginLabel ) ),
+				std::make_shared<IRTSLabel>( falseLabel ) ) );
 
 		returnedStatement = root;
 		returnValueType = TStdType::ST_Void;
@@ -306,9 +305,9 @@ namespace IRTree {
 	{
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = printStm->GetExpression();
 
-		IRTExpression* expNode = visitChild( exp.get() );
+		std::shared_ptr<IRTExpression> expNode = visitChild( exp.get() );
 
-		IRTStatement* root = new IRTSExp( expNode );
+		std::shared_ptr<IRTStatement> root = std::make_shared<IRTSExp>( expNode );
 
 		returnedStatement = root;
 		returnValueType = TStdType::ST_Void;
@@ -326,17 +325,17 @@ namespace IRTree {
 		std::shared_ptr<AbstractTreeGenerator::IStatement> head = stmList->GetStatement();
 		std::shared_ptr<AbstractTreeGenerator::CStatementList> tail = stmList->GetStatementList();
 
-		IRTStatement* headNode = visitChild( head.get() );
+		std::shared_ptr<IRTStatement> headNode = visitChild( head.get() );
 
-		IRTStatement* root;
+		std::shared_ptr<IRTStatement> root;
 
 		if( tail != nullptr ) {
 			tail->Accept( this );
 
-			IRTStatement* tailNode = returnedStatement;
-			root = new IRTSSeq( headNode, tailNode );
+			std::shared_ptr<IRTStatement> tailNode = returnedStatement;
+			root = std::make_shared<IRTSSeq>( headNode, tailNode );
 		} else {
-			root = new IRTSSeq( headNode, nullptr );
+			root = std::make_shared<IRTSSeq>( headNode, nullptr );
 		}
 
 		returnedStatement = root;
@@ -358,7 +357,7 @@ namespace IRTree {
 		int type = idType->GetType();
 		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = idType->GetIdExpression();
 
-		IRTExpression* expNode = visitChild( exp.get() );
+		std::shared_ptr<IRTExpression> expNode = visitChild( exp.get() );
 
 		// ...
 		// IRTStatement* root = new IRTSExp( expNode );
@@ -373,7 +372,7 @@ namespace IRTree {
 		int name = variable->GetIdExpression()->GetName();
 		AbstractTreeGenerator::IType* type = variable->GetType().get();
 		int typenum = type->GetType();
-		currentFrame->InsertVariable( name, new IAccess( name, typenum ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, typenum ) );
 		returnValueType = TStdType::ST_Void;
 	}
 
@@ -386,14 +385,14 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CTrueExpression* const trueExp )
 	{
-		IRTEConst* root = new IRTEConst( IRT_TRUE );
+		std::shared_ptr<IRTEConst> root = std::make_shared<IRTEConst>( IRT_TRUE );
 		returnValueType = TStdType::ST_Bool;
 		returnedExpression = root;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CFalseExpression* const falseExp )
 	{
-		IRTEConst* root = new IRTEConst( IRT_FALSE );
+		std::shared_ptr<IRTEConst> root = std::make_shared<IRTEConst>( IRT_FALSE );
 		returnValueType = TStdType::ST_Bool;
 		returnedExpression = root;
 	}
@@ -404,14 +403,14 @@ namespace IRTree {
 		std::shared_ptr<AbstractTreeGenerator::CExpressionList> expList = fieldExp->GetExpressionList();
 		int methodName = fieldExp->GetIdExpression()->GetName();
 
-		IRTExpression* expNode = visitChild( exp.get() );
+		std::shared_ptr<IRTExpression> expNode = visitChild( exp.get() );
 		int expressionType = returnValueType;
 		assert( expressionType != TStdType::ST_Void );
-		IRTStatement* root = new IRTSExp( expNode );
+		std::shared_ptr<IRTStatement> root = std::make_shared<IRTSExp>( expNode );
 
 		int currentSearchType = expressionType;
 		int methodReturnType = TStdType::ST_Void;
-		Label* methodLabel = 0;
+		std::shared_ptr<Label>methodLabel = 0;
 		do {
 			SymbolTable::CClassInfo info = table->GetClassInfo( currentSearchType );
 			if( info.ContainsMethod( methodName ) ) {
@@ -424,14 +423,14 @@ namespace IRTree {
 			}
 		} while( methodLabel == 0 );
 
-		IRTEName* name = new IRTEName( methodLabel );
-		IRTExpList* arguments = 0;
+		std::shared_ptr<IRTEName> name = std::make_shared<IRTEName>( methodLabel );
+		std::shared_ptr<IRTExpList> arguments = 0;
 		if( expList != 0 ) {
 			expList->Accept( this );
-			arguments = dynamic_cast<IRTExpList*>(returnedExpression);
+			arguments = std::dynamic_pointer_cast<IRTExpList>(returnedExpression);
 			assert( arguments != 0 );
 		}
-		IRTECall* call = new IRTECall( name, arguments );
+		std::shared_ptr<IRTECall> call = std::make_shared<IRTECall>( name, arguments );
 
 		returnedExpression = call;
 		returnValueType = methodReturnType;
@@ -443,25 +442,25 @@ namespace IRTree {
 		const std::shared_ptr<AbstractTreeGenerator::IStatement> first = condStm->GetStatementFirst();
 		const std::shared_ptr<AbstractTreeGenerator::IStatement> second = condStm->GetStatementSecond();
 
-		IRTExpression* expNode = visitChild( exp.get() );
-		IRTStatement* leftNode = visitChild( first.get() );
-		IRTStatement* rightNode = visitChild( second.get() );
+		std::shared_ptr<IRTExpression> expNode = visitChild( exp.get() );
+		std::shared_ptr<IRTStatement> leftNode = visitChild( first.get() );
+		std::shared_ptr<IRTStatement> rightNode = visitChild( second.get() );
 
-		Label* trueLabel = new Label();
-		Label* falseLabel = new Label();
-		Label* endLabel = new Label();
+		std::shared_ptr<Label> trueLabel = std::make_shared<Label>();
+		std::shared_ptr<Label> falseLabel = std::make_shared<Label>();
+		std::shared_ptr<Label> endLabel = std::make_shared<Label>();
 
-		IRTSSeq* root = new IRTSSeq( new IRTSCjump( CJUMP_NE,
+		std::shared_ptr<IRTSSeq> root = std::make_shared<IRTSSeq>( std::make_shared<IRTSCjump>( CJUMP_NE,
 			expNode,
-			new IRTEConst( 0 ),
+			std::make_shared<IRTEConst>( 0 ),
 			trueLabel,
 			falseLabel ),
-			new IRTSSeq( new IRTSSeq( new IRTSSeq( new IRTSLabel( trueLabel ),
+			std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( trueLabel ),
 				leftNode ),
-				new IRTSJump( endLabel ) ),
-				new IRTSSeq( new IRTSSeq( new IRTSLabel( falseLabel ),
+				std::make_shared<IRTSJump>( endLabel ) ),
+				std::make_shared< IRTSSeq>( std::make_shared< IRTSSeq>( std::make_shared<IRTSLabel>( falseLabel ),
 					rightNode ),
-					new IRTSLabel( endLabel ) ) ) );
+					std::make_shared<IRTSLabel>( endLabel ) ) ) );
 
 		returnedStatement = root;
 		returnValueType = TStdType::ST_Void;
@@ -469,7 +468,7 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CThisExpression* const thisExp )
 	{
-		returnedExpression = new IRTEMem( currentFrame->GetThisAccess() );
+		returnedExpression = std::make_shared<IRTEMem>( currentFrame->GetThisAccess() );
 		returnValueType = currentClass;
 	}
 

@@ -23,7 +23,7 @@ namespace SymbolTable {
 		int GetAllArgsCount() const;
 		int GetAllVarsCount() const;
 		int GetArgType( const int num ) const;
-		IRTree::Label* GetLabel() const;
+		std::shared_ptr<IRTree::Label> GetLabel() const;
 
 	private:
 		int returnType;
@@ -31,7 +31,7 @@ namespace SymbolTable {
 		std::map<int, CVariableInfo> args;
 		int varsCount;
 		std::vector<int> argsTypes;
-		mutable IRTree::Label* label;
+		mutable std::shared_ptr<IRTree::Label> label;
 		static int methodCount;
 	};
 }
