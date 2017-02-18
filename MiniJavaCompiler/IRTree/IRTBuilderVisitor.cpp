@@ -189,6 +189,7 @@ namespace IRTree {
 		returnValueType = TStdType::ST_Void;
 		visitChild( method->GetArgumentList().get() );
 		visitChild( method->GetVarDeclarationList().get() );
+		// TODO разобраться с этой странной штукой
 		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>(
 			visitChild( new AbstractTreeGenerator::CCompoundStatement( method->GetStatementList().get() ) ) );
 		codeFragment->SetNext( bufferFragment );
