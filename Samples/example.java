@@ -21,6 +21,8 @@ class A {
 	}
 	
 	public int A2() {
+		int b;
+		b = 6;
 		return 7;
 	}
 }

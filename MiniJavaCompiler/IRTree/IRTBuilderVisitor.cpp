@@ -176,9 +176,7 @@ namespace IRTree {
 		visitChild( method->GetArgumentList().get() );
 		visitChild( method->GetVarDeclarationList().get() );
 		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>(
-			visitChild(
-				new AbstractTreeGenerator::CCompoundStatement(//TODO че эт за хуйня
-					method->GetStatementList().get() ) ) );
+			visitChild( new AbstractTreeGenerator::CCompoundStatement( method->GetStatementList().get() ) ) );
 		codeFragment->SetNext( bufferFragment );
 		codeFragment = bufferFragment;
 	}
