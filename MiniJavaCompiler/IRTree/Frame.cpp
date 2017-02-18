@@ -36,5 +36,5 @@ namespace IRTree {
 	}
 
 	const int CFrame::ThisName = -11;
-	const int CFrame::ReturnName = -11;
+	const int CFrame::ReturnName = -12;
 }

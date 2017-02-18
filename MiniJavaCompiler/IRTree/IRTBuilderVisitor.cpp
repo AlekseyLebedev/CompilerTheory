@@ -46,7 +46,7 @@ namespace IRTree {
 		if( returnType > 0 ) {
 			typesize = table->GetClassInfo( returnType, statement->GetIdExpression().get() ).GetSize( table );
 		} else {
-			typesize = SymbolTable::CClassInfo::getSizeOfType( returnType, table );
+			typesize = SymbolTable::CClassInfo::GetSizeOfType( returnType, table );
 		}
 		std::shared_ptr<IRTSMove> root = std::make_shared<IRTSMove>( std::make_shared<IRTEMem>(std::make_shared<IRTEBinop>(
 			RELOP::BINOP_PLUS, id, std::make_shared<IRTEBinop>(
@@ -144,7 +144,7 @@ namespace IRTree {
 		if( returnType > 0 ) {
 			typesize = table->GetClassInfo( returnType, indexExp->GetExpressionFirst().get() ).GetSize( table );
 		} else {
-			typesize = SymbolTable::CClassInfo::getSizeOfType( returnType, table );
+			typesize = SymbolTable::CClassInfo::GetSizeOfType( returnType, table );
 		}
 		std::shared_ptr<IRTEMem> root = std::make_shared<IRTEMem>(std::make_shared<IRTEBinop>(
 			RELOP::BINOP_PLUS, id, std::make_shared<IRTEBinop>( RELOP::BINOP_MUL, ptr, std::make_shared<IRTEConst>( typesize ) ) ));
@@ -162,7 +162,7 @@ namespace IRTree {
 	{		
 		std::shared_ptr<IRTEMem> root = std::make_shared<IRTEMem>(std::make_shared<IRTEBinop>(
 			RELOP::BINOP_MINUS, visitChild( expression->GetExpression().get() ), std::make_shared<IRTEConst>(
-				SymbolTable::CClassInfo::getSizeOfType( AbstractTreeGenerator::TStandardType::ST_Int, table ) ) ));
+				SymbolTable::CClassInfo::GetSizeOfType( AbstractTreeGenerator::TStandardType::ST_Int, table ) ) ));
 		returnedExpression = root;
 		returnValueType = TStdType::ST_Int;
 	}
@@ -172,7 +172,7 @@ namespace IRTree {
 		std::shared_ptr<IRTExpression> root = std::make_shared<IRTECall>( std::make_shared<IRTEName>( 
 			table->GetAllocLabel() ), std::make_shared<IRTExpList>( std::make_shared<IRTEBinop>(
 			RELOP::BINOP_MUL, visitChild( expression->GetExpression().get() ), std::make_shared<IRTEConst>( 
-				SymbolTable::CClassInfo::getSizeOfType( AbstractTreeGenerator::TStandardType::ST_Int, table )) ), nullptr) );
+				SymbolTable::CClassInfo::GetSizeOfType( AbstractTreeGenerator::TStandardType::ST_Int, table )) ), nullptr) );
 		returnedExpression = root;		
 		returnValueType = TStdType::ST_Intlist;
 	}
