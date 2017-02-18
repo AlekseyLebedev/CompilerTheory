@@ -30,4 +30,20 @@ namespace SymbolTable {
 	{
 		return classesInfos.size();
 	}
+
+	std::shared_ptr<IRTree::Label> CTable::GetAllocLabel() const
+	{
+		if( allocLabel != 0 ) {
+			allocLabel = std::make_shared<IRTree::Label>( IRTree::SL_Alloc );
+		}
+		return allocLabel;
+	}
+
+	std::shared_ptr<IRTree::Label> CTable::GetPrintLnLabel() const
+	{
+		if( printLnLabel != 0 ) {
+			printLnLabel = std::make_shared<IRTree::Label>( IRTree::SL_PrintLn );
+		}
+		return printLnLabel;
+	}
 }

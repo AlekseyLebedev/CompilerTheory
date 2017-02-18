@@ -3,6 +3,7 @@
 #include <map>
 
 #include "IRTBuilderVisitor.h"
+#include "IRTExpConverter.h"
 #include "..\SymbolTable\ClassInfo.h"
 #include "..\AbstractTreeGenerator\Type.h"
 
@@ -95,11 +96,11 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CConstructorExpression* const expression )
 	{
-		std::shared_ptr<IRTExpression> exp = visitChild( expression->GetIdExpression().get() );
-		// OR Call?
-		std::shared_ptr<IRTEMem> root = std::make_shared<IRTEMem>( exp );
-		returnedExpression = root;
+
 		assert( false ); // TODO
+		//ctor
+		returnedExpression = std::make_shared<IRTECall>( std::make_shared<IRTEName>( table->GetAllocLabel() ), std::make_shared<IRTExpList>( std::make_shared<IRTEConst>(
+			table->GetClassInfo( expression->GetIdExpression()->GetName() ).GetSize( table ) ), nullptr ) );
 		returnValueType = expression->GetIdExpression()->GetName();
 	}
 
@@ -315,13 +316,11 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CPrintStatement* const printStm )
 	{
-		std::shared_ptr<AbstractTreeGenerator::IExpression> exp = printStm->GetExpression();
-
-		std::shared_ptr<IRTExpression> expNode = visitChild( exp.get() );
-
-		std::shared_ptr<IRTStatement> root = std::make_shared<IRTSExp>( expNode );
-
-		returnedStatement = root;
+		std::shared_ptr<IRTExpression> expression = visitChild( printStm->GetExpression() );
+		std::shared_ptr<IRTExpList> arguments = std::dynamic_pointer_cast<IRTExpList>(expression);
+		assert( (arguments != 0) || (expression == 0) );
+		returnedStatement = std::make_shared<Translate::IRTExpConverter>( std::make_shared<IRTECall>(
+			std::make_shared<IRTEName>( table->GetPrintLnLabel() ), arguments ) )->ToStatement();
 		returnValueType = TStdType::ST_Void;
 	}
 
