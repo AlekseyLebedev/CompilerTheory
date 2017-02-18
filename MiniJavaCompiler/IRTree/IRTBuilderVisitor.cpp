@@ -195,10 +195,13 @@ namespace IRTree {
 		visitChild( method->GetArgumentList().get() );
 		visitChild( method->GetVarDeclarationList().get() );
 		visitChild( method->GetStatementList() );
-		visitChild( method->GetExpression().get() );
-		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>( returnedStatement );
+		std::shared_ptr<IAccess> retAccess = currentFrame->GetReturnAccess();
+		std::shared_ptr<IRTSMove> moveReturnAcceess = std::make_shared<IRTSMove>( std::make_shared<IRTEMem>(retAccess), visitChild( method->GetExpression().get() ));
+		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>( 
+			std::make_shared<IRTSSeq>(returnedStatement, moveReturnAcceess ));
 		codeFragment->SetNext( bufferFragment );
 		codeFragment = bufferFragment;
+		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const methodList )
