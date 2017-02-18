@@ -317,8 +317,8 @@ namespace IRTree {
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CPrintStatement* const printStm )
 	{
 		std::shared_ptr<IRTExpression> expression = visitChild( printStm->GetExpression() );
-		std::shared_ptr<IRTExpList> arguments = std::dynamic_pointer_cast<IRTExpList>(expression);
-		assert( (arguments != 0) || (expression == 0) );
+		assert(expression != 0);
+		std::shared_ptr<IRTExpList> arguments = std::make_shared<IRTExpList>( expression, nullptr );
 		returnedStatement = std::make_shared<Translate::IRTExpConverter>( std::make_shared<IRTECall>(
 			std::make_shared<IRTEName>( table->GetPrintLnLabel() ), arguments ) )->ToStatement();
 		returnValueType = TStdType::ST_Void;
