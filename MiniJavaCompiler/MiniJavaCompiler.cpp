@@ -62,11 +62,11 @@ int main( int argc, char** argv )
 				IRTree::IRTBuilderVisitor irtree( &fillTable.GetTable() );
 				irtree.visit( root.get() );
 				std::wstringstream headerBuilder;
-				const IRTree::CCodeFragment* currentCodeFragment = irtree.GetCode();
+				std::shared_ptr<IRTree::CCodeFragment> currentCodeFragment = irtree.GetCode();
 				while( currentCodeFragment != 0 ) {
-					headerBuilder << argv[i] << ", " << reinterpret_cast<size_t>(currentCodeFragment);
+					headerBuilder << argv[i] << ", " << reinterpret_cast<size_t>(currentCodeFragment.get());
 					GraphvizOutput::CGraphvizLauncher::Launch<IRTree::IRTreeVisitor, const IRTree::IRTStatement>(
-						currentCodeFragment->GetTree(), fileIndex++, headerBuilder.str() );
+						currentCodeFragment->GetTree().get(), fileIndex++, headerBuilder.str() );
 					currentCodeFragment = currentCodeFragment->GetNext();
 					headerBuilder.str( L"" );
 				}

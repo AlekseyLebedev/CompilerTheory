@@ -11,8 +11,8 @@ namespace IRTree {
 		const std::shared_ptr<IRTStatement> GetTree() const;
 		const std::shared_ptr<CCodeFragment> GetNext() const;
 	private:
-		const std::shared_ptr<CFrame> frame;
-		const std::shared_ptr<CCodeFragment> next;
-		const std::shared_ptr<IRTStatement> body;
+		std::shared_ptr<CFrame> frame;
+		std::shared_ptr<CCodeFragment> next;
+		std::shared_ptr<IRTStatement> body;
 	};
 }

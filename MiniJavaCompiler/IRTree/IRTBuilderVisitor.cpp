@@ -504,12 +504,12 @@ namespace IRTree {
 
 	std::shared_ptr<IRTExpression> IRTBuilderVisitor::visitChild( std::shared_ptr<AbstractTreeGenerator::IExpression> const child )
 	{
-		visitChild( child.get() );
+		return visitChild( child.get() );
 	}
 
 	std::shared_ptr<IRTStatement> IRTBuilderVisitor::visitChild( std::shared_ptr<AbstractTreeGenerator::IStatement> const child )
 	{
-		visitChild( child.get() );
+		return visitChild( child.get() );
 	}
 
 	void IRTBuilderVisitor::insertMethodExecution()

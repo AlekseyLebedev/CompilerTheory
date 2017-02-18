@@ -20,8 +20,8 @@ namespace IRTree {
 	{
 		//visitNode(); - вспомогательный
 
-		const IRTExpression* head = node->GetHead();
-		const IRTExpList* tail = node->GetTail();
+		const IRTExpression* head = node->GetHead().get();
+		const IRTExpList* tail = node->GetTail().get();
 
 		if( head ) {
 			head->Accept( this );

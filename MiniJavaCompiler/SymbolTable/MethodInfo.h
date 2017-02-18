@@ -2,6 +2,7 @@
 #include "VariableInfo.h"
 #include <vector>
 #include <map>
+#include <memory>
 #include "..\AbstractTreeGenerator\INode.h"
 #include "..\IRTree\IRTLabel.h"
 

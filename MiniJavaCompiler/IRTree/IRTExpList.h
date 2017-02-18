@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "IRTExpression.h"
 
 namespace IRTree {
@@ -7,8 +8,7 @@ namespace IRTree {
     class IRTExpList : public IRTExpression
     {
     public:
-
-        IRTExpList( const std::shared_ptr<IRTExpression> _head, const std::shared_ptr<IRTExpList> _tail );
+		IRTExpList( const std::shared_ptr<IRTExpression> _head, const std::shared_ptr<IRTExpList> _tail );
 
         const std::shared_ptr<IRTExpression> GetHead() const;
         const std::shared_ptr<IRTExpList> GetTail() const;

@@ -8,17 +8,17 @@ CCodeFragment::CCodeFragment( const std::shared_ptr<IRTStatement> body ) : body(
 	
 }
 
-void IRTree::CCodeFragment::SetNext( const std::shared_ptr<CCodeFragment> next )
+void IRTree::CCodeFragment::SetNext( std::shared_ptr<CCodeFragment> next )
 {
 	this->next = next;
 }
 
-const IRTStatement* CCodeFragment::GetTree() const
+const std::shared_ptr<IRTStatement> CCodeFragment::GetTree() const
 {
 	return body;
 }
 
-const CCodeFragment* CCodeFragment::GetNext() const
+const std::shared_ptr<CCodeFragment> CCodeFragment::GetNext() const
 {
 	return next;
 }
