@@ -31,6 +31,7 @@ int main( int argc, char** argv )
 		yyparse();
 	} else {
 		std::stringstream buffer;
+		int fileIndex = 0;
 		for( size_t i = 1; i < argc; i++ ) {
 			glabalStringTable = std::make_shared<AbstractTreeGenerator::CStringTable>();
 			assert( glabalStringTable->insert( "main" ) == 0 );
@@ -65,7 +66,7 @@ int main( int argc, char** argv )
 				while( currentCodeFragment != 0 ) {
 					headerBuilder << argv[i] << ", " << reinterpret_cast<size_t>(currentCodeFragment);
 					GraphvizOutput::CGraphvizLauncher::Launch<IRTree::IRTreeVisitor, const IRTree::IRTStatement>(
-						currentCodeFragment->GetTree(), i, headerBuilder.str() );
+						currentCodeFragment->GetTree(), fileIndex++, headerBuilder.str() );
 					currentCodeFragment = currentCodeFragment->GetNext();
 					headerBuilder.str( L"" );
 				}
