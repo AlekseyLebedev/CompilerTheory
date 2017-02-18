@@ -2,7 +2,7 @@
 
 using namespace IRTree;
 
-CCodeFragment::CCodeFragment(const IRTStatement* body ) : body(body)
+CCodeFragment::CCodeFragment( const IRTStatement* body ) : body( body ), frame( 0 ), next( 0 )
 {
 	
 }

@@ -7,10 +7,10 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
+#include <cassert>
 #include "Graphwiz\GraphvizLauncher.h"
 #include "Graphwiz\DotOutputVisitor.h"
 #include "AbstractTreeGenerator\StringTable.h"
-#include <assert.h>
 #include "SymbolTable\FillTableVisitor.h"
 #include "SymbolTable\TypeCheckerVistor.h"
 #include "IRTree\IRTBuilderVisitor.h"
@@ -60,14 +60,19 @@ int main( int argc, char** argv )
 			try {
 				IRTree::IRTBuilderVisitor irtree( &fillTable.GetTable() );
 				irtree.visit( root.get() );
-				const IRTree::CCodeFragment* code = irtree.GetCode()->GetNext();
-				const IRTree::IRTStatement* tree = code->GetTree();
-				GraphvizOutput::CGraphvizLauncher::Launch<IRTree::IRTreeVisitor,
-						const IRTree::IRTStatement>( tree, i, L"Test" );
+				std::wstringstream headerBuilder;
+				const IRTree::CCodeFragment* currentCodeFragment = irtree.GetCode();
+				while( currentCodeFragment != 0 ) {
+					headerBuilder << argv[i] << ", " << reinterpret_cast<size_t>(currentCodeFragment);
+					GraphvizOutput::CGraphvizLauncher::Launch<IRTree::IRTreeVisitor, const IRTree::IRTStatement>(
+						currentCodeFragment->GetTree(), i, headerBuilder.str() );
+					currentCodeFragment = currentCodeFragment->GetNext();
+					headerBuilder.str( L"" );
+				}
 			}
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;
-				
+
 			}
 
 		}
