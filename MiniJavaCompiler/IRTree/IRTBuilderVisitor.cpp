@@ -48,10 +48,10 @@ namespace IRTree {
 		} else {
 			typesize = SymbolTable::CClassInfo::GetSizeOfType( returnType, table );
 		}
-		std::shared_ptr<IRTSMove> root = std::make_shared<IRTSMove>( std::make_shared<IRTEMem>(std::make_shared<IRTEBinop>(
+		std::shared_ptr<IRTSMove> root = std::make_shared<IRTSMove>( std::make_shared<IRTEMem>( std::make_shared<IRTEBinop>(
 			RELOP::BINOP_PLUS, id, std::make_shared<IRTEBinop>(
 				RELOP::BINOP_MUL, ptr, std::make_shared<IRTEConst>( typesize ) )
-			)), src );
+			) ), src );
 		returnedStatement = root;
 		returnValueType = TStdType::ST_Void;
 	}
@@ -143,8 +143,8 @@ namespace IRTree {
 		} else {
 			typesize = SymbolTable::CClassInfo::GetSizeOfType( returnType, table );
 		}
-		std::shared_ptr<IRTEMem> root = std::make_shared<IRTEMem>(std::make_shared<IRTEBinop>(
-			RELOP::BINOP_PLUS, id, std::make_shared<IRTEBinop>( RELOP::BINOP_MUL, ptr, std::make_shared<IRTEConst>( typesize ) ) ));
+		std::shared_ptr<IRTEMem> root = std::make_shared<IRTEMem>( std::make_shared<IRTEBinop>(
+			RELOP::BINOP_PLUS, id, std::make_shared<IRTEBinop>( RELOP::BINOP_MUL, ptr, std::make_shared<IRTEConst>( typesize ) ) ) );
 		returnedExpression = root;
 		returnValueType = returnType;
 	}
@@ -155,22 +155,22 @@ namespace IRTree {
 		returnValueType = TStdType::ST_Void;
 	}
 
-	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CLengthExpression* const expression)
-	{		
-		std::shared_ptr<IRTEMem> root = std::make_shared<IRTEMem>(std::make_shared<IRTEBinop>(
+	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CLengthExpression* const expression )
+	{
+		std::shared_ptr<IRTEMem> root = std::make_shared<IRTEMem>( std::make_shared<IRTEBinop>(
 			RELOP::BINOP_MINUS, visitChild( expression->GetExpression().get() ), std::make_shared<IRTEConst>(
-				SymbolTable::CClassInfo::GetSizeOfType( AbstractTreeGenerator::TStandardType::ST_Int, table ) ) ));
+				SymbolTable::CClassInfo::GetSizeOfType( AbstractTreeGenerator::TStandardType::ST_Int, table ) ) ) );
 		returnedExpression = root;
 		returnValueType = TStdType::ST_Int;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CListConstructorExpression* const expression )
 	{
-		std::shared_ptr<IRTExpression> root = std::make_shared<IRTECall>( std::make_shared<IRTEName>( 
+		std::shared_ptr<IRTExpression> root = std::make_shared<IRTECall>( std::make_shared<IRTEName>(
 			table->GetAllocLabel() ), std::make_shared<IRTExpList>( std::make_shared<IRTEBinop>(
-			RELOP::BINOP_MUL, visitChild( expression->GetExpression().get() ), std::make_shared<IRTEConst>( 
-				SymbolTable::CClassInfo::GetSizeOfType( AbstractTreeGenerator::TStandardType::ST_Int, table )) ), nullptr) );
-		returnedExpression = root;		
+				RELOP::BINOP_MUL, visitChild( expression->GetExpression().get() ), std::make_shared<IRTEConst>(
+					SymbolTable::CClassInfo::GetSizeOfType( AbstractTreeGenerator::TStandardType::ST_Int, table ) ) ), nullptr ) );
+		returnedExpression = root;
 		returnValueType = TStdType::ST_Intlist;
 	}
 
@@ -207,9 +207,9 @@ namespace IRTree {
 		visitChild( method->GetVarDeclarationList().get() );
 		visitChild( method->GetStatementList() );
 		std::shared_ptr<IAccess> retAccess = currentFrame->GetReturnAccess();
-		std::shared_ptr<IRTSMove> moveReturnAcceess = std::make_shared<IRTSMove>( std::make_shared<IRTEMem>(retAccess), visitChild( method->GetExpression().get() ));
-		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>( 
-			std::make_shared<IRTSSeq>(returnedStatement, moveReturnAcceess ));
+		std::shared_ptr<IRTSMove> moveReturnAcceess = std::make_shared<IRTSMove>( std::make_shared<IRTEMem>( retAccess ), visitChild( method->GetExpression().get() ) );
+		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>(
+			std::make_shared<IRTSSeq>( returnedStatement, moveReturnAcceess ) );
 		codeFragment->SetNext( bufferFragment );
 		codeFragment = bufferFragment;
 		returnValueType = TStdType::ST_Void;
@@ -336,7 +336,7 @@ namespace IRTree {
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CPrintStatement* const printStm )
 	{
 		std::shared_ptr<IRTExpression> expression = visitChild( printStm->GetExpression() );
-		assert(expression != 0);
+		assert( expression != 0 );
 		std::shared_ptr<IRTExpList> arguments = std::make_shared<IRTExpList>( expression, nullptr );
 		returnedStatement = std::make_shared<Translate::IRTExpConverter>( std::make_shared<IRTECall>(
 			std::make_shared<IRTEName>( table->GetPrintLnLabel() ), arguments ) )->ToStatement();
@@ -445,7 +445,7 @@ namespace IRTree {
 		if( expList != 0 ) {
 			expList->Accept( this );
 			arguments = std::dynamic_pointer_cast<IRTExpList>(returnedExpression);
-			assert( arguments != 0 );
+			assert( (arguments != 0) || (returnedExpression == 0) );
 		}
 		std::shared_ptr<IRTECall> call = std::make_shared<IRTECall>( name, arguments );
 
