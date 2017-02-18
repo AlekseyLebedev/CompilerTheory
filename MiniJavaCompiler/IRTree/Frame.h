@@ -16,10 +16,13 @@ namespace IRTree {
 		std::shared_ptr<IAccess> GetDataInfo( int name );
 		std::shared_ptr<Label> GetLabel();
 		std::shared_ptr<IAccess> GetThisAccess();
+		std::shared_ptr<IAccess> GetReturnAccess();
 		static const int ThisName;
+		static const int ReturnName;
 
 	private:
 		std::shared_ptr<IAccess> thisAccess;
+		std::shared_ptr<IAccess> returnAccess;
 		std::map<int, std::shared_ptr<IAccess>> variables;
 		int className;
 		std::shared_ptr<Label> label;

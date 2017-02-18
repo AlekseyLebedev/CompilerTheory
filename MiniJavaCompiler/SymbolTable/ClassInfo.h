@@ -39,7 +39,7 @@ namespace SymbolTable {
 		friend bool operator ==( CClassInfo a, CClassInfo b );
 		friend bool operator !=( CClassInfo a, CClassInfo b );
 		static const int NothingExtend;
-		static int getSizeOfType( const int type, const CTable * table );
+		static int GetSizeOfType( const int type, const CTable * table );
 	private:
 		int name;
 		// информация о методах

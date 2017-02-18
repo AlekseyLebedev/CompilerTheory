@@ -47,7 +47,24 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, L"NAME " + node->GetLabel()->GetName() ) );
+		int label = node->GetLabel()->GetName();
+		std::wstring labelName;
+		assert( SL_Count == 3 );
+		switch( label ) {
+			case SL_NotUsed:
+				assert( false );
+				break;
+			case SL_Alloc:
+				labelName = L"Alloc";
+				break;
+			case SL_PrintLn:
+				labelName = L"println";
+				break;
+			default:
+				labelName = std::to_wstring( label );
+				break;
+		}
+		nodeLables.insert( std::make_pair( currentNodeID, L"NAME " + labelName ) );
 
 		leaveNode();
 	}

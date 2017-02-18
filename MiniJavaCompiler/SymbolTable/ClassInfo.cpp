@@ -101,7 +101,7 @@ namespace SymbolTable {
 			for( size_t i = 0; i < allVariables.size(); i++ ) {
 				position = addVairableToSize( i, position, table );
 				if( allVariables[i] == id ) {
-					position -= getSizeOfType( variables.find( id )->second.GetType(), table );
+					position -= GetSizeOfType( variables.find( id )->second.GetType(), table );
 					return position;
 				}
 			}
@@ -121,7 +121,7 @@ namespace SymbolTable {
 		return (size + machineWordSize - 1) / machineWordSize;
 	}
 
-	int CClassInfo::getSizeOfType( const int type, const CTable* table )
+	int CClassInfo::GetSizeOfType( const int type, const CTable* table )
 	{
 		switch( type ) {
 			case AbstractTreeGenerator::TStandardType::ST_Bool:
@@ -136,14 +136,15 @@ namespace SymbolTable {
 				assert( false );
 				return -1;
 			default:
-				return table->GetClassInfo( type ).GetSize( table );
+				//return table->GetClassInfo( type ).GetSize( table );
+				return machineWordSize; //указатель
 		}
 	}
 
 	int CClassInfo::addVairableToSize( int index, int size, const CTable* table ) const
 	{
 		int type = variables.find( allVariables[index] )->second.GetType();
-		int fieldSize = getSizeOfType( type, table );
+		int fieldSize = GetSizeOfType( type, table );
 		if( fieldSize >= machineWordSize ) {
 			size = offset( size );
 		}
