@@ -10,17 +10,13 @@ class A {
 
 	public int A1() {
 		int b;
-		/*int[] a; 		
-		a = new int[4];					
-		a[1] = 5;*/
-		b = 37;
+		int[] c; 
+		int e;		
+		c = new int[4];					
+		c[1] = 5;
+		b = c[2];
+		e = c.length;
 		return 0;
-	}
-	
-	public int A2() {
-		int b;
-		b = 6;
-		return 7;
 	}
 	
 	public int A3() {
