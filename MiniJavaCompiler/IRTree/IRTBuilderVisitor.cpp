@@ -436,8 +436,11 @@ namespace IRTree {
 		std::shared_ptr<IRTExpList> arguments = 0;
 		if( expList != 0 ) {
 			expList->Accept( this );
-			arguments = std::dynamic_pointer_cast<IRTExpList>(returnedExpression);
-			assert( (arguments != 0) || (returnedExpression == 0) );
+			std::shared_ptr<IRTExpList> kek = std::make_shared<IRTExpList>(returnedExpression, nullptr);
+			arguments = std::make_shared<IRTExpList>(currentFrame->GetThisAccess(), kek);
+			//assert( (arguments != 0) || (returnedExpression == 0) );
+		} else {
+			arguments = std::make_shared<IRTExpList>( currentFrame->GetThisAccess(), nullptr );
 		}
 		std::shared_ptr<IRTECall> call = std::make_shared<IRTECall>( name, arguments );
 

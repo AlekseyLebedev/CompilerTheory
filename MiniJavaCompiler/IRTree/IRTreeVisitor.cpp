@@ -148,9 +148,13 @@ namespace IRTree {
 
 		nodeLables.insert( std::make_pair( currentNodeID, L"ESEQ" ) );
 		// left
-		node->GetStm()->Accept( this );
+		if( node->GetStm() ) {
+			node->GetStm()->Accept( this );
+		}
 		// right
-		node->GetExp()->Accept( this );
+		if( node->GetExp() ) {
+			node->GetExp()->Accept( this );
+		}
 
 		leaveNode();
 	}
