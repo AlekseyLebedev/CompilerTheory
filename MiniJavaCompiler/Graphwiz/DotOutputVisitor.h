@@ -11,7 +11,7 @@ namespace GraphvizOutput {
 
 	class CDotOutputVisitor : public AbstractTreeGenerator::IVisitor, public CBaseDotOutput {
 	public:
-		CDotOutputVisitor();
+		CDotOutputVisitor(const std::wstring& header);
 		virtual ~CDotOutputVisitor();
 		virtual void visit( AbstractTreeGenerator::CArgument * const ) override;
 		virtual void visit( AbstractTreeGenerator::CArgumentList * const ) override;
@@ -49,6 +49,7 @@ namespace GraphvizOutput {
 		virtual void visit( AbstractTreeGenerator::CBasicType * const ) override;
 		virtual void visit( AbstractTreeGenerator::CIdType * const ) override;
 	protected:
+		void addSubNodeWithStringTable( size_t id, const size_t label, const std::wstring & postfix );
 		void addSubNodeWithStringTable( size_t id, const size_t label, const std::string & postfix = "v" );
 	};
 }
