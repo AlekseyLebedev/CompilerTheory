@@ -214,7 +214,12 @@ namespace IRTree {
 			const int type = variableInfo.GetType();
 			currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, glabalStringTable->wfind( name ) ) );
 		}
-			
+		int extend = classInfo.GetExtend();
+		do {
+			// ТУТ
+		} while( extend != SymbolTable::CClassInfo::NothingExtend );
+
+
 		visitChild( method->GetArgumentList().get() );
 		visitChild( method->GetVarDeclarationList().get() );
 		visitChild( method->GetStatementList() );
