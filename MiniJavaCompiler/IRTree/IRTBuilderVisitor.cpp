@@ -9,7 +9,7 @@
 
 using TStdType = AbstractTreeGenerator::TStandardType;
 
-extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
+extern std::shared_ptr<AbstractTreeGenerator::CStringTable> globalStringTable;
 
 namespace IRTree {
 	// TODO указатель на CTable
@@ -28,7 +28,7 @@ namespace IRTree {
 	{
 		int name = argument->GetIdExpression()->GetName();
 		int type = argument->GetType()->GetType();
-		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, glabalStringTable->wfind( name ) ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, globalStringTable->wfind( name ) ) );
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgumentList* const arguments )
@@ -184,6 +184,7 @@ namespace IRTree {
 		currentClass = mainclass->GetClassName()->GetName();
 		SymbolTable::CClassInfo classInfo = table->GetClassInfo( currentClass );
 		assert( classInfo.GetMethods().size() == 1 );
+		// TODO сделать не настолько гейски
 		SymbolTable::CMethodInfo methodInfo = classInfo.GetMethods()[0];
 		std::shared_ptr<Label> label = methodInfo.GetLabel();
 
@@ -202,10 +203,18 @@ namespace IRTree {
 
 		assert( returnedExpression == 0 );
 		assert( returnedStatement == 0 );
+		SymbolTable::CClassInfo classInfo = table->GetClassInfo( currentClass );
+		std::shared_ptr<Label> label = classInfo.GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
 
-
-		std::shared_ptr<Label> label = table->GetClassInfo( currentClass ).GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
 		currentFrame = std::make_shared<CFrame>( currentClass, label );
+		std::vector<int> variables = classInfo.GetVariables();
+		for( int i = 0; i < variables.size(); i++ ) {
+			int name = variables[i];
+			SymbolTable::CVariableInfo variableInfo = classInfo.GetVarInfo( name );
+			int type = variableInfo.GetType();
+			currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, globalStringTable->wfind( name ) ) );
+		}
+			
 		visitChild( method->GetArgumentList().get() );
 		visitChild( method->GetVarDeclarationList().get() );
 		visitChild( method->GetStatementList() );
@@ -410,7 +419,7 @@ namespace IRTree {
 		int name = variable->GetIdExpression()->GetName();
 		AbstractTreeGenerator::IType* type = variable->GetType().get();
 		int typenum = type->GetType();
-		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, typenum, glabalStringTable->wfind( name ) ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, typenum, globalStringTable->wfind( name ) ) );
 		returnValueType = TStdType::ST_Void;
 	}
 
@@ -467,7 +476,7 @@ namespace IRTree {
 			expList->Accept( this );
 			std::shared_ptr<IRTExpList> kek = std::make_shared<IRTExpList>(returnedExpression, nullptr);
 			arguments = std::make_shared<IRTExpList>( expNode, std::make_shared<IRTExpList>(returnedExpression, nullptr ) );
-			//assert( (arguments != 0) || (returnedExpression == 0) );
+			assert( (arguments != 0) || (returnedExpression == 0) );
 		} else {
 			arguments = std::make_shared<IRTExpList>( expNode, nullptr );
 		}

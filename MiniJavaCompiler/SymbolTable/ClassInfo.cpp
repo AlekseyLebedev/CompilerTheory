@@ -27,7 +27,7 @@ namespace SymbolTable {
 	{
 		auto info = variables.find( id );
 		if( info == variables.end() ) {
-			assert( brokenNode != 0 );
+			assert( brokenNode != nullptr );
 			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Field not declarated" );
 		} else {
 			return info->second;
@@ -60,6 +60,10 @@ namespace SymbolTable {
 	const std::vector<CMethodInfo>& CClassInfo::GetMethods() const
 	{
 		return allMethods;
+	}
+	const std::vector<int>& CClassInfo::GetVariables() const
+	{
+		return allVariables;
 	}
 	int CClassInfo::GetExtend() const
 	{
