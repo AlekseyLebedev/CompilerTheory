@@ -1,6 +1,6 @@
 class Main{
     public static void main(String[] a) {
-	System.out.println(new A().A1());
+	System.out.println(new A().A3(7));
     }
 }
 
@@ -17,7 +17,7 @@ class A {
 		return 0;
 	}
 	
-	public int A3() {
+	public int A2() {
 		int a;					
 		a = 5;
 		if (a<4) {
@@ -29,5 +29,27 @@ class A {
 			a = 8;
 		}
 		return 7;
+	}
+	
+	public int A3(int n) {
+		boolean b1;
+		boolean b2;
+		b1 = false;
+		b2 = true;
+		int a;
+		a = 0;
+		if (b2) {
+			a = 1;
+		} else {
+			a = 2;
+		}
+		if (b1) {
+			a = 3;
+		}
+		while (a < 5) {
+			b1 = true;
+			a = a + 1;
+		}
+		return 999;
 	}
 }
