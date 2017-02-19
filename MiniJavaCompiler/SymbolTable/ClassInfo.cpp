@@ -20,6 +20,7 @@ namespace SymbolTable {
 
 	void CClassInfo::InsertVariableInfo( int id, const CVariableInfo& theVariableInfo )
 	{
+		allVariables.push_back( id );
 		variables[id] = theVariableInfo;
 	}
 
