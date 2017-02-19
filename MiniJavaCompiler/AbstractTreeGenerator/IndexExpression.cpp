@@ -2,7 +2,7 @@
 
 AbstractTreeGenerator::CIndexExpression::CIndexExpression( IExpression* theExpressionFirst,
 	IExpression* theExpressionSecond ) : 
-	epressionFirst( theExpressionFirst ), expressionSecond( theExpressionSecond )
+	expressionFirst( theExpressionFirst ), expressionSecond( theExpressionSecond )
 {
 }
 
@@ -14,9 +14,10 @@ void AbstractTreeGenerator::CIndexExpression::Accept( IVisitor * v)
 {
 	v->visit( this );
 }
-const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CIndexExpression::GetEpressionFirst() const
+
+const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CIndexExpression::GetExpressionFirst() const
 {
-	 return epressionFirst;
+	 return expressionFirst;
 }
 
 const std::shared_ptr<AbstractTreeGenerator::IExpression> AbstractTreeGenerator::CIndexExpression::GetExpressionSecond() const

@@ -7,11 +7,14 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
+#include <cassert>
 #include "Graphwiz\GraphvizLauncher.h"
+#include "Graphwiz\DotOutputVisitor.h"
 #include "AbstractTreeGenerator\StringTable.h"
-#include <assert.h>
 #include "SymbolTable\FillTableVisitor.h"
 #include "SymbolTable\TypeCheckerVistor.h"
+#include "IRTree\IRTBuilderVisitor.h"
+#include "IRTree\IRTreeVisitor.h"
 
 int yyparse();
 extern FILE* yyin, *yyout;
@@ -28,6 +31,7 @@ int main( int argc, char** argv )
 		yyparse();
 	} else {
 		std::stringstream buffer;
+		int fileIndex = 0;
 		for( size_t i = 1; i < argc; i++ ) {
 			glabalStringTable = std::make_shared<AbstractTreeGenerator::CStringTable>();
 			assert( glabalStringTable->insert( "main" ) == 0 );
@@ -47,11 +51,32 @@ int main( int argc, char** argv )
 			try {
 				SymbolTable::CTypeCheckerVistor typeChecker( fillTable.GetTable() );
 				typeChecker.visit( root.get() );
-				GraphvizOutput::CGraphvizLauncher::Launch( root.get(), i );
+				// AST
+				GraphvizOutput::CGraphvizLauncher::Launch<GraphvizOutput::CDotOutputVisitor,
+					AbstractTreeGenerator::CProgram>( root.get(), fileIndex++, L"AST" );
 			}
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;
 			}
+			try {
+				IRTree::IRTBuilderVisitor irtree( &fillTable.GetTable() );
+				irtree.visit( root.get() );
+				std::wstringstream headerBuilder;
+				std::shared_ptr<IRTree::CCodeFragment> currentCodeFragment = irtree.GetCode();
+				while( currentCodeFragment != 0 ) {
+					headerBuilder << argv[i] << ", " << reinterpret_cast<size_t>(currentCodeFragment.get());
+					std::wcout << L"Printing: " << headerBuilder.str() << std::endl;
+					GraphvizOutput::CGraphvizLauncher::Launch<IRTree::IRTreeVisitor, const IRTree::IRTStatement>(
+						currentCodeFragment->GetTree().get(), fileIndex++, headerBuilder.str() );
+					currentCodeFragment = currentCodeFragment->GetNext();
+					headerBuilder.str( L"" );
+				}
+			}
+			catch( std::exception* e ) {
+				std::cerr << e->what() << std::endl;
+
+			}
+
 		}
 	}
 	return 0;

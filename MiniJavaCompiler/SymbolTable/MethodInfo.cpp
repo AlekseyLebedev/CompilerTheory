@@ -1,5 +1,10 @@
+#include <memory>
+#include <cassert>
 #include "MethodInfo.h"
 #include "TypeException.h"
+#include "..\AbstractTreeGenerator\StringTable.h"
+
+extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 
 namespace SymbolTable {
 
@@ -16,10 +21,12 @@ namespace SymbolTable {
 	const CVariableInfo & CMethodInfo::GetVarInfo( const int id, const AbstractTreeGenerator::INode* brokenNode ) const
 	{
 		auto info = vars.find( id );
-		if( info == vars.end() )
+		if( info == vars.end() ) {
+			assert( brokenNode != 0 );
 			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Variable not declarated" );
-		else
+		} else {
 			return info->second;
+		}
 	}
 
 	void CMethodInfo::AddVariableInfo( const int id, const CVariableInfo & info )
@@ -31,10 +38,12 @@ namespace SymbolTable {
 	const CVariableInfo & CMethodInfo::GetArgInfo( const int id, const AbstractTreeGenerator::INode* brokenNode ) const
 	{
 		auto info = args.find( id );
-		if( info == args.end() )
+		if( info == args.end() ) {
+			assert( brokenNode != 0 );
 			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Variable not declarated" );
-		else
+		} else {
 			return info->second;
+		}
 	}
 
 	void CMethodInfo::AddArgInfo( const int id, const CVariableInfo & info )
@@ -43,25 +52,44 @@ namespace SymbolTable {
 		args[id] = info;
 	}
 
-	int CMethodInfo::GetUniqueArgsCount()
+	int CMethodInfo::GetUniqueArgsCount() const
 	{
 		return args.size();
 	}
 
-	int CMethodInfo::GetUniqueVarsCount()
+	int CMethodInfo::GetUniqueVarsCount() const
 	{
 		return varsCount;
 	}
-	int CMethodInfo::GetAllArgsCount()
+
+	int CMethodInfo::GetAllArgsCount() const
 	{
 		return argsTypes.size();
 	}
-	int CMethodInfo::GetAllVarsCount()
+
+	int CMethodInfo::GetAllVarsCount() const
 	{
 		return vars.size();
 	}
+
 	int CMethodInfo::GetArgType( const int num ) const
 	{
 		return argsTypes[num];
 	}
+
+	std::shared_ptr<IRTree::Label> CMethodInfo::GetLabel() const
+	{
+		if( label == 0 ) {
+			++methodCount;
+			label = std::make_shared<IRTree::Label>( -methodCount, glabalStringTable->wfind( name ) );
+		}
+		return label;
+	}
+
+	void CMethodInfo::SetName( int _name )
+	{
+		name = _name;
+	}
+
+	int CMethodInfo::methodCount = 0;
 }

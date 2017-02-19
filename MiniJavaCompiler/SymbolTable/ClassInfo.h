@@ -10,6 +10,8 @@
 #include "TypeException.h"
 
 namespace SymbolTable {
+	class CTable;
+
 	// информация о классе
 	class CClassInfo {
 	public:
@@ -20,18 +22,25 @@ namespace SymbolTable {
 		// добавить информацию о поле класса 
 		void InsertVariableInfo( int id, const CVariableInfo & theVariableInfo );
 
-		const CVariableInfo& GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode )const;
-		const CMethodInfo& GetMethodInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const;
-		const std::vector<CMethodInfo>& GetMethods() const;
+		const CVariableInfo& GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode = 0 )const;
+		const CMethodInfo& GetMethodInfo( const int id, const AbstractTreeGenerator::INode * brokenNode = 0 ) const;
 
+		bool ContainsMethod( const int id ) const;
+		bool ContainsField( const int id ) const;
+		const std::vector<CMethodInfo>& GetMethods() const;
+		const std::vector<int>& GetVariables() const;
 		int GetExtend() const;
 		void SetExtend( const int id );
 
+		// Размеры в байтах
+		int GetSize( const CTable* ) const;
+		int GetOffsetForField( const int id, const CTable* ) const;
 
 		int GetUniqueMethodsCount();
 		friend bool operator ==( CClassInfo a, CClassInfo b );
 		friend bool operator !=( CClassInfo a, CClassInfo b );
 		static const int NothingExtend;
+		static int GetSizeOfType( const int type, const CTable * table );
 	private:
 		int name;
 		// информация о методах
@@ -39,7 +48,12 @@ namespace SymbolTable {
 		std::map<int, CMethodInfo> methods;
 		// инфомрация о полях
 		std::map<int, CVariableInfo> variables; // возможно здесь следует ссылаться на VarDeclaration но хз
-
+		std::vector<int> allVariables; // Храним порядок в названиях
 		int extend;
+
+		static const int machineWordSize;
+		static int offset( const int size );
+		
+		int addVairableToSize( int index, int size, const CTable * table ) const;
 	};
 }

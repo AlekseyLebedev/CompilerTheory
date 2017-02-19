@@ -1,5 +1,8 @@
+#include <cassert>
 #include "ClassInfo.h"
 #include "TypeException.h"
+#include "Table.h"
+#include "..\AbstractTreeGenerator\Type.h"
 
 namespace SymbolTable {
 	CClassInfo::CClassInfo() : extend( CClassInfo::NothingExtend )
@@ -17,30 +20,51 @@ namespace SymbolTable {
 
 	void CClassInfo::InsertVariableInfo( int id, const CVariableInfo& theVariableInfo )
 	{
+		allVariables.push_back( id );
 		variables[id] = theVariableInfo;
 	}
 
 	const CVariableInfo & CClassInfo::GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const
 	{
 		auto info = variables.find( id );
-		if( info == variables.end() )
+		if( info == variables.end() ) {
+			assert( brokenNode != nullptr );
 			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Field not declarated" );
-		else
+		} else {
 			return info->second;
+		}
 	}
 
 	const CMethodInfo & CClassInfo::GetMethodInfo( const int id, const AbstractTreeGenerator::INode * brokenNode ) const
 	{
 		auto info = methods.find( id );
-		if( info == methods.end() )
+		if( info == methods.end() ) {
+			assert( brokenNode != nullptr );
 			throw new CTypeException( brokenNode->GetCol(), brokenNode->GetRow(), "Method not declarated" );
-		else
+		} else {
 			return info->second;
+		}
+	}
+
+	bool CClassInfo::ContainsMethod( const int id ) const
+	{
+		auto info = methods.find( id );
+		return (info != methods.end());
+	}
+
+	bool CClassInfo::ContainsField( const int id ) const
+	{
+		auto info = variables.find( id );
+		return (info != variables.end());
 	}
 
 	const std::vector<CMethodInfo>& CClassInfo::GetMethods() const
 	{
 		return allMethods;
+	}
+	const std::vector<int>& CClassInfo::GetVariables() const
+	{
+		return allVariables;
 	}
 	int CClassInfo::GetExtend() const
 	{
@@ -50,9 +74,88 @@ namespace SymbolTable {
 	{
 		extend = id;
 	}
+
+	int CClassInfo::GetSize( const CTable* table ) const
+	{
+		int size = 0;
+		if( extend != NothingExtend ) {
+			size = table->GetClassInfo( extend ).GetSize( table );
+		}
+		for( size_t i = 0; i < allVariables.size(); i++ ) {
+			size = addVairableToSize( i, size, table );
+		}
+		if( size == 0 ) {
+			size = 1; // Иначе будут проблемы с массивами
+		}
+		if( size >= machineWordSize ) {
+			size = offset( size );
+		}
+		return size;
+	}
+
+	int CClassInfo::GetOffsetForField( const int id, const CTable* table ) const
+	{
+		auto info = variables.find( id );
+		if( info == variables.end() ) {
+			assert( extend != NothingExtend );
+			return table->GetClassInfo( extend ).GetOffsetForField( id, table );
+		} else {
+			int position = 0;
+			if( extend != NothingExtend ) {
+				position = table->GetClassInfo( extend ).GetSize( table );
+			}
+			for( size_t i = 0; i < allVariables.size(); i++ ) {
+				position = addVairableToSize( i, position, table );
+				if( allVariables[i] == id ) {
+					position -= GetSizeOfType( variables.find( id )->second.GetType(), table );
+					return position;
+				}
+			}
+		}
+		return 0;
+	}
+
 	int CClassInfo::GetUniqueMethodsCount()
 	{
 		return methods.size();
+	}
+
+	const int CClassInfo::machineWordSize = 4;
+
+	int CClassInfo::offset( const int size )
+	{
+		return ((size + machineWordSize - 1) / machineWordSize) * machineWordSize;
+	}
+
+	int CClassInfo::GetSizeOfType( const int type, const CTable* table )
+	{
+		switch( type ) {
+			case AbstractTreeGenerator::TStandardType::ST_Bool:
+				return 1;
+			case AbstractTreeGenerator::TStandardType::ST_Int:
+				return 4;
+			case AbstractTreeGenerator::TStandardType::ST_Intlist:
+				return machineWordSize;
+			case AbstractTreeGenerator::TStandardType::ST_StringList:
+				return machineWordSize; // Не используется!
+			case AbstractTreeGenerator::TStandardType::ST_Void:
+				assert( false );
+				return -1;
+			default:
+				//return table->GetClassInfo( type ).GetSize( table );
+				return machineWordSize; //указатель
+		}
+	}
+
+	int CClassInfo::addVairableToSize( int index, int size, const CTable* table ) const
+	{
+		int type = variables.find( allVariables[index] )->second.GetType();
+		int fieldSize = GetSizeOfType( type, table );
+		if( fieldSize >= machineWordSize ) {
+			size = offset( size );
+		}
+		size += fieldSize;
+		return size;
 	}
 
 	const int CClassInfo::NothingExtend = -10;
