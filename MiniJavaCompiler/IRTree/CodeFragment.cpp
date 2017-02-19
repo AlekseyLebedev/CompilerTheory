@@ -3,9 +3,9 @@
 
 using namespace IRTree;
 
-CCodeFragment::CCodeFragment( const std::shared_ptr<IRTStatement> body ) : body( body ), frame( 0 ), next( 0 )
+CCodeFragment::CCodeFragment( const std::shared_ptr<IRTStatement> body, std::shared_ptr<CFrame> _frame ) : body( body ), frame( _frame ), next( 0 )
 {
-	
+
 }
 
 void IRTree::CCodeFragment::SetNext( std::shared_ptr<CCodeFragment> next )

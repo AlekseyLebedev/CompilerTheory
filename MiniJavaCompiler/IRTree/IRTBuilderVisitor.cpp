@@ -178,6 +178,9 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMainClass* const mainclass )
 	{
+		assert( returnedExpression == 0 );
+		assert( returnedStatement == 0 );
+
 		currentClass = mainclass->GetClassName()->GetName();
 		SymbolTable::CClassInfo classInfo = table->GetClassInfo( currentClass );
 		assert( classInfo.GetMethods().size() == 1 );
@@ -185,15 +188,21 @@ namespace IRTree {
 		std::shared_ptr<Label> label = methodInfo.GetLabel();
 
 		currentFrame = std::make_shared<CFrame>( currentClass, label );
-		startPoint = startPoint = std::make_shared<CCodeFragment>( visitChild( mainclass->GetStatement().get() ) );
+		startPoint = startPoint = std::make_shared<CCodeFragment>( visitChild( mainclass->GetStatement().get() ), currentFrame );
 		codeFragment = startPoint;
 
+		returnedExpression = 0;
+		returnedStatement = 0;
 		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclaration* const method )
 	{
 		// what about type of method
+
+		assert( returnedExpression == 0 );
+		assert( returnedStatement == 0 );
+
 
 		std::shared_ptr<Label> label = table->GetClassInfo( currentClass ).GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
 		currentFrame = std::make_shared<CFrame>( currentClass, label );
@@ -206,20 +215,33 @@ namespace IRTree {
 				std::make_shared<IRTEMem>( retAccess ),
 				visitChild( method->GetExpression().get() )
 				);
-		std::shared_ptr<CCodeFragment> bufferFragment =
-			std::make_shared<CCodeFragment>(
-				std::make_shared<IRTSSeq>( returnedStatement, moveReturnAcceess ) );
+		assert( moveReturnAcceess != 0 );
+		std::shared_ptr<IRTStatement> code;
+		if( returnedStatement != 0 ) {
+			code = std::make_shared<IRTSSeq>( returnedStatement, moveReturnAcceess );
+		} else {
+			code = moveReturnAcceess;
+		}
+		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>( code, currentFrame );
 		codeFragment->SetNext( bufferFragment );
 		codeFragment = bufferFragment;
+		returnedExpression = 0;
+		returnedStatement = 0;
 		returnValueType = TStdType::ST_Void;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CMethodDeclarationList* const methodList )
 	{
+		assert( returnedExpression == 0 );
+		assert( returnedStatement == 0 );
 		visitChild( methodList->GetMethodDeclaration().get() );
 		assert( returnValueType == TStdType::ST_Void );
+		assert( returnedExpression == 0 );
+		assert( returnedStatement == 0 );
 		visitChild( methodList->GetMethodDeclarationList().get() );
 		assert( returnValueType == TStdType::ST_Void );
+		assert( returnedExpression == 0 );
+		assert( returnedStatement == 0 );
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CNegationExpression* const negExp )
