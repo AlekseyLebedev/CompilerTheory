@@ -18,11 +18,11 @@ namespace IRTree {
 
 	void IRTreeVisitor::Visit( const IRTExpList* node )
 	{
-		//visitNode(); - вспомогательный
+		visitNode();
 
 		const IRTExpression* head = node->GetHead().get();
 		const IRTExpList* tail = node->GetTail().get();
-
+		nodeLables.insert( std::make_pair( currentNodeID, L"ELIST" ) );
 		if( head ) {
 			head->Accept( this );
 		}
@@ -31,7 +31,7 @@ namespace IRTree {
 			tail->Accept( this );
 		}
 
-		//leaveNode(); - вспомогательный
+		leaveNode();
 	}
 
 	void IRTreeVisitor::Visit( const IRTEConst* node )

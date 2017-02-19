@@ -428,13 +428,13 @@ namespace IRTree {
 		int methodReturnType = TStdType::ST_Void;
 		std::shared_ptr<Label>methodLabel = 0;
 		do {
-			SymbolTable::CClassInfo info = table->GetClassInfo( currentSearchType );
-			if( info.ContainsMethod( methodName ) ) {
-				SymbolTable::CMethodInfo methodInfo = info.GetMethodInfo( methodName );
+			SymbolTable::CClassInfo classInfo = table->GetClassInfo( currentSearchType );
+			if( classInfo.ContainsMethod( methodName ) ) {
+				SymbolTable::CMethodInfo methodInfo = classInfo.GetMethodInfo( methodName );
 				methodLabel = methodInfo.GetLabel();
 				methodReturnType = methodInfo.GetReturnType();
 			} else {
-				currentSearchType = info.GetExtend();
+				currentSearchType = classInfo.GetExtend();
 				assert( currentSearchType != SymbolTable::CClassInfo::NothingExtend );
 			}
 		} while( methodLabel == 0 );
@@ -444,10 +444,10 @@ namespace IRTree {
 		if( expList != 0 ) {
 			expList->Accept( this );
 			std::shared_ptr<IRTExpList> kek = std::make_shared<IRTExpList>(returnedExpression, nullptr);
-			arguments = std::make_shared<IRTExpList>(currentFrame->GetThisAccess(), kek);
+			arguments = std::make_shared<IRTExpList>( expNode, std::make_shared<IRTExpList>(returnedExpression, nullptr ) );
 			//assert( (arguments != 0) || (returnedExpression == 0) );
 		} else {
-			arguments = std::make_shared<IRTExpList>( currentFrame->GetThisAccess(), nullptr );
+			arguments = std::make_shared<IRTExpList>( expNode, nullptr );
 		}
 		std::shared_ptr<IRTECall> call = std::make_shared<IRTECall>( name, arguments );
 
