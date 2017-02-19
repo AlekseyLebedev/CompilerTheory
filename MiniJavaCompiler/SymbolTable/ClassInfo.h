@@ -24,10 +24,11 @@ namespace SymbolTable {
 
 		const CVariableInfo& GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode = 0 )const;
 		const CMethodInfo& GetMethodInfo( const int id, const AbstractTreeGenerator::INode * brokenNode = 0 ) const;
+
 		bool ContainsMethod( const int id ) const;
 		bool ContainsField( const int id ) const;
 		const std::vector<CMethodInfo>& GetMethods() const;
-
+		const std::vector<int>& GetVariables() const;
 		int GetExtend() const;
 		void SetExtend( const int id );
 

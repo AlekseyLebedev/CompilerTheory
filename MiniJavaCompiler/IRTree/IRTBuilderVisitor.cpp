@@ -184,6 +184,7 @@ namespace IRTree {
 		currentClass = mainclass->GetClassName()->GetName();
 		SymbolTable::CClassInfo classInfo = table->GetClassInfo( currentClass );
 		assert( classInfo.GetMethods().size() == 1 );
+		// TODO сделать не настолько гейски
 		SymbolTable::CMethodInfo methodInfo = classInfo.GetMethods()[0];
 		std::shared_ptr<Label> label = methodInfo.GetLabel();
 
@@ -202,10 +203,18 @@ namespace IRTree {
 
 		assert( returnedExpression == 0 );
 		assert( returnedStatement == 0 );
+		SymbolTable::CClassInfo classInfo = table->GetClassInfo( currentClass );
+		std::shared_ptr<Label> label = classInfo.GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
 
-
-		std::shared_ptr<Label> label = table->GetClassInfo( currentClass ).GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
 		currentFrame = std::make_shared<CFrame>( currentClass, label );
+		std::vector<int> variables = classInfo.GetVariables();
+		for( int i = 0; i < variables.size(); i++ ) {
+			const int name = variables[i];
+			SymbolTable::CVariableInfo variableInfo = classInfo.GetVarInfo( name );
+			const int type = variableInfo.GetType();
+			currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, glabalStringTable->wfind( name ) ) );
+		}
+			
 		visitChild( method->GetArgumentList().get() );
 		visitChild( method->GetVarDeclarationList().get() );
 		visitChild( method->GetStatementList() );
@@ -252,7 +261,7 @@ namespace IRTree {
 
 		std::shared_ptr<IRTStatement> root = std::make_shared<IRTSExp>( expNode );
 
-		assert( returnValueType == TStdType::ST_Int );
+		assert( returnValueType == TStdType::ST_Bool );
 		returnedStatement = root;
 	}
 
@@ -296,15 +305,18 @@ namespace IRTree {
 				break;
 			case operationType::And:
 				IRToperationType = BINOP_AND;
+				returnValueType = TStdType::ST_Bool;
 				break;
 			case operationType::Less:
 				IRToperationType = CJUMP_LT;
+				returnValueType = TStdType::ST_Bool;
 				break;
 			case operationType::Mod:
 				IRToperationType = BINOP_MOD;
 				break;
 			case operationType::Or:
 				IRToperationType = BINOP_OR;
+				returnValueType = TStdType::ST_Bool;
 				break;
 			default:
 				assert( false );
@@ -450,13 +462,13 @@ namespace IRTree {
 		int methodReturnType = TStdType::ST_Void;
 		std::shared_ptr<Label>methodLabel = 0;
 		do {
-			SymbolTable::CClassInfo info = table->GetClassInfo( currentSearchType );
-			if( info.ContainsMethod( methodName ) ) {
-				SymbolTable::CMethodInfo methodInfo = info.GetMethodInfo( methodName );
+			SymbolTable::CClassInfo classInfo = table->GetClassInfo( currentSearchType );
+			if( classInfo.ContainsMethod( methodName ) ) {
+				SymbolTable::CMethodInfo methodInfo = classInfo.GetMethodInfo( methodName );
 				methodLabel = methodInfo.GetLabel();
 				methodReturnType = methodInfo.GetReturnType();
 			} else {
-				currentSearchType = info.GetExtend();
+				currentSearchType = classInfo.GetExtend();
 				assert( currentSearchType != SymbolTable::CClassInfo::NothingExtend );
 			}
 		} while( methodLabel == 0 );
@@ -466,10 +478,10 @@ namespace IRTree {
 		if( expList != 0 ) {
 			expList->Accept( this );
 			std::shared_ptr<IRTExpList> kek = std::make_shared<IRTExpList>(returnedExpression, nullptr);
-			arguments = std::make_shared<IRTExpList>(currentFrame->GetThisAccess(), kek);
-			//assert( (arguments != 0) || (returnedExpression == 0) );
+			arguments = std::make_shared<IRTExpList>( expNode, std::make_shared<IRTExpList>(returnedExpression, nullptr ) );
+			assert( (arguments != 0) || (returnedExpression == 0) );
 		} else {
-			arguments = std::make_shared<IRTExpList>( currentFrame->GetThisAccess(), nullptr );
+			arguments = std::make_shared<IRTExpList>( expNode, nullptr );
 		}
 		std::shared_ptr<IRTECall> call = std::make_shared<IRTECall>( name, arguments );
 

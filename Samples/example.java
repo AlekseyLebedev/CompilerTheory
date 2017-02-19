@@ -1,6 +1,6 @@
 class Main{
     public static void main(String[] a) {
-	System.out.println(new A().A4());
+	System.out.println(new A().A4(7));
     }
 }
 
@@ -55,7 +55,9 @@ class A {
 		// return 999;
 	// }
 	
-	public int A4() {
+	public int A4(int a) {
+		a = -b;
+		
 		return 0;
 	}
 	
