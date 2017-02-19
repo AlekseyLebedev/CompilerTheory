@@ -48,22 +48,9 @@ namespace IRTree {
 		visitNode();
 
 		int label = node->GetLabel()->GetName();
-		std::wstring labelName;
+		std::wstring labelName = std::to_wstring( label ) + L" (";
+		labelName += node->GetLabel()->GetInfo() + L")";
 		assert( SL_Count == 3 );
-		switch( label ) {
-			case SL_NotUsed:
-				assert( false );
-				break;
-			case SL_Alloc:
-				labelName = L"Alloc";
-				break;
-			case SL_PrintLn:
-				labelName = L"println";
-				break;
-			default:
-				labelName = std::to_wstring( label );
-				break;
-		}
 		nodeLables.insert( std::make_pair( currentNodeID, L"NAME " + labelName ) );
 
 		leaveNode();
@@ -275,7 +262,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, concat( L"ACCESS ", node->GetName() ) ) );
+		nodeLables.insert( std::make_pair( currentNodeID, concat( L"ACCESS ", node->GetName() ) + L" (" + node->GetInfo() + L")" ) );
 
 		leaveNode();
 	}

@@ -5,21 +5,22 @@ namespace GraphvizOutput {
 
 	class CBaseDotOutput {
 	public:
-		CBaseDotOutput() : id( 0 )
+		CBaseDotOutput( const std::wstring& _header ) : id( 0 ), header( _header )
 		{
 		}
 
-		void Start( std::string filename )
+		void Start( std::wstring filename )
 		{
 			dotFile.open( filename, std::ios_base::out | std::ios_base::trunc );
-			dotFile << "digraph G{" << std::endl;
+			dotFile << L"digraph G{" << std::endl;
+			dotFile << L"\tlabel = \"" << header << "\"" << std::endl;
 			id = 0;
 		}
 
 
 		void Close()
 		{
-			dotFile << "}" << std::endl;
+			dotFile << L"}" << std::endl;
 			dotFile.close();
 		}
 
@@ -31,33 +32,56 @@ namespace GraphvizOutput {
 
 	protected:
 		size_t id;
-		std::ofstream dotFile;
+		std::wofstream dotFile;
+		const std::wstring& header;
+
+		std::wstring stringToWstring( const std::string& value )
+		{
+			return std::wstring( value.begin(), value.end() );
+		}
+
+		size_t enterNode( const std::wstring& label )
+		{
+			++id;
+			dotFile << L"\tn" << id << L"[label=\"" << label << L"\"]" << std::endl;
+			return id;
+		}
 
 		size_t enterNode( const std::string& label )
 		{
-			++id;
-			dotFile << "\tn" << id << "[label=\"" << label << "\"]" << std::endl;
-			return id;
+			return enterNode( stringToWstring( label ) );
+		}
+
+
+		void addSubNode( size_t id, const std::wstring& label, const std::wstring& postfix = L"v" )
+		{
+			dotFile << L"\tn" << id << postfix << L"[label=\"" << label << L"\"]" << std::endl;
+			dotFile << L"\tn" << id << L" -> n" << id << postfix << L";" << std::endl;
+		}
+
+
+		void addSubNode( size_t id, const int label, const std::wstring& postfix = L"v" )
+		{
+			dotFile << L"\tn" << id << postfix << L"[label=\"" << label << L"\"]" << std::endl;
+			dotFile << L"\tn" << id << L" -> n" << id << postfix << L";" << std::endl;
 		}
 
 
 		void addSubNode( size_t id, const std::string& label, const std::string& postfix = "v" )
 		{
-			dotFile << "\tn" << id << postfix << "[label=\"" << label << "\"]" << std::endl;
-			dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
+			addSubNode( id, stringToWstring( label ), stringToWstring( postfix ) );
 		}
 
 
-		void addSubNode( size_t id, const int label, const std::string& postfix = "v" )
+		void addSubNode( size_t id, const int label, const std::string& postfix )
 		{
-			dotFile << "\tn" << id << postfix << "[label=\"" << label << "\"]" << std::endl;
-			dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
+			addSubNode( id, label, stringToWstring( postfix ) );
 		}
 
 
 		void addArrow( const size_t from, const size_t to )
 		{
-			dotFile << "\tn" << from << " -> n" << to << ";" << std::endl;
+			dotFile << L"\tn" << from << L" -> n" << to << L";" << std::endl;
 		}
 
 
@@ -65,7 +89,7 @@ namespace GraphvizOutput {
 		{
 			size_t next = nextId();
 			if( node == 0 ) {
-				enterNode( "nullptr" );
+				enterNode( L"nullptr" );
 			} else {
 				node->Accept( dynamic_cast<TVisitor*>(this) );
 			}

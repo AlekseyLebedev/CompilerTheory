@@ -17,12 +17,13 @@ namespace IRTree {
 	public:
 
 		Label();
-		Label( const int _name );
+		Label( const int _name, const std::wstring& info = L"" );
 
 		const int GetName() const;
+		const std::wstring& GetInfo() const;
 
 	private:
-
+		const std::wstring info;
 		static int counter;
 		int name;
 	};

@@ -51,9 +51,9 @@ int main( int argc, char** argv )
 			try {
 				SymbolTable::CTypeCheckerVistor typeChecker( fillTable.GetTable() );
 				typeChecker.visit( root.get() );
-				// уже не строим AST
-				//GraphvizOutput::CGraphvizLauncher::Launch<GraphvizOutput::CDotOutputVisitor,
-				//	AbstractTreeGenerator::CProgram>( root.get(), i );
+				// AST
+				GraphvizOutput::CGraphvizLauncher::Launch<GraphvizOutput::CDotOutputVisitor,
+					AbstractTreeGenerator::CProgram>( root.get(), i, L"AST" );
 			}
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;

@@ -9,6 +9,8 @@
 
 using TStdType = AbstractTreeGenerator::TStandardType;
 
+extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
+
 namespace IRTree {
 	// TODO указатель на CTable
 	IRTBuilderVisitor::IRTBuilderVisitor( const SymbolTable::CTable * _table ) : table( _table )
@@ -26,7 +28,7 @@ namespace IRTree {
 	{
 		int name = argument->GetIdExpression()->GetName();
 		int type = argument->GetType()->GetType();
-		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, glabalStringTable->wfind( name ) ) );
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgumentList* const arguments )
@@ -199,9 +201,14 @@ namespace IRTree {
 		visitChild( method->GetVarDeclarationList().get() );
 		visitChild( method->GetStatementList() );
 		std::shared_ptr<IAccess> retAccess = currentFrame->GetReturnAccess();
-		std::shared_ptr<IRTSMove> moveReturnAcceess = std::make_shared<IRTSMove>( std::make_shared<IRTEMem>( retAccess ), visitChild( method->GetExpression().get() ) );
-		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>(
-			std::make_shared<IRTSSeq>( returnedStatement, moveReturnAcceess ) );
+		std::shared_ptr<IRTSMove> moveReturnAcceess =
+			std::make_shared<IRTSMove>(
+				std::make_shared<IRTEMem>( retAccess ),
+				visitChild( method->GetExpression().get() )
+				);
+		std::shared_ptr<CCodeFragment> bufferFragment =
+			std::make_shared<CCodeFragment>(
+				std::make_shared<IRTSSeq>( returnedStatement, moveReturnAcceess ) );
 		codeFragment->SetNext( bufferFragment );
 		codeFragment = bufferFragment;
 		returnValueType = TStdType::ST_Void;
@@ -381,7 +388,7 @@ namespace IRTree {
 		int name = variable->GetIdExpression()->GetName();
 		AbstractTreeGenerator::IType* type = variable->GetType().get();
 		int typenum = type->GetType();
-		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, typenum ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, typenum, glabalStringTable->wfind( name ) ) );
 		returnValueType = TStdType::ST_Void;
 	}
 

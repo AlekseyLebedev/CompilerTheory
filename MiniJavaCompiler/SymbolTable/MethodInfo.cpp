@@ -2,6 +2,9 @@
 #include <cassert>
 #include "MethodInfo.h"
 #include "TypeException.h"
+#include "..\AbstractTreeGenerator\StringTable.h"
+
+extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 
 namespace SymbolTable {
 
@@ -78,9 +81,14 @@ namespace SymbolTable {
 	{
 		if( label == 0 ) {
 			++methodCount;
-			label = std::make_shared<IRTree::Label>( -methodCount );
+			label = std::make_shared<IRTree::Label>( -methodCount, glabalStringTable->wfind( name ) );
 		}
 		return label;
+	}
+
+	void CMethodInfo::SetName( int _name )
+	{
+		name = _name;
 	}
 
 	int CMethodInfo::methodCount = 0;

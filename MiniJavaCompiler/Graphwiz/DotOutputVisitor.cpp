@@ -8,7 +8,7 @@ extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 
 namespace GraphvizOutput {
 
-	CDotOutputVisitor::CDotOutputVisitor() 
+	CDotOutputVisitor::CDotOutputVisitor( const std::wstring & _header ) : CBaseDotOutput( _header )
 	{
 	}
 
@@ -252,9 +252,14 @@ namespace GraphvizOutput {
 
 	}
 
-	void CDotOutputVisitor::addSubNodeWithStringTable( size_t id, const size_t label, const std::string & postfix )
+	void CDotOutputVisitor::addSubNodeWithStringTable( size_t id, const size_t label, const std::wstring& postfix )
 	{
-		dotFile << "\tn" << id << postfix << "[label=\"(" << label << "): '" << glabalStringTable->find( label ) << "'\"]" << std::endl;
-		dotFile << "\tn" << id << " -> n" << id << postfix << ";" << std::endl;
+		dotFile << L"\tn" << id << postfix << L"[label=\"(" << label << L"): '" << stringToWstring( glabalStringTable->find( label ) ) << L"'\"]" << std::endl;
+		dotFile << L"\tn" << id << L" -> n" << id << postfix << L";" << std::endl;
+	}
+
+	void CDotOutputVisitor::addSubNodeWithStringTable( size_t id, const size_t label, const std::string& postfix )
+	{
+		addSubNodeWithStringTable( id, label, stringToWstring( postfix ) );
 	}
 }
