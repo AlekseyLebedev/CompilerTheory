@@ -53,7 +53,7 @@ int main( int argc, char** argv )
 				typeChecker.visit( root.get() );
 				// AST
 				GraphvizOutput::CGraphvizLauncher::Launch<GraphvizOutput::CDotOutputVisitor,
-					AbstractTreeGenerator::CProgram>( root.get(), i, L"AST" );
+					AbstractTreeGenerator::CProgram>( root.get(), fileIndex++, L"AST" );
 			}
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;
