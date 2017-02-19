@@ -1,1 +1,1 @@
-.\x64\Debug\MiniJavaCompiler.exe .\Samples\BinarySearch.java
+.\x64\Debug\MiniJavaCompiler.exe .\Samples\BinaryTree.java

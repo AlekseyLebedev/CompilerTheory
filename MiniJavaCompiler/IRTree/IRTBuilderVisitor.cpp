@@ -261,7 +261,7 @@ namespace IRTree {
 
 		std::shared_ptr<IRTStatement> root = std::make_shared<IRTSExp>( expNode );
 
-		assert( returnValueType == TStdType::ST_Int );
+		assert( returnValueType == TStdType::ST_Bool );
 		returnedStatement = root;
 	}
 
@@ -305,15 +305,18 @@ namespace IRTree {
 				break;
 			case operationType::And:
 				IRToperationType = BINOP_AND;
+				returnValueType = TStdType::ST_Bool;
 				break;
 			case operationType::Less:
 				IRToperationType = CJUMP_LT;
+				returnValueType = TStdType::ST_Bool;
 				break;
 			case operationType::Mod:
 				IRToperationType = BINOP_MOD;
 				break;
 			case operationType::Or:
 				IRToperationType = BINOP_OR;
+				returnValueType = TStdType::ST_Bool;
 				break;
 			default:
 				assert( false );

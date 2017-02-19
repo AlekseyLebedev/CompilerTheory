@@ -56,6 +56,8 @@ class A {
 	// }
 	
 	public int A4(int a) {
+		a = -b;
+		
 		return 0;
 	}
 	
