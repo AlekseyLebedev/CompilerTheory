@@ -22,7 +22,14 @@ namespace AbstractTreeGenerator {
 		if( num < v.size() ) {
 			return v[num];
 		}
-		throw std::logic_error("Error in std::string CStringTable::find( const int num )! \n ");
+		throw std::logic_error( "Error in std::string CStringTable::find( const int num )! \n " );
+	}
+
+	std::wstring CStringTable::wfind( const int num )
+	{
+		const std::string& value = find( num );
+		std::wstring result( value.begin(), value.end() );
+		return result;
 	}
 
 	bool CStringTable::equals( const std::string& left, const std::string& right )

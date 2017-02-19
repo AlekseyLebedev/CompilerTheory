@@ -1,6 +1,7 @@
+#include <string>
 #include "Access.h"
 
-IRTree::IAccess::IAccess( int name, int type ) : name(name), type(type)
+IRTree::IAccess::IAccess( int name, int type, const std::wstring& _info ) : name( name ), type( type ), info( _info )
 {
 }
 
@@ -17,4 +18,9 @@ const int IRTree::IAccess::GetName() const
 const int IRTree::IAccess::GetType() const
 {
 	return type;
+}
+
+const std::wstring & IRTree::IAccess::GetInfo() const
+{
+	return info;
 }

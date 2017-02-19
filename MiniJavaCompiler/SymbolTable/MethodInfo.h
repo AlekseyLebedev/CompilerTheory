@@ -25,9 +25,11 @@ namespace SymbolTable {
 		int GetAllVarsCount() const;
 		int GetArgType( const int num ) const;
 		std::shared_ptr<IRTree::Label> GetLabel() const;
+		void SetName( int id );
 
 	private:
 		int returnType;
+		int name;
 		std::map<int, CVariableInfo> vars;
 		std::map<int, CVariableInfo> args;
 		int varsCount;

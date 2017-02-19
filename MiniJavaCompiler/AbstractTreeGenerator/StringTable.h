@@ -14,7 +14,8 @@ namespace AbstractTreeGenerator {
 		// возвращает номер присвоенный новой строке
 		int insert( const std::string& theString );
 		// возвращает строку по номеру 
-		std::string find( const int num);
+		std::string find( const int num );
+		std::wstring wfind( const int num );
 
 		// проверка совпадают ли две строки
 		bool equals( const std::string& left, const std::string& right );
