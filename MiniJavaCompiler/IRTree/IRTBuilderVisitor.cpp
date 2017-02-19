@@ -207,18 +207,18 @@ namespace IRTree {
 		std::shared_ptr<Label> label = classInfo.GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
 
 		currentFrame = std::make_shared<CFrame>( currentClass, label );
-		std::vector<int> variables = classInfo.GetVariables();
-		for( int i = 0; i < variables.size(); i++ ) {
-			const int name = variables[i];
-			SymbolTable::CVariableInfo variableInfo = classInfo.GetVarInfo( name );
-			const int type = variableInfo.GetType();
-			currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, glabalStringTable->wfind( name ) ) );
-		}
-		int extend = classInfo.GetExtend();
+		int extend = currentClass;
 		do {
-			// ТУТ
+			const SymbolTable::CClassInfo& currentClassInfo = table->GetClassInfo( extend );
+			std::vector<int> variables = currentClassInfo.GetVariables();
+			for( int i = 0; i < variables.size(); i++ ) {
+				const int name = variables[i];
+				SymbolTable::CVariableInfo variableInfo = currentClassInfo.GetVarInfo( name );
+				const int type = variableInfo.GetType();
+				currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, glabalStringTable->wfind( name ) ) );
+			}
+			extend = currentClassInfo.GetExtend();
 		} while( extend != SymbolTable::CClassInfo::NothingExtend );
-
 
 		visitChild( method->GetArgumentList().get() );
 		visitChild( method->GetVarDeclarationList().get() );
