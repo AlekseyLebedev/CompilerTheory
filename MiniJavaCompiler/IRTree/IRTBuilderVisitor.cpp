@@ -199,8 +199,13 @@ namespace IRTree {
 		visitChild( method->GetVarDeclarationList().get() );
 		visitChild( method->GetStatementList() );
 		std::shared_ptr<IAccess> retAccess = currentFrame->GetReturnAccess();
-		std::shared_ptr<IRTSMove> moveReturnAcceess = std::make_shared<IRTSMove>( std::make_shared<IRTEMem>( retAccess ), visitChild( method->GetExpression().get() ) );
-		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>(
+		std::shared_ptr<IRTSMove> moveReturnAcceess = 
+				std::make_shared<IRTSMove>( 
+						std::make_shared<IRTEMem>( retAccess ), 
+						visitChild( method->GetExpression().get() ) 
+					);
+		std::shared_ptr<CCodeFragment> bufferFragment = 
+				std::make_shared<CCodeFragment>(
 			std::make_shared<IRTSSeq>( returnedStatement, moveReturnAcceess ) );
 		codeFragment->SetNext( bufferFragment );
 		codeFragment = bufferFragment;
