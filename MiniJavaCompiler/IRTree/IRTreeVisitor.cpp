@@ -238,7 +238,12 @@ namespace IRTree {
 
 		nodeLables.insert( std::make_pair( currentNodeID, L"SEQ" ) );
 		// left
-		node->GetStmLeft()->Accept( this );
+		if( node->GetStmLeft().get() != 0 ) {
+			node->GetStmLeft()->Accept( this );
+		} else {
+			nullNode();
+			assert( node->GetStmRight() == 0 );
+		}
 		// right
 		if( node->GetStmRight() ) {
 			node->GetStmRight()->Accept( this );
