@@ -9,7 +9,7 @@
 
 using TStdType = AbstractTreeGenerator::TStandardType;
 
-extern std::shared_ptr<AbstractTreeGenerator::CStringTable> globalStringTable;
+extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 
 namespace IRTree {
 	// TODO указатель на CTable
@@ -28,7 +28,7 @@ namespace IRTree {
 	{
 		int name = argument->GetIdExpression()->GetName();
 		int type = argument->GetType()->GetType();
-		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, globalStringTable->wfind( name ) ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, glabalStringTable->wfind( name ) ) );
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgumentList* const arguments )
@@ -209,10 +209,10 @@ namespace IRTree {
 		currentFrame = std::make_shared<CFrame>( currentClass, label );
 		std::vector<int> variables = classInfo.GetVariables();
 		for( int i = 0; i < variables.size(); i++ ) {
-			int name = variables[i];
+			const int name = variables[i];
 			SymbolTable::CVariableInfo variableInfo = classInfo.GetVarInfo( name );
-			int type = variableInfo.GetType();
-			currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, globalStringTable->wfind( name ) ) );
+			const int type = variableInfo.GetType();
+			currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, glabalStringTable->wfind( name ) ) );
 		}
 			
 		visitChild( method->GetArgumentList().get() );
@@ -419,7 +419,7 @@ namespace IRTree {
 		int name = variable->GetIdExpression()->GetName();
 		AbstractTreeGenerator::IType* type = variable->GetType().get();
 		int typenum = type->GetType();
-		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, typenum, globalStringTable->wfind( name ) ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, typenum, glabalStringTable->wfind( name ) ) );
 		returnValueType = TStdType::ST_Void;
 	}
 
