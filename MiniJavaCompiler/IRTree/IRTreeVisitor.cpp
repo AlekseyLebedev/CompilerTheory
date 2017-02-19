@@ -258,7 +258,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, concat( L"ACCESS ", node->GetName() ) ) );
+		nodeLables.insert( std::make_pair( currentNodeID, concat( L"ACCESS ", node->GetName() ) + L" (" + node->GetInfo() + L")" ) );
 
 		leaveNode();
 	}

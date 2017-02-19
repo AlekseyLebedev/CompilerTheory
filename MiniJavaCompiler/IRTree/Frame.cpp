@@ -6,8 +6,8 @@
 
 namespace IRTree {
 
-	CFrame::CFrame( int className, std::shared_ptr<Label> _label ) : className( className ), label( _label ), thisAccess( std::make_shared<IAccess>( ThisName, className ) ),
-		returnAccess( std::make_shared<IAccess>( ReturnName, className ) )
+	CFrame::CFrame( int className, std::shared_ptr<Label> _label ) : className( className ), label( _label ), thisAccess( std::make_shared<IAccess>( ThisName, className, L"this" ) ),
+		returnAccess( std::make_shared<IAccess>( ReturnName, className, L"return" ) )
 	{
 	}
 

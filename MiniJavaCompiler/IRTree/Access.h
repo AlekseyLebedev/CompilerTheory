@@ -13,6 +13,6 @@ namespace IRTree {
 	private:
 		const int name;
 		const int type;
-		const std::wstring& info;
+		const std::wstring info;
 	};
 }
