@@ -97,6 +97,7 @@ namespace SymbolTable {
 	{
 		auto info = variables.find( id );
 		if( info == variables.end() ) {
+			assert( extend != NothingExtend );
 			return table->GetClassInfo( extend ).GetOffsetForField( id, table );
 		} else {
 			int position = 0;
@@ -123,7 +124,7 @@ namespace SymbolTable {
 
 	int CClassInfo::offset( const int size )
 	{
-		return (size + machineWordSize - 1) / machineWordSize;
+		return ((size + machineWordSize - 1) / machineWordSize) * machineWordSize;
 	}
 
 	int CClassInfo::GetSizeOfType( const int type, const CTable* table )

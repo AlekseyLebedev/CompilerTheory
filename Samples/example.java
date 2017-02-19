@@ -5,7 +5,8 @@ class Main{
 }
 
 class A {
-
+	int b;
+	int c;
 	// public int A1() {
 		// int b;
 		// int[] c; 
@@ -56,7 +57,9 @@ class A {
 	// }
 	
 	public int A4(int a) {
-		a = -b;
+		int d;
+		int e;
+		b = a;
 		
 		return 0;
 	}

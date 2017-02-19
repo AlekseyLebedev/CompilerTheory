@@ -19,8 +19,11 @@ namespace IRTree {
 	std::shared_ptr<IAccess> CFrame::GetDataInfo( int name )
 	{
 		auto iter = variables.find( name );
-		assert( iter != variables.end() );
-		return variables.find( name )->second;
+		if( iter != variables.end() ) {
+			return iter->second;
+		} else {
+			return 0;
+		}
 	}
 
 	std::shared_ptr<Label> CFrame::GetLabel()

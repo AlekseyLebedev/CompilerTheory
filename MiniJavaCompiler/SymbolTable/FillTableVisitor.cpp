@@ -115,6 +115,7 @@ namespace SymbolTable
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CVarDeclarationList* const list )
 	{
+		visitChild( list->GetVarDeclarationList().get() );
 		if( fillingClass ) {
 			currentClassInfo.InsertVariableInfo( list->GetVarDeclaration()->GetIdExpression()->GetName(),
 				list->GetVarDeclaration()->GetType()->GetType() );
@@ -122,7 +123,6 @@ namespace SymbolTable
 			currentMethodInfo.AddVariableInfo( list->GetVarDeclaration()->GetIdExpression()->GetName(),
 				list->GetVarDeclaration()->GetType()->GetType() );
 		}
-		visitChild( list->GetVarDeclarationList().get() );
 	}
 
 	void CFillTableVisitor::visit( AbstractTreeGenerator::CTrueExpression* const )

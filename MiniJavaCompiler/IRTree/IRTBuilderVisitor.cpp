@@ -125,10 +125,34 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CIdExpression* const expression )
 	{
-		std::shared_ptr<IAccess> access = currentFrame->GetDataInfo( expression->GetName() );
-		std::shared_ptr<IRTEMem> root = std::make_shared<IRTEMem>( access );
-		returnedExpression = root;
-		returnValueType = access->GetType();
+		int name = expression->GetName();
+		std::shared_ptr<IAccess> access = currentFrame->GetDataInfo( name );
+		if( access != 0 ) {
+			returnedExpression = access;
+			returnValueType = access->GetType();
+		} else {
+			int delta = table->GetClassInfo( currentClass ).GetOffsetForField( name, table );
+
+			// Ищем возвращаемый тип
+			bool found = false;
+			int extend = currentClass;
+			do {
+				const SymbolTable::CClassInfo& currentClassInfo = table->GetClassInfo( extend );
+				std::vector<int> variables = currentClassInfo.GetVariables();
+				for( int i = 0; i < variables.size(); i++ ) {
+					if( name == variables[i] ) {
+						SymbolTable::CVariableInfo variableInfo = currentClassInfo.GetVarInfo( name );
+						returnValueType = variableInfo.GetType();
+						found = true;// двойной break
+						break;
+					}
+				}
+				extend = currentClassInfo.GetExtend();
+			} while( (extend != SymbolTable::CClassInfo::NothingExtend) && (!found) );
+			assert( found );
+
+			returnedExpression = std::make_shared<IRTEMem>( std::make_shared<IRTEBinop>( BINOP_PLUS, currentFrame->GetThisAccess(), std::make_shared<IRTEConst>( delta ) ) );
+		}
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CIndexExpression* const indexExp )
@@ -207,18 +231,6 @@ namespace IRTree {
 		std::shared_ptr<Label> label = classInfo.GetMethodInfo( method->GetIdExpression()->GetName() ).GetLabel();
 
 		currentFrame = std::make_shared<CFrame>( currentClass, label );
-		int extend = currentClass;
-		do {
-			const SymbolTable::CClassInfo& currentClassInfo = table->GetClassInfo( extend );
-			std::vector<int> variables = currentClassInfo.GetVariables();
-			for( int i = 0; i < variables.size(); i++ ) {
-				const int name = variables[i];
-				SymbolTable::CVariableInfo variableInfo = currentClassInfo.GetVarInfo( name );
-				const int type = variableInfo.GetType();
-				currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, glabalStringTable->wfind( name ) ) );
-			}
-			extend = currentClassInfo.GetExtend();
-		} while( extend != SymbolTable::CClassInfo::NothingExtend );
 
 		visitChild( method->GetArgumentList().get() );
 		visitChild( method->GetVarDeclarationList().get() );
@@ -482,8 +494,8 @@ namespace IRTree {
 		std::shared_ptr<IRTExpList> arguments = 0;
 		if( expList != 0 ) {
 			expList->Accept( this );
-			std::shared_ptr<IRTExpList> kek = std::make_shared<IRTExpList>(returnedExpression, nullptr);
-			arguments = std::make_shared<IRTExpList>( expNode, std::make_shared<IRTExpList>(returnedExpression, nullptr ) );
+			std::shared_ptr<IRTExpList> kek = std::make_shared<IRTExpList>( returnedExpression, nullptr );
+			arguments = std::make_shared<IRTExpList>( expNode, std::make_shared<IRTExpList>( returnedExpression, nullptr ) );
 			assert( (arguments != 0) || (returnedExpression == 0) );
 		} else {
 			arguments = std::make_shared<IRTExpList>( expNode, nullptr );
