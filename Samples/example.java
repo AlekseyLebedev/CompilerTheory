@@ -34,9 +34,9 @@ class A {
 	// public int A3(int n) {
 		// boolean b1;
 		// boolean b2;
-		// b1 = false;
-		// b2 = true;
 		// int a;
+		// b1 = false;
+		// b2 = true;		
 		// a = 0;
 		// if (b2) {
 			// a = 1;
@@ -45,6 +45,8 @@ class A {
 		// }
 		// if (b1) {
 			// a = 3;
+		// } else {
+			// a = 2;
 		// }
 		// while (a < 5) {
 			// b1 = true;
@@ -70,28 +72,5 @@ class A {
 		// }
 		// return 7;
 	// }
-	
-	public int A3(int n) {
-		boolean b1;
-		boolean b2;
-		int a;
-		b1 = false;
-		b2 = true;		
-		a = 0;
-		if (b2) {
-			a = 1;
-		} else {
-			a = 2;
-		}
-		if (b1) {
-			a = 3;
-		} else {
-			a = 2;
-		}
-		while (a < 5) {
-			b1 = true;
-			a = a + 1;
-		}
-		return 999;
-	}
+
 }
