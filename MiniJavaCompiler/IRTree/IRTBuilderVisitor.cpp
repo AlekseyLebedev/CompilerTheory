@@ -115,9 +115,9 @@ namespace IRTree {
 			tail->Accept( this );
 
 			std::shared_ptr<IRTExpression> tailNode = returnedExpression;
-			root = std::make_shared< IRTEEseq>( std::make_shared<IRTSExp>( headNode ), tailNode );
+			root = std::make_shared< IRTExpList>( headNode , std::dynamic_pointer_cast<IRTExpList>(tailNode) );
 		} else {
-			root = std::make_shared< IRTEEseq>( std::make_shared <IRTSExp>( headNode ), nullptr );
+			root = std::make_shared< IRTExpList>(  headNode , nullptr );
 		}
 
 		returnedExpression = root;
@@ -493,9 +493,8 @@ namespace IRTree {
 		std::shared_ptr<IRTEName> name = std::make_shared<IRTEName>( methodLabel );
 		std::shared_ptr<IRTExpList> arguments = 0;
 		if( expList != 0 ) {
-			expList->Accept( this );
-			std::shared_ptr<IRTExpList> kek = std::make_shared<IRTExpList>( returnedExpression, nullptr );
-			arguments = std::make_shared<IRTExpList>( expNode, std::make_shared<IRTExpList>( returnedExpression, nullptr ) );
+			expList->Accept( this );			
+			arguments = std::make_shared<IRTExpList>( expNode, std::dynamic_pointer_cast<IRTExpList>(returnedExpression) );
 			assert( (arguments != 0) || (returnedExpression == 0) );
 		} else {
 			arguments = std::make_shared<IRTExpList>( expNode, nullptr );
