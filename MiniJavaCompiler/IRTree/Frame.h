@@ -23,7 +23,7 @@ namespace IRTree {
 		static const int FramePointerName;
 		int VariableOffset();
 		int ArgumentOffset();
-		int newTemp();
+		int NewTemp();
 
 	private:
 		std::shared_ptr<IAccess> thisAccess;

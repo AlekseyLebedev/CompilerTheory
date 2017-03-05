@@ -20,13 +20,17 @@ namespace IRTree {
 
 	//-----------------------------------------------------------------------------------------------------------------
 
-	CLinearizationVisitor::CLinearizationVisitor( std::shared_ptr<CFrame> _frame ) : frame( _frame )
+	CLinearizationVisitor::CLinearizationVisitor( std::shared_ptr<CFrame> _frame ) : frame( _frame ), hasCall( false )
 	{
 	}
 	void CLinearizationVisitor::Visit( const IRTExpList * node )
 	{
 		startMethod();
-		returnExpression = NEW<IRTExpList>( visitExpression<IRTExpression>( node->GetHead() ), visitExpression<IRTExpList>( node->GetTail() ) );
+		std::shared_ptr<Temp> temp( NEW<Temp>( frame->NewTemp() ) );
+		auto result = NEW<IRTExpList>( NEW<IRTETemp>( temp ), visitExpression<IRTExpList>( node->GetTail() ) );
+		arguments.push_back( visitExpression<IRTExpression>( node->GetHead() ) );
+		temps.push_back( temp );
+		returnExpression = result;
 	}
 
 	void CLinearizationVisitor::Visit( const IRTEConst * node )
@@ -62,15 +66,16 @@ namespace IRTree {
 	void CLinearizationVisitor::Visit( const IRTECall * node )
 	{
 		startMethod();
+
+		auto oldArguments = arguments;
+		auto oldTemps = temps;
+
 		std::shared_ptr<IRTExpList> args = visitExpression<IRTExpList>( node->GetArgs() );
-		std::shared_ptr<IRTECall> call = std::dynamic_pointer_cast<IRTECall>(args->GetHead());
-		if( call ) {
-			std::shared_ptr<IRTETemp> newTemp = NEW<IRTETemp>( NEW<Temp>( frame->newTemp() ) );
-			returnExpression = NEW<IRTEEseq>( NEW<IRTSMove>( call, newTemp ),
-				NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), NEW<IRTExpList>( newTemp, args->GetTail() ) ) );
-		} else {
-			returnExpression = NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), visitExpression<IRTExpList>( node->GetArgs() ) );
-		}
+
+		returnExpression = regenerate( NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), visitExpression<IRTExpList>( node->GetArgs() ) ),
+			oldArguments, oldTemps );
+
+		hasCall = true;
 	}
 
 	void CLinearizationVisitor::Visit( const IRTEEseq * node )
@@ -95,7 +100,6 @@ namespace IRTree {
 	{
 		startMethod();
 		returnStatement = NEW<IRTSJump>( node->GetLabel() );
-
 	}
 
 	void CLinearizationVisitor::Visit( const IRTSCjump * node )
@@ -130,10 +134,23 @@ namespace IRTree {
 		returnExpression = NEW<IRTEConstBool>( node->GetValue() );
 	}
 
-
 	std::shared_ptr<IRTStatement> CLinearizationVisitor::GetResult()
 	{
 		return returnStatement;
+	}
+
+	std::shared_ptr<IRTExpression> CLinearizationVisitor::regenerate( std::shared_ptr<IRTExpression> node, std::vector<std::shared_ptr<IRTExpression>>& oldArgumntes,
+		std::vector<std::shared_ptr<Temp>>& oldTemps )
+	{
+		assert( arguments.size() == temps.size() );
+
+		for( int i = 0; i < arguments.size(); i++ ) {
+			node = NEW<IRTEEseq>( NEW<IRTSMove>( NEW<IRTETemp>( temps[i] ), arguments[i] ), node );
+		}
+
+		arguments = oldArgumntes;
+		temps = oldTemps;
+		return node;
 	}
 
 	void CLinearizationVisitor::startVisit()
@@ -144,6 +161,7 @@ namespace IRTree {
 
 	void CLinearizationVisitor::startMethod()
 	{
+		assert( arguments.size() == temps.size() );
 		assert( returnExpression == 0 );
 		assert( returnStatement == 0 );
 	}

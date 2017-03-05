@@ -66,7 +66,7 @@ namespace IRTree {
 		return (argumentCount + 3) * SymbolTable::CClassInfo::MachineWordSize;
 	}
 
-	int CFrame::newTemp()
+	int CFrame::NewTemp()
 	{
 		return tempCounter++;
 	}

@@ -1,3 +1,4 @@
+#include <vector>
 #include "IRTreeAllClasses.h"
 #include "IVisitor.h"
 #include "Frame.h"
@@ -29,6 +30,9 @@ namespace IRTree {
 	private:
 		std::shared_ptr<IRTStatement> returnStatement;
 		std::shared_ptr<IRTExpression> returnExpression;
+		std::vector<std::shared_ptr<IRTExpression> > arguments;
+		std::vector<std::shared_ptr<Temp> > temps;
+		bool hasCall;
 
 		std::shared_ptr<CFrame> frame;
 		template<typename T>
@@ -63,6 +67,7 @@ namespace IRTree {
 			}
 		}
 
+		std::shared_ptr<IRTExpression> regenerate( std::shared_ptr<IRTExpression> root, std::vector<std::shared_ptr<IRTExpression>>& oldArgumntes, std::vector<std::shared_ptr<Temp>>& oldTemps );
 		void startVisit();
 		void startMethod();
 	};

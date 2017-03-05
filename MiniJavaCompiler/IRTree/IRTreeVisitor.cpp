@@ -73,7 +73,7 @@ namespace IRTree {
 	{
 		visitNode();
 
-		nodeLables.insert( std::make_pair( currentNodeID, L"TEMP " + node->GetTemp()->GetName() ) );
+		nodeLables.insert( std::make_pair( currentNodeID, L"TEMP " + std::to_wstring( node->GetTemp()->GetName() ) ) );
 
 		leaveNode();
 	}
