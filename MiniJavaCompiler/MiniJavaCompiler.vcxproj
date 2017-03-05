@@ -220,6 +220,7 @@
     <ClInclude Include="IRTree\IRTStmConverter.h" />
     <ClInclude Include="IRTree\IRTTemp.h" />
     <ClInclude Include="IRTree\IVisitor.h" />
+    <ClInclude Include="IRTree\LinearizationVisitor.h" />
     <ClInclude Include="IRTree\StatementClasses\IRTSCjump.h" />
     <ClInclude Include="IRTree\StatementClasses\IRTSExp.h" />
     <ClInclude Include="IRTree\StatementClasses\IRTSJump.h" />
@@ -296,6 +297,7 @@
     <ClCompile Include="IRTree\IRTreeVisitor.cpp" />
     <ClCompile Include="IRTree\IRTStmConverter.cpp" />
     <ClCompile Include="IRTree\IRTTemp.cpp" />
+    <ClCompile Include="IRTree\LinearizationVisitor.cpp" />
     <ClCompile Include="IRTree\StatementClasses\IRTSCjump.cpp" />
     <ClCompile Include="IRTree\StatementClasses\IRTSExp.cpp" />
     <ClCompile Include="IRTree\StatementClasses\IRTSJump.cpp" />
