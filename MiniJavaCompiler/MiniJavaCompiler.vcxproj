@@ -447,6 +447,7 @@
     <ClInclude Include="IRTree\Access.h" />
     <ClInclude Include="IRTree\AccessRemoverVisitor.h" />
     <ClInclude Include="IRTree\CodeFragment.h" />
+    <ClInclude Include="IRTree\EseqUpperVisitor.h" />
     <ClInclude Include="IRTree\ExpressionClasses\IRTEBinop.h" />
     <ClInclude Include="IRTree\ExpressionClasses\IRTECall.h" />
     <ClInclude Include="IRTree\ExpressionClasses\IRTEConst.h" />
@@ -530,6 +531,7 @@
     <ClCompile Include="IRTree\Access.cpp" />
     <ClCompile Include="IRTree\AccessRemoverVisitor.cpp" />
     <ClCompile Include="IRTree\CodeFragment.cpp" />
+    <ClCompile Include="IRTree\EseqUpperVisitor.cpp" />
     <ClCompile Include="IRTree\ExpressionClasses\IRTEBinop.cpp" />
     <ClCompile Include="IRTree\ExpressionClasses\IRTECall.cpp" />
     <ClCompile Include="IRTree\ExpressionClasses\IRTEConst.cpp" />
