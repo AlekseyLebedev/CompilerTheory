@@ -39,6 +39,7 @@ namespace IRTree {
 			if( node == 0 ) {
 				return 0;
 			} else {
+				node->Assept( this );
 				std::shared_ptr<typename T> result = std::dynamic_pointer_cast<T>(returnExpression);
 				assert( result != 0 );
 				returnExpression = 0;
@@ -54,6 +55,7 @@ namespace IRTree {
 			if( node == 0 ) {
 				return 0;
 			} else {
+				node->Assept( this );
 				std::shared_ptr<typename T> result = std::dynamic_pointer_cast<T>(returnStatement);
 				assert( result != 0 );
 				returnStatement = 0;
@@ -63,6 +65,5 @@ namespace IRTree {
 
 		void startVisit();
 		void startMethod();
-
 	};
 }

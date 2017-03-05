@@ -30,7 +30,7 @@ namespace IRTree {
 	{
 		int name = argument->GetIdExpression()->GetName();
 		int type = argument->GetType()->GetType();
-		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, currentFrame->ArgumentOffset(), glabalStringTable->wfind( name ) ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, currentFrame->ArgumentOffset(), glabalStringTable->wfind( name ) ), true );
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgumentList* const arguments )
@@ -463,7 +463,7 @@ namespace IRTree {
 		int name = variable->GetIdExpression()->GetName();
 		AbstractTreeGenerator::IType* type = variable->GetType().get();
 		int typenum = type->GetType();
-		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, typenum, currentFrame->VariableOffset(), glabalStringTable->wfind( name ) ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, typenum, currentFrame->VariableOffset(), glabalStringTable->wfind( name ) ), false );
 		returnValueType = TStdType::ST_Void;
 	}
 
