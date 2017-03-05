@@ -4,7 +4,11 @@
 
 namespace IRTree {
 
-	class IRTEConst : public IRTExpression {
+	class IConst : public IRTExpression {
+
+	};
+
+	class IRTEConst : public IConst {
 	public:
 
 		IRTEConst(int _value);
@@ -19,7 +23,7 @@ namespace IRTree {
 
 	};
 
-	class IRTEConstBool : public IRTExpression {
+	class IRTEConstBool : public IConst {
 	public:
 
 		IRTEConstBool( bool _value );
