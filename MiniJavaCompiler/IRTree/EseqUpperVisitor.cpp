@@ -6,6 +6,21 @@
 
 
 namespace IRTree {
+
+	static bool isNop( std::shared_ptr<IRTStatement> value )
+	{
+		std::shared_ptr<IRTSExp> exp = std::dynamic_pointer_cast<IRTSExp>(value);
+		return exp != 0 && std::dynamic_pointer_cast<IRTree::IRTEConst>(exp->GetExp()) != 0;
+	}
+
+	static bool commute( std::shared_ptr<IRTStatement> a, std::shared_ptr<IRTExpList> b )
+	{
+		return isNop( a ) || std::dynamic_pointer_cast<IRTEName>(b) != 0
+			|| std::dynamic_pointer_cast<IConst>(b) != 0;
+	}
+
+	//-----------------------------------------------------------------------------------------------------------------
+
 	CEseqUpperVisitor::CEseqUpperVisitor( std::shared_ptr<CFrame> _frame) : frame(_frame)
 	{
 	}
@@ -36,13 +51,42 @@ namespace IRTree {
 	void CEseqUpperVisitor::Visit( const IRTEBinop * node )
 	{
 		startMethod();
-		returnExpression = NEW<IRTEBinop>( node->GetBinop(), visitExpression<IRTExpression>( node->GetLeft() ), visitExpression<IRTExpression>( node->GetRight() ) );
+		RELOP op = node->GetBinop();
+		std::shared_ptr<IRTExpression> eleft = visitExpression<IRTExpression>( node->GetLeft() );
+		std::shared_ptr<IRTExpression> eright = visitExpression<IRTExpression>( node->GetRight() );
+		std::shared_ptr<IRTEEseq> eseq = std::dynamic_pointer_cast<IRTEEseq>(eleft);
+		if( eseq ) {
+			std::shared_ptr<IRTStatement> s = visitStatement( eseq->GetStm() );
+			std::shared_ptr<IRTExpression> e1 = visitExpression( eseq->GetExp() );
+			std::shared_ptr<IRTEBinop> binop = visitExpression( NEW<IRTEBinop>( op, e1, eright ) );
+			returnExpression = NEW<IRTEEseq>( s, binop );
+		} else {
+			eseq = std::dynamic_pointer_cast<IRTEEseq>(eright);
+			if( eseq ) {
+				std::shared_ptr<IRTStatement> s = visitStatement( eseq->GetStm() );
+				std::shared_ptr<IRTExpression> e2 = visitExpression( eseq->GetExp() );
+				std::shared_ptr<IRTETemp> t = NEW<IRTETemp>( NEW<Temp>( frame->newTemp() ) );
+				std::shared_ptr<IRTSMove> move = NEW<IRTSMove>( t, eleft );
+				std::shared_ptr<IRTEBinop> binop = visitExpression( NEW<IRTEBinop>( op, t, e2 ) );
+				returnExpression = NEW<IRTEEseq>( move, NEW<IRTEEseq>( s, binop ) );
+			} else {
+				returnExpression = NEW<IRTEBinop>( op, eleft, eright );
+			}
+		}		
 	}
 
 	void CEseqUpperVisitor::Visit( const IRTEMem * node )
 	{
 		startMethod();
-		returnExpression = NEW<IRTEMem>( visitExpression<IRTExpression>( node->GetExp() ) );
+		std::shared_ptr<IRTExpression> exp = visitExpression<IRTExpression>( node->GetExp() );
+		std::shared_ptr<IRTEEseq> eseq = std::dynamic_pointer_cast<IRTEEseq>(exp);
+		if( eseq ) {
+			std::shared_ptr<IRTStatement> s = visitStatement<IRTStatement>( eseq->GetStm() );
+			std::shared_ptr<IRTExpression> e1 = visitExpression<IRTExpression>( eseq->GetExp() );
+			returnExpression = NEW<IRTEEseq>( s, NEW<IRTEMem>( e1 ) );
+		} else {
+			returnExpression = NEW<IRTEMem>( exp );
+		}
 	}
 
 	void CEseqUpperVisitor::Visit( const IRTECall * node )

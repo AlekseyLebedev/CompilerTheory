@@ -5,20 +5,7 @@
 #define NEW std::make_shared
 
 
-namespace IRTree {
-	static bool isNop( std::shared_ptr<IRTStatement> value )
-	{
-		std::shared_ptr<IRTSExp> exp = std::dynamic_pointer_cast<IRTSExp>(value);
-		return exp != 0 && std::dynamic_pointer_cast<IRTree::IRTEConst>(exp->GetExp()) != 0;
-	}
-
-	static bool commute( std::shared_ptr<IRTStatement> a, std::shared_ptr<IRTExpList> b )
-	{
-		return isNop( a ) || std::dynamic_pointer_cast<IRTEName>(b) != 0
-			|| std::dynamic_pointer_cast<IConst>(b) != 0;
-	}
-
-	//-----------------------------------------------------------------------------------------------------------------
+namespace IRTree {	
 
 	CLinearizationVisitor::CLinearizationVisitor( std::shared_ptr<CFrame> _frame ) : frame( _frame )
 	{
