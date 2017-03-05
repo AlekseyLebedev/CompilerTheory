@@ -43,6 +43,19 @@ namespace IRTree {
 		leaveNode();
 	}
 
+	void IRTreeVisitor::Visit( const IRTEConstBool* node )
+	{
+		visitNode();
+
+		if( node->GetValue() ) {
+			nodeLables.insert( std::make_pair( currentNodeID, L"TRUE" ) );
+		} else {
+			nodeLables.insert( std::make_pair( currentNodeID, L"FALSE" ) );
+		}		
+
+		leaveNode();
+	}
+
 	void IRTreeVisitor::Visit( const IRTEName* node )
 	{
 		visitNode();
