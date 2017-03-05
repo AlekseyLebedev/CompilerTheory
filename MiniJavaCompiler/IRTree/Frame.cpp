@@ -14,9 +14,14 @@ namespace IRTree {
 	{
 	}
 
-	void CFrame::InsertVariable( int name, std::shared_ptr<IAccess> access )
+	void CFrame::InsertVariable( int name, std::shared_ptr<IAccess> access, bool argument )
 	{
 		variables.insert( std::pair<int, std::shared_ptr<IAccess>>( name, access ) );
+		if( argument ) {
+			++argumentCount;
+		} else {
+			++variableCount;
+		}
 	}
 
 	std::shared_ptr<IAccess> CFrame::GetDataInfo( int name )

@@ -1,10 +1,10 @@
 #include "IRTEConst.h"
 
-IRTree::IRTEConst::IRTEConst( unsigned int _value ) : value( _value )
+IRTree::IRTEConst::IRTEConst( int _value ) : value( _value )
 {
 }
 
-unsigned int IRTree::IRTEConst::GetValue() const
+int IRTree::IRTEConst::GetValue() const
 {
 	return value;
 }
