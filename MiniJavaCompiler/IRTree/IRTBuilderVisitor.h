@@ -98,6 +98,7 @@ namespace IRTree {
 		std::shared_ptr<IRTExpression> visitChild( std::shared_ptr<AbstractTreeGenerator::IExpression> const child );
 		std::shared_ptr<IRTStatement> visitChild( std::shared_ptr<AbstractTreeGenerator::IStatement> const child );
 		void insertMethodExecution();
+		std::shared_ptr<IRTStatement> postProccessTree( std::shared_ptr<IRTStatement> code );
 		
 		std::shared_ptr<IRTExpression> returnedExpression;
 		std::shared_ptr<IRTStatement> returnedStatement;

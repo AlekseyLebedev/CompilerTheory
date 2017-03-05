@@ -215,7 +215,7 @@ namespace IRTree {
 		std::shared_ptr<Label> label = methodInfo.GetLabel();
 
 		currentFrame = std::make_shared<CFrame>( currentClass, label );
-		startPoint = startPoint = std::make_shared<CCodeFragment>( visitChild( mainclass->GetStatement().get() ), currentFrame );
+		startPoint = std::make_shared<CCodeFragment>( postProccessTree( visitChild( mainclass->GetStatement().get() ) ), currentFrame );
 		codeFragment = startPoint;
 
 		returnedExpression = 0;
@@ -250,13 +250,7 @@ namespace IRTree {
 		} else {
 			code = moveReturnAcceess;
 		}
-		CAccessRemoverVisitor accessRemover(currentFrame);
-		code->Accept( &accessRemover );
-		code = accessRemover.GetResult();
-
-		CLinearizationVisitor linearizator( currentFrame );
-		code->Accept( &linearizator );
-		code = linearizator.GetResult();
+		code = postProccessTree( code );
 
 		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>( code, currentFrame );
 		codeFragment->SetNext( bufferFragment );
@@ -627,5 +621,14 @@ namespace IRTree {
 	std::shared_ptr<CCodeFragment> IRTBuilderVisitor::GetCode()
 	{
 		return startPoint;
+	}
+
+	std::shared_ptr<IRTStatement> IRTBuilderVisitor::postProccessTree( std::shared_ptr<IRTStatement> code )
+	{
+		CAccessRemoverVisitor accessRemover( currentFrame );
+		CLinearizationVisitor linearizator( currentFrame );
+		code->Accept( &accessRemover );
+		accessRemover.GetResult()->Accept( &linearizator );
+		return linearizator.GetResult();
 	}
 }
