@@ -30,19 +30,23 @@ namespace GraphvizOutput {
 	template <typename TDotVisitor, typename TNode>
 	void CGraphvizLauncher::Launch( TNode * node, int number, const std::wstring& header )
 	{
+		std::wstringstream convert;
+#ifndef NO_PICTURES
 		std::wstringstream filenameStream;
 		filenameStream << filename << number << dotExtentionString;
 		TDotVisitor visitor( header );
 		visitor.Start( filenameStream.str() );
 		node->Accept( &visitor );
 		visitor.Close();
-		std::wstringstream convert;
 		convert << convertString << filenameStream.str() << convertStringEnd << number << extentionString;
 		_wsystem( convert.str().c_str() );
+#endif // !NO_PICTURES
+#ifdef SHOW_PICTURES
 		convert = std::wstringstream();
 		convert << L"mspaint ";
 		convert << launchString << number << extentionString;
 		_wsystem( convert.str().c_str() );
+#endif // SHOW_PICTURES
 	}
 
 	const wchar_t* CGraphvizLauncher::filename = L"temp";

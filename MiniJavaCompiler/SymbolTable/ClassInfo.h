@@ -17,6 +17,10 @@ namespace SymbolTable {
 	public:
 		CClassInfo();
 		CClassInfo( int name_ );
+
+		// Размер машинного слова
+		static const int MachineWordSize;
+		
 		// добавить информацию о методе класса
 		void InsertMethod( int id, const CMethodInfo & theMethodInfo );
 		// добавить информацию о поле класса 
@@ -51,7 +55,6 @@ namespace SymbolTable {
 		std::vector<int> allVariables; // Храним порядок в названиях
 		int extend;
 
-		static const int machineWordSize;
 		static int offset( const int size );
 		
 		int addVairableToSize( int index, int size, const CTable * table ) const;

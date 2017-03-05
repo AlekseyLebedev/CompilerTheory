@@ -29,7 +29,7 @@ namespace IRTree {
 	{
 		int name = argument->GetIdExpression()->GetName();
 		int type = argument->GetType()->GetType();
-		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, glabalStringTable->wfind( name ) ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, type, currentFrame->ArgumentOffset(), glabalStringTable->wfind( name ) ), true );
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CArgumentList* const arguments )
@@ -116,9 +116,9 @@ namespace IRTree {
 			tail->Accept( this );
 
 			std::shared_ptr<IRTExpression> tailNode = returnedExpression;
-			root = std::make_shared< IRTExpList>( headNode , std::dynamic_pointer_cast<IRTExpList>(tailNode) );
+			root = std::make_shared< IRTExpList>( headNode, std::dynamic_pointer_cast<IRTExpList>(tailNode) );
 		} else {
-			root = std::make_shared< IRTExpList>(  headNode , nullptr );
+			root = std::make_shared< IRTExpList>( headNode, nullptr );
 		}
 
 		returnedExpression = root;
@@ -249,7 +249,7 @@ namespace IRTree {
 		} else {
 			code = moveReturnAcceess;
 		}
-		AccessRemoverVisitor accessRemover;
+		CAccessRemoverVisitor accessRemover(currentFrame);
 		code->Accept( &accessRemover );
 		code = accessRemover.GetResult();
 
@@ -458,7 +458,7 @@ namespace IRTree {
 		int name = variable->GetIdExpression()->GetName();
 		AbstractTreeGenerator::IType* type = variable->GetType().get();
 		int typenum = type->GetType();
-		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, typenum, glabalStringTable->wfind( name ) ) );
+		currentFrame->InsertVariable( name, std::make_shared<IAccess>( name, typenum, currentFrame->VariableOffset(), glabalStringTable->wfind( name ) ), false );
 		returnValueType = TStdType::ST_Void;
 	}
 
@@ -512,7 +512,7 @@ namespace IRTree {
 		std::shared_ptr<IRTEName> name = std::make_shared<IRTEName>( methodLabel );
 		std::shared_ptr<IRTExpList> arguments = 0;
 		if( expList != 0 ) {
-			expList->Accept( this );			
+			expList->Accept( this );
 			arguments = std::make_shared<IRTExpList>( expNode, std::dynamic_pointer_cast<IRTExpList>(returnedExpression) );
 			assert( (arguments != 0) || (returnedExpression == 0) );
 		} else {
@@ -541,8 +541,8 @@ namespace IRTree {
 		std::shared_ptr<IRTEBinop> binopNode = std::dynamic_pointer_cast<IRTEBinop>(expNode);
 		std::shared_ptr<IRTSSeq> root;
 		if( binopNode ) {
-			root = std::make_shared<IRTSSeq>( std::make_shared<IRTSCjump>( binopNode->GetBinop(), 
-				binopNode->GetLeft(), binopNode->GetRight(),				
+			root = std::make_shared<IRTSSeq>( std::make_shared<IRTSCjump>( binopNode->GetBinop(),
+				binopNode->GetLeft(), binopNode->GetRight(),
 				trueLabel,
 				falseLabel ),
 				std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( trueLabel ),
