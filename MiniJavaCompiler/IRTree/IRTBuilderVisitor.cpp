@@ -7,6 +7,7 @@
 #include "..\SymbolTable\ClassInfo.h"
 #include "..\AbstractTreeGenerator\Type.h"
 #include "AccessRemoverVisitor.h"
+#include "LinearizationVisitor.h"
 
 using TStdType = AbstractTreeGenerator::TStandardType;
 
@@ -252,6 +253,10 @@ namespace IRTree {
 		CAccessRemoverVisitor accessRemover(currentFrame);
 		code->Accept( &accessRemover );
 		code = accessRemover.GetResult();
+
+		CLinearizationVisitor linearizator( currentFrame );
+		code->Accept( &linearizator );
+		code = linearizator.GetResult();
 
 		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>( code, currentFrame );
 		codeFragment->SetNext( bufferFragment );

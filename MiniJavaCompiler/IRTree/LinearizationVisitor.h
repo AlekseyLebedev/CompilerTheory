@@ -1,11 +1,12 @@
 #include "IRTreeAllClasses.h"
 #include "IVisitor.h"
-
+#include "Frame.h"
 
 namespace IRTree {
 
 	class CLinearizationVisitor : public IVisitor {
 	public:
+		CLinearizationVisitor( std::shared_ptr<CFrame> );
 		// Унаследовано через IVisitor
 		virtual void Visit( const IRTExpList * node ) override;
 		virtual void Visit( const IRTEConst * node ) override;
@@ -29,6 +30,7 @@ namespace IRTree {
 		std::shared_ptr<IRTStatement> returnStatement;
 		std::shared_ptr<IRTExpression> returnExpression;
 
+		std::shared_ptr<CFrame> frame;
 		template<typename T>
 		std::shared_ptr<typename T> visitExpression( std::shared_ptr<typename T> node )
 		{

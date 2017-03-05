@@ -9,7 +9,7 @@ namespace IRTree {
 
 	CFrame::CFrame( int className, std::shared_ptr<Label> _label ) : className( className ), label( _label ),
 		thisAccess( std::make_shared<IAccess>( ThisName, className, 2 * SymbolTable::CClassInfo::MachineWordSize, L"this" ) ),
-		returnAccess( std::make_shared<IAccess>( ReturnName, className, 0, L"return" ) ), argumentCount( 0 ), variableCount( 0 ),
+		returnAccess( std::make_shared<IAccess>( ReturnName, className, 0, L"return" ) ), argumentCount( 0 ), variableCount( 0 ), tempCounter(0),
 		framePointerAccess( std::make_shared<IAccess>( FramePointerName, className, 0, L"framePointer" ) )
 	{
 	}
@@ -59,6 +59,11 @@ namespace IRTree {
 	{
 		// Старый %EBP, Return adress, this (и 1, т.к. не добавили) - 3 (с 0 индексация)
 		return (argumentCount + 3) * SymbolTable::CClassInfo::MachineWordSize;
+	}
+
+	int CFrame::newTemp()
+	{
+		return tempCounter++;
 	}
 
 	const int CFrame::ThisName = -11;

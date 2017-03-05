@@ -8,11 +8,11 @@ namespace IRTree {
     class Temp
     {
     public:
-
-        const std::wstring GetName() const;
+		Temp( int _name );
+        const int GetName() const;
 
     private:
 
-        const std::wstring name;
+        const int name;
     };
 }
