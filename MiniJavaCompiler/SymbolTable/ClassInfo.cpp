@@ -87,7 +87,7 @@ namespace SymbolTable {
 		if( size == 0 ) {
 			size = 1; // Иначе будут проблемы с массивами
 		}
-		if( size >= machineWordSize ) {
+		if( size >= MachineWordSize ) {
 			size = offset( size );
 		}
 		return size;
@@ -120,11 +120,11 @@ namespace SymbolTable {
 		return methods.size();
 	}
 
-	const int CClassInfo::machineWordSize = 4;
+	const int CClassInfo::MachineWordSize = 4;
 
 	int CClassInfo::offset( const int size )
 	{
-		return ((size + machineWordSize - 1) / machineWordSize) * machineWordSize;
+		return ((size + MachineWordSize - 1) / MachineWordSize) * MachineWordSize;
 	}
 
 	int CClassInfo::GetSizeOfType( const int type, const CTable* table )
@@ -135,15 +135,15 @@ namespace SymbolTable {
 			case AbstractTreeGenerator::TStandardType::ST_Int:
 				return 4;
 			case AbstractTreeGenerator::TStandardType::ST_Intlist:
-				return machineWordSize;
+				return MachineWordSize;
 			case AbstractTreeGenerator::TStandardType::ST_StringList:
-				return machineWordSize; // Не используется!
+				return MachineWordSize; // Не используется!
 			case AbstractTreeGenerator::TStandardType::ST_Void:
 				assert( false );
 				return -1;
 			default:
 				//return table->GetClassInfo( type ).GetSize( table );
-				return machineWordSize; //указатель
+				return MachineWordSize; //указатель
 		}
 	}
 
@@ -151,7 +151,7 @@ namespace SymbolTable {
 	{
 		int type = variables.find( allVariables[index] )->second.GetType();
 		int fieldSize = GetSizeOfType( type, table );
-		if( fieldSize >= machineWordSize ) {
+		if( fieldSize >= MachineWordSize ) {
 			size = offset( size );
 		}
 		size += fieldSize;

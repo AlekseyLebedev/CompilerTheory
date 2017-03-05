@@ -1,11 +1,14 @@
 #include "IRTreeAllClasses.h"
+#include "Frame.h"
 #include "IVisitor.h"
 
 
 namespace IRTree {
 
-	class AccessRemoverVisitor : public IVisitor {
+	class CAccessRemoverVisitor : public IVisitor {
 	public:
+		CAccessRemoverVisitor( std::shared_ptr<CFrame> );
+
 		// Унаследовано через IVisitor
 		virtual void Visit( const IRTExpList * node ) override;
 		virtual void Visit( const IRTEConst * node ) override;
@@ -29,6 +32,8 @@ namespace IRTree {
 		std::shared_ptr<IRTStatement> returnStatement;
 		std::shared_ptr<IRTExpression> returnExpression;
 
+		std::shared_ptr<CFrame> frame;
+
 		template<typename T>
 		std::shared_ptr<typename T> visitExpression( std::shared_ptr<typename T> node )
 		{
@@ -37,6 +42,7 @@ namespace IRTree {
 			if( node == 0 ) {
 				return 0;
 			} else {
+				node->Accept( this );
 				std::shared_ptr<typename T> result = std::dynamic_pointer_cast<T>(returnExpression);
 				assert( result != 0 );
 				returnExpression = 0;
@@ -52,6 +58,7 @@ namespace IRTree {
 			if( node == 0 ) {
 				return 0;
 			} else {
+				node->Accept( this );
 				std::shared_ptr<typename T> result = std::dynamic_pointer_cast<T>(returnStatement);
 				assert( result != 0 );
 				returnStatement = 0;

@@ -1,124 +1,133 @@
 #include <cassert>
 #include <memory>
 #include "AccessRemoverVisitor.h"
+#include "Frame.h"
 
 #define NEW std::make_shared
 
 
 namespace IRTree {
+	CAccessRemoverVisitor::CAccessRemoverVisitor( std::shared_ptr<CFrame> _frame ) : frame( _frame )
+	{
+	}
 
-	void AccessRemoverVisitor::Visit( const IRTExpList * node )
+	void CAccessRemoverVisitor::Visit( const IRTExpList * node )
 	{
 		startMethod();
 		returnExpression = NEW<IRTExpList>( visitExpression<IRTExpression>( node->GetHead() ), visitExpression<IRTExpList>( node->GetTail() ) );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTEConst * node )
+	void CAccessRemoverVisitor::Visit( const IRTEConst * node )
 	{
 		startMethod();
 		returnExpression = NEW<IRTEConst>( node->GetValue() );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTEName * node )
+	void CAccessRemoverVisitor::Visit( const IRTEName * node )
 	{
 		startMethod();
 		returnExpression = NEW<IRTEName>( node->GetLabel() );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTETemp * node )
+	void CAccessRemoverVisitor::Visit( const IRTETemp * node )
 	{
 		startMethod();
 		returnExpression = NEW<IRTETemp>( node->GetTemp() );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTEBinop * node )
+	void CAccessRemoverVisitor::Visit( const IRTEBinop * node )
 	{
 		startMethod();
 		returnExpression = NEW<IRTEBinop>( node->GetBinop(), visitExpression<IRTExpression>( node->GetLeft() ), visitExpression<IRTExpression>( node->GetRight() ) );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTEMem * node )
+	void CAccessRemoverVisitor::Visit( const IRTEMem * node )
 	{
 		startMethod();
 		returnExpression = NEW<IRTEMem>( visitExpression<IRTExpression>( node->GetExp() ) );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTECall * node )
+	void CAccessRemoverVisitor::Visit( const IRTECall * node )
 	{
 		startMethod();
 		returnExpression = NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), visitExpression<IRTExpList>( node->GetArgs() ) );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTEEseq * node )
+	void CAccessRemoverVisitor::Visit( const IRTEEseq * node )
 	{
 		startMethod();
 		returnExpression = NEW<IRTEEseq>( visitStatement<IRTStatement>( node->GetStm() ), visitExpression<IRTExpression>( node->GetExp() ) );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTSMove * node )
+	void CAccessRemoverVisitor::Visit( const IRTSMove * node )
 	{
 		startMethod();
 		returnStatement = NEW<IRTSMove>( visitExpression<IRTExpression>( node->GetExrDst() ), visitExpression<IRTExpression>( node->GetExrSrc() ) );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTSExp * node )
+	void CAccessRemoverVisitor::Visit( const IRTSExp * node )
 	{
 		startMethod();
 		returnStatement = NEW<IRTSExp>( visitExpression<IRTExpression>( node->GetExp() ) );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTSJump * node )
+	void CAccessRemoverVisitor::Visit( const IRTSJump * node )
 	{
 		startMethod();
 		returnStatement = NEW<IRTSJump>( node->GetLabel() );
 
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTSCjump * node )
+	void CAccessRemoverVisitor::Visit( const IRTSCjump * node )
 	{
 		startMethod();
 		returnStatement = NEW<IRTSCjump>( node->GetRelop(), visitExpression<IRTExpression>( node->GetExpLeft() ), visitExpression<IRTExpression>( node->GetExpRight() ),
 			node->GetLabelLeft(), node->GetLabelRight() );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTSSeq * node )
+	void CAccessRemoverVisitor::Visit( const IRTSSeq * node )
 	{
 		startMethod();
 		returnStatement = NEW<IRTSSeq>( visitStatement<IRTStatement>( node->GetStmLeft() ), visitStatement<IRTStatement>( node->GetStmRight() ) );
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTSLabel * node )
+	void CAccessRemoverVisitor::Visit( const IRTSLabel * node )
 	{
 		startMethod();
 		returnStatement = NEW<IRTSLabel>( node->GetLabel() );
 	}
 
-	void AccessRemoverVisitor::Visit( const IAccess * node )
+	void CAccessRemoverVisitor::Visit( const IAccess * node )
 	{
 		startMethod();
-		// TODO
+		if( node->GetName() == CFrame::ReturnName ) {
+			assert( node->GetOffset() == 0 );
+			returnExpression = frame->GetThisAccess();
+		} else {
+			returnExpression = NEW<IRTEBinop>( BINOP_PLUS, frame->GetFramePointerAccess(), NEW<IRTEConst>( node->GetOffset() ) );
+		}
 
 	}
 
-	void AccessRemoverVisitor::Visit( const IRTEConstBool * node )
+	void CAccessRemoverVisitor::Visit( const IRTEConstBool * node )
 	{
 		startMethod();
 		returnExpression = NEW<IRTEConstBool>( node->GetValue() );
 	}
 
 
-	std::shared_ptr<IRTStatement> AccessRemoverVisitor::GetResult()
+	std::shared_ptr<IRTStatement> CAccessRemoverVisitor::GetResult()
 	{
 		return returnStatement;
 	}
 
-	void AccessRemoverVisitor::startVisit()
+	void CAccessRemoverVisitor::startVisit()
 	{
 		assert( returnExpression == 0 );
 		assert( returnStatement == 0 );
 	}
 
-	void AccessRemoverVisitor::startMethod()
+	void CAccessRemoverVisitor::startMethod()
 	{
 		assert( returnExpression == 0 );
 		assert( returnStatement == 0 );

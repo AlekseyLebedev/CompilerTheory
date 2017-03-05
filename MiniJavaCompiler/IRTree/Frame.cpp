@@ -3,11 +3,14 @@
 #include "IRTLabel.h"
 #include <memory>
 #include <cassert>
+#include "..\SymbolTable\ClassInfo.h"
 
 namespace IRTree {
 
-	CFrame::CFrame( int className, std::shared_ptr<Label> _label ) : className( className ), label( _label ), thisAccess( std::make_shared<IAccess>( ThisName, className, L"this" ) ),
-		returnAccess( std::make_shared<IAccess>( ReturnName, className, L"return" ) )
+	CFrame::CFrame( int className, std::shared_ptr<Label> _label ) : className( className ), label( _label ),
+		thisAccess( std::make_shared<IAccess>( ThisName, className, 2 * SymbolTable::CClassInfo::MachineWordSize, L"this" ) ),
+		returnAccess( std::make_shared<IAccess>( ReturnName, className, 0, L"return" ) ), argumentCount( 0 ), variableCount( 0 ),
+		framePointerAccess( std::make_shared<IAccess>( FramePointerName, className, 0, L"framePointer" ) )
 	{
 	}
 
@@ -41,6 +44,24 @@ namespace IRTree {
 		return returnAccess;
 	}
 
+	std::shared_ptr<IAccess> CFrame::GetFramePointerAccess()
+	{
+		return framePointerAccess;
+	}
+
+	int CFrame::VariableOffset()
+	{
+		// 1 - т.к. еще не добавили
+		return - (variableCount + 1) * SymbolTable::CClassInfo::MachineWordSize;
+	}
+
+	int CFrame::ArgumentOffset()
+	{
+		// Старый %EBP, Return adress, this (и 1, т.к. не добавили) - 3 (с 0 индексация)
+		return (argumentCount + 3) * SymbolTable::CClassInfo::MachineWordSize;
+	}
+
 	const int CFrame::ThisName = -11;
 	const int CFrame::ReturnName = -12;
+	const int CFrame::FramePointerName = -14;
 }

@@ -42,7 +42,7 @@ namespace GraphvizOutput {
 		convert = std::wstringstream();
 		convert << L"mspaint ";
 		convert << launchString << number << extentionString;
-		_wsystem( convert.str().c_str() );
+		//_wsystem( convert.str().c_str() );
 	}
 
 	const wchar_t* CGraphvizLauncher::filename = L"temp";
