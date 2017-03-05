@@ -368,17 +368,31 @@ namespace IRTree {
 		std::shared_ptr<Label> trueLabel = std::make_shared<Label>();
 		std::shared_ptr<Label> falseLabel = std::make_shared<Label>();
 
-		std::shared_ptr<IRTSSeq> root = std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( beginLabel ),
-			std::make_shared<IRTSCjump>( CJUMP_NE,
-				expNode,
-				std::make_shared<IRTEConst>( 0 ),
-				trueLabel,
-				falseLabel ) ),
-			std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( trueLabel ),
-				stmNode ),
-				std::make_shared<IRTSJump>( beginLabel ) ),
-				std::make_shared<IRTSLabel>( falseLabel ) ) );
-
+		std::shared_ptr<IRTEBinop> binopNode = std::dynamic_pointer_cast<IRTEBinop>(expNode);
+		std::shared_ptr<IRTSSeq> root;
+		if( binopNode ) {
+			root = std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( beginLabel ),
+				std::make_shared<IRTSCjump>( binopNode->GetBinop(),
+					binopNode->GetLeft(),
+					binopNode->GetRight(),
+					trueLabel,
+					falseLabel ) ),
+				std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( trueLabel ),
+					stmNode ),
+					std::make_shared<IRTSJump>( beginLabel ) ),
+					std::make_shared<IRTSLabel>( falseLabel ) ) );
+		} else {
+			root = std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( beginLabel ),
+				std::make_shared<IRTSCjump>( CJUMP_NE,
+					expNode,
+					std::make_shared<IRTEConst>( 0 ),
+					trueLabel,
+					falseLabel ) ),
+				std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( trueLabel ),
+					stmNode ),
+					std::make_shared<IRTSJump>( beginLabel ) ),
+					std::make_shared<IRTSLabel>( falseLabel ) ) );
+		}
 		returnedStatement = root;
 		returnValueType = TStdType::ST_Void;
 	}
@@ -519,18 +533,32 @@ namespace IRTree {
 		std::shared_ptr<Label> falseLabel = std::make_shared<Label>();
 		std::shared_ptr<Label> endLabel = std::make_shared<Label>();
 
-		std::shared_ptr<IRTSSeq> root = std::make_shared<IRTSSeq>( std::make_shared<IRTSCjump>( CJUMP_NE,
-			expNode,
-			std::make_shared<IRTEConst>( 0 ),
-			trueLabel,
-			falseLabel ),
-			std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( trueLabel ),
-				leftNode ),
-				std::make_shared<IRTSJump>( endLabel ) ),
-				std::make_shared< IRTSSeq>( std::make_shared< IRTSSeq>( std::make_shared<IRTSLabel>( falseLabel ),
-					rightNode ),
-					std::make_shared<IRTSLabel>( endLabel ) ) ) );
-
+		std::shared_ptr<IRTEBinop> binopNode = std::dynamic_pointer_cast<IRTEBinop>(expNode);
+		std::shared_ptr<IRTSSeq> root;
+		if( binopNode ) {
+			root = std::make_shared<IRTSSeq>( std::make_shared<IRTSCjump>( binopNode->GetBinop(), 
+				binopNode->GetLeft(), binopNode->GetRight(),				
+				trueLabel,
+				falseLabel ),
+				std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( trueLabel ),
+					leftNode ),
+					std::make_shared<IRTSJump>( endLabel ) ),
+					std::make_shared< IRTSSeq>( std::make_shared< IRTSSeq>( std::make_shared<IRTSLabel>( falseLabel ),
+						rightNode ),
+						std::make_shared<IRTSLabel>( endLabel ) ) ) );
+		} else {
+			root = std::make_shared<IRTSSeq>( std::make_shared<IRTSCjump>( CJUMP_NE,
+				expNode,
+				std::make_shared<IRTEConst>( 0 ),
+				trueLabel,
+				falseLabel ),
+				std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( trueLabel ),
+					leftNode ),
+					std::make_shared<IRTSJump>( endLabel ) ),
+					std::make_shared< IRTSSeq>( std::make_shared< IRTSSeq>( std::make_shared<IRTSLabel>( falseLabel ),
+						rightNode ),
+						std::make_shared<IRTSLabel>( endLabel ) ) ) );
+		}
 		returnedStatement = root;
 		returnValueType = TStdType::ST_Void;
 	}
