@@ -22,6 +22,7 @@ namespace IRTree {
 		virtual void Visit( const IRTSSeq * node ) override;
 		virtual void Visit( const IRTSLabel * node ) override;
 		virtual void Visit( const IAccess * node ) override;
+		virtual void Visit( const IRTEConstBool * node ) override;
 
 		std::shared_ptr<IRTStatement> GetResult();
 	private:
@@ -60,6 +61,7 @@ namespace IRTree {
 
 		void startVisit();
 		void startMethod();
+
 	};
 
 }

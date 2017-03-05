@@ -100,6 +100,13 @@ namespace IRTree {
 
 	}
 
+	void AccessRemoverVisitor::Visit( const IRTEConstBool * node )
+	{
+		startMethod();
+		returnExpression = NEW<IRTEConstBool>( node->GetValue() );
+	}
+
+
 	std::shared_ptr<IRTStatement> AccessRemoverVisitor::GetResult()
 	{
 		return returnStatement;
@@ -116,5 +123,4 @@ namespace IRTree {
 		assert( returnExpression == 0 );
 		assert( returnStatement == 0 );
 	}
-
 }
