@@ -452,14 +452,14 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CTrueExpression* const trueExp )
 	{
-		std::shared_ptr<IRTEConst> root = std::make_shared<IRTEConst>( IRT_TRUE );
+		std::shared_ptr<IRTEConstBool> root = std::make_shared<IRTEConstBool>( true );
 		returnValueType = TStdType::ST_Bool;
 		returnedExpression = root;
 	}
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CFalseExpression* const falseExp )
 	{
-		std::shared_ptr<IRTEConst> root = std::make_shared<IRTEConst>( IRT_FALSE );
+		std::shared_ptr<IRTEConstBool> root = std::make_shared<IRTEConstBool>( false );
 		returnValueType = TStdType::ST_Bool;
 		returnedExpression = root;
 	}

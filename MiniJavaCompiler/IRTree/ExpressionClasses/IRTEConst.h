@@ -18,4 +18,18 @@ namespace IRTree {
 		const unsigned int value;
 
 	};
+
+	class IRTEConstBool : public IRTExpression {
+	public:
+
+		IRTEConstBool( bool _value );
+
+		bool GetValue() const;
+
+		void Accept( IVisitor* visitor ) const override;
+
+	private:
+
+		const bool value;
+	};
 }

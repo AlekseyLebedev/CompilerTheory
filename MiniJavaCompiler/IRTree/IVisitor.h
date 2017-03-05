@@ -6,6 +6,7 @@ namespace IRTree {
 	// Expressions
 	class IRTExpression;
 	class IRTEConst;
+	class IRTEConstBool;
 	class IRTEName;
 	class IRTETemp;
 	class IRTEBinop;
@@ -28,6 +29,7 @@ namespace IRTree {
 
 		// Expressions
 		virtual void Visit( const IRTEConst* node ) = 0;
+		virtual void Visit( const IRTEConstBool* node ) = 0;
 		virtual void Visit( const IRTEName* node ) = 0;
 		virtual void Visit( const IRTETemp* node ) = 0;
 		virtual void Visit( const IRTEBinop* node ) = 0;

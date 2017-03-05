@@ -23,6 +23,7 @@ namespace IRTree {
 
 		// Expressions
 		virtual void Visit( const IRTEConst* node );
+		virtual void Visit( const IRTEConstBool* node );
 		virtual void Visit( const IRTEName* node );
 		virtual void Visit( const IRTETemp* node );
 		virtual void Visit( const IRTEBinop* node );
