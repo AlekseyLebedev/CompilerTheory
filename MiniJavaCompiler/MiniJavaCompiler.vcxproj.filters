@@ -325,6 +325,9 @@
     <ClInclude Include="IRTree\AccessRemoverVisitor.h">
       <Filter>IRTree\h</Filter>
     </ClInclude>
+    <ClInclude Include="IRTree\LinearizationVisitor.h">
+      <Filter>IRTree\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -547,6 +550,9 @@
       <Filter>IRTree\cpp</Filter>
     </ClCompile>
     <ClCompile Include="IRTree\AccessRemoverVisitor.cpp">
+      <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTree\LinearizationVisitor.cpp">
       <Filter>IRTree\cpp</Filter>
     </ClCompile>
   </ItemGroup>
