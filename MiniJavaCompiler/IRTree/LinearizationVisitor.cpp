@@ -106,7 +106,7 @@ namespace IRTree {
 	void CLinearizationVisitor::Visit( const IAccess * node )
 	{
 		startMethod();
-		// TODO
+		returnExpression = NEW<IAccess>( *node );
 
 	}
 
