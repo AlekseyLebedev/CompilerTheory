@@ -15,6 +15,16 @@ const std::shared_ptr<IRTree::IRTExpList> IRTree::IRTExpList::GetTail() const
     return tail;
 }
 
+std::shared_ptr<IRTree::IRTExpression> IRTree::IRTExpList::GetHead()
+{
+	return head;
+}
+
+std::shared_ptr<IRTree::IRTExpList> IRTree::IRTExpList::GetTail()
+{
+	return tail;
+}
+
 void IRTree::IRTExpList::Accept( IVisitor* visitor ) const
 {
     visitor->Visit( this );

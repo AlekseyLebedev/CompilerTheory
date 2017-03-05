@@ -19,26 +19,26 @@ namespace IRTree {
 		IRTreeVisitor(const std::wstring& header);
 		~IRTreeVisitor();
 
-		virtual void Visit( const IRTExpList* node );
+		virtual void Visit( const IRTExpList* node ) override;
 
 		// Expressions
-		virtual void Visit( const IRTEConst* node );
-		virtual void Visit( const IRTEName* node );
-		virtual void Visit( const IRTETemp* node );
-		virtual void Visit( const IRTEBinop* node );
-		virtual void Visit( const IRTEMem* node );
-		virtual void Visit( const IRTECall* node );
-		virtual void Visit( const IRTEEseq* node );
+		virtual void Visit( const IRTEConst* node ) override;
+		virtual void Visit( const IRTEName* node ) override;
+		virtual void Visit( const IRTETemp* node ) override;
+		virtual void Visit( const IRTEBinop* node ) override;
+		virtual void Visit( const IRTEMem* node ) override;
+		virtual void Visit( const IRTECall* node ) override;
+		virtual void Visit( const IRTEEseq* node ) override;
 
 		// Statements
-		virtual void Visit( const IRTSMove* node );
-		virtual void Visit( const IRTSExp* node );
-		virtual void Visit( const IRTSJump* node );
-		virtual void Visit( const IRTSCjump* node );
-		virtual void Visit( const IRTSSeq* node );
-		virtual void Visit( const IRTSLabel* node );
+		virtual void Visit( const IRTSMove* node ) override;
+		virtual void Visit( const IRTSExp* node ) override;
+		virtual void Visit( const IRTSJump* node ) override;
+		virtual void Visit( const IRTSCjump* node ) override;
+		virtual void Visit( const IRTSSeq* node ) override;
+		virtual void Visit( const IRTSLabel* node ) override;
 
-		virtual void Visit( const IAccess* node );
+		virtual void Visit( const IAccess* node ) override;
 
 		void Start( const std::wstring& filename );
 		void Close();

@@ -6,6 +6,7 @@
 #include "IRTExpConverter.h"
 #include "..\SymbolTable\ClassInfo.h"
 #include "..\AbstractTreeGenerator\Type.h"
+#include "AccessRemoverVisitor.h"
 
 using TStdType = AbstractTreeGenerator::TStandardType;
 
@@ -248,6 +249,10 @@ namespace IRTree {
 		} else {
 			code = moveReturnAcceess;
 		}
+		AccessRemoverVisitor accessRemover;
+		code->Accept( &accessRemover );
+		code = accessRemover.GetResult();
+
 		std::shared_ptr<CCodeFragment> bufferFragment = std::make_shared<CCodeFragment>( code, currentFrame );
 		codeFragment->SetNext( bufferFragment );
 		codeFragment = bufferFragment;
