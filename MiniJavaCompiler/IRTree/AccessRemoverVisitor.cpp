@@ -104,7 +104,7 @@ namespace IRTree {
 			assert( node->GetOffset() == 0 );
 			returnExpression = frame->GetThisAccess();
 		} else {
-			returnExpression = NEW<IRTEBinop>( BINOP_PLUS, frame->GetFramePointerAccess(), NEW<IRTEConst>( node->GetOffset() ) );
+			returnExpression = NEW<IRTEMem>( NEW<IRTEBinop>( BINOP_PLUS, frame->GetFramePointerAccess(), NEW<IRTEConst>( node->GetOffset() ) ) );
 		}
 
 	}
