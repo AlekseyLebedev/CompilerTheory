@@ -21,7 +21,7 @@ namespace IRTree {
 
 	//-----------------------------------------------------------------------------------------------------------------
 
-	CEseqUpperVisitor::CEseqUpperVisitor( std::shared_ptr<CFrame> _frame) : frame(_frame)
+	CEseqUpperVisitor::CEseqUpperVisitor( std::shared_ptr<CFrame> _frame ) : frame( _frame )
 	{
 	}
 	void CEseqUpperVisitor::Visit( const IRTExpList * node )
@@ -72,7 +72,7 @@ namespace IRTree {
 			} else {
 				returnExpression = NEW<IRTEBinop>( op, eleft, eright );
 			}
-		}		
+		}
 	}
 
 	void CEseqUpperVisitor::Visit( const IRTEMem * node )
@@ -95,9 +95,9 @@ namespace IRTree {
 		std::shared_ptr<IRTExpList> args = visitExpression<IRTExpList>( node->GetArgs() );
 		std::shared_ptr<IRTECall> call = std::dynamic_pointer_cast<IRTECall>(args->GetHead());
 		if( call ) {
-			std::shared_ptr<IRTETemp> newTemp = NEW<IRTETemp>(NEW<Temp>( frame->NewTemp() ));
-			returnExpression = NEW<IRTEEseq>( NEW<IRTSMove>(call,newTemp), 
-				NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), NEW<IRTExpList>( newTemp, args->GetTail() ) ));
+			std::shared_ptr<IRTETemp> newTemp = NEW<IRTETemp>( NEW<Temp>( frame->NewTemp() ) );
+			returnExpression = NEW<IRTEEseq>( NEW<IRTSMove>( call, newTemp ),
+				NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), NEW<IRTExpList>( newTemp, args->GetTail() ) ) );
 		} else {
 			returnExpression = NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), visitExpression<IRTExpList>( node->GetArgs() ) );
 		}
@@ -110,12 +110,12 @@ namespace IRTree {
 		std::shared_ptr<IRTExpression> exp = visitExpression<IRTExpression>( node->GetExp() );
 		std::shared_ptr<IRTEEseq> eseq = std::dynamic_pointer_cast<IRTEEseq>(exp);
 		if( eseq ) {
-			std::shared_ptr<IRTStatement> s2 = visitStatement<IRTStatement>( eseq->GetStm());
-			std::shared_ptr<IRTExpression> e = visitExpression<IRTExpression>( eseq->GetExp());
+			std::shared_ptr<IRTStatement> s2 = visitStatement<IRTStatement>( eseq->GetStm() );
+			std::shared_ptr<IRTExpression> e = visitExpression<IRTExpression>( eseq->GetExp() );
 			returnExpression = NEW<IRTEEseq>( NEW<IRTSSeq>( s1, s2 ), e );
 		} else {
 			returnExpression = NEW<IRTEEseq>( visitStatement<IRTStatement>( node->GetStm() ), visitExpression<IRTExpression>( node->GetExp() ) );
-		}		
+		}
 	}
 
 	void CEseqUpperVisitor::Visit( const IRTSMove * node )
@@ -134,14 +134,39 @@ namespace IRTree {
 	{
 		startMethod();
 		returnStatement = NEW<IRTSJump>( node->GetLabel() );
-
 	}
 
 	void CEseqUpperVisitor::Visit( const IRTSCjump * node )
 	{
 		startMethod();
-		returnStatement = NEW<IRTSCjump>( node->GetRelop(), visitExpression<IRTExpression>( node->GetExpLeft() ), visitExpression<IRTExpression>( node->GetExpRight() ),
-			node->GetLabelLeft(), node->GetLabelRight() );
+		std::shared_ptr<IRTExpression> expLeft = visitExpression<IRTExpression>( node->GetExpLeft() );
+		std::shared_ptr<IRTEEseq> eseq = std::dynamic_pointer_cast<IRTEEseq>(expLeft);
+		RELOP op = node->GetRelop();
+		std::shared_ptr<Label> l1 = node->GetLabelLeft();
+		std::shared_ptr<Label> l2 = node->GetLabelRight();
+		if( eseq ) {
+			std::shared_ptr<IRTStatement> s = visitStatement<IRTStatement>( eseq->GetStm() );
+			std::shared_ptr<IRTExpression> e1 = visitExpression<IRTExpression>( eseq->GetExp() );
+			std::shared_ptr<IRTExpression> e2 = visitExpression<IRTExpression>( node->GetExpRight() );			
+			returnStatement = NEW<IRTSSeq>( s, NEW<IRTSCjump>( op, e1, e2, l1, l2 ) );
+		} else {
+			std::shared_ptr<IRTExpression> expRight = visitExpression<IRTExpression>( node->GetExpRight() );
+			eseq = std::dynamic_pointer_cast<IRTExpression>(expRight);
+			if( eseq ) {
+				std::shared_ptr<IRTExpression> e1 = expLeft;
+				std::shared_ptr<IRTExpression> e2 = visitExpression<IRTExpression>( eseq->GetExp() );
+				std::shared_ptr<IRTStatement> s = visitStatement<IRTStatement>( eseq->GetStm() );
+				if( commute( s, NEW<IRTExpList>(e1, nullptr) ) ) {
+					returnStatement = NEW<IRTSSeq>( s, NEW<IRTSCjump>( op, e1, e2, l1, l2 ) );
+				} else {
+					std::shared_ptr<IRTETemp> t = NEW<IRTETemp>( NEW<Temp>( frame->NewTemp() ) );
+					returnStatement = NEW<IRTSSeq>( NEW<IRTSMove>(t,e1), NEW<IRTSSeq>(s, NEW<IRTSCjump>(
+						op, t,e2,l1,l2) ) );
+				}
+			} else {
+				returnStatement = NEW<IRTSCjump>( op, expLeft, expRight, l1, l2 );
+			}
+		}		
 	}
 
 	void CEseqUpperVisitor::Visit( const IRTSSeq * node )
