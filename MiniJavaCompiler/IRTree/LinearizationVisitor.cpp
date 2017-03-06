@@ -126,16 +126,23 @@ namespace IRTree {
 		return returnStatement;
 	}
 
-	std::shared_ptr<IRTExpression> CLinearizationVisitor::regenerate( std::shared_ptr<IRTExpression> node, std::vector<std::shared_ptr<IRTExpression>>& oldArgumntes,
+	std::shared_ptr<IRTExpression> CLinearizationVisitor::regenerate( std::shared_ptr<IRTExpression> node, std::vector<std::shared_ptr<IRTExpression>>& _arguments,
+		std::vector<std::shared_ptr<Temp>>& _temps , std::vector<std::shared_ptr<IRTExpression>>& oldArguments,
 		std::vector<std::shared_ptr<Temp>>& oldTemps )
 	{
-		assert( arguments.size() == temps.size() );
+		assert( _arguments.size() == _temps.size() );
 
-		for( int i = 0; i < arguments.size(); i++ ) {
-			node = NEW<IRTEEseq>( NEW<IRTSMove>( NEW<IRTETemp>( temps[i] ), arguments[i] ), node );
+		for( int i = 0; i < _arguments.size(); i++ ) {
+			node = NEW<IRTEEseq>( NEW<IRTSMove>( NEW<IRTETemp>( _temps[i] ), _arguments[i] ), node );
 		}
+		return node;
+	}
 
-		arguments = oldArgumntes;
+	std::shared_ptr<IRTExpression> CLinearizationVisitor::regenerate( std::shared_ptr<IRTExpression> node, std::vector<std::shared_ptr<IRTExpression>>& oldArguments,
+		std::vector<std::shared_ptr<Temp>>& oldTemps )
+	{
+		node = regenerate( node, arguments, temps, oldArguments, oldTemps );
+		arguments = oldArguments;
 		temps = oldTemps;
 		return node;
 	}
