@@ -108,7 +108,14 @@ namespace IRTree {
 	void CLinearizationVisitor::Visit( const IRTSSeq * node )
 	{
 		startMethod();
-		returnStatement = NEW<IRTSSeq>( visitStatement<IRTStatement>( node->GetStmLeft() ), visitStatement<IRTStatement>( node->GetStmRight() ) );
+		std::shared_ptr<IRTStatement> left = visitStatement<IRTStatement>( node->GetStmLeft() );
+		std::shared_ptr<IRTStatement> right = visitStatement<IRTStatement>( node->GetStmRight() );
+		std::shared_ptr<IRTSSeq> leftSeq = std::dynamic_pointer_cast<IRTSSeq>(left);
+		if( leftSeq != 0 ) {
+			returnStatement = NEW<IRTSSeq>( leftSeq->GetStmLeft(), NEW<IRTSSeq>( leftSeq->GetStmRight(), right ) );
+		} else {
+			returnStatement = NEW<IRTSSeq>( left, right );
+		}
 	}
 
 	void CLinearizationVisitor::Visit( const IRTSLabel * node )
