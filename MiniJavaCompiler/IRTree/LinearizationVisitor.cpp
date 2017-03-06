@@ -98,8 +98,11 @@ namespace IRTree {
 	void CLinearizationVisitor::Visit( const IRTSCjump * node )
 	{
 		startMethod();
-		returnStatement = NEW<IRTSCjump>( node->GetRelop(), visitExpression<IRTExpression>( node->GetExpLeft() ), visitExpression<IRTExpression>( node->GetExpRight() ),
-			node->GetLabelLeft(), node->GetLabelRight() );
+		std::shared_ptr<Temp> left = NEW<Temp>( frame->NewTemp() );
+		std::shared_ptr<Temp> right = NEW<Temp>( frame->NewTemp() );
+		returnStatement = NEW<IRTSSeq>( NEW<IRTSMove>( NEW<IRTETemp>( left ), visitExpression<IRTExpression>( node->GetExpLeft() ) ),
+			NEW<IRTSSeq>( NEW<IRTSMove>( NEW<IRTETemp>( right ), visitExpression<IRTExpression>( node->GetExpRight() ) ),
+				NEW<IRTSCjump>( node->GetRelop(), NEW<IRTETemp>( left ), NEW<IRTETemp>( right ), node->GetLabelLeft(), node->GetLabelRight() ) ) );
 	}
 
 	void CLinearizationVisitor::Visit( const IRTSSeq * node )
