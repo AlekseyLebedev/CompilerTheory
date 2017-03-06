@@ -125,7 +125,17 @@ namespace IRTree {
 	void CEseqUpperVisitor::Visit( const IRTSMove * node )
 	{
 		startMethod();
-		returnStatement = NEW<IRTSMove>( visitExpression<IRTExpression>( node->GetExrDst() ), visitExpression<IRTExpression>( node->GetExrSrc() ) );
+		std::shared_ptr<IRTExpression> dist = visitExpression<IRTExpression>( node->GetExrDst() );
+		std::shared_ptr<IRTExpression> sourse = visitExpression<IRTExpression>( node->GetExrSrc() );
+		std::shared_ptr<IRTETemp> temp = std::dynamic_pointer_cast<IRTETemp>(dist);
+		std::shared_ptr<IRTEEseq> eseq = std::dynamic_pointer_cast<IRTEEseq>(sourse);
+		if( temp && eseq ) {
+			std::shared_ptr<IRTStatement> s = visitStatement<IRTStatement>( eseq->GetStm() );
+			std::shared_ptr<IRTExpression> e = visitExpression<IRTExpression>( eseq->GetExp() );
+			returnStatement = NEW<IRTSSeq>( s, NEW<IRTSMove>(temp, e) );
+		} else {
+			returnStatement = NEW<IRTSMove>( dist, sourse );
+		}		
 	}
 
 	void CEseqUpperVisitor::Visit( const IRTSExp * node )
