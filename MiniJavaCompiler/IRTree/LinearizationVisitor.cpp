@@ -5,7 +5,7 @@
 #define NEW std::make_shared
 
 
-namespace IRTree {	
+namespace IRTree {
 
 	CLinearizationVisitor::CLinearizationVisitor( std::shared_ptr<CFrame> _frame ) : frame( _frame ), hasCall( false )
 	{
@@ -41,7 +41,13 @@ namespace IRTree {
 	void CLinearizationVisitor::Visit( const IRTEBinop * node )
 	{
 		startMethod();
-		returnExpression = NEW<IRTEBinop>( node->GetBinop(), visitExpression<IRTExpression>( node->GetLeft() ), visitExpression<IRTExpression>( node->GetRight() ) );
+		std::vector<std::shared_ptr<Temp> > temporaries;
+		std::vector<std::shared_ptr<IRTExpression> > expressions;
+		temporaries.push_back( NEW<Temp>( frame->NewTemp() ) );
+		temporaries.push_back( NEW<Temp>( frame->NewTemp() ) );
+		expressions.push_back( visitExpression<IRTExpression>( node->GetRight() ) );
+		expressions.push_back( visitExpression<IRTExpression>( node->GetLeft() ) );
+		returnExpression = regenerateByArguments( NEW<IRTEBinop>( node->GetBinop(), NEW<IRTETemp>( temporaries[1] ), NEW<IRTETemp>( temporaries[0] ) ), expressions, temporaries );
 	}
 
 	void CLinearizationVisitor::Visit( const IRTEMem * node )
@@ -59,7 +65,7 @@ namespace IRTree {
 
 		std::shared_ptr<IRTExpList> args = visitExpression<IRTExpList>( node->GetArgs() );
 
-		returnExpression = regenerate( NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), visitExpression<IRTExpList>( node->GetArgs() ) ),
+		returnExpression = regenerateByField( NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), visitExpression<IRTExpList>( node->GetArgs() ) ),
 			oldArguments, oldTemps );
 
 		hasCall = true;
@@ -126,9 +132,8 @@ namespace IRTree {
 		return returnStatement;
 	}
 
-	std::shared_ptr<IRTExpression> CLinearizationVisitor::regenerate( std::shared_ptr<IRTExpression> node, std::vector<std::shared_ptr<IRTExpression>>& _arguments,
-		std::vector<std::shared_ptr<Temp>>& _temps , std::vector<std::shared_ptr<IRTExpression>>& oldArguments,
-		std::vector<std::shared_ptr<Temp>>& oldTemps )
+	std::shared_ptr<IRTExpression> CLinearizationVisitor::regenerateByArguments( std::shared_ptr<IRTExpression> node, std::vector<std::shared_ptr<IRTExpression>>& _arguments,
+		std::vector<std::shared_ptr<Temp>>& _temps )
 	{
 		assert( _arguments.size() == _temps.size() );
 
@@ -138,10 +143,10 @@ namespace IRTree {
 		return node;
 	}
 
-	std::shared_ptr<IRTExpression> CLinearizationVisitor::regenerate( std::shared_ptr<IRTExpression> node, std::vector<std::shared_ptr<IRTExpression>>& oldArguments,
+	std::shared_ptr<IRTExpression> CLinearizationVisitor::regenerateByField( std::shared_ptr<IRTExpression> node, std::vector<std::shared_ptr<IRTExpression>>& oldArguments,
 		std::vector<std::shared_ptr<Temp>>& oldTemps )
 	{
-		node = regenerate( node, arguments, temps, oldArguments, oldTemps );
+		node = regenerateByArguments( node, arguments, temps );
 		arguments = oldArguments;
 		temps = oldTemps;
 		return node;

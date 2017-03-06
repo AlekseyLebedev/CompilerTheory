@@ -67,8 +67,8 @@ namespace IRTree {
 			}
 		}
 
-		std::shared_ptr<IRTExpression> regenerate( std::shared_ptr<IRTExpression> node, std::vector<std::shared_ptr<IRTExpression>>& argumntes, std::vector<std::shared_ptr<Temp>>& temps, std::vector<std::shared_ptr<IRTExpression>>& oldArgumntes, std::vector<std::shared_ptr<Temp>>& oldTemps );
-		std::shared_ptr<IRTExpression> regenerate( std::shared_ptr<IRTExpression> root, std::vector<std::shared_ptr<IRTExpression>>& oldArgumntes, std::vector<std::shared_ptr<Temp>>& oldTemps );
+		std::shared_ptr<IRTExpression> regenerateByArguments( std::shared_ptr<IRTExpression> node, std::vector<std::shared_ptr<IRTExpression>>&, std::vector<std::shared_ptr<Temp>>& );
+		std::shared_ptr<IRTExpression> regenerateByField( std::shared_ptr<IRTExpression> root, std::vector<std::shared_ptr<IRTExpression>>& oldArgumntes, std::vector<std::shared_ptr<Temp>>& oldTemps );
 		void startVisit();
 		void startMethod();
 	};
