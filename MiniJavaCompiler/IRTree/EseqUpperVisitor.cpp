@@ -155,7 +155,7 @@ namespace IRTree {
 			returnStatement = NEW<IRTSSeq>( s, NEW<IRTSCjump>( op, e1, e2, l1, l2 ) );
 		} else {
 			std::shared_ptr<IRTExpression> expRight = visitExpression<IRTExpression>( node->GetExpRight() );
-			eseq = std::dynamic_pointer_cast<IRTExpression>(expRight);
+			eseq = std::dynamic_pointer_cast<IRTEEseq>(expRight);
 			if( eseq ) {
 				std::shared_ptr<IRTExpression> e1 = expLeft;
 				std::shared_ptr<IRTExpression> e2 = visitExpression<IRTExpression>( eseq->GetExp() );
