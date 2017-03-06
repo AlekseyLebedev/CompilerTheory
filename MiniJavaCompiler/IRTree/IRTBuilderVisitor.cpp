@@ -8,6 +8,7 @@
 #include "..\AbstractTreeGenerator\Type.h"
 #include "AccessRemoverVisitor.h"
 #include "LinearizationVisitor.h"
+#include "EseqUpperVisitor.h"
 
 using TStdType = AbstractTreeGenerator::TStandardType;
 
@@ -625,10 +626,14 @@ namespace IRTree {
 
 	std::shared_ptr<IRTStatement> IRTBuilderVisitor::postProccessTree( std::shared_ptr<IRTStatement> code )
 	{
-		CAccessRemoverVisitor accessRemover( currentFrame );
-		CLinearizationVisitor linearizator( currentFrame );
-		code->Accept( &accessRemover );
-		accessRemover.GetResult()->Accept( &linearizator );
-		return linearizator.GetResult();
+		CAccessRemoverVisitor accessRemoverVisitor( currentFrame );
+		CLinearizationVisitor linearizationVisitor( currentFrame );
+		CEseqUpperVisitor eseqUpperVisitor( currentFrame );
+
+		code->Accept( &accessRemoverVisitor );
+		accessRemoverVisitor.GetResult()->Accept( &linearizationVisitor );
+		linearizationVisitor.GetResult()->Accept( &eseqUpperVisitor );
+
+		return eseqUpperVisitor.GetResult();
 	}
 }
