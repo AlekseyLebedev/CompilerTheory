@@ -65,7 +65,7 @@ namespace IRTree {
 			if( eseq ) {
 				std::shared_ptr<IRTStatement> s = visitStatement( eseq->GetStm() );
 				std::shared_ptr<IRTExpression> e2 = visitExpression( eseq->GetExp() );
-				std::shared_ptr<IRTETemp> t = NEW<IRTETemp>( NEW<Temp>( frame->newTemp() ) );
+				std::shared_ptr<IRTETemp> t = NEW<IRTETemp>( NEW<Temp>( frame->NewTemp() ) );
 				std::shared_ptr<IRTSMove> move = NEW<IRTSMove>( t, eleft );
 				std::shared_ptr<IRTEBinop> binop = visitExpression( NEW<IRTEBinop>( op, t, e2 ) );
 				returnExpression = NEW<IRTEEseq>( move, NEW<IRTEEseq>( s, binop ) );
