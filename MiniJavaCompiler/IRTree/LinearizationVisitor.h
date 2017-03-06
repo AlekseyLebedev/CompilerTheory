@@ -7,7 +7,7 @@ namespace IRTree {
 
 	class CLinearizationVisitor : public IVisitor {
 	public:
-		CLinearizationVisitor( std::shared_ptr<CFrame> );
+		CLinearizationVisitor( std::shared_ptr<CFrame>, bool call );
 		// Унаследовано через IVisitor
 		virtual void Visit( const IRTExpList * node ) override;
 		virtual void Visit( const IRTEConst * node ) override;
@@ -33,6 +33,7 @@ namespace IRTree {
 		std::vector<std::shared_ptr<IRTExpression> > arguments;
 		std::vector<std::shared_ptr<Temp> > temps;
 		bool hasCall;
+		bool callRemove;
 
 		std::shared_ptr<CFrame> frame;
 		template<typename T>
