@@ -74,7 +74,7 @@ namespace IRTree {
 
 			std::shared_ptr<IRTExpList> args = visitExpression<IRTExpList>( node->GetArgs() );
 
-			returnExpression = regenerateByField( NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), visitExpression<IRTExpList>( node->GetArgs() ) ),
+			returnExpression = regenerateByField( NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), args ),
 				oldArguments, oldTemps );
 		} else {
 			returnExpression = NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), visitExpression<IRTExpList>( node->GetArgs() ) );

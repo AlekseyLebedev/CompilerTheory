@@ -56,21 +56,21 @@ namespace IRTree {
 		std::shared_ptr<IRTExpression> eright = visitExpression<IRTExpression>( node->GetRight() );
 		std::shared_ptr<IRTEEseq> eseq = std::dynamic_pointer_cast<IRTEEseq>(eleft);
 		if( eseq ) {
-			std::shared_ptr<IRTStatement> s = visitStatement( eseq->GetStm() );
-			std::shared_ptr<IRTExpression> e1 = visitExpression( eseq->GetExp() );
-			std::shared_ptr<IRTEBinop> binop = visitExpression( NEW<IRTEBinop>( op, e1, eright ) );
+			std::shared_ptr<IRTStatement> s =  eseq->GetStm();
+			std::shared_ptr<IRTExpression> e1 = eseq->GetExp();
+			std::shared_ptr<IRTEBinop> binop = NEW<IRTEBinop>( op, e1, eright );
 			returnExpression = NEW<IRTEEseq>( s, binop );
 		} else {
 			eseq = std::dynamic_pointer_cast<IRTEEseq>(eright);
 			if( eseq ) {
-				std::shared_ptr<IRTStatement> s = visitStatement( eseq->GetStm() );
-				std::shared_ptr<IRTExpression> e2 = visitExpression( eseq->GetExp() );
+				std::shared_ptr<IRTStatement> s = eseq->GetStm();
+				std::shared_ptr<IRTExpression> e2 = eseq->GetExp();
 				if( commute( s, NEW<IRTExpList>( eleft, nullptr ) ) ) {
 					returnExpression = NEW<IRTEEseq>( s, NEW<IRTEBinop>( op, eleft, e2 ) );
 				} else {
 					std::shared_ptr<IRTETemp> t = NEW<IRTETemp>( NEW<Temp>( frame->NewTemp() ) );
 					std::shared_ptr<IRTSMove> move = NEW<IRTSMove>( t, eleft );
-					std::shared_ptr<IRTEBinop> binop = visitExpression( NEW<IRTEBinop>( op, t, e2 ) );
+					std::shared_ptr<IRTEBinop> binop = NEW<IRTEBinop>( op, t, e2 ) ;
 					returnExpression = NEW<IRTEEseq>( move, NEW<IRTEEseq>( s, binop ) );
 				}
 			} else {
@@ -85,8 +85,8 @@ namespace IRTree {
 		std::shared_ptr<IRTExpression> exp = visitExpression<IRTExpression>( node->GetExp() );
 		std::shared_ptr<IRTEEseq> eseq = std::dynamic_pointer_cast<IRTEEseq>(exp);
 		if( eseq ) {
-			std::shared_ptr<IRTStatement> s = visitStatement<IRTStatement>( eseq->GetStm() );
-			std::shared_ptr<IRTExpression> e1 = visitExpression<IRTExpression>( eseq->GetExp() );
+			std::shared_ptr<IRTStatement> s =  eseq->GetStm();
+			std::shared_ptr<IRTExpression> e1 = eseq->GetExp();
 			returnExpression = NEW<IRTEEseq>( s, NEW<IRTEMem>( e1 ) );
 		} else {
 			returnExpression = NEW<IRTEMem>( exp );
@@ -103,7 +103,7 @@ namespace IRTree {
 			returnExpression = NEW<IRTEEseq>( NEW<IRTSMove>( call, newTemp ),
 				NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), NEW<IRTExpList>( newTemp, args->GetTail() ) ) );
 		} else {
-			returnExpression = NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), visitExpression<IRTExpList>( node->GetArgs() ) );
+			returnExpression = NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ),  node->GetArgs()  );
 		}
 	}
 
@@ -114,11 +114,11 @@ namespace IRTree {
 		std::shared_ptr<IRTExpression> exp = visitExpression<IRTExpression>( node->GetExp() );
 		std::shared_ptr<IRTEEseq> eseq = std::dynamic_pointer_cast<IRTEEseq>(exp);
 		if( eseq ) {
-			std::shared_ptr<IRTStatement> s2 = visitStatement<IRTStatement>( eseq->GetStm() );
-			std::shared_ptr<IRTExpression> e = visitExpression<IRTExpression>( eseq->GetExp() );
+			std::shared_ptr<IRTStatement> s2 = eseq->GetStm();
+			std::shared_ptr<IRTExpression> e =  eseq->GetExp();
 			returnExpression = NEW<IRTEEseq>( NEW<IRTSSeq>( s1, s2 ), e );
 		} else {
-			returnExpression = NEW<IRTEEseq>( visitStatement<IRTStatement>( node->GetStm() ), visitExpression<IRTExpression>( node->GetExp() ) );
+			returnExpression = NEW<IRTEEseq>( s1, exp );
 		}
 	}
 
@@ -129,8 +129,8 @@ namespace IRTree {
 		std::shared_ptr<IRTExpression> sourse = visitExpression<IRTExpression>( node->GetExrSrc() );
 		std::shared_ptr<IRTEEseq> eseq = std::dynamic_pointer_cast<IRTEEseq>(sourse);
 		if( eseq != 0 ) {
-			std::shared_ptr<IRTStatement> s = visitStatement<IRTStatement>( eseq->GetStm() );
-			std::shared_ptr<IRTExpression> e = visitExpression<IRTExpression>( eseq->GetExp() );
+			std::shared_ptr<IRTStatement> s = eseq->GetStm();
+			std::shared_ptr<IRTExpression> e =eseq->GetExp();
 			returnStatement = NEW<IRTSSeq>( s, NEW<IRTSMove>( dist, e ) );
 		} else {
 			returnStatement = NEW<IRTSMove>( dist, sourse );
@@ -158,8 +158,8 @@ namespace IRTree {
 		std::shared_ptr<Label> l1 = node->GetLabelLeft();
 		std::shared_ptr<Label> l2 = node->GetLabelRight();
 		if( eseq ) {
-			std::shared_ptr<IRTStatement> s = visitStatement<IRTStatement>( eseq->GetStm() );
-			std::shared_ptr<IRTExpression> e1 = visitExpression<IRTExpression>( eseq->GetExp() );
+			std::shared_ptr<IRTStatement> s =  eseq->GetStm();
+			std::shared_ptr<IRTExpression> e1 = eseq->GetExp() ;
 			std::shared_ptr<IRTExpression> e2 = visitExpression<IRTExpression>( node->GetExpRight() );
 			returnStatement = NEW<IRTSSeq>( s, NEW<IRTSCjump>( op, e1, e2, l1, l2 ) );
 		} else {
@@ -167,8 +167,8 @@ namespace IRTree {
 			eseq = std::dynamic_pointer_cast<IRTEEseq>(expRight);
 			if( eseq ) {
 				std::shared_ptr<IRTExpression> e1 = expLeft;
-				std::shared_ptr<IRTExpression> e2 = visitExpression<IRTExpression>( eseq->GetExp() );
-				std::shared_ptr<IRTStatement> s = visitStatement<IRTStatement>( eseq->GetStm() );
+				std::shared_ptr<IRTExpression> e2 =  eseq->GetExp();
+				std::shared_ptr<IRTStatement> s = eseq->GetStm();
 				if( commute( s, NEW<IRTExpList>( e1, nullptr ) ) ) {
 					returnStatement = NEW<IRTSSeq>( s, NEW<IRTSCjump>( op, e1, e2, l1, l2 ) );
 				} else {
