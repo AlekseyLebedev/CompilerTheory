@@ -630,12 +630,13 @@ namespace IRTree {
 		CLinearizationVisitor callVisitor( currentFrame , true);
 		CLinearizationVisitor linearizationVisitor( currentFrame, false );
 		CEseqUpperVisitor eseqUpperVisitor( currentFrame );
+		CEseqUpperVisitor eseqUpperVisitor2( currentFrame );
 
 		code->Accept( &accessRemoverVisitor );
 		accessRemoverVisitor.GetResult()->Accept( &callVisitor );
 		callVisitor.GetResult()->Accept( &linearizationVisitor );
 		linearizationVisitor.GetResult()->Accept( &eseqUpperVisitor );
-
-		return eseqUpperVisitor.GetResult();
+		eseqUpperVisitor.GetResult()->Accept( &eseqUpperVisitor2 );
+		return eseqUpperVisitor2.GetResult();
 	}
 }

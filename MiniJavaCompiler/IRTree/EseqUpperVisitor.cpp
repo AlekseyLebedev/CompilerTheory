@@ -133,7 +133,15 @@ namespace IRTree {
 			std::shared_ptr<IRTExpression> e =eseq->GetExp();
 			returnStatement = NEW<IRTSSeq>( s, NEW<IRTSMove>( dist, e ) );
 		} else {
-			returnStatement = NEW<IRTSMove>( dist, sourse );
+			std::shared_ptr<IRTEEseq> eseq = std::dynamic_pointer_cast<IRTEEseq>(dist);
+			if( eseq != 0 ) {
+				std::shared_ptr<IRTStatement> s = eseq->GetStm();
+				std::shared_ptr<IRTExpression> e = eseq->GetExp();
+				returnStatement = NEW<IRTSSeq>( s, NEW<IRTSMove>( e, sourse ) );
+			}
+			else {
+				returnStatement = NEW<IRTSMove>( dist, sourse );
+			}
 		}
 	}
 
