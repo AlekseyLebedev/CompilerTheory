@@ -38,7 +38,6 @@ namespace IRTree {
 		std::shared_ptr<typename T> visitExpression( std::shared_ptr<typename T> node )
 		{
 			startVisit();
-			IRTExpression* forAssert = node.get();
 			if( node == 0 ) {
 				return 0;
 			} else {
@@ -54,7 +53,6 @@ namespace IRTree {
 		std::shared_ptr<typename T> visitStatement( std::shared_ptr<typename T> node )
 		{
 			startVisit();
-			IRTStatement* forAssert = node.get();
 			if( node == 0 ) {
 				return 0;
 			} else {
