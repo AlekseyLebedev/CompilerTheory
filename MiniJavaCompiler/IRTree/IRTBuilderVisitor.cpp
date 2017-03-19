@@ -634,8 +634,9 @@ namespace IRTree {
 
 		code->Accept( &accessRemoverVisitor );
 		accessRemoverVisitor.GetResult()->Accept( &callVisitor );
-		callVisitor.GetResult()->Accept( &linearizationVisitor );
-		linearizationVisitor.GetResult()->Accept( &eseqUpperVisitor );
+		callVisitor.GetResult()->Accept( &eseqUpperVisitor );
+		//callVisitor.GetResult()->Accept( &linearizationVisitor );
+		//linearizationVisitor.GetResult()->Accept( &eseqUpperVisitor );
 		eseqUpperVisitor.GetResult()->Accept( &eseqUpperVisitor2 );
 		return eseqUpperVisitor2.GetResult();
 	}
