@@ -13,7 +13,7 @@ namespace IRTree {
 		return exp != 0 && std::dynamic_pointer_cast<IRTree::IRTEConst>(exp->GetExp()) != 0;
 	}
 
-	static bool commute( std::shared_ptr<IRTStatement> a, std::shared_ptr<IRTExpList> b )
+	bool Commute( std::shared_ptr<IRTStatement> a, std::shared_ptr<IRTExpression> b )
 	{
 		return isNop( a ) || std::dynamic_pointer_cast<IRTEName>(b) != 0
 			|| std::dynamic_pointer_cast<IConst>(b) != 0;
@@ -65,7 +65,7 @@ namespace IRTree {
 			if( eseq ) {
 				std::shared_ptr<IRTStatement> s = eseq->GetStm();
 				std::shared_ptr<IRTExpression> e2 = eseq->GetExp();
-				if( commute( s, NEW<IRTExpList>( eleft, nullptr ) ) ) {
+				if( Commute( s, NEW<IRTExpList>( eleft, nullptr ) ) ) {
 					returnExpression = NEW<IRTEEseq>( s, NEW<IRTEBinop>( op, eleft, e2 ) );
 				} else {
 					std::shared_ptr<IRTETemp> t = NEW<IRTETemp>( NEW<Temp>( frame->NewTemp() ) );
@@ -177,7 +177,7 @@ namespace IRTree {
 				std::shared_ptr<IRTExpression> e1 = expLeft;
 				std::shared_ptr<IRTExpression> e2 =  eseq->GetExp();
 				std::shared_ptr<IRTStatement> s = eseq->GetStm();
-				if( commute( s, NEW<IRTExpList>( e1, nullptr ) ) ) {
+				if( Commute( s, NEW<IRTExpList>( e1, nullptr ) ) ) {
 					returnStatement = NEW<IRTSSeq>( s, NEW<IRTSCjump>( op, e1, e2, l1, l2 ) );
 				} else {
 					std::shared_ptr<IRTETemp> t = NEW<IRTETemp>( NEW<Temp>( frame->NewTemp() ) );

@@ -3,6 +3,7 @@
 #include "Frame.h"
 
 namespace IRTree {
+	bool Commute( std::shared_ptr<IRTStatement> a, std::shared_ptr<IRTExpression> b );
 
 	class CEseqUpperVisitor : public IVisitor {
 	public:
