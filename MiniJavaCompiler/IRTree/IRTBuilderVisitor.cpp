@@ -629,7 +629,7 @@ namespace IRTree {
 	{
 		CAccessRemoverVisitor accessRemoverVisitor( currentFrame );
 		CLinearizationVisitor callVisitor( currentFrame, true );
-		CLinearizationVisitor linearizationVisitor( currentFrame, false );
+		//CLinearizationVisitor linearizationVisitor( currentFrame, false );
 		CEseqUpperVisitor eseqUpperVisitor( currentFrame );
 		CEseqUpperVisitor eseqUpperVisitor2( currentFrame );
 
