@@ -78,7 +78,7 @@ int main( int argc, char** argv )
 			}
 			CGenerator generator( irtree.GetCode() );
 			try {
-
+				generator.SplitIRTree();
 			}
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;
