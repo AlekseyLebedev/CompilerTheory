@@ -14,7 +14,10 @@ public:
 	void SetRoot( std::shared_ptr<IRTree::CCodeFragment>  theRoot );
 	std::shared_ptr<IRTree::CCodeFragment> GetRoot();
 
+
 	void SplitIRTree();
+	// проверяет, является ли правый Seq началом нового лейбла
+	bool CheckNewLabel( std::shared_ptr<IRTStatement> theStm );
 	void AddBasicBlock( std::shared_ptr<IRTStatement> block );
 
 private:
