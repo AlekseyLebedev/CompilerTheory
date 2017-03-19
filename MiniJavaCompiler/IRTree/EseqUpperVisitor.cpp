@@ -189,16 +189,23 @@ namespace IRTree {
 		}
 	}
 
-	void CEseqUpperVisitor::Visit( const IRTSSeq * node )
+	static void rightRotate( std::shared_ptr<IRTStatement>& left, std::shared_ptr<IRTStatement>& right )
+	{
+		std::shared_ptr<IRTSSeq> leftSeq;
+		while( (leftSeq = std::dynamic_pointer_cast<IRTSSeq>(left)) != 0 ) {
+			left = leftSeq->GetStmLeft();
+			std::shared_ptr<IRTStatement> _left = leftSeq->GetStmRight();
+			rightRotate( _left, right );
+			right = NEW<IRTSSeq>( _left, right );
+		}
+	}
+
+		void CEseqUpperVisitor::Visit( const IRTSSeq * node )
 	{
 		startMethod();
 		std::shared_ptr<IRTStatement> left = visitStatement<IRTStatement>( node->GetStmLeft() );
 		std::shared_ptr<IRTStatement> right = visitStatement<IRTStatement>( node->GetStmRight() );
-		std::shared_ptr<IRTSSeq> leftSeq;
-		while( (leftSeq = std::dynamic_pointer_cast<IRTSSeq>(left)) != 0 ) {
-			left = leftSeq->GetStmLeft();
-			right = NEW<IRTSSeq>( leftSeq->GetStmRight(), right );
-		}
+		rightRotate( left, right );
 		returnStatement = NEW<IRTSSeq>( left, right );
 	}
 
