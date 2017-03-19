@@ -570,7 +570,8 @@ namespace IRTree {
 
 	void IRTBuilderVisitor::visit( AbstractTreeGenerator::CThisExpression* const thisExp )
 	{
-		returnedExpression = std::make_shared<IRTEMem>( currentFrame->GetThisAccess() );
+		//returnedExpression = std::make_shared<IRTEMem>( currentFrame->GetThisAccess() );
+		returnedExpression = currentFrame->GetThisAccess();
 		returnValueType = currentClass;
 	}
 
@@ -627,8 +628,8 @@ namespace IRTree {
 	std::shared_ptr<IRTStatement> IRTBuilderVisitor::postProccessTree( std::shared_ptr<IRTStatement> code )
 	{
 		CAccessRemoverVisitor accessRemoverVisitor( currentFrame );
-		CLinearizationVisitor callVisitor( currentFrame , true);
-		CLinearizationVisitor linearizationVisitor( currentFrame, false );
+		CLinearizationVisitor callVisitor( currentFrame, true );
+		//CLinearizationVisitor linearizationVisitor( currentFrame, false );
 		CEseqUpperVisitor eseqUpperVisitor( currentFrame );
 		CEseqUpperVisitor eseqUpperVisitor2( currentFrame );
 
@@ -638,6 +639,6 @@ namespace IRTree {
 		//callVisitor.GetResult()->Accept( &linearizationVisitor );
 		//linearizationVisitor.GetResult()->Accept( &eseqUpperVisitor );
 		eseqUpperVisitor.GetResult()->Accept( &eseqUpperVisitor2 );
-		return eseqUpperVisitor2.GetResult();
+		return 	eseqUpperVisitor2.GetResult();
 	}
 }
