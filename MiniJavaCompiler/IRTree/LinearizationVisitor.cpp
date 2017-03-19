@@ -1,6 +1,7 @@
 #include <cassert>
 #include <memory>
 #include "LinearizationVisitor.h"
+#include "EseqUpperVisitor.h"
 
 #define NEW std::make_shared
 
@@ -9,18 +10,38 @@ namespace IRTree {
 
 	CLinearizationVisitor::CLinearizationVisitor( std::shared_ptr<CFrame> _frame, bool _call ) : frame( _frame ), hasCall( false ), callRemove( _call )
 	{
+		assert( _call );
 	}
 	void CLinearizationVisitor::Visit( const IRTExpList * node )
 	{
 		startMethod();
+		auto tail = visitExpression<IRTExpList>( node->GetTail() );
+		bool oldHasCall = hasCall;
+		hasCall = false;
+		auto argument = visitExpression<IRTExpression>( node->GetHead() );
 		if( callRemove ) {
-			std::shared_ptr<Temp> temp( NEW<Temp>( frame->NewTemp() ) );
-			auto result = NEW<IRTExpList>( NEW<IRTETemp>( temp ), visitExpression<IRTExpList>( node->GetTail() ) );
-			arguments.push_back( visitExpression<IRTExpression>( node->GetHead() ) );
-			temps.push_back( temp );
-			returnExpression = result;
+			hasCall |= oldHasCall;
+
+			bool needUp = hasCall;
+			if( !needUp ) {
+				for( size_t i = 0; i < arguments.size(); i++ ) {
+					if( !Commute( 0, argument ) ) {
+						needUp = true;
+					}
+				}
+			}
+
+			if( needUp ) {
+				std::shared_ptr<Temp> temp( NEW<Temp>( frame->NewTemp() ) );
+				auto result = NEW<IRTExpList>( NEW<IRTETemp>( temp ), tail );
+				arguments.push_back( argument );
+				temps.push_back( temp );
+				returnExpression = result;
+			} else {
+				returnExpression = NEW<IRTExpList>( argument, tail );
+			}
 		} else {
-			returnExpression = NEW<IRTExpList>( visitExpression<IRTExpression>( node->GetHead() ), visitExpression<IRTExpList>( node->GetTail() ) );
+			returnExpression = NEW<IRTExpList>( argument, tail );
 		}
 	}
 
@@ -69,6 +90,7 @@ namespace IRTree {
 		startMethod();
 
 		if( callRemove ) {
+			hasCall = false;
 			auto oldArguments = arguments;
 			auto oldTemps = temps;
 
@@ -76,6 +98,7 @@ namespace IRTree {
 
 			returnExpression = regenerateByField( NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), args ),
 				oldArguments, oldTemps );
+			hasCall = true;
 		} else {
 			returnExpression = NEW<IRTECall>( visitExpression<IRTExpression>( node->GetFunc() ), visitExpression<IRTExpList>( node->GetArgs() ) );
 		}
