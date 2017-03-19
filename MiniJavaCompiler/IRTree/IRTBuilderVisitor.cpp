@@ -627,11 +627,13 @@ namespace IRTree {
 	std::shared_ptr<IRTStatement> IRTBuilderVisitor::postProccessTree( std::shared_ptr<IRTStatement> code )
 	{
 		CAccessRemoverVisitor accessRemoverVisitor( currentFrame );
-		CLinearizationVisitor linearizationVisitor( currentFrame );
+		CLinearizationVisitor callVisitor( currentFrame , true);
+		CLinearizationVisitor linearizationVisitor( currentFrame, false );
 		CEseqUpperVisitor eseqUpperVisitor( currentFrame );
 
 		code->Accept( &accessRemoverVisitor );
-		accessRemoverVisitor.GetResult()->Accept( &linearizationVisitor );
+		accessRemoverVisitor.GetResult()->Accept( &callVisitor );
+		callVisitor.GetResult()->Accept( &linearizationVisitor );
 		linearizationVisitor.GetResult()->Accept( &eseqUpperVisitor );
 
 		return eseqUpperVisitor.GetResult();
