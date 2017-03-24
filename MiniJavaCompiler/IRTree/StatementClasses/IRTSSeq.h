@@ -11,7 +11,7 @@ namespace IRTree {
 
 		const std::shared_ptr<IRTStatement> GetStmLeft() const;
 		const std::shared_ptr<IRTStatement> GetStmRight() const;
-		
+		void SetStmRight();
 		void CutStmRight();
 
         void Accept( IVisitor* visitor ) const override;
