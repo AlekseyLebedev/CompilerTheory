@@ -22,7 +22,7 @@ void CGenerator::SplitIRTree()
 			std::shared_ptr<IRTSSeq> oldRight = currentSeq;
 
 			std::shared_ptr<IRTStatement> leftStm = currentSeq->GetStmLeft();
-			assert( std::dynamic_pointer_cast<IRTSSeq>(leftStm) == 0 );
+			assert( std::dynamic_pointer_cast<IRTSSeq>( leftStm ) == 0 );
 			std::shared_ptr<IRTStatement> rightStm = currentSeq->GetStmRight();
 
 			while( std::dynamic_pointer_cast<IRTSSeq>( rightStm ) != 0 && CheckNewLabel( rightStm ) ) {
@@ -34,7 +34,7 @@ void CGenerator::SplitIRTree()
 			}
 
 			// правый оказался Seq, т.е. дошли до нового лейбла
-			if( std::dynamic_pointer_cast<IRTSSeq>(rightStm) != 0 ) {
+			if( std::dynamic_pointer_cast<IRTSSeq>( rightStm ) != 0 ) {
 				oldRight->CutStmRight();
 				currentStatement = rightStm;
 				rightStm = nullptr;
@@ -55,53 +55,55 @@ bool CGenerator::CheckNewLabel( std::shared_ptr<IRTStatement> theStm )
 	assert( currentSeq != 0 );
 	std::shared_ptr<IRTStatement> leftStm = currentSeq->GetStmLeft();
 	std::shared_ptr<IRTStatement> rightStm = currentSeq->GetStmRight();
-	assert( std::dynamic_pointer_cast<IRTSSeq>(leftStm) == 0 );
+	assert( std::dynamic_pointer_cast<IRTSSeq>( leftStm ) == 0 );
 
-	if( std::dynamic_pointer_cast<IRTSLabel>(leftStm) != 0 ) {
+	if( std::dynamic_pointer_cast<IRTSLabel>( leftStm ) != 0 ) {
 		return false;
 	}
 	return true;
 }
 
-// TODO : добавить добавление лейблов при добавлении блоков
 void CGenerator::AddBasicBlock( std::shared_ptr<IRTStatement> block )
 {
-	// обрезка правого поддерева
-	std::shared_ptr<IRTSSeq> seq = std::dynamic_pointer_cast<IRTSSeq>(block);
+	// добавление лейблов
+	std::shared_ptr<IRTSSeq> seq = std::dynamic_pointer_cast<IRTSSeq>( block );
 	if( seq ) {
 		std::shared_ptr<IRTStatement> left = seq->GetStmLeft();
-		if( !std::dynamic_pointer_cast<IRTSLabel>(left) ) {
-			basicBlocks.push_back( std::make_shared<IRTSSeq>(
-				std::make_shared<IRTSLabel>( std::make_shared<Label>() ), block ) );
-			return;
+		if( !std::dynamic_pointer_cast<IRTSLabel>( left ) ) {
+			block = std::make_shared<IRTSSeq>( std::make_shared<IRTSLabel>( std::make_shared<Label>() ), block );
 		}
 	}
 
-	std::shared_ptr<IRTSSeq> currentSeq = std::dynamic_pointer_cast<IRTSSeq>(block);
+	std::shared_ptr<IRTSSeq> currentSeq = std::dynamic_pointer_cast<IRTSSeq>( block );
 	assert( currentSeq != 0 );
 	std::shared_ptr<IRTStatement> oldRight = block;
 	std::shared_ptr<IRTStatement> rightStm = currentSeq->GetStmRight();
 	std::shared_ptr<IRTStatement> rightRightStm;
-	if( std::dynamic_pointer_cast<IRTSSeq>(rightStm) != 0 ) {
-		std::shared_ptr<IRTSSeq> tmp = std::dynamic_pointer_cast<IRTSSeq>(rightStm);
+	if( std::dynamic_pointer_cast<IRTSSeq>( rightStm ) != 0 ) {
+		std::shared_ptr<IRTSSeq> tmp = std::dynamic_pointer_cast<IRTSSeq>( rightStm );
 		assert( tmp != 0 );
 		rightRightStm = tmp->GetStmRight();
 	}
-	while( rightRightStm != 0 ) {
-		std::shared_ptr<IRTSSeq> tmp = std::dynamic_pointer_cast<IRTSSeq>(rightStm);
+	while( std::dynamic_pointer_cast<IRTSSeq>(rightRightStm) != 0 ) {
+		std::shared_ptr<IRTSSeq> tmp = std::dynamic_pointer_cast<IRTSSeq>(rightRightStm);
 		assert( tmp != 0 );
 		oldRight = rightStm;
 		rightStm = rightRightStm;
 		rightRightStm = tmp->GetStmRight();
 	}
-	std::shared_ptr<IRTSSeq> rightSeq = std::dynamic_pointer_cast<IRTSSeq>(rightStm);
-	std::shared_ptr<IRTStatement> leftStm = rightSeq->GetStmLeft();
-	assert( std::dynamic_pointer_cast<IRTSSeq>(leftStm) == 0 );
+	std::shared_ptr<IRTSSeq> rightSeq = std::dynamic_pointer_cast<IRTSSeq>( rightStm );
 
-	std::shared_ptr<IRTSSeq> rightSeq = std::dynamic_pointer_cast<IRTSSeq>(rightStm);
+	std::shared_ptr<IRTStatement> leftStm;
+	if( rightSeq != 0 ) {
+		leftStm = rightSeq->GetStmLeft();
+		assert( std::dynamic_pointer_cast<IRTSSeq>(leftStm) == 0 );
+	}
 
-	// обрезка правого поддерева
-
+	std::shared_ptr<IRTSSeq> oldRightSeq = std::dynamic_pointer_cast<IRTSSeq>( oldRight );
+	assert( oldRightSeq != 0 );
+	if( rightRightStm == 0 && leftStm != 0 ) {
+		oldRightSeq->SetStmRight( leftStm );
+	}
 
 	basicBlocks.push_back( block );
 }

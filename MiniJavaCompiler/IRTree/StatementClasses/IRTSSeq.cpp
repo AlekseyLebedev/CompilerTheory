@@ -15,6 +15,11 @@ const std::shared_ptr<IRTree::IRTStatement> IRTree::IRTSSeq::GetStmRight() const
 	return right;
 }
 
+void IRTree::IRTSSeq::SetStmRight( std::shared_ptr<IRTStatement> rightStm )
+{
+	right = rightStm;
+}
+
 void IRTree::IRTSSeq::CutStmRight()
 {
 	right.reset();
