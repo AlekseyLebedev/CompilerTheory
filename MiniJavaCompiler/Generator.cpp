@@ -66,7 +66,15 @@ bool CGenerator::CheckNewLabel( std::shared_ptr<IRTStatement> theStm )
 void CGenerator::AddBasicBlock( std::shared_ptr<IRTStatement> block )
 {
 	// обрезка правого поддерева
-
+	std::shared_ptr<IRTSSeq> seq = std::dynamic_pointer_cast<IRTSSeq>(block);
+	if( seq ) {
+		std::shared_ptr<IRTStatement> left = seq->GetStmLeft();
+		if( !std::dynamic_pointer_cast<IRTSLabel>(left) ) {
+			basicBlocks.push_back(std::make_shared<IRTSSeq>(
+				std::make_shared<IRTSLabel>(std::make_shared<Label>()), block ));
+			return;
+		}
+	}
 
 
 	basicBlocks.push_back( block );
