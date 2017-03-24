@@ -19,18 +19,23 @@ void CGenerator::SplitIRTree()
 		while( currentStatement != 0 ) {
 			std::shared_ptr<IRTSSeq> currentSeq = std::dynamic_pointer_cast<IRTSSeq>( currentStatement );
 			assert( currentSeq != 0 );
+			std::shared_ptr<IRTSSeq> oldRight = currentSeq;
 
 			std::shared_ptr<IRTStatement> leftStm = currentSeq->GetStmLeft();
+			assert( std::dynamic_pointer_cast<IRTSSeq>(leftStm) == 0 );
 			std::shared_ptr<IRTStatement> rightStm = currentSeq->GetStmRight();
-			assert( std::dynamic_pointer_cast<IRTSSeq>( leftStm ) == 0 );
 
 			while( std::dynamic_pointer_cast<IRTSSeq>( rightStm ) != 0 && CheckNewLabel( rightStm ) ) {
 				std::shared_ptr<IRTSSeq> tmp = std::dynamic_pointer_cast<IRTSSeq>( rightStm );
 				assert( tmp != 0 );
+				leftStm = tmp->GetStmLeft();
+				oldRight = tmp;
 				rightStm = tmp->GetStmRight();
 			}
+
 			// правый оказался Seq, т.е. дошли до нового лейбла
 			if( std::dynamic_pointer_cast<IRTSSeq>(rightStm) != 0 ) {
+				oldRight->CutStmRight();
 				currentStatement = rightStm;
 				rightStm = nullptr;
 				AddBasicBlock( currentSeq );
@@ -57,9 +62,12 @@ bool CGenerator::CheckNewLabel( std::shared_ptr<IRTStatement> theStm )
 	}
 	return true;
 }
-
+// TODO : добавить добавление лейблов при добавлении блоков
 void CGenerator::AddBasicBlock( std::shared_ptr<IRTStatement> block )
 {
-	// TODO : добавить добавление лейблов при добавлении блоков
+	// обрезка правого поддерева
+
+
+
 	basicBlocks.push_back( block );
 }
