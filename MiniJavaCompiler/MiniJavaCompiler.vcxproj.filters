@@ -65,7 +65,16 @@
     <Filter Include="Graphwiz\cpp">
       <UniqueIdentifier>{e99a7503-3228-454d-ac35-46e30bad05b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CodeGenerater">
+    <Filter Include="CodeGenerator">
+      <UniqueIdentifier>{26e976f3-a9d0-4cfe-bb6a-e1dfb6b3a376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeGenerator\h">
+      <UniqueIdentifier>{f06b58e6-1716-473c-a225-b3eee4286f8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeGenerator\cpp">
+      <UniqueIdentifier>{209e9bd7-6254-47ba-a4d8-4fcae4d8c99b}</UniqueIdentifier>
+    </Filter>
+	    <Filter Include="CodeGenerater">
       <UniqueIdentifier>{a8702b50-467f-427b-b0b7-af2fd4995a66}</UniqueIdentifier>
     </Filter>
     <Filter Include="CodeGenerater\cpp">
@@ -340,6 +349,9 @@
     <ClInclude Include="IRTree\EseqUpperVisitor.h">
       <Filter>IRTree\h</Filter>
     </ClInclude>
+	<ClInclude Include="Generator.h">
+      <Filter>CodeGenerator\h</Filter>
+    </ClInclude>
     <ClInclude Include="CodeGenerater\Instruction.h">
       <Filter>CodeGenerater\h</Filter>
     </ClInclude>
@@ -575,6 +587,9 @@
     </ClCompile>
     <ClCompile Include="IRTree\EseqUpperVisitor.cpp">
       <Filter>IRTree\cpp</Filter>
+    </ClCompile>
+	    <ClCompile Include="Generator.cpp">
+      <Filter>CodeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="CodeGenerater\Instruction.cpp">
       <Filter>CodeGenerater\cpp</Filter>

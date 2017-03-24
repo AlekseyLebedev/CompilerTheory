@@ -15,6 +15,7 @@
 #include "SymbolTable\TypeCheckerVistor.h"
 #include "IRTree\IRTBuilderVisitor.h"
 #include "IRTree\IRTreeVisitor.h"
+#include "Generator.h"
 
 int yyparse();
 extern FILE* yyin, *yyout;
@@ -58,8 +59,8 @@ int main( int argc, char** argv )
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;
 			}
+			IRTree::IRTBuilderVisitor irtree( &fillTable.GetTable() );
 			try {
-				IRTree::IRTBuilderVisitor irtree( &fillTable.GetTable() );
 				irtree.visit( root.get() );
 				std::wstringstream headerBuilder;
 				std::shared_ptr<IRTree::CCodeFragment> currentCodeFragment = irtree.GetCode();
@@ -74,9 +75,14 @@ int main( int argc, char** argv )
 			}
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;
-
 			}
-
+			CGenerator generator( irtree.GetCode() );
+			try {
+				generator.SplitIRTree();
+			}
+			catch( std::exception* e ) {
+				std::cerr << e->what() << std::endl;
+			}
 		}
 	}
 	return 0;
