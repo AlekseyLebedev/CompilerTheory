@@ -19,5 +19,14 @@ namespace IRTree {
 		return info;
 	}
 
+	std::wstring Label::GetAssmeblerName()
+	{
+		if( name < 0 ) {
+			return L"lbln" + std::to_wstring( -name );
+		} else {
+			return L"lblp" + std::to_wstring( name );
+		}
+	}
+
 	int Label::counter = TStandadLabel::SL_Count;
 }

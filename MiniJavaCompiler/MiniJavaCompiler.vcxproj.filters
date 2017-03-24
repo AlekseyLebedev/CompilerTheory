@@ -74,6 +74,15 @@
     <Filter Include="CodeGenerator\cpp">
       <UniqueIdentifier>{209e9bd7-6254-47ba-a4d8-4fcae4d8c99b}</UniqueIdentifier>
     </Filter>
+	    <Filter Include="CodeGenerater">
+      <UniqueIdentifier>{a8702b50-467f-427b-b0b7-af2fd4995a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeGenerater\cpp">
+      <UniqueIdentifier>{5ab6c45f-9eef-43eb-b80f-0148ca2d8a23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeGenerater\h">
+      <UniqueIdentifier>{5cc21b5f-03fe-465a-9575-8e8b18e1f4b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -340,8 +349,14 @@
     <ClInclude Include="IRTree\EseqUpperVisitor.h">
       <Filter>IRTree\h</Filter>
     </ClInclude>
-    <ClInclude Include="Generator.h">
+	<ClInclude Include="Generator.h">
       <Filter>CodeGenerator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeGenerater\Instruction.h">
+      <Filter>CodeGenerater\h</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeGenerater\OperationType.h">
+      <Filter>CodeGenerater\h</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -573,8 +588,11 @@
     <ClCompile Include="IRTree\EseqUpperVisitor.cpp">
       <Filter>IRTree\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Generator.cpp">
+	    <ClCompile Include="Generator.cpp">
       <Filter>CodeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeGenerater\Instruction.cpp">
+      <Filter>CodeGenerater\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
