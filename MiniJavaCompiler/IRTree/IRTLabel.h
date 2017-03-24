@@ -21,6 +21,7 @@ namespace IRTree {
 
 		const int GetName() const;
 		const std::wstring& GetInfo() const;
+		std::wstring GetAssmeblerName();
 
 	private:
 		const std::wstring info;
