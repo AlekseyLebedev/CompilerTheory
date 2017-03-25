@@ -103,8 +103,49 @@ void CGenerator::AddBasicBlock( std::shared_ptr<IRTStatement> block )
 	assert( oldRightSeq != 0 );
 	if( rightRightStm == 0 && leftStm != 0 ) {
 		oldRightSeq->SetStmRight( leftStm );
-	}
+	}	
 
 	basicBlocks.push_back( block );
+
+	// swap true è false
+	seq = std::dynamic_pointer_cast<IRTSSeq>(block);
+	if( swapBranches.size() ) {
+		std::shared_ptr<IRTSLabel> label = std::dynamic_pointer_cast<IRTSLabel>(seq->GetStmLeft());
+		if( label ) {
+			for( std::list<CSwapBranches>::iterator swapBrancesItem = swapBranches.begin(); swapBrancesItem != swapBranches.end();
+				swapBrancesItem++ ) {
+				if( label->GetLabel() == swapBrancesItem->trueLabel ) {
+					swapBrancesItem->trueIterator = std::prev(basicBlocks.end());
+				} else if( label->GetLabel() == swapBrancesItem->falseLabel ) {
+					swapBrancesItem->falseIterator = std::prev( basicBlocks.end() );
+					std::swap( *swapBrancesItem->falseIterator, *swapBrancesItem->trueIterator );
+					swapBranches.erase( swapBrancesItem );
+					break;
+				}
+
+			}
+		}
+
+	}
+	if( seq ) {
+		do {
+			std::shared_ptr<IRTStatement> right = seq->GetStmRight();
+			std::shared_ptr<IRTSCjump> cjump = std::dynamic_pointer_cast<IRTSCjump>(right);
+			if( cjump ) {
+				CSwapBranches swapBranch;
+				swapBranch.trueLabel = cjump->GetLabelLeft();
+				swapBranch.falseLabel = cjump->GetLabelRight();
+				swapBranches.push_back( swapBranch );
+				break;
+			} else {
+				std::shared_ptr<IRTSSeq> rseq = std::dynamic_pointer_cast<IRTSSeq>(right);
+				if( rseq ) {
+					seq = rseq;
+				} else {
+					break;
+				}
+			}
+		} while( true );
+	}
 }
 
