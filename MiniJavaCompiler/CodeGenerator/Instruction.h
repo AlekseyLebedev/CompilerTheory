@@ -42,7 +42,7 @@ namespace CodeGeneration {
 		int GetInstructionCode();
 		CSharedPtrVector<CTemp>& GetArguments();
 		CSharedPtrVector<CTemp>& GetDefinedTemps();
-		CSharedPtrVector<CLabel>& GetDefinedJumpPoint();
+		CSharedPtrVector<CLabel>& GetJumpPoints();
 		std::vector<int>& GetConstants();
 		virtual std::wstring ToCode() override;
 

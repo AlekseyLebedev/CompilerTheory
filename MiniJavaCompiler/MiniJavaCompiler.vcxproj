@@ -534,6 +534,7 @@
     <ClCompile Include="CodeGenerator\CodeGeneratorVisitor.cpp" />
     <ClCompile Include="CodeGenerator\Generator.cpp" />
     <ClCompile Include="CodeGenerator\Instruction.cpp" />
+    <ClCompile Include="CodeGenerator\OperationType.cpp" />
     <ClCompile Include="Graphwiz\IRTDotOutputVisitor.cpp" />
     <ClCompile Include="IRTree\Access.cpp" />
     <ClCompile Include="IRTree\AccessRemoverVisitor.cpp" />

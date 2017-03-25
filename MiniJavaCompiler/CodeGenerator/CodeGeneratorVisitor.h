@@ -29,9 +29,12 @@ namespace CodeGeneration {
 		virtual void Visit( const IRTree::IAccess * node ) override;
 		virtual void Visit( const IRTree::IRTEConstBool * node ) override;
 
+		void SetFrame( std::shared_ptr<IRTree::CFrame> frame );
+
 	private:
 		std::shared_ptr<CTemp> returnValue;
 		CSharedPtrVector<IInstruction> code;
+		std::shared_ptr<IRTree::CFrame> frame;
 
 		std::shared_ptr<CTemp> visitExpression( std::shared_ptr<IRTree::IRTStatement> node )
 		{
@@ -54,6 +57,11 @@ namespace CodeGeneration {
 				node->Accept( this );
 				assert( returnValue == 0 );
 			}
+		}
+
+		inline std::shared_ptr<CTemp> newTemp()
+		{
+			return std::make_shared<CTemp>( frame->NewTemp() );
 		}
 
 		void startVisit();

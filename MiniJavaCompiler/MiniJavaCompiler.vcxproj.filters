@@ -591,6 +591,9 @@
     <ClCompile Include="CodeGenerator\CodeGeneratorVisitor.cpp">
       <Filter>CodeGenerator\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="CodeGenerator\OperationType.cpp">
+      <Filter>CodeGenerator\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="LexicParser\grammar.l">

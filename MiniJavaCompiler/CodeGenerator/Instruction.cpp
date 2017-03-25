@@ -29,7 +29,7 @@ namespace CodeGeneration {
 		return definedTemps;
 	}
 
-	CSharedPtrVector<CLabel>& COperation::GetDefinedJumpPoint()
+	CSharedPtrVector<CLabel>& COperation::GetJumpPoints()
 	{
 		return jumpPoints;
 	}
