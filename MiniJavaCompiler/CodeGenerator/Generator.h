@@ -3,8 +3,8 @@
 #include <map>
 #include <cassert>
 #include <list>
-#include "IRTree\IRTreeAllClasses.h"
-#include "IRTree\CodeFragment.h"
+#include "..\IRTree\IRTreeAllClasses.h"
+#include "..\IRTree\CodeFragment.h"
 
 using namespace IRTree;
 
