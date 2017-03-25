@@ -442,6 +442,7 @@
     <ClInclude Include="AbstractTreeGenerator\VarDeclaration.h" />
     <ClInclude Include="AbstractTreeGenerator\VarDeclarationList.h" />
     <ClInclude Include="AbstractTreeGenerator\VariablesTable.h" />
+    <ClInclude Include="CodeGenerator\CodeGeneratorVisitor.h" />
     <ClInclude Include="CodeGenerator\Generator.h" />
     <ClInclude Include="CodeGenerator\Instruction.h" />
     <ClInclude Include="CodeGenerator\OperationType.h" />
@@ -530,6 +531,7 @@
     <ClCompile Include="AbstractTreeGenerator\VarDeclaration.cpp" />
     <ClCompile Include="AbstractTreeGenerator\VarDeclarationList.cpp" />
     <ClCompile Include="AbstractTreeGenerator\VariablesTable.cpp" />
+    <ClCompile Include="CodeGenerator\CodeGeneratorVisitor.cpp" />
     <ClCompile Include="CodeGenerator\Generator.cpp" />
     <ClCompile Include="CodeGenerator\Instruction.cpp" />
     <ClCompile Include="Graphwiz\IRTDotOutputVisitor.cpp" />
