@@ -35,11 +35,11 @@ namespace CodeGeneration {
 
 	class COperation : public IInstruction {
 	public:
-		COperation( int code ) : instructionCode( code )
+		COperation( TOperationType code ) : instructionCode( code )
 		{
 		}
 
-		int GetInstructionCode();
+		TOperationType GetInstructionCode();
 		CSharedPtrVector<CTemp>& GetArguments();
 		CSharedPtrVector<CTemp>& GetDefinedTemps();
 		CSharedPtrVector<CLabel>& GetJumpPoints();
@@ -47,7 +47,7 @@ namespace CodeGeneration {
 		virtual std::wstring ToCode() override;
 
 	private:
-		int instructionCode;
+		TOperationType instructionCode;
 		CSharedPtrVector<CTemp> arguments;
 		CSharedPtrVector<CTemp> definedTemps;
 		CSharedPtrVector<CLabel> jumpPoints;

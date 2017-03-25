@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include "Instruction.h"
 
 namespace CodeGeneration {
@@ -14,7 +16,7 @@ namespace CodeGeneration {
 
 	//-----------------------------------------------------------------------------------------------------------------
 
-	int COperation::GetInstructionCode()
+	TOperationType COperation::GetInstructionCode()
 	{
 		return instructionCode;
 	}
@@ -41,8 +43,25 @@ namespace CodeGeneration {
 
 	std::wstring COperation::ToCode()
 	{
-		// TODO
-		return std::wstring();
+		std::wstring codeTemplate = GetOperationString( instructionCode );
+		std::wstringstream result;
+		int tempIndex = 0;
+		int constIndex = 0;
+		int jumpIndex = 0;
+		for( size_t i = 0; i < codeTemplate.length(); i++ ) {
+			switch( codeTemplate[i] ) {
+				case L'\'':
+					result << L"r" << arguments[tempIndex++];
+					break;
+				case L'!':
+					result << L"r" << constants[constIndex++];
+					break;
+				default:
+					result << codeTemplate[i];
+					break;
+			}
+		}
+		return result.str();
 	}
 
 	//-----------------------------------------------------------------------------------------------------------------
