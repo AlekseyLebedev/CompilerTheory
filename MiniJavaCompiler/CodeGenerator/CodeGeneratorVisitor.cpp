@@ -13,11 +13,35 @@ namespace CodeGeneration {
 
 	}
 
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTExpList * node )
+	{
+		startMethod();
+		assert( false ); //TODO
+	}
+
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEConst * node )
 	{
 		startMethod();
 		// Должны найти это при разборе случаев сверху
 		assert( false );
+	}
+
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEName * node )
+	{
+		startMethod();
+		assert( false ); //TODO
+	}
+
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTETemp * node )
+	{
+		startMethod();
+		assert( false ); //TODO
+	}
+
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEBinop * node )
+	{
+		startMethod();
+		assert( false ); //TODO
 	}
 
 	inline bool isAdressOperation( IRTree::RELOP operation )
@@ -53,11 +77,65 @@ namespace CodeGeneration {
 		}
 	}
 
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTECall * node )
+	{
+		startMethod();
+		assert( false ); //TODO
+	}
+
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEEseq * node )
+	{
+		startMethod();
+		assert( false ); //TODO
+	}
+
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSMove * node )
+	{
+		startMethod();
+		assert( false ); //TODO
+	}
+
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSExp * node )
+	{
+		startMethod();
+		assert( false ); //TODO
+	}
+
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSJump * node )
+	{
+		startMethod();
+		assert( false ); //TODO
+	}
+
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSCjump * node )
+	{
+		startMethod();
+		assert( false ); //TODO
+	}
+
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSSeq * node )
+	{
+		startMethod();
+		assert( false ); //TODO
+	}
+
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSLabel * node )
+	{
+		startMethod();
+		assert( false ); //TODO
+	}
+
 	void CCodeGeneratorVisitor::Visit( const IRTree::IAccess * node )
 	{
 		startMethod();
 		// Должны найти это при разборе случаев сверху
 		assert( false );
+	}
+
+	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEConstBool * node )
+	{
+		startMethod();
+		assert( false ); //TODO
 	}
 
 	void CCodeGeneratorVisitor::SetFrame( std::shared_ptr<IRTree::CFrame> _frame )
