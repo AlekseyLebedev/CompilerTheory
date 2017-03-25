@@ -15,7 +15,7 @@
 #include "SymbolTable\TypeCheckerVistor.h"
 #include "IRTree\IRTBuilderVisitor.h"
 #include "IRTree\IRTreeVisitor.h"
-#include "Generator.h"
+#include "CodeGenerator\Generator.h"
 
 int yyparse();
 extern FILE* yyin, *yyout;
