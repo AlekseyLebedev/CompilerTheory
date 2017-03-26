@@ -57,68 +57,145 @@ namespace CodeGeneration {
 		}
 	}
 
+	static bool applyBoolOperation( IRTree::RELOP operation, bool leftArg, bool rigthArg )
+	{
+		switch( operation ) {
+			case IRTree::BINOP_AND:
+				return leftArg && rigthArg;
+			case IRTree::BINOP_OR:
+				return leftArg || rigthArg;
+			case IRTree::BINOP_XOR:
+				return leftArg ^ rigthArg;			
+			default:
+				assert( false );
+				return 0xDEADBEEF;
+		}
+	}
+
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEBinop * node )
 	{
 		startMethod();
 		IRTree::RELOP opType = node->GetBinop();
 		std::shared_ptr<IRTree::IRTExpression> left = node->GetLeft();
 		std::shared_ptr<IRTree::IRTExpression> right = node->GetRight();
-		std::shared_ptr<IRTree::IRTEConst> leftConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(left);
-		std::shared_ptr<IRTree::IRTEConst> rightConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(right);
+		std::shared_ptr<IRTree::IConst> leftIConst = std::dynamic_pointer_cast<IRTree::IConst>(left);
+		std::shared_ptr<IRTree::IConst> rightIConst = std::dynamic_pointer_cast<IRTree::IConst>(right);
 		std::shared_ptr<COperation> operation;
 		std::shared_ptr<CTemp> resultTemp;
 		resultTemp = newTemp();
 
 		// 1 случай: оба константы
-		if( leftConst && rightConst ) {
+		if( leftIConst && rightIConst ) {
 			operation = NEW<COperation>( OT_LoadConst );
-			int resultConst = applyIntOperation( node->GetBinop(), leftConst->GetValue(), rightConst->GetValue() );
-			operation->GetConstants().push_back( resultConst );
-			operation->GetArguments().push_back( resultTemp );
+			if( opType >= IRTree::BINOP_PLUS && opType <= IRTree::BINOP_MOD ) {
+				std::shared_ptr<IRTree::IRTEConst> leftConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(leftIConst);
+				std::shared_ptr<IRTree::IRTEConst> rightConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(rightIConst);
+				int resultConst = applyIntOperation( opType, leftConst->GetValue(), rightConst->GetValue() );
+				operation->GetConstants().push_back( resultConst );
+				operation->GetArguments().push_back( resultTemp );
+			} else if( opType >= IRTree::BINOP_AND &&  opType <= IRTree::BINOP_XOR ) {
+				std::shared_ptr<IRTree::IRTEConstBool> leftConst = std::dynamic_pointer_cast<IRTree::IRTEConstBool>(leftIConst);
+				std::shared_ptr<IRTree::IRTEConstBool> rightConst = std::dynamic_pointer_cast<IRTree::IRTEConstBool>(rightIConst);
+				int resultConst = applyBoolOperation( opType, leftConst->GetValue(), rightConst->GetValue() );
+				operation->GetConstants().push_back( resultConst );
+				operation->GetArguments().push_back( resultTemp );
+			}				
 		}
 		// 2 случай: один из аргументов константа, другой - регистр
-		else if( (!leftConst && rightConst) || (leftConst && !rightConst) ) {
+		else if( (!leftIConst && rightIConst) || (leftIConst && !rightIConst) ) {			
+			
 			std::shared_ptr<CTemp> temp;
+			std::shared_ptr<CTemp> resultTemp = newTemp();
 			int constInt;
-			if( !leftConst ) {
-				assert( rightConst );
-				temp = visitExpression( left );
-				constInt = rightConst->GetValue();
-			} else {
-				assert( leftConst );
-				temp = visitExpression( right );
-				constInt = leftConst->GetValue();
-			}
 
-			if( temp )
+			if( !leftIConst ) {
+				assert( rightIConst );				
+				temp = visitExpression( left );
+				std::shared_ptr<IRTree::IRTEConst> rightConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(rightIConst);
+				std::shared_ptr<IRTree::IRTEConstBool> rightConstBool;
+				if( rightConst ) {
+					constInt = rightConst->GetValue();
+				} else {
+					rightConstBool = std::dynamic_pointer_cast<IRTree::IRTEConstBool>(rightIConst);
+					constInt = rightConstBool->GetValue();
+				}
 				switch( opType ) {
 					case IRTree::BINOP_PLUS:
 						operation = NEW<COperation>( OT_AddTempConst );
 						break;
 					case IRTree::BINOP_MINUS:
-						operation = NEW<COperation>( OT_SubTempConst );
+						operation = NEW<COperation>( OT_SubTempConstRight );
 						break;
 					case IRTree::BINOP_MUL:
 						operation = NEW<COperation>( OT_MulTempConst );
 						break;
 					case IRTree::BINOP_DIV:
-						operation = NEW<COperation>( OT_DivTempConst );
+						operation = NEW<COperation>( OT_DivTempConstRight );
+						break;
+					case IRTree::BINOP_AND:
+						operation = NEW<COperation>( OT_AndTempConst );
+						break;
+					case IRTree::BINOP_OR:
+						operation = NEW<COperation>( OT_OrTempConst );
+						break;
+					case IRTree::BINOP_XOR:
+						operation = NEW<COperation>( OT_XorTempConst );
 						break;
 					default:
 						assert( false );
 						break;
 				}
-
-			operation->GetArguments().push_back( resultTemp );
-			operation->GetArguments().push_back( temp );
-			operation->GetConstants().push_back( constInt );
+				operation->GetArguments().push_back( resultTemp );
+				operation->GetArguments().push_back( temp );
+				operation->GetConstants().push_back( constInt );				
+			} else {
+				assert( leftIConst );
+				temp = visitExpression( right );
+				std::shared_ptr<IRTree::IRTEConst> leftConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(leftIConst);
+				std::shared_ptr<IRTree::IRTEConstBool> leftConstBool;
+				if( leftConst ) {
+					constInt = leftConst->GetValue();
+				} else {
+					leftConstBool = std::dynamic_pointer_cast<IRTree::IRTEConstBool>(rightIConst);
+					constInt = leftConstBool->GetValue();
+				}
+				switch( opType ) {
+					case IRTree::BINOP_PLUS:
+						operation = NEW<COperation>( OT_AddTempConst );
+						break;
+					case IRTree::BINOP_MINUS:
+						operation = NEW<COperation>( OT_SubTempConstLeft );
+						break;
+					case IRTree::BINOP_MUL:
+						operation = NEW<COperation>( OT_MulTempConst );
+						break;
+					case IRTree::BINOP_DIV:
+						operation = NEW<COperation>( OT_DivTempConstLeft );
+						break;
+					case IRTree::BINOP_AND:
+						operation = NEW<COperation>( OT_AndTempConst );
+						break;
+					case IRTree::BINOP_OR:
+						operation = NEW<COperation>( OT_OrTempConst );
+						break;
+					case IRTree::BINOP_XOR:
+						operation = NEW<COperation>( OT_XorTempConst );
+						break;
+					default:
+						assert( false );
+						break;
+				}
+				operation->GetArguments().push_back( resultTemp );
+				operation->GetArguments().push_back( temp );
+				operation->GetConstants().push_back( constInt );				
+			}		
 		}
 		// 3 случай: оба регистры
 		else {
-			assert( !rightConst );
-			assert( !leftConst );
-			std::shared_ptr<CTemp> tempLeft = visitExpression( node->GetLeft() );
-			std::shared_ptr<CTemp> tempRight = visitExpression( node->GetRight() );
+			assert( !rightIConst );
+			assert( !leftIConst );
+			std::shared_ptr<CTemp> tempLeft = visitExpression( left );
+			std::shared_ptr<CTemp> tempRight = visitExpression( right );
 
 			switch( opType ) {
 				case IRTree::BINOP_PLUS:
@@ -132,6 +209,15 @@ namespace CodeGeneration {
 					break;
 				case IRTree::BINOP_DIV:
 					operation = NEW<COperation>( OT_DivTemps );
+					break;
+				case IRTree::BINOP_AND:
+					operation = NEW<COperation>( OT_AndTemps );
+					break;
+				case IRTree::BINOP_OR:
+					operation = NEW<COperation>( OT_OrTemps );
+					break;
+				case IRTree::BINOP_XOR:
+					operation = NEW<COperation>( OT_XorTemps );
 					break;
 			}
 
