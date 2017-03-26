@@ -35,7 +35,7 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTETemp * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		returnValue = node->GetTemp();
 	}
 
 	static int applyIntOperation( IRTree::RELOP operation, int leftArg, int rigthArg )
