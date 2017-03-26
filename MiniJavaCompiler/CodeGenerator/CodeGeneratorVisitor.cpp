@@ -312,7 +312,55 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSCjump * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+
+		auto relop = node->GetRelop();
+
+		std::shared_ptr<COperation> operation = NEW<COperation>( OT_CMP );
+		auto expLeft = node->GetExpLeft();
+		auto expRight = node->GetExpRight();
+		operation->GetArguments().push_back( visitExpression( expLeft ) );
+		operation->GetArguments().push_back( visitExpression( expRight ) );
+
+		auto labelLeft = node->GetLabelLeft();
+		auto rightRight = node->GetLabelRight();
+		std::shared_ptr<COperation> operationLeft;
+		std::shared_ptr<COperation> operationRight;
+
+		switch( relop ) {
+			case IRTree::CJUMP_EQ:
+				operationLeft = NEW<COperation>( OT_JE );
+				operationRight = NEW<COperation>( OT_JNE );
+				break;
+			case IRTree::CJUMP_NE:
+				operationLeft = NEW<COperation>( OT_JNE );
+				operationRight = NEW<COperation>( OT_JE );
+				break;
+			case IRTree::CJUMP_LT:
+				operationLeft = NEW<COperation>( OT_JL );
+				operationRight = NEW<COperation>( OT_JGE );
+				break;
+			case IRTree::CJUMP_LE:
+				operationLeft = NEW<COperation>( OT_JLE );
+				operationRight = NEW<COperation>( OT_JG );
+				break;
+			case IRTree::CJUMP_GE:
+				operationLeft = NEW<COperation>( OT_JGE );
+				operationRight = NEW<COperation>( OT_JL );
+				break;
+			case IRTree::CJUMP_GT:
+				operationLeft = NEW<COperation>( OT_JG );
+				operationRight = NEW<COperation>( OT_JLE );
+				break;
+			default:
+				assert( false );
+				break;
+			}
+
+		code.push_back( operation );
+		operationLeft->GetJumpPoints().push_back( labelLeft );
+		operationRight->GetJumpPoints().push_back( rightRight );
+		code.push_back( operationLeft );
+		code.push_back( operationRight );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSSeq * node )
@@ -325,7 +373,11 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSLabel * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+
+		auto label = node->GetLabel();
+		std::shared_ptr<CLabelDefinition> labelDefinition = NEW<CLabelDefinition>( label );
+		
+		code.push_back( labelDefinition );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IAccess * node )

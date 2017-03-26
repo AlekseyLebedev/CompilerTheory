@@ -27,6 +27,7 @@ namespace CodeGeneration {
 	// Определние точки перехода
 	class CLabelDefinition : public IInstruction {
 	public:
+		CLabelDefinition( std::shared_ptr<CLabel>& theLabel ) : label( theLabel ) {}
 		std::shared_ptr<CLabel> GetLabel();
 		virtual std::wstring ToCode() override;
 
