@@ -2,6 +2,8 @@
 
 #include "OperationType.h"
 
+namespace CodeGeneartion {
+
 std::wstring GetOperationString( TOperationType type )
 {
 	switch( type ) {
@@ -10,10 +12,12 @@ std::wstring GetOperationString( TOperationType type )
 			break;
 		case OT_Move:
 			return L"MOVE ' '";
-		case OT_MemFramePointerPlusCont:
+		case OT_MemFramePointerPlusConst:
 			return L"MOVE ' [isp+!]";
 		default:
 			assert( false );
 			break;
 	}
 }
+
+} // namespace CodeGeneartion

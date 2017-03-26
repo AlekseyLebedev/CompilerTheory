@@ -69,12 +69,20 @@ namespace CodeGeneration {
 				if( rightConst != 0 && access != 0 ) {
 					assert( access->GetName() == IRTree::CFrame::FramePointerName );
 					assert( access->GetType() == IRTree::BINOP_PLUS );
-					std::shared_ptr<COperation> operation = NEW<COperation>( OT_MemFramePointerPlusCont );
+					std::shared_ptr<COperation> operation = NEW<COperation>( OT_MemFramePointerPlusConst );
 					returnValue = newTemp();
 					operation->GetDefinedTemps().push_back( returnValue );
 					operation->GetArguments().push_back( returnValue );
 					code.push_back( operation );
+					return;
 				}
+			}
+
+
+		} else {
+			std::shared_ptr<IRTree::IRTEConst> constExpr = DYNAMIC_CAST<IRTree::IRTEConst>( expression );
+			if( constExpr != 0 ) {
+				
 			}
 		}
 	}
