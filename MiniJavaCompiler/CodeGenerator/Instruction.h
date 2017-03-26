@@ -58,8 +58,8 @@ namespace CodeGeneration {
 	public:
 		CMoveOperation( std::shared_ptr<CTemp>& from, std::shared_ptr<CTemp>& to ) : COperation( OT_Move )
 		{
-			GetArguments().push_back( from );
 			GetArguments().push_back( to );
+			GetArguments().push_back( from );
 		}
 
 		std::shared_ptr<CTemp> GetFrom();

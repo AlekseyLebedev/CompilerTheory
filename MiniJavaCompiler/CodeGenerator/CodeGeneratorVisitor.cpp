@@ -153,8 +153,9 @@ namespace CodeGeneration {
 					assert( access->GetName() == IRTree::CFrame::FramePointerName );
 					assert( access->GetType() == IRTree::BINOP_PLUS );
 					std::shared_ptr<COperation> operation = NEW<COperation>( OT_MemFramePointerPlusCont );
-					operation->GetDefinedTemps().push_back( newTemp() );
-					operation->GetArguments().push_back( operation->GetDefinedTemps()[0] );
+					returnValue = newTemp();
+					operation->GetDefinedTemps().push_back( returnValue );
+					operation->GetArguments().push_back( returnValue );
 					code.push_back( operation );
 				}
 			}
