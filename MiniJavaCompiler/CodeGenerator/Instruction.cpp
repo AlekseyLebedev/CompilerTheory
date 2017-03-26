@@ -51,10 +51,13 @@ namespace CodeGeneration {
 		for( size_t i = 0; i < codeTemplate.length(); i++ ) {
 			switch( codeTemplate[i] ) {
 				case L'\'':
-					result << L"r" << arguments[tempIndex++];
+					result << L"r" << arguments[tempIndex++]->GetName();
 					break;
 				case L'!':
-					result << L"r" << constants[constIndex++];
+					result << constants[constIndex++];
+					break;
+				case L'^':
+					result << L"" << jumpPoints[jumpIndex++]->GetAssmeblerName();
 					break;
 				default:
 					result << codeTemplate[i];

@@ -16,6 +16,7 @@ namespace CodeGeneration {
 	using CTemp = IRTree::Temp;
 	using CLabel = IRTree::Label;
 
+	// Базовый класс инструкции
 	class IInstruction {
 	public:
 		virtual ~IInstruction() {};
@@ -23,6 +24,7 @@ namespace CodeGeneration {
 		virtual std::wstring ToCode() = 0; // TODO потом добавиться маппинг Temp в регистры и переменные на стеке
 	};
 
+	// Определние точки перехода
 	class CLabelDefinition : public IInstruction {
 	public:
 		CLabelDefinition( std::shared_ptr<CLabel>& theLabel ) : label( theLabel ) {}
@@ -34,6 +36,7 @@ namespace CodeGeneration {
 
 	};
 
+	// Ассемблерная инструкция
 	class COperation : public IInstruction {
 	public:
 		COperation( TOperationType code ) : instructionCode( code )
@@ -55,6 +58,7 @@ namespace CodeGeneration {
 		std::vector<int> constants;
 	};
 
+	// Операция перемещения данных. Отдельно, т.к. полезна для алгоритма распредления темпов оп регистрам и стэку
 	class CMoveOperation : public COperation {
 	public:
 		CMoveOperation( std::shared_ptr<CTemp>& from, std::shared_ptr<CTemp>& to ) : COperation( OT_Move )
@@ -65,6 +69,16 @@ namespace CodeGeneration {
 
 		std::shared_ptr<CTemp> GetFrom();
 		std::shared_ptr<CTemp> GetTo();
+	};
+
+	// Операция вызова функции. Отдельно - т.к. сложная платформозависимая логика расопложения
+	// аргументов (ABI: __stdcall, __fastcall, cdecl и т.д.) и необходимо сохранять значение регистров (TODO)
+	class CCallOperation : public COperation {
+	public:
+		CCallOperation( std::shared_ptr<CLabel>& label ) : COperation( OT_Move )
+		{
+			GetJumpPoints().push_back( label );
+		}
 	};
 
 } // namespace CodeGeneration
