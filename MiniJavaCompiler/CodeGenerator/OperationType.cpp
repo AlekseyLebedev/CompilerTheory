@@ -38,14 +38,30 @@ namespace CodeGeneration {
 				return L"DIV  ' ' '";
 			case OT_AddTempConst:
 				return L"ADDI  ' ' !";
-			case OT_SubTempConst:
+			case OT_SubTempConstRight:
 				return L"SUBI  ' ' !";
+			case OT_SubTempConstLeft:
+				return L"SUBI  ' ! '";
 			case OT_MulTempConst:
 				return L"MULI  ' ' !";
-			case OT_DivTempConst:
+			case OT_DivTempConstRight:
 				return L"DIVI  ' ' !";
+			case OT_DivTempConstLeft:
+				return L"DIVI  ' ! '";
 			case OT_LoadConst:
 				return L"LOAD ' !";
+			case OT_AndTemps:
+				return L"AND ' '";
+			case OT_OrTemps:
+				return L"OR ' '";
+			case OT_XorTemps:
+				return L"XOR ' '";
+			case OT_AndTempConst:
+				return L"ANDI ' !";
+			case OT_OrTempConst:
+				return L"ORI ' !";
+			case OT_XorTempConst:
+				return L"XORI ' !";
 			case OT_CMP:
 				return L"CMP ' '";
 			case OT_JMP:
