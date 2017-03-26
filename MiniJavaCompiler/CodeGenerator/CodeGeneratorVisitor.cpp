@@ -68,8 +68,9 @@ namespace CodeGeneration {
 				std::shared_ptr<IRTree::IAccess> access = DYNAMIC_CAST<IRTree::IAccess>( binop->GetLeft() );
 				if( rightConst != 0 && access != 0 ) {
 					assert( access->GetName() == IRTree::CFrame::FramePointerName );
+					assert( access->GetType() == IRTree::BINOP_PLUS );
 					std::shared_ptr<COperation> operation = NEW<COperation>( OT_MemFramePointerPlusCont );
-					operation->GetDefinedTemps().push_back(  newTemp() );
+					operation->GetDefinedTemps().push_back( newTemp() );
 					operation->GetArguments().push_back( operation->GetDefinedTemps()[0] );
 					code.push_back( operation );
 				}
