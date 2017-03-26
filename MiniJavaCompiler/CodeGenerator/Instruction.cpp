@@ -1,4 +1,5 @@
 #include <sstream>
+#include <cassert>
 
 #include "Instruction.h"
 
@@ -11,7 +12,7 @@ namespace CodeGeneration {
 
 	std::wstring CLabelDefinition::ToCode()
 	{
-		return label->GetAssmeblerName();
+		return label->GetAssmeblerName() + L":";
 	}
 
 	//-----------------------------------------------------------------------------------------------------------------
@@ -41,6 +42,8 @@ namespace CodeGeneration {
 		return constants;
 	}
 
+	static const wchar_t* registerPrefix = L"r";
+
 	std::wstring COperation::ToCode()
 	{
 		std::wstring codeTemplate = GetOperationString( instructionCode );
@@ -51,7 +54,7 @@ namespace CodeGeneration {
 		for( size_t i = 0; i < codeTemplate.length(); i++ ) {
 			switch( codeTemplate[i] ) {
 				case L'\'':
-					result << L"r" << arguments[tempIndex++]->GetName();
+					result << registerPrefix << arguments[tempIndex++]->GetName();
 					break;
 				case L'!':
 					result << constants[constIndex++];
@@ -77,6 +80,32 @@ namespace CodeGeneration {
 	std::shared_ptr<CTemp> CMoveOperation::GetTo()
 	{
 		return GetArguments()[0];
+	}
+
+	//-----------------------------------------------------------------------------------------------------------------
+
+	std::wstring CCallOperation::ToCode()
+	{
+		std::wstringstream result;
+		result << L"; begin call" << std::endl;
+		// TODO сохранение регистров!!!
+
+		// первый аргумент зарезервирован под возвращаемое значение
+		assert( GetArguments().size() > 0 );
+		for( size_t i = 1; i < GetArguments().size(); i++ ) {
+			// —корее всего будем делать так, по cdecl
+			result << "/*|*/ PUSH " << registerPrefix << GetArguments()[i]->GetName();
+		}
+		result << COperation::ToCode() << std::endl;
+		// ј вот это не по cdecl. “ип вызвающа€ функци€ чистит только аргументы
+		// TODO: либо переделать по cdecl с учетом текущей щан€тости стека, либо придумать как делаем
+		result << L"; TODO: Not cdecl! " << std::endl;
+		result << "ADD %ebp " << ((GetArguments().size() - 1) * sizeof( int )) << std::endl;
+		// ¬озвращаемое значение тоже по cdecl
+		result << "/*|*/MOV " << registerPrefix << GetArguments()[0]->GetName() << L" %eax";
+		result << L"; end call" << std::endl;
+
+		return result.str();
 	}
 
 } // namespace CodeGeneration

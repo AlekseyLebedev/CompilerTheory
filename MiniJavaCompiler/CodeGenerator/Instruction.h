@@ -79,6 +79,8 @@ namespace CodeGeneration {
 		{
 			GetJumpPoints().push_back( label );
 		}
+
+		virtual std::wstring ToCode();
 	};
 
 } // namespace CodeGeneration
