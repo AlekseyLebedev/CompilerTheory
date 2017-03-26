@@ -22,8 +22,17 @@ public:
 
 private:
 	std::shared_ptr<IRTree::CCodeFragment>  root;
-
+	
 	// храним список всех блоков в виде указателей на канонические деревья
 	std::list<std::shared_ptr<IRTStatement> > basicBlocks;
 
+	// запоминаем индексы для CJUMP и ветви TRUE и FALSE, чтобы потом свопнуть
+	struct CSwapBranches {		
+		std::list<std::shared_ptr<IRTStatement>>::iterator trueIterator;
+		std::list<std::shared_ptr<IRTStatement>>::iterator falseIterator;		
+		std::shared_ptr<Label> trueLabel;
+		std::shared_ptr<Label> falseLabel;
+
+	};
+	std::list<CSwapBranches> swapBranches;
 };
