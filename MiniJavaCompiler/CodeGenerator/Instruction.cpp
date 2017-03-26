@@ -68,12 +68,12 @@ namespace CodeGeneration {
 
 	std::shared_ptr<CTemp> CMoveOperation::GetFrom()
 	{
-		return GetArguments()[0];
+		return GetArguments()[1];
 	}
 
 	std::shared_ptr<CTemp> CMoveOperation::GetTo()
 	{
-		return GetArguments()[1];
+		return GetArguments()[0];
 	}
 
 } // namespace CodeGeneration
