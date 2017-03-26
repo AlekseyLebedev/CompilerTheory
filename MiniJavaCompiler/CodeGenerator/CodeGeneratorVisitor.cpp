@@ -29,13 +29,14 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEName * node )
 	{
 		startMethod();
+		// Предположительно сюда не заходим, но это не факт
 		assert( false ); //TODO
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTETemp * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		returnValue = node->GetTemp();
 	}
 
 	static int applyIntOperation( IRTree::RELOP operation, int leftArg, int rigthArg )
@@ -366,7 +367,8 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEEseq * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		// Этих узлов быть не должно
+		assert( false ); 
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSMove * node )
@@ -378,36 +380,90 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSExp * node )
 	{
 		startMethod();
+		// Тут нужно что-то делать только если внутри Call
 		assert( false ); //TODO
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSJump * node )
 	{
 		startMethod();
-		/*std::shared_ptr<CLabel> jumpLabel = node->GetLabel();
-		std::shared_ptr<COperation> operation = NEW<COperation>();
-		operation->GetJumpPoints().push_back( jumpLabel );*/
+		std::shared_ptr<COperation> operation = NEW<COperation>( OT_JMP );
 
-		assert( false ); //TODO
+		auto label = node->GetLabel();
+		operation->GetJumpPoints().push_back( label );
+		
+		code.push_back( operation );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSCjump * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+
+		auto relop = node->GetRelop();
+
+		std::shared_ptr<COperation> operation = NEW<COperation>( OT_CMP );
+		auto expLeft = node->GetExpLeft();
+		auto expRight = node->GetExpRight();
+		operation->GetArguments().push_back( visitExpression( expLeft ) );
+		operation->GetArguments().push_back( visitExpression( expRight ) );
+
+		auto labelLeft = node->GetLabelLeft();
+		auto rightRight = node->GetLabelRight();
+		std::shared_ptr<COperation> operationLeft;
+		std::shared_ptr<COperation> operationRight;
+
+		switch( relop ) {
+			case IRTree::CJUMP_EQ:
+				operationLeft = NEW<COperation>( OT_JE );
+				operationRight = NEW<COperation>( OT_JNE );
+				break;
+			case IRTree::CJUMP_NE:
+				operationLeft = NEW<COperation>( OT_JNE );
+				operationRight = NEW<COperation>( OT_JE );
+				break;
+			case IRTree::CJUMP_LT:
+				operationLeft = NEW<COperation>( OT_JL );
+				operationRight = NEW<COperation>( OT_JGE );
+				break;
+			case IRTree::CJUMP_LE:
+				operationLeft = NEW<COperation>( OT_JLE );
+				operationRight = NEW<COperation>( OT_JG );
+				break;
+			case IRTree::CJUMP_GE:
+				operationLeft = NEW<COperation>( OT_JGE );
+				operationRight = NEW<COperation>( OT_JL );
+				break;
+			case IRTree::CJUMP_GT:
+				operationLeft = NEW<COperation>( OT_JG );
+				operationRight = NEW<COperation>( OT_JLE );
+				break;
+			default:
+				assert( false );
+				break;
+			}
+
+		code.push_back( operation );
+		operationLeft->GetJumpPoints().push_back( labelLeft );
+		operationRight->GetJumpPoints().push_back( rightRight );
+		code.push_back( operationLeft );
+		code.push_back( operationRight );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSSeq * node )
 	{
 		startMethod();
 		visitStatement( node->GetStmLeft() );
-		visitStatement( node->GetStmRight() );		
+		visitStatement( node->GetStmRight() );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSLabel * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+
+		auto label = node->GetLabel();
+		std::shared_ptr<CLabelDefinition> labelDefinition = NEW<CLabelDefinition>( label );
+		
+		code.push_back( labelDefinition );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IAccess * node )
@@ -420,7 +476,8 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEConstBool * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		// Должны найти это при разборе случаев сверху
+		assert( false ); 
 	}
 
 	void CCodeGeneratorVisitor::SetFrame( std::shared_ptr<IRTree::CFrame> _frame )

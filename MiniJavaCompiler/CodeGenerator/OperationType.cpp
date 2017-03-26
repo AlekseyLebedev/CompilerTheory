@@ -26,6 +26,8 @@ namespace CodeGeneration {
 				return L"MOVE ' [!]";
 			case OT_MemReg:
 				return L"MOVE ' [']";
+			case OT_Call:
+				return L"CALL ^";
 			case OT_AddTemps:
 				return L"ADD  ' ' '";
 			case OT_SubTemps:
@@ -60,6 +62,22 @@ namespace CodeGeneration {
 				return L"ORI ' !";
 			case OT_XorTempConst:
 				return L"XORI ' !";
+			case OT_CMP:
+				return L"CMP ' '";
+			case OT_JMP:
+				return L"JMP ^";
+			case OT_JE:
+				return L"JE ^";
+			case OT_JNE:
+				return L"JNE ^";
+			case OT_JG:
+				return L"JG ^";
+			case OT_JGE:
+				return L"JGE ^";
+			case OT_JL:
+				return L"JL ^";
+			case OT_JLE:
+				return L"JLE ^";
 			default:
 				assert( false );
 				break;

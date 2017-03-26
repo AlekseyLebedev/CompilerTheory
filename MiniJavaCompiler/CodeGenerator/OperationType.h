@@ -14,6 +14,7 @@ namespace CodeGeneration {
 		OT_MemRegMulConst, // Обращеине регистр * константа
 		OT_MemConst, // Обращеине в память по константe
 		OT_MemReg, // Обращеине в память по значению из регистра
+		OT_Call, // Вызов функции
 		OT_AddConstToFirst, // Добавление к первому аргументу и т.д.
 		OT_AddTemps, // Бинарная операция сложения регистров
 		OT_SubTemps, // Бинарная операция вычитания регистров
@@ -32,7 +33,15 @@ namespace CodeGeneration {
 		OT_AndTempConst, // Логическая операция И с регистром и константой
 		OT_OrTempConst, // Логическая операция ИЛИ с регистром и константой
 		OT_XorTempConst //  Взаимоисключающее ИЛИ для регистра и конмтанты
-		
+		OT_LoadConst, // Запоминаем константу в регистр
+		OT_CMP, // сравнение
+		OT_JMP, // безусловный прыжок
+		OT_JE,  // нуль или равно // ZF = 1
+		OT_JNE, // не нуль или не равно // ZF = 0
+		OT_JG,	// больше / не меньше и не равно // ZF = 0 и SF = OF
+		OT_JGE, // JNL больше или равно / не меньше // SF = OF
+		OT_JL,	// JNGE меньше / не больше и не равно // SF != OF
+		OT_JLE	// JNG меньше или равно / не больше	// ZF = 1 или SF != OF
 	};
 
 	std::wstring GetOperationString( TOperationType type );
