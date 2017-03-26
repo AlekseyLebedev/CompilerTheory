@@ -24,9 +24,14 @@ namespace CodeGeneration {
 		OT_MulTempConst, // Бинарная операция умножения регистра с константой
 		OT_DivTempConst, // Бинарная операция деления регистра с константой
 		OT_LoadConst, // Запоминаем константу в регистр
+		OT_CMP, // сравнение
 		OT_JMP, // безусловный прыжок
-		OT_JE,  // нуль или равно // ZF=1
-		OT_JNE // не нуль или не равно // ZF = 0
+		OT_JE,  // нуль или равно // ZF = 1
+		OT_JNE, // не нуль или не равно // ZF = 0
+		OT_JG,	// больше / не меньше и не равно // ZF = 0 и SF = OF
+		OT_JGE, // JNL больше или равно / не меньше // SF = OF
+		OT_JL,	// JNGE меньше / не больше и не равно // SF != OF
+		OT_JLE	// JNG меньше или равно / не больше	// ZF = 1 или SF != OF
 	};
 
 	std::wstring GetOperationString( TOperationType type );
