@@ -309,6 +309,17 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSCjump * node )
 	{
 		startMethod();
+
+		auto labelLeft = node->GetLabelLeft();
+		std::shared_ptr<COperation> operationLeft = NEW<COperation>( OT_JE );
+		operationLeft->GetJumpPoints().push_back( labelLeft );
+		code.push_back( operationLeft );
+
+		auto rightRight = node->GetLabelRight();
+		std::shared_ptr<COperation> operationRight = NEW<COperation>( OT_JNE );
+		operationRight->GetJumpPoints().push_back( rightRight );
+		code.push_back( operationRight );
+
 		assert( false ); //TODO
 	}
 
@@ -322,7 +333,11 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSLabel * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+
+		auto label = node->GetLabel();
+		std::shared_ptr<CLabelDefinition> labelDefinition = NEW<CLabelDefinition>( label );
+		
+		code.push_back( labelDefinition );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IAccess * node )
