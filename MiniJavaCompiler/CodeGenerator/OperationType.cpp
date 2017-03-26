@@ -35,13 +35,13 @@ namespace CodeGeneration {
 			case OT_DivTemps:
 				return L"DIV  ' ' '";
 			case OT_AddTempConst:
-				return L"ADD  ' ' !";
+				return L"ADDI  ' ' !";
 			case OT_SubTempConst:
-				return L"SUB  ' ' !";
+				return L"SUBI  ' ' !";
 			case OT_MulTempConst:
-				return L"MUL  ' ' !";
+				return L"MULI  ' ' !";
 			case OT_DivTempConst:
-				return L"DIV  ' ' !";
+				return L"DIVI  ' ' !";
 			case OT_LoadConst:
 				return L"LOAD ' !";
 			default:

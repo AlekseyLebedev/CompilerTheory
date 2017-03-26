@@ -12,10 +12,10 @@ std::shared_ptr<IRTree::CCodeFragment>  CGenerator::GetRoot()
 
 void CGenerator::SplitIRTree()
 {
-	std::shared_ptr<IRTree::CCodeFragment> currentCodeFragment = root;
+	std::shared_ptr<IRTree::CCodeFragment> currentCodeFragment = root;	
 	while( currentCodeFragment != 0 ) {
-		std::shared_ptr<IRTStatement> currentStatement = currentCodeFragment->GetTree();
-
+		std::shared_ptr<IRTStatement> currentStatement = currentCodeFragment->GetTree();	
+		currentFrame = currentCodeFragment->GetFrame();
 		while( currentStatement != 0 ) {
 			std::shared_ptr<IRTSSeq> currentSeq = std::dynamic_pointer_cast<IRTSSeq>( currentStatement );
 			assert( currentSeq != 0 );
@@ -105,7 +105,7 @@ void CGenerator::AddBasicBlock( std::shared_ptr<IRTStatement> block )
 		oldRightSeq->SetStmRight( leftStm );
 	}	
 
-	basicBlocks.push_back( block );
+	basicBlocks.push_back( std::make_pair(block, currentFrame) );
 
 	// swap true è false
 	seq = std::dynamic_pointer_cast<IRTSSeq>(block);
