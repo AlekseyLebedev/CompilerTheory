@@ -35,7 +35,7 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTETemp * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		returnValue = node->GetTemp();
 	}
 
 	static int applyIntOperation( IRTree::RELOP operation, int leftArg, int rigthArg )
@@ -280,7 +280,8 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEEseq * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		// Ётих узлов быть не должно
+		assert( false ); 
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSMove * node )
@@ -292,6 +293,7 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSExp * node )
 	{
 		startMethod();
+		// “ут нужно что-то делать только если внутри Call
 		assert( false ); //TODO
 	}
 
@@ -327,7 +329,7 @@ namespace CodeGeneration {
 	{
 		startMethod();
 		visitStatement( node->GetStmLeft() );
-		visitStatement( node->GetStmRight() );		
+		visitStatement( node->GetStmRight() );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSLabel * node )
@@ -350,7 +352,8 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEConstBool * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		// ƒолжны найти это при разборе случаев сверху
+		assert( false ); 
 	}
 
 	void CCodeGeneratorVisitor::SetFrame( std::shared_ptr<IRTree::CFrame> _frame )
