@@ -64,6 +64,8 @@ namespace CodeGeneration {
 				return L"XORI ' !";
 			case OT_CMP:
 				return L"CMP ' '";
+			case OT_CMPC:
+				return L"CMPC ' '";
 			case OT_JMP:
 				return L"JMP ^";
 			case OT_JE:

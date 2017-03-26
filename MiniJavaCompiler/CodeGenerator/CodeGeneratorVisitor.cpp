@@ -79,8 +79,8 @@ namespace CodeGeneration {
 		IRTree::RELOP opType = node->GetBinop();
 		std::shared_ptr<IRTree::IRTExpression> left = node->GetLeft();
 		std::shared_ptr<IRTree::IRTExpression> right = node->GetRight();
-		std::shared_ptr<IRTree::IConst> leftIConst = std::dynamic_pointer_cast<IRTree::IConst>(left);
-		std::shared_ptr<IRTree::IConst> rightIConst = std::dynamic_pointer_cast<IRTree::IConst>(right);
+		std::shared_ptr<IRTree::IConst> leftIConst = std::dynamic_pointer_cast<IRTree::IConst>( left );
+		std::shared_ptr<IRTree::IConst> rightIConst = std::dynamic_pointer_cast<IRTree::IConst>( right );
 		std::shared_ptr<COperation> operation;
 		std::shared_ptr<CTemp> resultTemp;
 		resultTemp = newTemp();
@@ -89,21 +89,21 @@ namespace CodeGeneration {
 		if( leftIConst && rightIConst ) {
 			operation = NEW<COperation>( OT_LoadConst );
 			if( opType >= IRTree::BINOP_PLUS && opType <= IRTree::BINOP_MOD ) {
-				std::shared_ptr<IRTree::IRTEConst> leftConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(leftIConst);
-				std::shared_ptr<IRTree::IRTEConst> rightConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(rightIConst);
+				std::shared_ptr<IRTree::IRTEConst> leftConst = std::dynamic_pointer_cast<IRTree::IRTEConst>( leftIConst );
+				std::shared_ptr<IRTree::IRTEConst> rightConst = std::dynamic_pointer_cast<IRTree::IRTEConst>( rightIConst );
 				int resultConst = applyIntOperation( opType, leftConst->GetValue(), rightConst->GetValue() );
 				operation->GetConstants().push_back( resultConst );
 				operation->GetArguments().push_back( resultTemp );
 			} else if( opType >= IRTree::BINOP_AND &&  opType <= IRTree::BINOP_XOR ) {
-				std::shared_ptr<IRTree::IRTEConstBool> leftConst = std::dynamic_pointer_cast<IRTree::IRTEConstBool>(leftIConst);
-				std::shared_ptr<IRTree::IRTEConstBool> rightConst = std::dynamic_pointer_cast<IRTree::IRTEConstBool>(rightIConst);
+				std::shared_ptr<IRTree::IRTEConstBool> leftConst = std::dynamic_pointer_cast<IRTree::IRTEConstBool>( leftIConst );
+				std::shared_ptr<IRTree::IRTEConstBool> rightConst = std::dynamic_pointer_cast<IRTree::IRTEConstBool>( rightIConst );
 				int resultConst = applyBoolOperation( opType, leftConst->GetValue(), rightConst->GetValue() );
 				operation->GetConstants().push_back( resultConst );
 				operation->GetArguments().push_back( resultTemp );
 			}				
 		}
 		// 2 случай: один из аргументов константа, другой - регистр
-		else if( (!leftIConst && rightIConst) || (leftIConst && !rightIConst) ) {			
+		else if( ( !leftIConst && rightIConst ) || ( leftIConst && !rightIConst ) ) {			
 			
 			std::shared_ptr<CTemp> temp;
 			std::shared_ptr<CTemp> resultTemp = newTemp();
@@ -112,12 +112,12 @@ namespace CodeGeneration {
 			if( !leftIConst ) {
 				assert( rightIConst );				
 				temp = visitExpression( left );
-				std::shared_ptr<IRTree::IRTEConst> rightConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(rightIConst);
+				std::shared_ptr<IRTree::IRTEConst> rightConst = std::dynamic_pointer_cast<IRTree::IRTEConst>( rightIConst );
 				std::shared_ptr<IRTree::IRTEConstBool> rightConstBool;
 				if( rightConst ) {
 					constInt = rightConst->GetValue();
 				} else {
-					rightConstBool = std::dynamic_pointer_cast<IRTree::IRTEConstBool>(rightIConst);
+					rightConstBool = std::dynamic_pointer_cast<IRTree::IRTEConstBool>( rightIConst );
 					constInt = rightConstBool->GetValue();
 				}
 				switch( opType ) {
@@ -152,12 +152,12 @@ namespace CodeGeneration {
 			} else {
 				assert( leftIConst );
 				temp = visitExpression( right );
-				std::shared_ptr<IRTree::IRTEConst> leftConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(leftIConst);
+				std::shared_ptr<IRTree::IRTEConst> leftConst = std::dynamic_pointer_cast<IRTree::IRTEConst>( leftIConst );
 				std::shared_ptr<IRTree::IRTEConstBool> leftConstBool;
 				if( leftConst ) {
 					constInt = leftConst->GetValue();
 				} else {
-					leftConstBool = std::dynamic_pointer_cast<IRTree::IRTEConstBool>(rightIConst);
+					leftConstBool = std::dynamic_pointer_cast<IRTree::IRTEConstBool>( rightIConst );
 					constInt = leftConstBool->GetValue();
 				}
 				switch( opType ) {
@@ -401,11 +401,32 @@ namespace CodeGeneration {
 
 		auto relop = node->GetRelop();
 
-		std::shared_ptr<COperation> operation = NEW<COperation>( OT_CMP );
 		auto expLeft = node->GetExpLeft();
 		auto expRight = node->GetExpRight();
-		operation->GetArguments().push_back( visitExpression( expLeft ) );
-		operation->GetArguments().push_back( visitExpression( expRight ) );
+		std::shared_ptr<IRTree::IConst> leftConst = std::dynamic_pointer_cast<IRTree::IConst>( expLeft );
+		std::shared_ptr<IRTree::IConst> rightConst = std::dynamic_pointer_cast<IRTree::IConst>( expRight );
+
+		// если оба константы 
+		if( leftConst && rightConst ) {
+
+		} // если 
+		else if( (!leftConst && rightConst) || (leftConst && !rightConst) ) {
+
+		} else {
+
+		}
+		std::shared_ptr<COperation> operation = NEW<COperation>( OT_CMP );
+		if( std::dynamic_pointer_cast<IRTree::IRTEConst>( expLeft ) ) {
+
+		} else {
+			operation->GetArguments().push_back( visitExpression( expLeft ) );
+		}
+
+		if( std::dynamic_pointer_cast<IRTree::IRTEConst>( expRight ) ) {
+
+		} else {
+			operation->GetArguments().push_back( visitExpression( expRight ) );
+		}
 
 		auto labelLeft = node->GetLabelLeft();
 		auto rightRight = node->GetLabelRight();
