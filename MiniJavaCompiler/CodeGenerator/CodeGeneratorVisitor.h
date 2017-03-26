@@ -35,6 +35,8 @@ namespace CodeGeneration {
 		std::shared_ptr<CTemp> returnValue;
 		CSharedPtrVector<IInstruction> code;
 		std::shared_ptr<IRTree::CFrame> frame;
+		bool hasCall;
+		CSharedPtrVector<CTemp> callArguments;
 
 		std::shared_ptr<CTemp> visitExpression( std::shared_ptr<IRTree::IRTExpression> node )
 		{

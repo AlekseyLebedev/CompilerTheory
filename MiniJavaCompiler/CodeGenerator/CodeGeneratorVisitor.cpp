@@ -8,7 +8,7 @@
 
 namespace CodeGeneration {
 
-	CCodeGeneratorVisitor::CCodeGeneratorVisitor()
+	CCodeGeneratorVisitor::CCodeGeneratorVisitor() : hasCall( false )
 	{
 
 	}
@@ -16,7 +16,16 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTExpList * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		std::shared_ptr<CMoveOperation> operation = NEW<CMoveOperation>( newTemp(), visitExpression( node->GetHead() ) );
+		operation->GetDefinedTemps().push_back( operation->GetTo() );
+		callArguments.push_back( operation->GetTo() );
+		code.push_back( operation );
+
+		// На самом деле все равно, что положить в returnValue. Это не используется. На всякий случай, поддержал правильную семантику оператора запятая
+		returnValue = visitExpression( node->GetTail() );
+		if( returnValue == 0 ) {
+			returnValue = operation->GetTo();
+		}
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEConst * node )
@@ -275,14 +284,33 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTECall * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		assert( callArguments.size() == 0 );
+
+		visitExpression( node->GetArgs() );
+
+		std::shared_ptr<IRTree::IRTEName> name = DYNAMIC_CAST<IRTree::IRTEName>( node->GetFunc() );
+		assert( name != 0 );
+
+		std::shared_ptr<CCallOperation> operation = NEW<CCallOperation>( name->GetLabel() );
+		returnValue = newTemp();
+		operation->GetDefinedTemps().push_back( returnValue );
+		operation->GetArguments().push_back( returnValue );
+
+		visitExpression( node->GetArgs() );
+		for( size_t i = 0; i < callArguments.size(); i++ ) {
+			operation->GetArguments().push_back( callArguments[i] );
+		}
+		code.push_back( operation );
+
+		callArguments.clear();
+		hasCall = true;
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEEseq * node )
 	{
 		startMethod();
 		// Этих узлов быть не должно
-		assert( false ); 
+		assert( false );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSMove * node )
@@ -294,8 +322,16 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSExp * node )
 	{
 		startMethod();
-		// Тут нужно что-то делать только если внутри Call
-		assert( false ); //TODO
+		// Тут нужно что-то делать только если внутри Call (оптимизация)
+		// TODO: а вдруг я не прав? Вроде бы ничего другого не могло вызвать побочных эффектов
+		int codeSize = code.size();
+		hasCall = false;
+		visitExpression( node->GetExp() );
+		if( !hasCall ) {
+			// Оптимизаяци: удаляем лишнее, если не было Call внутри.
+			code.erase( code.begin() + codeSize, code.end() );
+		}
+		hasCall = false;
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSJump * node )
@@ -305,7 +341,7 @@ namespace CodeGeneration {
 
 		auto label = node->GetLabel();
 		operation->GetJumpPoints().push_back( label );
-		
+
 		code.push_back( operation );
 	}
 
@@ -354,7 +390,7 @@ namespace CodeGeneration {
 			default:
 				assert( false );
 				break;
-			}
+		}
 
 		code.push_back( operation );
 		operationLeft->GetJumpPoints().push_back( labelLeft );
@@ -376,7 +412,7 @@ namespace CodeGeneration {
 
 		auto label = node->GetLabel();
 		std::shared_ptr<CLabelDefinition> labelDefinition = NEW<CLabelDefinition>( label );
-		
+
 		code.push_back( labelDefinition );
 	}
 
@@ -391,7 +427,7 @@ namespace CodeGeneration {
 	{
 		startMethod();
 		// Должны найти это при разборе случаев сверху
-		assert( false ); 
+		assert( false );
 	}
 
 	void CCodeGeneratorVisitor::SetFrame( std::shared_ptr<IRTree::CFrame> _frame )
