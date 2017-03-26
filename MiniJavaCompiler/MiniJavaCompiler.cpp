@@ -17,6 +17,7 @@
 #include "IRTree\IRTreeVisitor.h"
 #include "CodeGenerator\Generator.h"
 #include "CodeGenerator\CodeGeneratorVisitor.h"
+#include "CodeGenerator\Printer.h"
 
 int yyparse();
 extern FILE* yyin, *yyout;
@@ -89,6 +90,7 @@ int main( int argc, char** argv )
 					codeGeneratorVisitor->Visit( std::dynamic_pointer_cast<IRTSSeq>(block->first).get() );
 					CSharedPtrVector<CodeGeneration::IInstruction> code =  codeGeneratorVisitor->GetCode();
 					// TODO: сделать что-нибудь с этим кодом
+					CodeGeneration::PrintToFile( code, L"code-" + std::to_wstring( fileIndex++ ) );
 				}
 			}
 			catch( std::exception* e ) {

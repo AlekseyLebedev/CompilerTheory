@@ -5,7 +5,8 @@
 namespace IRTree {
 
 	class IConst : public IRTExpression {
-
+	public:
+		virtual int GetValueAsInt() = 0;
 	};
 
 	class IRTEConst : public IConst {
@@ -17,6 +18,7 @@ namespace IRTree {
 
         void Accept( IVisitor* visitor ) const override;
 
+		virtual int GetValueAsInt() override;
 	private:
 
 		const int value;
@@ -32,6 +34,7 @@ namespace IRTree {
 
 		void Accept( IVisitor* visitor ) const override;
 
+		virtual int GetValueAsInt() override;
 	private:
 
 		const bool value;

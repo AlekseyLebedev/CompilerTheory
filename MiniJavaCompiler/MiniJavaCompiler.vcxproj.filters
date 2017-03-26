@@ -352,6 +352,9 @@
     <ClInclude Include="CodeGenerator\CodeGeneratorVisitor.h">
       <Filter>CodeGenerator\h</Filter>
     </ClInclude>
+    <ClInclude Include="CodeGenerator\Printer.h">
+      <Filter>CodeGenerator\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -592,6 +595,9 @@
       <Filter>CodeGenerator\cpp</Filter>
     </ClCompile>
     <ClCompile Include="CodeGenerator\OperationType.cpp">
+      <Filter>CodeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeGenerator\Printer.cpp">
       <Filter>CodeGenerator\cpp</Filter>
     </ClCompile>
   </ItemGroup>
