@@ -209,7 +209,8 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSSeq * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		visitStatement( node->GetStmLeft() );
+		visitStatement( node->GetStmRight() );		
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSLabel * node )
