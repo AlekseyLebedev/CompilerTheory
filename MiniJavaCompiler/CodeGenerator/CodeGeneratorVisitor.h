@@ -30,7 +30,7 @@ namespace CodeGeneration {
 		virtual void Visit( const IRTree::IRTEConstBool * node ) override;
 
 		void SetFrame( std::shared_ptr<IRTree::CFrame> frame );
-
+		CSharedPtrVector<IInstruction> GetCode() const;
 	private:
 		std::shared_ptr<CTemp> returnValue;
 		CSharedPtrVector<IInstruction> code;

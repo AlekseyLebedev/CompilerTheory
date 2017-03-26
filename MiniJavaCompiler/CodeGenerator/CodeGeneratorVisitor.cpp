@@ -241,6 +241,11 @@ namespace CodeGeneration {
 		frame = _frame;
 	}
 
+	CSharedPtrVector<IInstruction> CCodeGeneratorVisitor::GetCode() const
+	{
+		return code;
+	}
+
 	void CCodeGeneratorVisitor::startVisit()
 	{
 		assert( returnValue == 0 );

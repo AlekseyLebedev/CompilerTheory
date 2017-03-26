@@ -10,6 +10,11 @@ std::shared_ptr<IRTree::CCodeFragment>  CGenerator::GetRoot()
 	return root;
 }
 
+std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>> CGenerator::GetBasicBlocks() const
+{
+	return basicBlocks;
+}
+
 void CGenerator::SplitIRTree()
 {
 	std::shared_ptr<IRTree::CCodeFragment> currentCodeFragment = root;	

@@ -16,6 +16,7 @@
 #include "IRTree\IRTBuilderVisitor.h"
 #include "IRTree\IRTreeVisitor.h"
 #include "CodeGenerator\Generator.h"
+#include "CodeGenerator\CodeGeneratorVisitor.h"
 
 int yyparse();
 extern FILE* yyin, *yyout;
@@ -79,6 +80,16 @@ int main( int argc, char** argv )
 			CGenerator generator( irtree.GetCode() );
 			try {
 				generator.SplitIRTree();
+				CodeGeneration::CCodeGeneratorVisitor* codeGeneratorVisitor;
+				std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>> basisBlocks = generator.GetBasicBlocks();
+				for( std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>>::iterator block = basisBlocks.begin();
+					block != basisBlocks.end(); block++ ) {
+					codeGeneratorVisitor = new CodeGeneration::CCodeGeneratorVisitor();
+					codeGeneratorVisitor->SetFrame( block->second );
+					codeGeneratorVisitor->Visit( std::dynamic_pointer_cast<IRTSSeq>(block->first).get() );
+					CSharedPtrVector<CodeGeneration::IInstruction> code =  codeGeneratorVisitor->GetCode();
+					// TODO: сделать что-нибудь с этим кодом
+				}
 			}
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;
