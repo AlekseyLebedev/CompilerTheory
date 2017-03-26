@@ -442,9 +442,9 @@ namespace CodeGeneration {
 				break;
 			}
 
-		code.push_back( operation );
 		operationLeft->GetJumpPoints().push_back( labelLeft );
 		operationRight->GetJumpPoints().push_back( rightRight );
+		code.push_back( operation );
 		code.push_back( operationLeft );
 		code.push_back( operationRight );
 	}
