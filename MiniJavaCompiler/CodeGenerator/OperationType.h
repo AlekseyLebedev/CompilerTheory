@@ -12,6 +12,8 @@ namespace CodeGeneration {
 		OT_MemRegMinusConst, // Обращеине регистр - константа
 		OT_MemConstMinusReg, // Обращеине константа - регистр
 		OT_MemRegMulConst, // Обращеине регистр * константа
+		OT_MemConst, // Обращеине в память по константe
+		OT_MemReg, // Обращеине в память по значению из регистра
 		OT_AddConstToFirst, // Добавление к первому аргументу и т.д.
 		OT_AddTemps, // Бинарная операция сложения регистров
 		OT_SubTemps, // Бинарная операция вычитания регистров
