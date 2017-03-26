@@ -10,6 +10,7 @@ namespace IRTree {
 		void SetNext( const std::shared_ptr<CCodeFragment> next );
 		const std::shared_ptr<IRTStatement> GetTree() const;
 		const std::shared_ptr<CCodeFragment> GetNext() const;
+		const std::shared_ptr<CFrame> GetFrame() const;
 	private:
 		std::shared_ptr<CFrame> frame;
 		std::shared_ptr<CCodeFragment> next;
