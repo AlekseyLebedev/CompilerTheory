@@ -197,9 +197,9 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSJump * node )
 	{
 		startMethod();
-		std::shared_ptr<CLabel> jumpLabel = node->GetLabel();
+		/*std::shared_ptr<CLabel> jumpLabel = node->GetLabel();
 		std::shared_ptr<COperation> operation = NEW<COperation>();
-		operation->GetJumpPoints().push_back( jumpLabel );
+		operation->GetJumpPoints().push_back( jumpLabel );*/
 
 		assert( false ); //TODO
 	}

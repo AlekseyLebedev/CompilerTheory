@@ -22,3 +22,8 @@ const std::shared_ptr<CCodeFragment> CCodeFragment::GetNext() const
 {
 	return next;
 }
+
+const std::shared_ptr<CFrame> IRTree::CCodeFragment::GetFrame() const
+{
+	return frame;
+}
