@@ -29,6 +29,7 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEName * node )
 	{
 		startMethod();
+		// Предположительно сюда не заходим, но это не факт
 		assert( false ); //TODO
 	}
 

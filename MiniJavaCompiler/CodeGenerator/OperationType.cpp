@@ -26,6 +26,8 @@ namespace CodeGeneration {
 				return L"MOVE ' [!]";
 			case OT_MemReg:
 				return L"MOVE ' [']";
+			case OT_Call:
+				return L"CALL ^";
 			case OT_AddTemps:
 				return L"ADD  ' ' '";
 			case OT_SubTemps:
