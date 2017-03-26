@@ -21,7 +21,10 @@ namespace CodeGeneration {
 		OT_SubTempConst, // Бинарная операция вычитания регистра с константой
 		OT_MulTempConst, // Бинарная операция умножения регистра с константой
 		OT_DivTempConst, // Бинарная операция деления регистра с константой
-		OT_LoadConst // Запоминаем константу в регистр
+		OT_LoadConst, // Запоминаем константу в регистр
+		OT_JMP, // безусловный прыжок
+		OT_JE,  // нуль или равно // ZF=1
+		OT_JNE // не нуль или не равно // ZF = 0
 	};
 
 	std::wstring GetOperationString( TOperationType type );

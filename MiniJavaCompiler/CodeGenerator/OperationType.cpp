@@ -32,6 +32,12 @@ namespace CodeGeneration {
 				return L"DIV  ' ' !";
 			case OT_LoadConst:
 				return L"LOAD ' !";
+			case OT_JMP:
+				return L"JMP ^";
+			case OT_JE:
+				return L"JE ^";
+			case OT_JNE:
+				return L"JNE ^";
 			default:
 				assert( false );
 				break;

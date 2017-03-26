@@ -197,7 +197,12 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSJump * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		std::shared_ptr<COperation> operation = NEW<COperation>( OT_JMP );
+
+		auto label = node->GetLabel();
+		operation->GetJumpPoints().push_back( label );
+		
+		code.push_back( operation );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSCjump * node )
