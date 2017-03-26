@@ -402,7 +402,52 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSMove * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		std::shared_ptr<IRTree::IRTExpression> dist =  node->GetExrDst();
+		std::shared_ptr<IRTree::IRTExpression> source = node->GetExrSrc();
+		std::shared_ptr<IRTree::IRTEMem> distMem = std::dynamic_pointer_cast<IRTree::IRTEMem>(dist);
+		std::shared_ptr<IRTree::IRTEMem> sourceMem = std::dynamic_pointer_cast<IRTree::IRTEMem>(source);
+		std::shared_ptr<COperation> operation;
+		if( sourceMem && distMem ) {
+			operation = NEW<COperation>( OT_Movem );
+			std::shared_ptr<CTemp> distTemp  = visitExpression( distMem->GetExp() );
+			std::shared_ptr<CTemp> sourceTemp = visitExpression( sourceMem->GetExp() );
+			operation->GetArguments().push_back( distTemp );
+			operation->GetArguments().push_back( sourceTemp );
+		} else if( distMem ) {
+			std::shared_ptr<IRTree::IRTExpression> distExp = distMem->GetExp();
+			std::shared_ptr<IRTree::IRTEBinop> distExpBinop = std::dynamic_pointer_cast<IRTree::IRTEBinop>(distExp);
+			std::shared_ptr<IRTree::IRTEConst> distExpConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(distExp);
+			if( distExpBinop ) {
+				if( distExpBinop->GetBinop() == IRTree::BINOP_PLUS ) {
+					std::shared_ptr<IRTree::IRTExpression> binopLeft = distExpBinop->GetLeft();
+					std::shared_ptr<IRTree::IRTExpression> binopRight = distExpBinop->GetRight();
+					std::shared_ptr<IRTree::IRTEConst> binopLeftConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(binopLeft);
+					std::shared_ptr<IRTree::IRTEConst> binopRightConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(binopRight);
+					if( binopLeftConst ) {
+						assert( !binopRightConst );
+						operation = NEW<COperation>( OT_Store );
+						operation->GetArguments().push_back( visitExpression( binopRight ) );
+						operation->GetConstants().push_back( binopLeftConst->GetValue() );
+					} else if( binopRightConst ) {
+						assert( !binopLeftConst );
+						operation = NEW<COperation>( OT_Store );
+						operation->GetArguments().push_back( visitExpression( binopLeft ) );
+						operation->GetConstants().push_back( binopRightConst->GetValue() );
+					} else {
+						assert( false );
+					}
+				} else  if ( distExpConst ) {
+					operation = NEW<COperation>( OT_StoreConst );
+					operation->GetConstants().push_back( distExpConst->GetValue() );
+				} else {
+					operation = NEW<COperation>( OT_StoreTemp );
+					operation->GetArguments().push_back( visitExpression( distExp ) );
+				}
+			}
+			operation->GetArguments().push_back( visitExpression( source ) );
+		}		
+		assert( operation ); 
+		code.push_back( operation );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSExp * node )

@@ -41,7 +41,11 @@ namespace CodeGeneration {
 		OT_JG,	// больше / не меньше и не равно // ZF = 0 и SF = OF
 		OT_JGE, // JNL больше или равно / не меньше // SF = OF
 		OT_JL,	// JNGE меньше / не больше и не равно // SF != OF
-		OT_JLE	// JNG меньше или равно / не больше	// ZF = 1 или SF != OF
+		OT_JLE,	// JNG меньше или равно / не больше	// ZF = 1 или SF != OF
+		OT_Movem, //MOVE from MEM to MEM 
+		OT_Store, // Store
+		OT_StoreConst, // Store c одной константой
+		OT_StoreTemp, // Store c одним Temp
 	};
 
 	std::wstring GetOperationString( TOperationType type );

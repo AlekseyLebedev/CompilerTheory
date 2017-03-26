@@ -80,6 +80,14 @@ namespace CodeGeneration {
 				return L"JL ^";
 			case OT_JLE:
 				return L"JLE ^";
+			case OT_Movem:
+				return L"MOVEM M['] M[']";
+			case OT_Store:
+				return L"STORE M['+!] '";
+			case OT_StoreConst:
+				return L"STORE M[!] '";
+			case OT_StoreTemp:
+				return L"STORE M['] '";
 			default:
 				assert( false );
 				break;
