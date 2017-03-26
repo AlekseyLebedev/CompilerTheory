@@ -41,7 +41,90 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEBinop * node )
 	{
 		startMethod();
-		assert( false ); //TODO
+		IRTree::RELOP opType =  node->GetBinop();
+		std::shared_ptr<IRTree::IRTExpression> left = node->GetLeft();
+		std::shared_ptr<IRTree::IRTExpression> right = node->GetRight();
+		std::shared_ptr<IRTree::IRTEConst> leftConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(left);
+		std::shared_ptr<IRTree::IRTEConst> rightConst = std::dynamic_pointer_cast<IRTree::IRTEConst>(right);
+		std::shared_ptr<COperation> operation;
+		std::shared_ptr<CTemp> resultTemp;
+		resultTemp = newTemp();
+
+		// 1 случай: оба константы
+		if( leftConst && rightConst ) {
+			operation = NEW<COperation>( OT_LoadConst );
+			int resultConst = leftConst->GetValue() + rightConst->GetValue();
+			operation->GetConstants().push_back(resultConst);			
+			operation->GetArguments().push_back( resultTemp );						
+		} 
+		// 2 случай: один из аргументов константа, другой - регистр
+		else if( (!leftConst && rightConst) || (leftConst && !rightConst) ) {
+			std::shared_ptr<CTemp> temp;
+			int constInt;
+			if( !leftConst ) {
+				assert( rightConst );
+				temp = visitExpression( left );
+				constInt = rightConst->GetValue();
+			} else {
+				assert( leftConst );
+				temp = visitExpression( right );
+				constInt = leftConst->GetValue();
+			}
+			
+			if ( temp )
+			switch( opType ) {
+				case IRTree::BINOP_PLUS:
+					operation = NEW<COperation>( OT_AddTempConst );
+					break;
+				case IRTree::BINOP_MINUS:
+					operation = NEW<COperation>( OT_SubTempConst );
+					break;
+				case IRTree::BINOP_MUL:
+					operation = NEW<COperation>( OT_MulTempConst );
+					break;
+				case IRTree::BINOP_DIV:
+					operation = NEW<COperation>( OT_DivTempConst );
+					break;
+				default:
+					assert( false );
+					break;
+			}
+
+			operation->GetArguments().push_back( resultTemp );
+			operation->GetArguments().push_back( temp );
+			operation->GetConstants().push_back( constInt );
+		} 
+		// 3 случай: оба регистры
+		else {
+			assert( !rightConst );
+			assert( !leftConst );
+			std::shared_ptr<CTemp> tempLeft = visitExpression( node->GetLeft() );
+			std::shared_ptr<CTemp> tempRight = visitExpression( node->GetRight() );
+
+			switch( opType ) {
+				case IRTree::BINOP_PLUS:
+					operation = NEW<COperation>( OT_AddTemps );
+					break;
+				case IRTree::BINOP_MINUS:
+					operation = NEW<COperation>( OT_SubTemps );
+					break;
+				case IRTree::BINOP_MUL:
+					operation = NEW<COperation>( OT_MulTemps );
+					break;
+				case IRTree::BINOP_DIV:
+					operation = NEW<COperation>( OT_DivTemps );
+					break;
+			}
+
+			operation->GetArguments().push_back( resultTemp );
+			operation->GetArguments().push_back( tempLeft );
+			operation->GetArguments().push_back( tempRight );			
+		}
+
+		operation->GetDefinedTemps().push_back( resultTemp );
+		code.push_back( operation );
+		
+		returnValue = resultTemp;		
 	}
 
 	inline bool isAdressOperation( IRTree::RELOP operation )
