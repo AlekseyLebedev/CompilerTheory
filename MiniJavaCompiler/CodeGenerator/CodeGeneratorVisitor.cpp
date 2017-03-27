@@ -463,7 +463,18 @@ namespace CodeGeneration {
 					operation->GetArguments().push_back( visitExpression( distExp ) );
 				}
 			}
-			operation->GetArguments().push_back( visitExpression( source ) );
+			std::shared_ptr<IRTree::IConst> constExpr = DYNAMIC_CAST<IRTree::IConst>( source );
+			if( constExpr != 0 ) {
+				// TODO: костыль, нужно переделать
+				std::shared_ptr<COperation> kostyl = NEW<COperation>( OT_LoadConst );
+				kostyl->GetArguments().push_back( newTemp() );
+				kostyl->GetDefinedTemps().push_back( kostyl->GetArguments()[0] );
+				kostyl->GetConstants().push_back( constExpr->GetValueAsInt() );
+				code.push_back( kostyl );
+				operation->GetArguments().push_back( kostyl->GetArguments()[0] );
+			} else {
+				operation->GetArguments().push_back( visitExpression( source ) );
+			}
 		} else {
 			std::shared_ptr<IRTree::IRTETemp> dstTemp = std::dynamic_pointer_cast<IRTree::IRTETemp>(dist);
 			std::shared_ptr<IRTree::IRTETemp> sourceTemp = std::dynamic_pointer_cast<IRTree::IRTETemp>(source);
