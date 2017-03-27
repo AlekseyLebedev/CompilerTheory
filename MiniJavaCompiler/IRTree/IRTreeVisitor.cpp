@@ -222,6 +222,15 @@ namespace IRTree {
 			case CJUMP_NE:
 				nodeLables.insert( std::make_pair( tempNode, L"!=" ) );
 				break;
+			case BINOP_AND:
+				nodeLables.insert( std::make_pair( tempNode, L"&&" ) );
+				break;
+			case BINOP_OR:
+				nodeLables.insert( std::make_pair( tempNode, L"||" ) );
+				break;
+			case BINOP_XOR:
+				nodeLables.insert( std::make_pair( tempNode, L" ^ " ) );
+				break;
 			default:
 				assert( false );
 				break;

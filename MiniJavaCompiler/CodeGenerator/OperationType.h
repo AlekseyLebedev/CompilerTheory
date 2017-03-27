@@ -44,6 +44,7 @@ namespace CodeGeneration {
 		OT_JLE,	// JNG меньше или равно / не больше	// ZF = 1 или SF != OF
 		OT_Movem, //MOVE from MEM to MEM 
 		OT_Store, // Store
+		OT_StoreToFramePointerPlusConst, // Store в память MEM(FramePointer + const )
 		OT_StoreConst, // Store c одной константой
 		OT_StoreTemp, // Store c одним Temp
 		OT_StoreTemps, // Store с двумя Temp 

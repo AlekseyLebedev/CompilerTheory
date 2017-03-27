@@ -639,6 +639,10 @@ namespace IRTree {
 		//callVisitor.GetResult()->Accept( &linearizationVisitor );
 		//linearizationVisitor.GetResult()->Accept( &eseqUpperVisitor );
 		eseqUpperVisitor.GetResult()->Accept( &eseqUpperVisitor2 );
-		return 	eseqUpperVisitor2.GetResult();
+		std::shared_ptr<IRTStatement> res = eseqUpperVisitor2.GetResult();
+		if( std::dynamic_pointer_cast<IRTSSeq>(res) == 0 ) {
+			res = std::make_shared<IRTSSeq>( res, nullptr );
+		}
+		return res;
 	}
 }

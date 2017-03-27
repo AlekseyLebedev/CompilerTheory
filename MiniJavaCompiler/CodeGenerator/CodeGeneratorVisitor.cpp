@@ -414,14 +414,14 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSMove * node )
 	{
 		startMethod();
-		std::shared_ptr<IRTree::IRTExpression> dist =  node->GetExrDst();
+		std::shared_ptr<IRTree::IRTExpression> dist = node->GetExrDst();
 		std::shared_ptr<IRTree::IRTExpression> source = node->GetExrSrc();
 		std::shared_ptr<IRTree::IRTEMem> distMem = std::dynamic_pointer_cast<IRTree::IRTEMem>( dist );
 		std::shared_ptr<IRTree::IRTEMem> sourceMem = std::dynamic_pointer_cast<IRTree::IRTEMem>( source );
 		std::shared_ptr<COperation> operation;
 		if( sourceMem && distMem ) {
 			operation = NEW<COperation>( OT_Movem );
-			std::shared_ptr<CTemp> distTemp  = visitExpression( distMem->GetExp() );
+			std::shared_ptr<CTemp> distTemp = visitExpression( distMem->GetExp() );
 			std::shared_ptr<CTemp> sourceTemp = visitExpression( sourceMem->GetExp() );
 			operation->GetArguments().push_back( distTemp );
 			operation->GetArguments().push_back( sourceTemp );
@@ -442,13 +442,20 @@ namespace CodeGeneration {
 						operation->GetConstants().push_back( binopLeftConst->GetValue() );
 					} else if( binopRightConst ) {
 						assert( !binopLeftConst );
-						operation = NEW<COperation>( OT_Store );
-						operation->GetArguments().push_back( visitExpression( binopLeft ) );
-						operation->GetConstants().push_back( binopRightConst->GetValue() );
+						std::shared_ptr<IRTree::IAccess> leftAccess = DYNAMIC_CAST<IRTree::IAccess>( binopLeft );
+						if( leftAccess != 0 ) {
+							operation = NEW<COperation>( OT_StoreToFramePointerPlusConst );
+							operation->GetConstants().push_back( binopRightConst->GetValue() );
+						} else {
+							operation = NEW<COperation>( OT_Store );
+							operation->GetArguments().push_back( visitExpression( binopLeft ) );
+							operation->GetConstants().push_back( binopRightConst->GetValue() );
+						}
 					} else {
 						assert( false );
 					}
-				} else  if ( distExpConst ) {
+				} else  if( distExpConst ) {
+					assert( false ); // TODO: очень странно записывать что-то в константу
 					operation = NEW<COperation>( OT_StoreConst );
 					operation->GetConstants().push_back( distExpConst->GetValue() );
 				} else {
@@ -472,7 +479,7 @@ namespace CodeGeneration {
 				operation->GetArguments().push_back( visitExpression( dist ) );
 			}
 		}
-		assert( operation ); 
+		assert( operation );
 		code.push_back( operation );
 	}
 
