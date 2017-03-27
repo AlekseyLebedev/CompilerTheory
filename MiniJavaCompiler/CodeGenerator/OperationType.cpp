@@ -13,7 +13,7 @@ namespace CodeGeneration {
 			case OT_Move:
 				return L"MOVE ' '";
 			case OT_MemFramePointerPlusConst:
-				return L"MOVE ' [ifp+!]";
+				return L"MOVE ' [%ebp+!]";
 			case OT_MemConstMinusReg:
 				return L"MOVE ' [! - ']";
 			case OT_MemRegMinusConst:
@@ -86,6 +86,8 @@ namespace CodeGeneration {
 				return L"MOVEM M['] M[']";
 			case OT_Store:
 				return L"STORE M['+!] '";
+			case OT_StoreToFramePointerPlusConst:
+				return L"STORE [%ebp+!] '";
 			case OT_StoreConst:
 				return L"STORE M[!] '";
 			case OT_StoreTemp:
