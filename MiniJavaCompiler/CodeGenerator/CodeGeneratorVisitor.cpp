@@ -25,7 +25,7 @@ namespace CodeGeneration {
 			operation->GetConstants().push_back( constExpr->GetValueAsInt() );
 			code.push_back( operation );
 		} else {
-			std::shared_ptr<CMoveOperation> operation = NEW<CMoveOperation>( resultTemp, visitExpression( node->GetHead() ) );
+			std::shared_ptr<CMoveOperation> operation = NEW<CMoveOperation>( visitExpression( node->GetHead() ), resultTemp );
 			operation->GetDefinedTemps().push_back( resultTemp );
 			code.push_back( operation );
 		}
@@ -382,8 +382,6 @@ namespace CodeGeneration {
 	{
 		startMethod();
 		assert( callArguments.size() == 0 );
-
-		visitExpression( node->GetArgs() );
 
 		std::shared_ptr<IRTree::IRTEName> name = DYNAMIC_CAST<IRTree::IRTEName>( node->GetFunc() );
 		assert( name != 0 );
