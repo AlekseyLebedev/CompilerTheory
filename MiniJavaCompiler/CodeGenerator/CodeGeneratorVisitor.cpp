@@ -25,9 +25,14 @@ namespace CodeGeneration {
 			operation->GetConstants().push_back( constExpr->GetValueAsInt() );
 			code.push_back( operation );
 		} else {
-			std::shared_ptr<CMoveOperation> operation = NEW<CMoveOperation>( visitExpression( node->GetHead() ), resultTemp );
-			operation->GetDefinedTemps().push_back( resultTemp );
-			code.push_back( operation );
+			std::shared_ptr<IRTree::IRTETemp> tempArg = DYNAMIC_CAST<IRTree::IRTETemp>( node->GetHead() );
+			if( tempArg != 0 ) {
+				resultTemp = tempArg->GetTemp();
+			} else {
+				std::shared_ptr<CMoveOperation> operation = NEW<CMoveOperation>( visitExpression( node->GetHead() ), resultTemp );
+				operation->GetDefinedTemps().push_back( resultTemp );
+				code.push_back( operation );
+			}
 		}
 		callArguments.push_back( resultTemp );
 
@@ -430,7 +435,10 @@ namespace CodeGeneration {
 			} else {
 				std::shared_ptr<IRTree::IAccess> destAccess = DYNAMIC_CAST<IRTree::IAccess>( distMem->GetExp() );
 				if( destAccess ) {
-					assert( false );
+					assert( destAccess->GetName() == IRTree::CFrame::ReturnName );
+					operation = NEW<COperation>( OT_MoveMemToEax );
+					std::shared_ptr<CTemp> sourceTemp = visitExpression( sourceMem->GetExp() );
+					operation->GetArguments().push_back( sourceTemp );
 				} else {
 					operation = NEW<COperation>( OT_Movem );
 					std::shared_ptr<CTemp> distTemp = visitExpression( distMem->GetExp() );
