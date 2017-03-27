@@ -75,7 +75,7 @@ namespace CodeGeneration {
 	// аргументов (ABI: __stdcall, __fastcall, cdecl и т.д.) и необходимо сохранять значение регистров (TODO)
 	class CCallOperation : public COperation {
 	public:
-		CCallOperation( const std::shared_ptr<CLabel>& label ) : COperation( OT_Move )
+		CCallOperation( const std::shared_ptr<CLabel>& label ) : COperation( OT_Call )
 		{
 			GetJumpPoints().push_back( label );
 		}

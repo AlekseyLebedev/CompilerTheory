@@ -94,7 +94,7 @@ namespace CodeGeneration {
 		assert( GetArguments().size() > 0 );
 		for( size_t i = 1; i < GetArguments().size(); i++ ) {
 			// Скорее всего будем делать так, по cdecl
-			result << "/*|*/ PUSH " << registerPrefix << GetArguments()[i]->GetName();
+			result << "/*|*/ PUSH " << registerPrefix << GetArguments()[i]->GetName() << std::endl;
 		}
 		result << COperation::ToCode() << std::endl;
 		// А вот это не по cdecl. Тип вызвающая функция чистит только аргументы
