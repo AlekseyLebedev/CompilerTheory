@@ -255,3 +255,5 @@ lexer.cpp
 syntatic.cpp
 syntatic.h
 syntatic.output
+
+code-*.txt
