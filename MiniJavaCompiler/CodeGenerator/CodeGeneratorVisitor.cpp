@@ -455,7 +455,21 @@ namespace CodeGeneration {
 				}
 			}
 			operation->GetArguments().push_back( visitExpression( source ) );
-		}		
+		} else {
+			std::shared_ptr<IRTree::IRTETemp> dstTemp = std::dynamic_pointer_cast<IRTree::IRTETemp>(dist);
+			std::shared_ptr<IRTree::IRTETemp> sourceTemp = std::dynamic_pointer_cast<IRTree::IRTETemp>(source);
+			if( dstTemp ) {
+				std::shared_ptr<CTemp> temp = dstTemp->GetTemp();
+				operation = NEW<COperation>( OT_LoadTemp );
+				operation->GetArguments().push_back( temp );
+				operation->GetArguments().push_back( visitExpression( source ) );
+			} else if( sourceTemp ) {
+				std::shared_ptr<CTemp> temp = sourceTemp->GetTemp();
+				operation = NEW<COperation>( OT_StoreTemps );
+				operation->GetArguments().push_back( temp );
+				operation->GetArguments().push_back( visitExpression( dist ) );
+			}
+		}
 		assert( operation ); 
 		code.push_back( operation );
 	}

@@ -46,6 +46,8 @@ namespace CodeGeneration {
 		OT_Store, // Store
 		OT_StoreConst, // Store c одной константой
 		OT_StoreTemp, // Store c одним Temp
+		OT_StoreTemps, // Store с двумя Temp 
+		OT_LoadTemp // Запоминаем регистр в temp
 	};
 
 	std::wstring GetOperationString( TOperationType type );
