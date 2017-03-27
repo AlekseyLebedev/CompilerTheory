@@ -84,6 +84,8 @@ namespace CodeGeneration {
 				return L"JLE ^";
 			case OT_Movem:
 				return L"MOVEM M['] M[']";
+			case OT_MoveMemToFramePointerPlusConst:
+				return L"MOVEM [%ebp+!] [']";
 			case OT_Store:
 				return L"STORE M['+!] '";
 			case OT_StoreToFramePointerPlusConst:
