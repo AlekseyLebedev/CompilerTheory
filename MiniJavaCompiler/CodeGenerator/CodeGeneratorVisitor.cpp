@@ -130,7 +130,7 @@ namespace CodeGeneration {
 		else if( (!leftIConst && rightIConst) || (leftIConst && !rightIConst) ) {
 
 			std::shared_ptr<CTemp> temp;
-			std::shared_ptr<CTemp> resultTemp = newTemp();
+			//std::shared_ptr<CTemp> resultTemp = newTemp();
 			int constInt;
 
 			if( !leftIConst ) {
