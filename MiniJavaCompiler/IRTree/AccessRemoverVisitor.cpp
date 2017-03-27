@@ -102,7 +102,7 @@ namespace IRTree {
 		startMethod();
 		if( node->GetName() == CFrame::ReturnName ) {
 			assert( node->GetOffset() == 0 );
-			returnExpression = frame->GetThisAccess();
+			returnExpression = frame->GetReturnAccess();
 		} else {
 			returnExpression = NEW<IRTEMem>( NEW<IRTEBinop>( BINOP_PLUS, frame->GetFramePointerAccess(), NEW<IRTEConst>( node->GetOffset() ) ) );
 		}
