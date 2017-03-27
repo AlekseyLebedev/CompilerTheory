@@ -560,30 +560,24 @@ namespace CodeGeneration {
 
 			switch( relop ) {
 				case IRTree::CJUMP_EQ:
-					logicResult = (left == right);
+					logicResult = ( left == right );
 					break;
 				case IRTree::CJUMP_NE:
-					logicResult = (left != right);
+					logicResult = ( left != right );
 					break;
 				case IRTree::CJUMP_LT:
-					logicResult = (left < right);
+					logicResult = ( left < right );
 					break;
 				case IRTree::CJUMP_GT:
-					logicResult = (left > right);
+					logicResult = ( left > right );
 					break;
 				case IRTree::CJUMP_LE:
-					logicResult = (left <= right);
+					logicResult = ( left <= right );
 					break;
 				case IRTree::CJUMP_GE:
-					logicResult = (left >= right);
+					logicResult = ( left >= right );
 					break;
 			}
-
-			//std::shared_ptr<COperation> operation = NEW<COperation>( OT_CMPC );
-
-			//operation->GetConstants().push_back( leftConst->GetValueAsInt() );
-			//operation->GetConstants().push_back( rightConst->GetValueAsInt() );
-			//code.push_back( operation );
 
 			auto labelLeft = node->GetLabelLeft();
 			auto rightRight = node->GetLabelRight();
