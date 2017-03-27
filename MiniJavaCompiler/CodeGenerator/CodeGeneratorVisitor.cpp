@@ -387,12 +387,13 @@ namespace CodeGeneration {
 		std::shared_ptr<IRTree::IRTEName> name = DYNAMIC_CAST<IRTree::IRTEName>( node->GetFunc() );
 		assert( name != 0 );
 
+		visitExpression( node->GetArgs() );
+
 		std::shared_ptr<CCallOperation> operation = NEW<CCallOperation>( name->GetLabel() );
 		returnValue = newTemp();
 		operation->GetDefinedTemps().push_back( returnValue );
 		operation->GetArguments().push_back( returnValue );
 
-		visitExpression( node->GetArgs() );
 		for( size_t i = 0; i < callArguments.size(); i++ ) {
 			operation->GetArguments().push_back( callArguments[i] );
 		}
