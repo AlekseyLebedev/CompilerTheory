@@ -1,5 +1,5 @@
 #include <string>
-#include <string>
+#include <cassert>
 #include <iostream>
 #include <fstream>
 
@@ -7,13 +7,24 @@
 
 namespace CodeGeneration
 {
-
-	void PrintToFile( CSharedPtrVector<IInstruction>& code, const std::wstring& filename )
+	CAssemlerCodePrinter::CAssemlerCodePrinter( const std::wstring& filename ) : output( filename + L".txt" )
 	{
-		std::wofstream output( filename + L".txt" );
+	}
+
+	CAssemlerCodePrinter::~CAssemlerCodePrinter()
+	{
+		assert( !output.is_open() );
+	}
+
+	void CAssemlerCodePrinter::PrintBlock( CSharedPtrVector<IInstruction>& code )
+	{
 		for( size_t i = 0; i < code.size(); i++ ) {
 			output << code[i]->ToCode() << std::endl;
 		}
+	}
+
+	void CAssemlerCodePrinter::Close()
+	{
 		output.close();
 	}
 
