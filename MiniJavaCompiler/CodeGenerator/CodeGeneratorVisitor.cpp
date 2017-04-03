@@ -649,34 +649,26 @@ namespace CodeGeneration {
 		}
 
 		auto labelLeft = node->GetLabelLeft();
-		auto rightRight = node->GetLabelRight();
 		std::shared_ptr<COperation> operationLeft;
-		std::shared_ptr<COperation> operationRight;
 
 		switch( relop ) {
 			case IRTree::CJUMP_EQ:
 				operationLeft = NEW<COperation>( OT_JE );
-				operationRight = NEW<COperation>( OT_JNE );
 				break;
 			case IRTree::CJUMP_NE:
 				operationLeft = NEW<COperation>( OT_JNE );
-				operationRight = NEW<COperation>( OT_JE );
 				break;
 			case IRTree::CJUMP_LT:
 				operationLeft = NEW<COperation>( OT_JL );
-				operationRight = NEW<COperation>( OT_JGE );
 				break;
 			case IRTree::CJUMP_LE:
 				operationLeft = NEW<COperation>( OT_JLE );
-				operationRight = NEW<COperation>( OT_JG );
 				break;
 			case IRTree::CJUMP_GE:
 				operationLeft = NEW<COperation>( OT_JGE );
-				operationRight = NEW<COperation>( OT_JL );
 				break;
 			case IRTree::CJUMP_GT:
 				operationLeft = NEW<COperation>( OT_JG );
-				operationRight = NEW<COperation>( OT_JLE );
 				break;
 			default:
 				assert( false );
@@ -684,9 +676,7 @@ namespace CodeGeneration {
 		}
 
 		operationLeft->GetJumpPoints().push_back( labelLeft );
-		operationRight->GetJumpPoints().push_back( rightRight );
 		code.push_back( operationLeft );
-		code.push_back( operationRight );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSSeq * node )
