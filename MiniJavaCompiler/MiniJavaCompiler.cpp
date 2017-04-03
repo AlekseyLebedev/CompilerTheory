@@ -60,42 +60,35 @@ int main( int argc, char** argv )
 			}
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;
+				// ќшибка в коде, вы€вленна€ type-checker'ом
+				continue;
 			}
 			IRTree::IRTBuilderVisitor irtree( &fillTable.GetTable() );
-			try {
-				irtree.visit( root.get() );
-				std::wstringstream headerBuilder;
-				std::shared_ptr<IRTree::CCodeFragment> currentCodeFragment = irtree.GetCode();
-				while( currentCodeFragment != 0 ) {
-					headerBuilder << argv[i] << ", " << reinterpret_cast<size_t>(currentCodeFragment.get());
-					std::wcout << L"Printing: " << headerBuilder.str() << std::endl;
-					GraphvizOutput::CGraphvizLauncher::Launch<IRTree::IRTreeVisitor, const IRTree::IRTStatement>(
-						currentCodeFragment->GetTree().get(), fileIndex++, headerBuilder.str() );
-					currentCodeFragment = currentCodeFragment->GetNext();
-					headerBuilder.str( L"" );
-				}
-			}
-			catch( std::exception* e ) {
-				std::cerr << e->what() << std::endl;
+			irtree.visit( root.get() );
+			std::wstringstream headerBuilder;
+			std::shared_ptr<IRTree::CCodeFragment> currentCodeFragment = irtree.GetCode();
+			while( currentCodeFragment != 0 ) {
+				headerBuilder << argv[i] << ", " << reinterpret_cast<size_t>(currentCodeFragment.get());
+				std::wcout << L"Printing: " << headerBuilder.str() << std::endl;
+				GraphvizOutput::CGraphvizLauncher::Launch<IRTree::IRTreeVisitor, const IRTree::IRTStatement>(
+					currentCodeFragment->GetTree().get(), fileIndex++, headerBuilder.str() );
+				currentCodeFragment = currentCodeFragment->GetNext();
+				headerBuilder.str( L"" );
 			}
 			CGenerator generator( irtree.GetCode() );
-			try {
-				generator.SplitIRTree();
-				CodeGeneration::CCodeGeneratorVisitor* codeGeneratorVisitor;
-				std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>> basisBlocks = generator.GetBasicBlocks();
-				for( std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>>::iterator block = basisBlocks.begin();
-					block != basisBlocks.end(); block++ ) {
-					codeGeneratorVisitor = new CodeGeneration::CCodeGeneratorVisitor();
-					codeGeneratorVisitor->SetFrame( block->second );
-					codeGeneratorVisitor->Visit( std::dynamic_pointer_cast<IRTSSeq>(block->first).get() );
-					CSharedPtrVector<CodeGeneration::IInstruction> code =  codeGeneratorVisitor->GetCode();
-					// TODO: сделать что-нибудь с этим кодом
-					CodeGeneration::PrintToFile( code, L"code-" + std::to_wstring( fileIndex++ ) );
-				}
+			generator.SplitIRTree();
+			CodeGeneration::CCodeGeneratorVisitor* codeGeneratorVisitor;
+			std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>> basisBlocks = generator.GetBasicBlocks();
+			CodeGeneration::CAssemlerCodePrinter assemblePrinter( L"code-" + std::to_wstring( fileIndex++ ) );
+			for( std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>>::iterator block = basisBlocks.begin();
+				block != basisBlocks.end(); block++ ) {
+				codeGeneratorVisitor = new CodeGeneration::CCodeGeneratorVisitor();
+				codeGeneratorVisitor->SetFrame( block->second );
+				codeGeneratorVisitor->Visit( std::dynamic_pointer_cast<IRTSSeq>(block->first).get() );
+				CSharedPtrVector<CodeGeneration::IInstruction> code = codeGeneratorVisitor->GetCode();
+				assemblePrinter.PrintBlock( code );
 			}
-			catch( std::exception* e ) {
-				std::cerr << e->what() << std::endl;
-			}
+			assemblePrinter.Close();
 		}
 	}
 	return 0;

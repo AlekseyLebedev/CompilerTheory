@@ -94,15 +94,15 @@ namespace CodeGeneration {
 		assert( GetArguments().size() > 0 );
 		for( size_t i = 1; i < GetArguments().size(); i++ ) {
 			// Скорее всего будем делать так, по cdecl
-			result << "/*|*/ PUSH " << registerPrefix << GetArguments()[i]->GetName() << std::endl;
+			result << "PUSH " << registerPrefix << GetArguments()[i]->GetName() << std::endl;
 		}
 		result << COperation::ToCode() << std::endl;
 		// А вот это не по cdecl. Тип вызвающая функция чистит только аргументы
 		// TODO: либо переделать по cdecl с учетом текущей щанятости стека, либо придумать как делаем
-		result << L"; TODO: Not cdecl! " << std::endl;
-		result << "ADD %ebp " << ((GetArguments().size() - 1) * sizeof( int )) << std::endl;
+		result << L"; TODO: rewrite after temps moved to registers and stack" << std::endl;
+		//result << "ADD %esp " << ((GetArguments().size() - 1) * sizeof( int )) << std::endl;
 		// Возвращаемое значение тоже по cdecl
-		result << "/*|*/MOV " << registerPrefix << GetArguments()[0]->GetName() << L" %eax";
+		result << "MOV " << registerPrefix << GetArguments()[0]->GetName() << L" %eax";
 		result << L"; end call" << std::endl;
 
 		return result.str();

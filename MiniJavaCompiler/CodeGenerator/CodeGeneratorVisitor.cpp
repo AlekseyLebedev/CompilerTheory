@@ -29,9 +29,7 @@ namespace CodeGeneration {
 			if( tempArg != 0 ) {
 				resultTemp = tempArg->GetTemp();
 			} else {
-				std::shared_ptr<CMoveOperation> operation = NEW<CMoveOperation>( visitExpression( node->GetHead() ), resultTemp );
-				operation->GetDefinedTemps().push_back( resultTemp );
-				code.push_back( operation );
+				resultTemp = visitExpression( node->GetHead() );
 			}
 		}
 		callArguments.push_back( resultTemp );
