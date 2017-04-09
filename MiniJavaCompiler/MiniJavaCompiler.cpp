@@ -1,4 +1,4 @@
-// MiniJavaCompiler.cpp: определяет точку входа для консольного приложения.
+п»ї// MiniJavaCompiler.cpp: РѕРїСЂРµРґРµР»СЏРµС‚ С‚РѕС‡РєСѓ РІС…РѕРґР° РґР»СЏ РєРѕРЅСЃРѕР»СЊРЅРѕРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 //
 
 #include <cstdio>
@@ -18,6 +18,8 @@
 #include "CodeGenerator\Generator.h"
 #include "CodeGenerator\CodeGeneratorVisitor.h"
 #include "CodeGenerator\Printer.h"
+
+#define Р”Р•РќРРЎ РџРР”РћР 
 
 int yyparse();
 extern FILE* yyin, *yyout;
@@ -60,7 +62,7 @@ int main( int argc, char** argv )
 			}
 			catch( std::exception* e ) {
 				std::cerr << e->what() << std::endl;
-				// Ошибка в коде, выявленная type-checker'ом
+				// РћС€РёР±РєР° РІ РєРѕРґРµ, РІС‹СЏРІР»РµРЅРЅР°СЏ type-checker'РѕРј
 				continue;
 			}
 			IRTree::IRTBuilderVisitor irtree( &fillTable.GetTable() );
