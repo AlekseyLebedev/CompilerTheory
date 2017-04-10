@@ -17,25 +17,34 @@ namespace RegAlloc {
 
 	private:
 
-		// Здесь хранятся номера переменных, "живых" на каком-то входящем ребре в вершину N.
-		std::vector<std::set<int>> live_in;
-		// Здесь хранятся номера переменных, "живых" на каком-то исходящем ребре из вершины N.
-		std::vector<std::set<int>> live_out;
+		unsigned int numberOfVerteces;
+		// Здесь хранятся переменных, "живых" на каком-то входящем ребре в вершину N.
+		std::vector<std::set<std::string>> live_in;
+		// Здесь хранятся переменных, "живых" на каком-то исходящем ребре из вершины N.
+		std::vector<std::set<std::string>> live_out;
 
-		//Всем переменным дадим идентификаторы для удобства работы.
-		// Здесь хранятся номера переменных, определяемых в вершине N.
-		std::vector<std::set<int>> def;
-		// Здесь хранятся номера переменных, используемых в вершине N.
-		std::vector<std::set<int>> use;
+		// Здесь хранятся переменные, определяемых в вершине N.
+		std::vector<std::set<std::string>> def;
+		// Здесь хранятся переменные, используемых в вершине N.
+		std::vector<std::set<std::string>> use;
 
 		// Здесь хранятся номера вершин, куда следует ребро из вершины N.
 		std::vector<std::set<int>> out_edges;
 		// Здесь хранятся номера вершин, откуда следует ребро в вершину N.
 		std::vector<std::set<int>> in_edges;
 
+		//Является ли N-ная вершина move-инструкцией.
+		std::vector<bool> isMove;
+
+		std::set<std::pair<std::string, std::string>> interactionGraph;
+
+		void createTableWithLifeTime();
+		void createInteractionGraph();
+		void doSomethingWithInteractionGraph();
+
 		void generateTempExample();
 
-		void printStateTempExample( unsigned int numberOfVertexes );
+		void printState();
 
 	};
 }
