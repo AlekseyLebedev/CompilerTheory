@@ -18,6 +18,7 @@
 #include "CodeGenerator\Generator.h"
 #include "CodeGenerator\CodeGeneratorVisitor.h"
 #include "CodeGenerator\Printer.h"
+#include "RegisterAllocator\RegisterAllocator.h"
 
 // :-!
 
@@ -32,6 +33,11 @@ AbstractTreeGenerator::CProgram* rootNode;
 
 int main( int argc, char** argv )
 {
+	///////////////////
+	RegAlloc::RegisterAllocator ra;
+	ra.initialisation();
+	ra.work();
+	//////////////////
 	if( argc == 0 ) {
 		yyparse();
 	} else {

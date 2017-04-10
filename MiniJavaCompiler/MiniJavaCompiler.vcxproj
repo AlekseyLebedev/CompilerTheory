@@ -484,6 +484,7 @@
     <ClInclude Include="IRTree\Translate.h" />
     <ClInclude Include="Graphwiz\DotOutputVisitor.h" />
     <ClInclude Include="Graphwiz\GraphvizLauncher.h" />
+    <ClInclude Include="RegisterAllocator\RegisterAllocator.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SymbolTable\ClassInfo.h" />
     <ClInclude Include="SymbolTable\FillTableVisitor.h" />
@@ -568,6 +569,7 @@
     <ClCompile Include="LexicParser\lexer.cpp" />
     <ClCompile Include="LexicParser\syntatic.cpp" />
     <ClCompile Include="MiniJavaCompiler.cpp" />
+    <ClCompile Include="RegisterAllocator\RegisterAllocator.cpp" />
     <ClCompile Include="SymbolTable\ClassInfo.cpp" />
     <ClCompile Include="SymbolTable\FillTableVisitor.cpp" />
     <ClCompile Include="SymbolTable\MethodInfo.cpp" />

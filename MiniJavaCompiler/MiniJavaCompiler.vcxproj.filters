@@ -74,6 +74,15 @@
     <Filter Include="CodeGenerator\cpp">
       <UniqueIdentifier>{209e9bd7-6254-47ba-a4d8-4fcae4d8c99b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RegisterAllocator">
+      <UniqueIdentifier>{571d00f2-0f1a-46c0-914e-a4d51685784c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RegisterAllocator\cpp">
+      <UniqueIdentifier>{140304b3-19c2-428d-af71-41491d3e195e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RegisterAllocator\h">
+      <UniqueIdentifier>{7ce6da60-4e04-4044-875e-d55dc89acb1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -355,6 +364,9 @@
     <ClInclude Include="CodeGenerator\Printer.h">
       <Filter>CodeGenerator\h</Filter>
     </ClInclude>
+    <ClInclude Include="RegisterAllocator\RegisterAllocator.h">
+      <Filter>RegisterAllocator\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniJavaCompiler.cpp">
@@ -599,6 +611,9 @@
     </ClCompile>
     <ClCompile Include="CodeGenerator\Printer.cpp">
       <Filter>CodeGenerator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="RegisterAllocator\RegisterAllocator.cpp">
+      <Filter>RegisterAllocator\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
