@@ -19,7 +19,7 @@
 #include "CodeGenerator\CodeGeneratorVisitor.h"
 #include "CodeGenerator\Printer.h"
 
-#define ДЕНИС ПИДОР
+// :-!
 
 int yyparse();
 extern FILE* yyin, *yyout;
