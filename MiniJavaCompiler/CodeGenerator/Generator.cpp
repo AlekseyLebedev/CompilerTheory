@@ -24,7 +24,7 @@ std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>> CGe
 	
 			RegAlloc::RegisterAllocator ra;
 			ra.initialisation( code );
-
+			ra.work();
 		}
 	}
 
