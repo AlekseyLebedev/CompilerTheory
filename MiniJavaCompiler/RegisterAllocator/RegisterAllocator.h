@@ -5,13 +5,19 @@
 #include <set>
 #include <iostream>
 
+#include "..\CodeGenerator\CodeGeneratorVisitor.h"
+#include "..\CodeGenerator\Instruction.h"
+
 namespace RegAlloc {
+
+	using CodeGeneration;
 
 	class RegisterAllocator {
 
 	public:
 
 		void initialisation();
+		void initialisation( CSharedPtrVector<CodeGeneration::IInstruction> code );
 
 		void work();
 

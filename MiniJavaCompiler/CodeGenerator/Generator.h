@@ -5,6 +5,7 @@
 #include <list>
 #include "..\IRTree\IRTreeAllClasses.h"
 #include "..\IRTree\CodeFragment.h"
+#include "..\RegisterAllocator\RegisterAllocator.h"
 
 using namespace IRTree;
 

@@ -89,7 +89,7 @@ int main( int argc, char** argv )
 			std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>> basisBlocks = generator.GetBasicBlocks();
 			CodeGeneration::CAssemlerCodePrinter assemblePrinter( L"code-" + std::to_wstring( fileIndex++ ) );
 			for( std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>>::iterator block = basisBlocks.begin();
-				block != basisBlocks.end(); block++ ) {
+				block != basisBlocks.end(); ++block ) {
 				codeGeneratorVisitor = new CodeGeneration::CCodeGeneratorVisitor();
 				codeGeneratorVisitor->SetFrame( block->second );
 				codeGeneratorVisitor->Visit( std::dynamic_pointer_cast<IRTSSeq>(block->first).get() );

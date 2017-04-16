@@ -9,6 +9,54 @@ namespace RegAlloc {
 
 	}
 
+
+	void initialisation( CSharedPtrVector<CodeGeneration::IInstruction> code ) {
+
+		numberOfVerteces = code.size();
+
+		out_edges.resize(numberOfVerteces);
+		in_edges.resize(numberOfVerteces);
+
+		def.resize(numberOfVerteces);
+		use.resize(numberOfVerteces);
+
+		isMove.resize(numberOfVerteces);
+
+		live_in.resize(numberOfVerteces);
+		live_out.resize(numberOfVerteces);
+
+		for( unsigned int codeLineIndex = 0; codeLineIndex < numberOfVerteces; ++codeLineIndex ) {
+			// initialisation out_edges && in_edges
+			CSharedPtrVector<CLabel> jumpPoints = code[codeLineIndex].GetDefinedTemps();
+			for( unsigned int jump = 0; jump < jumpPoints.size(); ++jump ) {
+				// Нужно привести jumpPoints[jump] к числу, то есть взять номер "строки", куда произойдёт переход.
+				// jumpPoints[jump] => index
+				// out_edges[codeLineIndex].insert( index );
+				// in_edges[index].insert( codeLineIndex );
+			}
+
+			// initialisation def
+			CSharedPtrVector<CTemp> defined = code[codeLineIndex].GetDefinedTemps();
+			for( unsigned int argIndex = 0; argIndex < defined.size(); ++argIndex ) {
+				// Получить идентификатор переменной:
+				// defined[argIndex] => variable
+				// def[codeLineIndex].insert( variable );
+			}
+
+			// initialisation use
+			CSharedPtrVector<CTemp> arguments = code[codeLineIndex].GetDefinedTemps();
+			for( unsigned int argIndex = 0; argIndex < arguments.size(); ++argIndex ) {
+				// Получить идентификатор переменной:
+				// arguments[argIndex] => variable
+				// def[codeLineIndex].insert( variable );
+			}
+
+			// initialisation isMove
+			isMove[codeLineIndex] = ( code[codeLineIndex].GetInstructionCode() == OT_Move );
+
+		}
+	}
+
 	void RegisterAllocator::work() {
 
 		createTableWithLifeTime();
