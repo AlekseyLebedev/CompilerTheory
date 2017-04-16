@@ -54,14 +54,14 @@ void CGenerator::SplitIRTree()
 				rightStm = tmp->GetStmRight();
 			}
 
-			// ïðàâûé îêàçàëñÿ Seq, ò.å. äîøëè äî íîâîãî ëåéáëà
+			// правый оказался Seq, т.е. дошли до нового лейбла
 			if( std::dynamic_pointer_cast<IRTSSeq>( rightStm ) != 0 ) {
 				oldRight->CutStmRight();
 				currentStatement = rightStm;
 				rightStm = nullptr;
 				AddBasicBlock( currentSeq );
 			}  else {
-			// ïðàâûé îêàçàëñÿ íå Seq, ò.å. äîøëè äî êîíöà è äîáàâëÿåì âñå ÷òî îñòàëîñü
+			// правый оказался не Seq, т.е. дошли до конца и добавляем все что осталось
 				AddBasicBlock( currentSeq );
 				currentStatement = 0;
 			}
@@ -86,7 +86,7 @@ bool CGenerator::CheckNewLabel( std::shared_ptr<IRTStatement> theStm )
 
 void CGenerator::AddBasicBlock( std::shared_ptr<IRTStatement> block )
 {
-	// äîáàâëåíèå ëåéáëîâ
+	// добавление лейблов
 	std::shared_ptr<IRTSSeq> seq = std::dynamic_pointer_cast<IRTSSeq>( block );
 	if( seq ) {
 		std::shared_ptr<IRTStatement> left = seq->GetStmLeft();
@@ -128,7 +128,7 @@ void CGenerator::AddBasicBlock( std::shared_ptr<IRTStatement> block )
 
 	basicBlocks.push_back( std::make_pair(block, currentFrame) );
 
-	// swap true è false
+	// swap true & false
 	seq = std::dynamic_pointer_cast<IRTSSeq>(block);
 	if( swapBranches.size() ) {
 		std::shared_ptr<IRTSLabel> label = std::dynamic_pointer_cast<IRTSLabel>(seq->GetStmLeft());
