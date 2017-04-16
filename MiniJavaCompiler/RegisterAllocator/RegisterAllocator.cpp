@@ -239,4 +239,4 @@ namespace RegAlloc {
 		}
 		std::cout << '\n';
 	}
-}
+} // namespace RegAlloc

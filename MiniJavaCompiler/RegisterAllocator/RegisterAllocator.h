@@ -53,4 +53,4 @@ namespace RegAlloc {
 		void printState();
 
 	};
-}
+} // namespace RegAlloc

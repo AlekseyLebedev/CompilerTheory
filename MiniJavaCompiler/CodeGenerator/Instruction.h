@@ -16,15 +16,15 @@ namespace CodeGeneration {
 	using CTemp = IRTree::Temp;
 	using CLabel = IRTree::Label;
 
-	// Базовый класс инструкции
+	// Р‘Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ РёРЅСЃС‚СЂСѓРєС†РёРё
 	class IInstruction {
 	public:
 		virtual ~IInstruction() {};
-		// Превращает в строку кода на ассемблере
-		virtual std::wstring ToCode() = 0; // TODO потом добавиться маппинг Temp в регистры и переменные на стеке
+		// РџСЂРµРІСЂР°С‰Р°РµС‚ РІ СЃС‚СЂРѕРєСѓ РєРѕРґР° РЅР° Р°СЃСЃРµРјР±Р»РµСЂРµ
+		virtual std::wstring ToCode() = 0; // TODO РїРѕС‚РѕРј РґРѕР±Р°РІРёС‚СЊСЃСЏ РјР°РїРїРёРЅРі Temp РІ СЂРµРіРёСЃС‚СЂС‹ Рё РїРµСЂРµРјРµРЅРЅС‹Рµ РЅР° СЃС‚РµРєРµ
 	};
 
-	// Определние точки перехода
+	// РћРїСЂРµРґРµР»РµРЅРёРµ С‚РѕС‡РєРё РїРµСЂРµС…РѕРґР°
 	class CLabelDefinition : public IInstruction {
 	public:
 		CLabelDefinition( std::shared_ptr<CLabel>& theLabel ) : label( theLabel ) {}
@@ -36,7 +36,7 @@ namespace CodeGeneration {
 
 	};
 
-	// Ассемблерная инструкция
+	// РђСЃСЃРµРјР±Р»РµСЂРЅР°СЏ РёРЅСЃС‚СЂСѓРєС†РёСЏ
 	class COperation : public IInstruction {
 	public:
 		COperation( TOperationType code ) : instructionCode( code )
@@ -58,7 +58,7 @@ namespace CodeGeneration {
 		std::vector<int> constants;
 	};
 
-	// Операция перемещения данных. Отдельно, т.к. полезна для алгоритма распредления темпов оп регистрам и стэку
+	// РћРїРµСЂР°С†РёСЏ РїРµСЂРµРјРµС‰РµРЅРёСЏ РґР°РЅРЅС‹С…. РћС‚РґРµР»СЊРЅРѕ, С‚.Рє. РїРѕР»РµР·РЅР° РґР»СЏ Р°Р»РіРѕСЂРёС‚РјР° СЂР°СЃРїСЂРµРґР»РµРЅРёСЏ С‚РµРјРїРѕРІ РїРѕ СЂРµРіРёСЃС‚СЂР°Рј Рё СЃС‚РµРєСѓ
 	class CMoveOperation : public COperation {
 	public:
 		CMoveOperation( std::shared_ptr<CTemp>& from, std::shared_ptr<CTemp>& to ) : COperation( OT_Move )
@@ -71,8 +71,8 @@ namespace CodeGeneration {
 		std::shared_ptr<CTemp> GetTo();
 	};
 
-	// Операция вызова функции. Отдельно - т.к. сложная платформозависимая логика расопложения
-	// аргументов (ABI: __stdcall, __fastcall, cdecl и т.д.) и необходимо сохранять значение регистров (TODO)
+	// РћРїРµСЂР°С†РёСЏ РІС‹Р·РѕРІР° С„СѓРЅРєС†РёРё. РћС‚РґРµР»СЊРЅРѕ - С‚.Рє. СЃР»РѕР¶РЅР°СЏ РїР»Р°С‚С„РѕСЂРјРѕР·Р°РІРёСЃРёРјР°СЏ Р»РѕРіРёРєР° СЂР°СЃРѕРїР»РѕР¶РµРЅРёСЏ
+	// Р°СЂРіСѓРјРµРЅС‚РѕРІ (ABI: __stdcall, __fastcall, cdecl Рё С‚.Рґ.) Рё РЅРµРѕР±С…РѕРґРёРјРѕ СЃРѕС…СЂР°РЅСЏС‚СЊ Р·РЅР°С‡РµРЅРёРµ СЂРµРіРёСЃС‚СЂРѕРІ (TODO)
 	class CCallOperation : public COperation {
 	public:
 		CCallOperation( const std::shared_ptr<CLabel>& label ) : COperation( OT_Call )
