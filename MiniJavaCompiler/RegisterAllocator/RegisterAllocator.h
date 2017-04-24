@@ -3,21 +3,23 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <map>
+#include <stack>
 #include <iostream>
 
-#include "..\CodeGenerator\CodeGeneratorVisitor.h"
+#include "..\CodeGenerator\Generator.h"
 #include "..\CodeGenerator\Instruction.h"
 
 namespace RegAlloc {
 
-	using CodeGeneration;
+	using namespace CodeGeneration;
 
 	class RegisterAllocator {
 
 	public:
 
 		void initialisation();
-		void initialisation( CSharedPtrVector<CodeGeneration::IInstruction> code );
+		void initialisation( CSharedPtrVector<COperation> code );
 
 		void work();
 
@@ -42,10 +44,11 @@ namespace RegAlloc {
 		//Является ли N-ная вершина move-инструкцией.
 		std::vector<bool> isMove;
 
-		std::set<std::pair<std::string, std::string>> interactionGraph;
+		std::set<std::pair<std::pair<std::string, std::string>, bool>> interactionGraph;
 
 		void createTableWithLifeTime();
 		void createInteractionGraph();
+		void simplify( unsigned int numberOfColors );
 		void doSomethingWithInteractionGraph();
 
 		void generateTempExample();

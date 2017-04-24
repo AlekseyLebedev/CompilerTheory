@@ -7,12 +7,13 @@
 
 #include "OperationType.h"
 
-template <typename T>
-class CSharedPtrVector : public std::vector<std::shared_ptr<T> > {
-
-};
-
 namespace CodeGeneration {
+
+	template <typename T>
+	class CSharedPtrVector : public std::vector<std::shared_ptr<T> > {
+
+	};
+
 	using CTemp = IRTree::Temp;
 	using CLabel = IRTree::Label;
 

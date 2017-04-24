@@ -13,18 +13,19 @@ std::shared_ptr<IRTree::CCodeFragment>  CGenerator::GetRoot()
 std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>> CGenerator::GetBasicBlocks() const
 {
 
-	for( auto block = basisBlocks.begin(); block != basisBlocks.end(); ++block ) {
+	CodeGeneration::CCodeGeneratorVisitor* codeGeneratorVisitor;
+	for( auto block = basicBlocks.begin(); block != basicBlocks.end(); ++block ) {
 		codeGeneratorVisitor = new CodeGeneration::CCodeGeneratorVisitor();
 		codeGeneratorVisitor->SetFrame( block->second );
 		codeGeneratorVisitor->Visit( std::dynamic_pointer_cast<IRTSSeq>(block->first).get() );
-		CSharedPtrVector<CodeGeneration::IInstruction> code = codeGeneratorVisitor->GetCode();
+		CodeGeneration::CSharedPtrVector<CodeGeneration::IInstruction> code = codeGeneratorVisitor->GetCode();
 
 		// initialisation code
 		for( unsigned int i = 0; i < code.size(); ++i ) {
 	
 			RegAlloc::RegisterAllocator ra;
-			ra.initialisation( code );
-			ra.work();
+			//ra.initialisation( code );
+			//ra.work();
 		}
 	}
 

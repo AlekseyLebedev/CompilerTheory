@@ -88,7 +88,7 @@ int main( int argc, char** argv )
 				codeGeneratorVisitor = new CodeGeneration::CCodeGeneratorVisitor();
 				codeGeneratorVisitor->SetFrame( block->second );
 				codeGeneratorVisitor->Visit( std::dynamic_pointer_cast<IRTSSeq>(block->first).get() );
-				CSharedPtrVector<CodeGeneration::IInstruction> code = codeGeneratorVisitor->GetCode();
+				CodeGeneration::CSharedPtrVector<CodeGeneration::IInstruction> code = codeGeneratorVisitor->GetCode();
 				assemblePrinter.PrintBlock( code );
 			}
 			assemblePrinter.Close();

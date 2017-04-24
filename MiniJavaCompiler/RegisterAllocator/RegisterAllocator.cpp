@@ -8,9 +8,12 @@ namespace RegAlloc {
 		generateTempExample();
 
 	}
-
-
-	void initialisation( CSharedPtrVector<CodeGeneration::IInstruction> code ) {
+	
+	using namespace CodeGeneration;
+	
+	// Должно быть:
+	// void RegisterAllocator::initialisation(CSharedPtrVector<IInstruction> code) {
+	void RegisterAllocator::initialisation( CSharedPtrVector<COperation> code ) {
 
 		numberOfVerteces = code.size();
 
@@ -27,7 +30,7 @@ namespace RegAlloc {
 
 		for( unsigned int codeLineIndex = 0; codeLineIndex < numberOfVerteces; ++codeLineIndex ) {
 			// initialisation out_edges && in_edges
-			CSharedPtrVector<CLabel> jumpPoints = code[codeLineIndex].GetDefinedTemps();
+			CSharedPtrVector<CLabel> jumpPoints = code[codeLineIndex]->GetJumpPoints();
 			for( unsigned int jump = 0; jump < jumpPoints.size(); ++jump ) {
 				// Нужно привести jumpPoints[jump] к числу, то есть взять номер "строки", куда произойдёт переход.
 				// jumpPoints[jump] => index
@@ -36,7 +39,7 @@ namespace RegAlloc {
 			}
 
 			// initialisation def
-			CSharedPtrVector<CTemp> defined = code[codeLineIndex].GetDefinedTemps();
+			CSharedPtrVector<CTemp> defined = code[codeLineIndex]->GetDefinedTemps();
 			for( unsigned int argIndex = 0; argIndex < defined.size(); ++argIndex ) {
 				// Получить идентификатор переменной:
 				// defined[argIndex] => variable
@@ -44,7 +47,7 @@ namespace RegAlloc {
 			}
 
 			// initialisation use
-			CSharedPtrVector<CTemp> arguments = code[codeLineIndex].GetDefinedTemps();
+			CSharedPtrVector<CTemp> arguments = code[codeLineIndex]->GetArguments();
 			for( unsigned int argIndex = 0; argIndex < arguments.size(); ++argIndex ) {
 				// Получить идентификатор переменной:
 				// arguments[argIndex] => variable
@@ -52,7 +55,7 @@ namespace RegAlloc {
 			}
 
 			// initialisation isMove
-			isMove[codeLineIndex] = ( code[codeLineIndex].GetInstructionCode() == OT_Move );
+			isMove[codeLineIndex] = ( code[codeLineIndex]->GetInstructionCode() == OT_Move );
 
 		}
 	}
@@ -61,7 +64,11 @@ namespace RegAlloc {
 
 		createTableWithLifeTime();
 		createInteractionGraph();
+		
 		doSomethingWithInteractionGraph();
+
+		// ToDo
+		simplify( numberOfVerteces );
 
 	}
 
@@ -123,33 +130,111 @@ namespace RegAlloc {
 		for( unsigned int i = 0; i < numberOfVerteces; ++i ) {
 			for( auto defined = def[i].begin(); defined != def[i].end(); ++defined ) {
 				for( auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter ) {
-					if( !isMove[i] || (*defined != *iter) ) {
-						interactionGraph.insert(std::make_pair(*defined, *iter));
+					if( isMove[i] ) {
+						if( *defined != *iter) {
+							interactionGraph.insert(std::make_pair(std::make_pair(*defined, *iter), true));
+							interactionGraph.insert(std::make_pair(std::make_pair(*iter, *defined), true));
+						}
+					} else {
+						if( interactionGraph.find(std::make_pair(std::make_pair(*defined, *iter), true)) == interactionGraph.end() ) {
+							interactionGraph.insert(std::make_pair(std::make_pair(*defined, *iter), false));
+							interactionGraph.insert(std::make_pair(std::make_pair(*iter, *defined), false));
+						}
 					}
 				}
 			}
-			//if( isMove[i] ) {
-			//	for( auto defined = def[i].begin(); defined != def[i].end(); ++defined ) {
-			//		for( auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter ) {
-			//			if( *defined != *iter ) {
-			//				interactionGraph.insert(std::make_pair(*defined, *iter));
-			//			}
-			//		}
-			//	}
-			//} else {
-			//	for( auto defined = def[i].begin(); defined != def[i].end(); ++defined ) {
-			//		for( auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter ) {
-			//			interactionGraph.insert(std::make_pair(*defined, *iter));
-			//		}
-			//	}
-			//}
+		}
+	}
+
+	void RegisterAllocator::simplify( unsigned int numberOfColors ) {
+		std::map<std::string, int> numbersOfEdges;
+		std::stack<std::pair<std::string, bool>> candidates;
+
+		std::set<std::pair<std::pair<std::string, std::string>, bool>> interactionGraphCopy = interactionGraph;
+
+		for( auto iter = interactionGraphCopy.begin(); iter != interactionGraphCopy.end(); ++iter ) {
+			auto vertex = numbersOfEdges.find(iter->first.first);
+			int count = 0;
+			if( vertex != numbersOfEdges.end() ) {
+				count = vertex->second;
+				numbersOfEdges.erase(vertex);
+			}
+			numbersOfEdges.insert(std::make_pair(iter->first.first, count + 1));
+		}
+
+		bool isAll = true;
+		
+		for( unsigned int i = 0; i < numberOfVerteces; ++i ) {
+			int minNumberOfEdges = numberOfVerteces;
+			std::string name;
+			for( auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter ) {
+				if( iter->second < minNumberOfEdges ) {
+					minNumberOfEdges = iter->second;
+					name = iter->first;
+				}
+			}
+
+			if( minNumberOfEdges > numberOfColors ) {
+				candidates.push(std::make_pair(name, true));
+			} else {
+				candidates.push(std::make_pair(name, false));
+				isAll = false;
+			}
+			
+			auto iter = interactionGraphCopy.begin();
+			while( interactionGraphCopy.begin() != interactionGraphCopy.end() ) {
+				if( (iter->first.first == name) || (iter->first.second == name) ) {
+					auto toDelete = iter;
+					++iter;
+					interactionGraphCopy.erase(toDelete);
+				} else {
+					++iter;
+				}
+				if( iter == interactionGraphCopy.end() ) {
+					numbersOfEdges.erase(name);
+					break;
+				}
+			}
+		}
+
+		//select
+
+		std::map<std::string, int> colors;
+		while( true ) {
+			auto top = candidates.top();
+			candidates.pop();
+			std::vector<std::string> neighboors;
+			for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
+				if( iter->first.first == top.first ) {
+					neighboors.push_back(iter->first.second);
+				}
+			}
+
+			std::set<int> availableNumbers;
+			for( int i = 0; i < numberOfColors; ++i ) {
+				availableNumbers.insert(i);
+			}
+
+			for( unsigned i = 0; i <= neighboors.size(); ++i ) {
+				auto neighboor = colors.find(neighboors[i]);
+				if( neighboor != colors.end() ) {
+					availableNumbers.erase(neighboor->second);
+				}
+			}
+
+			if( availableNumbers.begin() == availableNumbers.end() ) {
+				std::cout << "Error: no available color!\n";
+				//тут должен происходить сброс в стек
+				break;
+			}
+			colors.insert(std::make_pair(top.first, *availableNumbers.begin()));
 		}
 	}
 
 	void RegisterAllocator::doSomethingWithInteractionGraph() {
 
 		for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
-			std::cout << iter->first << " -> " << iter->second << '\n';
+			std::cout << iter->first.first << " -> " << iter->first.second << '\n';
 		}
 
 	}

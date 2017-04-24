@@ -6,6 +6,7 @@
 #include "..\IRTree\IRTreeAllClasses.h"
 #include "..\IRTree\CodeFragment.h"
 #include "..\RegisterAllocator\RegisterAllocator.h"
+#include "CodeGeneratorVisitor.h"
 
 using namespace IRTree;
 
