@@ -44,7 +44,10 @@ namespace RegAlloc {
 		//Является ли N-ная вершина move-инструкцией.
 		std::vector<bool> isMove;
 
+		//Граф взаимодействия переменных.
 		std::set<std::pair<std::pair<std::string, std::string>, bool>> interactionGraph;
+		//Цвета a.k.a. номера.
+		std::map<std::string, int> colors;
 
 		void createTableWithLifeTime();
 		void createInteractionGraph();

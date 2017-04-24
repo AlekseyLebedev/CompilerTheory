@@ -67,7 +67,6 @@ namespace RegAlloc {
 		
 		doSomethingWithInteractionGraph();
 
-		// ToDo
 		simplify( numberOfVerteces );
 
 	}
@@ -147,7 +146,9 @@ namespace RegAlloc {
 	}
 
 	void RegisterAllocator::simplify( unsigned int numberOfColors ) {
+		// Для подсчёта соседей.
 		std::map<std::string, int> numbersOfEdges;
+		//Стек для алгоритма раскраски, bool -- для move-инструкций (если делать оптимизацию с ними).
 		std::stack<std::pair<std::string, bool>> candidates;
 
 		std::set<std::pair<std::pair<std::string, std::string>, bool>> interactionGraphCopy = interactionGraph;
@@ -198,8 +199,6 @@ namespace RegAlloc {
 		}
 
 		//select
-
-		std::map<std::string, int> colors;
 		while( true ) {
 			auto top = candidates.top();
 			candidates.pop();
