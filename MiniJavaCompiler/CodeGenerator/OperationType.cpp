@@ -90,6 +90,8 @@ namespace CodeGeneration {
 				return L"MOVEM %eax [%ebp+!]";
 			case OT_MoveMemToEax:
 				return L"MOVE %eax [']";
+			case OT_MoveTempToEax:
+				return L"MOVE %eax '";
 			case OT_Store:
 				return L"STORE M['+!] '";
 			case OT_StoreToFramePointerPlusConst:

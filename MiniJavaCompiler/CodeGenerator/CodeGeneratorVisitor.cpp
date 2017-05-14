@@ -494,7 +494,16 @@ namespace CodeGeneration {
 					operation = NEW<COperation>( OT_StoreTemp );
 					operation->GetArguments().push_back( visitExpression( distExp ) );
 				}
+			} else {
+				std::shared_ptr<IRTree::IAccess> destAccess = DYNAMIC_CAST<IRTree::IAccess>( distMem->GetExp() );
+				if( destAccess ) {
+					assert( destAccess->GetName() == IRTree::CFrame::ReturnName );
+					operation = NEW<COperation>(OT_MoveTempToEax);
+				} else {
+					assert( false );
+				}
 			}
+			assert( operation != 0 );
 			std::shared_ptr<IRTree::IConst> constExpr = DYNAMIC_CAST<IRTree::IConst>( source );
 			if( constExpr != 0 ) {
 				// TODO: костыль, нужно переделать

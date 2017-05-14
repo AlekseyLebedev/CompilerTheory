@@ -46,6 +46,7 @@ namespace CodeGeneration {
 		OT_MoveMemToFramePointerPlusConst, //MOVE from MEM to MEM(framepointer + const) 
 		OT_MoveFramePointerPlusConstToEax, //MOVE from MEM to MEM(framepointer + const) 
 		OT_MoveMemToEax, //MOVE from MEM to eax (return)
+		OT_MoveTempToEax, //MOVE from MEM to eax (return)
 		OT_Store, // Store
 		OT_StoreToFramePointerPlusConst, // Store в память MEM(FramePointer + const )
 		OT_StoreConst, // Store c одной константой

@@ -56,27 +56,27 @@ namespace CodeGeneration {
 				case L'\'':
 				{
 					int regNum = arguments[tempIndex++]->GetName();
-					switch( colors[regNum] ) {
-						case 0:
-							result << "%eax";
-							break;
-						case 1:
-							result << "%ebx";
-							break;
-						case 2:
-							result << "%ecx";
-							break;
-						case 3:
-							result << "%edx";
-							break;
-						case 4:
-							result << "%eex";
-							break;
-						default:
-							assert( false );
-							break;
-					}
-					//result << registerPrefix << ;
+					//switch( colors[regNum] ) {
+					//	case 0:
+					//		result << "%eax";
+					//		break;
+					//	case 1:
+					//		result << "%ebx";
+					//		break;
+					//	case 2:
+					//		result << "%ecx";
+					//		break;
+					//	case 3:
+					//		result << "%edx";
+					//		break;
+					//	case 4:
+					//		result << "%eex";
+					//		break;
+					//	default:
+					//		assert( false );
+					//		break;
+					//}
+					result << registerPrefix << registerPrefix << regNum;
 					break;
 				}
 				case L'!':
