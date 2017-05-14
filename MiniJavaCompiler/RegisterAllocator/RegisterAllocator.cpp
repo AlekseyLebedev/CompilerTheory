@@ -96,8 +96,13 @@ namespace RegAlloc {
 
 		doSomethingWithInteractionGraph();
 
-		simplify( numberOfVerteces );
+		simplify( 5 );
 
+	}
+
+	std::map<int, int>& RegisterAllocator::getColors()
+	{
+		return colors;
 	}
 
 	void RegisterAllocator::createTableWithLifeTime()
@@ -336,7 +341,7 @@ namespace RegAlloc {
 
 	void RegisterAllocator::printState()
 	{
-		assert( false );
+		//assert( false );
 		std::cout << "\tuse\tdef\tin\tout\n";
 		for( int i = 0; i < numberOfVerteces; ++i ) {
 			std::cout << (i + 1) << '\t';

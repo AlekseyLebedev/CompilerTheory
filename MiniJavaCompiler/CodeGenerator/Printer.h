@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <map>
 #include <list>
 #include "Instruction.h"
 
@@ -16,7 +17,7 @@ namespace CodeGeneration
 		CAssemlerCodePrinter( const std::wstring& filename );
 		~CAssemlerCodePrinter();
 
-		void PrintBlock( CSharedPtrVector<IInstruction>& code );
+		void PrintBlock( CSharedPtrVector<IInstruction>& code, std::map<int, int>& colors );
 
 		void Close();
 

@@ -23,6 +23,8 @@ namespace RegAlloc {
 
 		void work();
 
+		std::map<int, int>& getColors();
+
 	private:
 
 		unsigned int numberOfVerteces;

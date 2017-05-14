@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <map>
 
 #include "..\IRTree\IRTTemp.h"
 #include "..\IRTree\IRTLabel.h"
@@ -22,7 +23,7 @@ namespace CodeGeneration {
 	public:
 		virtual ~IInstruction() {};
 		// Превращает в строку кода на ассемблере
-		virtual std::wstring ToCode() = 0; // TODO потом добавиться маппинг Temp в регистры и переменные на стеке
+		virtual std::wstring ToCode( std::map<int, int>& ) = 0; // TODO потом добавиться маппинг Temp в регистры и переменные на стеке
 	};
 
 	// Определение точки перехода
@@ -30,7 +31,7 @@ namespace CodeGeneration {
 	public:
 		CLabelDefinition( std::shared_ptr<CLabel>& theLabel ) : label( theLabel ) {}
 		std::shared_ptr<CLabel> GetLabel();
-		virtual std::wstring ToCode() override;
+		virtual std::wstring ToCode( std::map<int, int>& ) override;
 
 	private:
 		std::shared_ptr<CLabel> label;
@@ -49,7 +50,7 @@ namespace CodeGeneration {
 		CSharedPtrVector<CTemp>& GetDefinedTemps();
 		CSharedPtrVector<CLabel>& GetJumpPoints();
 		std::vector<int>& GetConstants();
-		virtual std::wstring ToCode() override;
+		virtual std::wstring ToCode( std::map<int, int>& ) override;
 
 	private:
 		TOperationType instructionCode;
@@ -81,7 +82,7 @@ namespace CodeGeneration {
 			GetJumpPoints().push_back( label );
 		}
 
-		virtual std::wstring ToCode();
+		virtual std::wstring ToCode( std::map<int, int>& colors );
 	};
 
 } // namespace CodeGeneration

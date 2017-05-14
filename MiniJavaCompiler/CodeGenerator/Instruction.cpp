@@ -10,7 +10,7 @@ namespace CodeGeneration {
 		return label;
 	}
 
-	std::wstring CLabelDefinition::ToCode()
+	std::wstring CLabelDefinition::ToCode( std::map<int, int>& )
 	{
 		return label->GetAssmeblerName() + L":";
 	}
@@ -44,7 +44,7 @@ namespace CodeGeneration {
 
 	static const wchar_t* registerPrefix = L"r";
 
-	std::wstring COperation::ToCode()
+	std::wstring COperation::ToCode( std::map<int, int>& colors )
 	{
 		std::wstring codeTemplate = GetOperationString( instructionCode );
 		std::wstringstream result;
@@ -54,8 +54,31 @@ namespace CodeGeneration {
 		for( size_t i = 0; i < codeTemplate.length(); i++ ) {
 			switch( codeTemplate[i] ) {
 				case L'\'':
-					result << registerPrefix << arguments[tempIndex++]->GetName();
+				{
+					int regNum = arguments[tempIndex++]->GetName();
+					switch( colors[regNum] ) {
+						case 0:
+							result << "%eax";
+							break;
+						case 1:
+							result << "%ebx";
+							break;
+						case 2:
+							result << "%ecx";
+							break;
+						case 3:
+							result << "%edx";
+							break;
+						case 4:
+							result << "%eex";
+							break;
+						default:
+							assert( false );
+							break;
+					}
+					//result << registerPrefix << ;
 					break;
+				}
 				case L'!':
 					result << constants[constIndex++];
 					break;
@@ -84,7 +107,7 @@ namespace CodeGeneration {
 
 	//-----------------------------------------------------------------------------------------------------------------
 
-	std::wstring CCallOperation::ToCode()
+	std::wstring CCallOperation::ToCode( std::map<int, int>& colors )
 	{
 		std::wstringstream result;
 		result << L"; begin call" << std::endl;
@@ -96,7 +119,7 @@ namespace CodeGeneration {
 			// Скорее всего будем делать так, по cdecl
 			result << "PUSH " << registerPrefix << GetArguments()[i]->GetName() << std::endl;
 		}
-		result << COperation::ToCode() << std::endl;
+		result << COperation::ToCode( colors ) << std::endl;
 		// А вот это не по cdecl. Тип вызвающая функция чистит только аргументы
 		// TODO: либо переделать по cdecl с учетом текущей щанятости стека, либо придумать как делаем
 		result << L"; TODO: rewrite after temps moved to registers and stack" << std::endl;

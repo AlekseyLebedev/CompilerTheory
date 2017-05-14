@@ -20,10 +20,10 @@ namespace CodeGeneration
 		assert( !output.is_open() );
 	}
 
-	void CAssemlerCodePrinter::PrintBlock( CSharedPtrVector<IInstruction>& code )
+	void CAssemlerCodePrinter::PrintBlock( CSharedPtrVector<IInstruction>& code, std::map<int, int>& reg )
 	{
 		for( size_t i = 0; i < code.size(); i++ ) {
-			output << code[i]->ToCode() << std::endl;
+			output << code[i]->ToCode( reg ) << std::endl;
 		}
 	}
 
@@ -56,7 +56,7 @@ namespace CodeGeneration
 			RegAlloc::RegisterAllocator regAlloc;
 			regAlloc.initialisation( commands[i] );
 			regAlloc.work();
-			assemblePrinter.PrintBlock( commands[i] );
+			assemblePrinter.PrintBlock( commands[i], regAlloc.getColors() );
 		}
 
 		assemblePrinter.Close();
