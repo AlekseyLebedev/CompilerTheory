@@ -54,7 +54,7 @@ namespace RegAlloc {
 		void simplify( unsigned int numberOfColors );
 		void doSomethingWithInteractionGraph();
 
-		void generateTempExample();
+		//void generateTempExample();
 
 		void printState();
 

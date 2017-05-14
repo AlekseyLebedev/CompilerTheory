@@ -7,8 +7,8 @@ namespace RegAlloc {
 	void RegisterAllocator::initialisation()
 	{
 
-		//temporary
-		generateTempExample();
+		// temporary
+		// generateTempExample();
 
 	}
 
@@ -152,7 +152,7 @@ namespace RegAlloc {
 				i = 0;
 			}
 		}
-		printState();
+		//printState();
 	}
 
 	void RegisterAllocator::createInteractionGraph()
@@ -265,77 +265,78 @@ namespace RegAlloc {
 	void RegisterAllocator::doSomethingWithInteractionGraph()
 	{
 
-		for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
-			std::cout << iter->first.first << " -> " << iter->first.second << '\n';
-		}
+		//for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
+		//	std::cout << iter->first.first << " -> " << iter->first.second << '\n';
+		//}
 
 	}
 
-	void RegisterAllocator::generateTempExample()
-	{
+	//void RegisterAllocator::generateTempExample()
+	//{
 
-		//////////////////
-		// 0: a:= 0
-		// 1: b:= a+1
-		// 2: c:= c+b
-		// 3: a:= b*2
-		// 4: if a<N GOTO 2
-		// 5: return c
-		//
-		// a - 0
-		// b - 1
-		// c - 2
-		// 
-		//////////////////
+	//	//////////////////
+	//	// 0: a:= 0
+	//	// 1: b:= a+1
+	//	// 2: c:= c+b
+	//	// 3: a:= b*2
+	//	// 4: if a<N GOTO 2
+	//	// 5: return c
+	//	//
+	//	// a - 0
+	//	// b - 1
+	//	// c - 2
+	//	// 
+	//	//////////////////
 
-		numberOfVerteces = 6;
+	//	numberOfVerteces = 6;
 
-		out_edges.resize( numberOfVerteces );
-		in_edges.resize( numberOfVerteces );
+	//	out_edges.resize( numberOfVerteces );
+	//	in_edges.resize( numberOfVerteces );
 
-		def.resize( numberOfVerteces );
-		use.resize( numberOfVerteces );
+	//	def.resize( numberOfVerteces );
+	//	use.resize( numberOfVerteces );
 
-		out_edges[0].insert( 1 );
-		out_edges[1].insert( 2 );
-		out_edges[2].insert( 3 );
-		out_edges[3].insert( 4 );
-		out_edges[4].insert( 1 );
-		out_edges[4].insert( 5 );
+	//	out_edges[0].insert( 1 );
+	//	out_edges[1].insert( 2 );
+	//	out_edges[2].insert( 3 );
+	//	out_edges[3].insert( 4 );
+	//	out_edges[4].insert( 1 );
+	//	out_edges[4].insert( 5 );
 
-		in_edges[1].insert( 0 );
-		in_edges[1].insert( 4 );
-		in_edges[2].insert( 1 );
-		in_edges[3].insert( 2 );
-		in_edges[4].insert( 3 );
-		in_edges[5].insert( 4 );
+	//	in_edges[1].insert( 0 );
+	//	in_edges[1].insert( 4 );
+	//	in_edges[2].insert( 1 );
+	//	in_edges[3].insert( 2 );
+	//	in_edges[4].insert( 3 );
+	//	in_edges[5].insert( 4 );
 
-		def[0].insert( 0 );
-		def[1].insert( 1 );
-		def[2].insert( 2 );
-		def[3].insert( 0 );
+	//	def[0].insert( 0 );
+	//	def[1].insert( 1 );
+	//	def[2].insert( 2 );
+	//	def[3].insert( 0 );
 
-		use[1].insert( 0 );
-		use[2].insert( 1 );
-		use[2].insert( 2 );
-		use[3].insert( 3 );
-		use[4].insert( 0 );
-		use[5].insert( 2 );
+	//	use[1].insert( 0 );
+	//	use[2].insert( 1 );
+	//	use[2].insert( 2 );
+	//	use[3].insert( 3 );
+	//	use[4].insert( 0 );
+	//	use[5].insert( 2 );
 
-		isMove.resize( numberOfVerteces );
-		isMove[0] = true;
-		isMove[1] = true;
-		isMove[2] = true;
-		isMove[3] = true;
-		isMove[4] = false;
-		isMove[5] = false;
+	//	isMove.resize( numberOfVerteces );
+	//	isMove[0] = true;
+	//	isMove[1] = true;
+	//	isMove[2] = true;
+	//	isMove[3] = true;
+	//	isMove[4] = false;
+	//	isMove[5] = false;
 
-		live_in.resize( numberOfVerteces );
-		live_out.resize( numberOfVerteces );
-	}
+	//	live_in.resize( numberOfVerteces );
+	//	live_out.resize( numberOfVerteces );
+	//}
 
 	void RegisterAllocator::printState()
 	{
+		assert( false );
 		std::cout << "\tuse\tdef\tin\tout\n";
 		for( int i = 0; i < numberOfVerteces; ++i ) {
 			std::cout << (i + 1) << '\t';
