@@ -422,7 +422,7 @@ namespace CodeGeneration {
 		std::shared_ptr<COperation> operation;
 		if( sourceMem && distMem ) {
 			std::shared_ptr<IRTree::IRTEBinop> destMemBinop = DYNAMIC_CAST<IRTree::IRTEBinop>( distMem->GetExp() );
-			if( destMemBinop && (DYNAMIC_CAST<IRTree::IAccess>( destMemBinop ) != 0) ) {
+			if( destMemBinop && (DYNAMIC_CAST<IRTree::IAccess>( destMemBinop->GetLeft() ) != 0) ) {
 				assert( destMemBinop->GetBinop() == IRTree::BINOP_PLUS );
 				std::shared_ptr<IRTree::IRTEConst> memConst = DYNAMIC_CAST<IRTree::IRTEConst>( destMemBinop->GetRight() );
 				assert( memConst != 0 );
@@ -450,11 +450,23 @@ namespace CodeGeneration {
 						operation->GetArguments().push_back( sourceTemp );
 					}
 				} else {
-					operation = NEW<COperation>( OT_Movem );
+					std::shared_ptr<IRTree::IRTEBinop> sourcebinop = DYNAMIC_CAST<IRTree::IRTEBinop>( sourceMem->GetExp() );
 					std::shared_ptr<CTemp> distTemp = visitExpression( distMem->GetExp() );
-					std::shared_ptr<CTemp> sourceTemp = visitExpression( sourceMem->GetExp() );
-					operation->GetArguments().push_back( distTemp );
-					operation->GetArguments().push_back( sourceTemp );
+					if( sourcebinop != 0 ) {
+						operation = NEW<COperation>( OT_MoveFramePointerPlusConstToMem );
+						operation->GetArguments().push_back( distTemp );
+						assert( sourcebinop->GetBinop() == IRTree::BINOP_PLUS );
+						assert( DYNAMIC_CAST<IRTree::IAccess>( sourcebinop->GetLeft() ) != 0 );
+						assert( DYNAMIC_CAST<IRTree::IAccess>( sourcebinop->GetLeft() )->GetName() == IRTree::CFrame::FramePointerName );
+						std::shared_ptr<IRTree::IRTEConst> rightconst = DYNAMIC_CAST<IRTree::IRTEConst>( sourcebinop->GetRight() );
+						assert( rightconst != 0 );
+						operation->GetConstants().push_back( rightconst->GetValueAsInt() );
+					} else {
+						operation = NEW<COperation>( OT_Movem );
+						std::shared_ptr<CTemp> sourceTemp = visitExpression( sourceMem->GetExp() );
+						operation->GetArguments().push_back( distTemp );
+						operation->GetArguments().push_back( sourceTemp );
+					}
 				}
 			}
 		} else if( distMem ) {
@@ -498,7 +510,7 @@ namespace CodeGeneration {
 				std::shared_ptr<IRTree::IAccess> destAccess = DYNAMIC_CAST<IRTree::IAccess>( distMem->GetExp() );
 				if( destAccess ) {
 					assert( destAccess->GetName() == IRTree::CFrame::ReturnName );
-					operation = NEW<COperation>(OT_MoveTempToEax);
+					operation = NEW<COperation>( OT_MoveTempToEax );
 				} else {
 					assert( false );
 				}

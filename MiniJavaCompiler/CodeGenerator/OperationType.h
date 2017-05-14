@@ -44,6 +44,7 @@ namespace CodeGeneration {
 		OT_JLE,	// JNG меньше или равно / не больше	// ZF = 1 или SF != OF
 		OT_Movem, //MOVE from MEM to MEM 
 		OT_MoveMemToFramePointerPlusConst, //MOVE from MEM to MEM(framepointer + const) 
+		OT_MoveFramePointerPlusConstToMem, //MOVE from MEM to MEM(framepointer + const) 
 		OT_MoveFramePointerPlusConstToEax, //MOVE from MEM to MEM(framepointer + const) 
 		OT_MoveMemToEax, //MOVE from MEM to eax (return)
 		OT_MoveTempToEax, //MOVE from MEM to eax (return)
