@@ -231,7 +231,7 @@ namespace RegAlloc {
 		}
 
 		//select
-		while( true ) {
+		while( !candidates.empty() ) {
 			auto top = candidates.top();
 			candidates.pop();
 			std::vector<int> neighboors;
@@ -246,7 +246,7 @@ namespace RegAlloc {
 				availableNumbers.insert( i );
 			}
 
-			for( unsigned i = 0; i <= neighboors.size(); ++i ) {
+			for( unsigned i = 0; i < neighboors.size(); ++i ) {
 				auto neighboor = colors.find( neighboors[i] );
 				if( neighboor != colors.end() ) {
 					availableNumbers.erase( neighboor->second );
