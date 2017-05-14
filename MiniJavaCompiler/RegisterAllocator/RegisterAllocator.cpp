@@ -1,5 +1,7 @@
 ﻿#include "RegisterAllocator.h"
 
+#define DYNAMIC_CAST std::dynamic_pointer_cast
+
 namespace RegAlloc {
 
 	void RegisterAllocator::initialisation() {
@@ -8,12 +10,11 @@ namespace RegAlloc {
 		generateTempExample();
 
 	}
-	
+
 	using namespace CodeGeneration;
-	
+
 	// Должно быть:
-	// void RegisterAllocator::initialisation(CSharedPtrVector<IInstruction> code) {
-	void RegisterAllocator::initialisation( CSharedPtrVector<COperation> code ) {
+	void RegisterAllocator::initialisation(CSharedPtrVector<IInstruction>& code) {
 
 		numberOfVerteces = code.size();
 
@@ -28,35 +29,37 @@ namespace RegAlloc {
 		live_in.resize(numberOfVerteces);
 		live_out.resize(numberOfVerteces);
 
-		for( unsigned int codeLineIndex = 0; codeLineIndex < numberOfVerteces; ++codeLineIndex ) {
-			// initialisation out_edges && in_edges
-			CSharedPtrVector<CLabel> jumpPoints = code[codeLineIndex]->GetJumpPoints();
-			for( unsigned int jump = 0; jump < jumpPoints.size(); ++jump ) {
-				// Нужно привести jumpPoints[jump] к числу, то есть взять номер "строки", куда произойдёт переход.
-				// jumpPoints[jump] => index
-				// out_edges[codeLineIndex].insert( index );
-				// in_edges[index].insert( codeLineIndex );
+		for (unsigned int codeLineIndex = 0; codeLineIndex < numberOfVerteces; ++codeLineIndex) {
+			std::shared_ptr<COperation> operation = DYNAMIC_CAST<COperation>(code[codeLineIndex]);
+			if (operation != 0) {
+				// initialisation out_edges && in_edges
+				CSharedPtrVector<CLabel> jumpPoints = operation->GetJumpPoints();
+				for (unsigned int jump = 0; jump < jumpPoints.size(); ++jump) {
+					// Нужно привести jumpPoints[jump] к числу, то есть взять номер "строки", куда произойдёт переход.
+					// jumpPoints[jump] => index
+					out_edges[codeLineIndex].insert(jumpPoints[jump]->GetName());
+					in_edges[jumpPoints[jump]->GetName()].insert( codeLineIndex );
+				}
+
+				// initialisation def
+				CSharedPtrVector<CTemp> defined = operation->GetDefinedTemps();
+				for (unsigned int argIndex = 0; argIndex < defined.size(); ++argIndex) {
+					// Получить идентификатор переменной:
+					// defined[argIndex] => variable
+					 def[codeLineIndex].insert(defined[argIndex]->GetName());
+				}
+
+				// initialisation use
+				CSharedPtrVector<CTemp> arguments = operation->GetArguments();
+				for (unsigned int argIndex = 0; argIndex < arguments.size(); ++argIndex) {
+					// Получить идентификатор переменной:
+					// arguments[argIndex] => variable
+					use[codeLineIndex].insert( arguments[argIndex]->GetName() );
+				}
+
+				// initialisation isMove
+				isMove[codeLineIndex] = (DYNAMIC_CAST<CMoveOperation>(code[codeLineIndex]) != 0);
 			}
-
-			// initialisation def
-			CSharedPtrVector<CTemp> defined = code[codeLineIndex]->GetDefinedTemps();
-			for( unsigned int argIndex = 0; argIndex < defined.size(); ++argIndex ) {
-				// Получить идентификатор переменной:
-				// defined[argIndex] => variable
-				// def[codeLineIndex].insert( variable );
-			}
-
-			// initialisation use
-			CSharedPtrVector<CTemp> arguments = code[codeLineIndex]->GetArguments();
-			for( unsigned int argIndex = 0; argIndex < arguments.size(); ++argIndex ) {
-				// Получить идентификатор переменной:
-				// arguments[argIndex] => variable
-				// def[codeLineIndex].insert( variable );
-			}
-
-			// initialisation isMove
-			isMove[codeLineIndex] = ( code[codeLineIndex]->GetInstructionCode() == OT_Move );
-
 		}
 	}
 
@@ -64,18 +67,18 @@ namespace RegAlloc {
 
 		createTableWithLifeTime();
 		createInteractionGraph();
-		
+
 		doSomethingWithInteractionGraph();
 
-		simplify( numberOfVerteces );
+		simplify(numberOfVerteces);
 
 	}
 
 	void RegisterAllocator::createTableWithLifeTime() {
 
-		for( unsigned int i = 0; i < numberOfVerteces; ++i ) {
-			for( auto iter = use[i].begin(); iter != use[i].end(); ++iter ) {
-				if( live_in[i].find(*iter) == live_in[i].end() ) {
+		for (unsigned int i = 0; i < numberOfVerteces; ++i) {
+			for (auto iter = use[i].begin(); iter != use[i].end(); ++iter) {
+				if (live_in[i].find(*iter) == live_in[i].end()) {
 					live_in[i].insert(*iter);
 				}
 			}
@@ -83,12 +86,12 @@ namespace RegAlloc {
 
 		unsigned int i = 0;
 		bool isEnd = true;
-		while( true ) {
-			
+		while (true) {
+
 			//out
-			for( auto iterEdges = out_edges[i].begin(); iterEdges != out_edges[i].end(); ++iterEdges ) {
-				for( auto iterIn = live_in[*iterEdges].begin(); iterIn != live_in[*iterEdges].end(); ++iterIn ) {
-					if( live_out[i].find(*iterIn) == live_out[i].end() ) {
+			for (auto iterEdges = out_edges[i].begin(); iterEdges != out_edges[i].end(); ++iterEdges) {
+				for (auto iterIn = live_in[*iterEdges].begin(); iterIn != live_in[*iterEdges].end(); ++iterIn) {
+					if (live_out[i].find(*iterIn) == live_out[i].end()) {
 						live_out[i].insert(*iterIn);
 						isEnd = false;
 					}
@@ -96,25 +99,25 @@ namespace RegAlloc {
 			}
 
 			//in
-			std::set<std::string> variables;
-			for( auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter ) {
+			std::set<int> variables;
+			for (auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter) {
 				variables.insert(*iter);
 			}
-			for( auto iter = def[i].begin(); iter != def[i].end(); ++iter ) {
-				if( variables.find(*iter) != variables.end() ) {
+			for (auto iter = def[i].begin(); iter != def[i].end(); ++iter) {
+				if (variables.find(*iter) != variables.end()) {
 					variables.erase(*iter);
 				}
 			}
-			for( auto iter = variables.begin(); iter != variables.end(); ++iter ) {
-				if( live_in[i].find(*iter) == live_in[i].end() ) {
+			for (auto iter = variables.begin(); iter != variables.end(); ++iter) {
+				if (live_in[i].find(*iter) == live_in[i].end()) {
 					live_in[i].insert(*iter);
 					isEnd = false;
 				}
 			}
 
 			++i;
-			if( i == numberOfVerteces) {
-				if( isEnd ) {
+			if (i == numberOfVerteces) {
+				if (isEnd) {
 					break;
 				}
 				//printState(numberOfVerteces);
@@ -126,16 +129,17 @@ namespace RegAlloc {
 	}
 
 	void RegisterAllocator::createInteractionGraph() {
-		for( unsigned int i = 0; i < numberOfVerteces; ++i ) {
-			for( auto defined = def[i].begin(); defined != def[i].end(); ++defined ) {
-				for( auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter ) {
-					if( isMove[i] ) {
-						if( *defined != *iter) {
+		for (unsigned int i = 0; i < numberOfVerteces; ++i) {
+			for (auto defined = def[i].begin(); defined != def[i].end(); ++defined) {
+				for (auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter) {
+					if (isMove[i]) {
+						if (*defined != *iter) {
 							interactionGraph.insert(std::make_pair(std::make_pair(*defined, *iter), true));
 							interactionGraph.insert(std::make_pair(std::make_pair(*iter, *defined), true));
 						}
-					} else {
-						if( interactionGraph.find(std::make_pair(std::make_pair(*defined, *iter), true)) == interactionGraph.end() ) {
+					}
+					else {
+						if (interactionGraph.find(std::make_pair(std::make_pair(*defined, *iter), true)) == interactionGraph.end()) {
 							interactionGraph.insert(std::make_pair(std::make_pair(*defined, *iter), false));
 							interactionGraph.insert(std::make_pair(std::make_pair(*iter, *defined), false));
 						}
@@ -145,18 +149,18 @@ namespace RegAlloc {
 		}
 	}
 
-	void RegisterAllocator::simplify( unsigned int numberOfColors ) {
+	void RegisterAllocator::simplify(unsigned int numberOfColors) {
 		// Для подсчёта соседей.
-		std::map<std::string, int> numbersOfEdges;
+		std::map<int, int> numbersOfEdges;
 		//Стек для алгоритма раскраски, bool -- для move-инструкций (если делать оптимизацию с ними).
-		std::stack<std::pair<std::string, bool>> candidates;
+		std::stack<std::pair<int, bool>> candidates;
 
-		std::set<std::pair<std::pair<std::string, std::string>, bool>> interactionGraphCopy = interactionGraph;
+		std::set<std::pair<std::pair<int, int>, bool>> interactionGraphCopy = interactionGraph;
 
-		for( auto iter = interactionGraphCopy.begin(); iter != interactionGraphCopy.end(); ++iter ) {
+		for (auto iter = interactionGraphCopy.begin(); iter != interactionGraphCopy.end(); ++iter) {
 			auto vertex = numbersOfEdges.find(iter->first.first);
 			int count = 0;
-			if( vertex != numbersOfEdges.end() ) {
+			if (vertex != numbersOfEdges.end()) {
 				count = vertex->second;
 				numbersOfEdges.erase(vertex);
 			}
@@ -164,34 +168,36 @@ namespace RegAlloc {
 		}
 
 		bool isAll = true;
-		
-		for( unsigned int i = 0; i < numberOfVerteces; ++i ) {
+
+		for (unsigned int i = 0; i < numberOfVerteces; ++i) {
 			int minNumberOfEdges = numberOfVerteces;
-			std::string name;
-			for( auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter ) {
-				if( iter->second < minNumberOfEdges ) {
+			int name;
+			for (auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter) {
+				if (iter->second < minNumberOfEdges) {
 					minNumberOfEdges = iter->second;
 					name = iter->first;
 				}
 			}
 
-			if( minNumberOfEdges > numberOfColors ) {
+			if (minNumberOfEdges > numberOfColors) {
 				candidates.push(std::make_pair(name, true));
-			} else {
+			}
+			else {
 				candidates.push(std::make_pair(name, false));
 				isAll = false;
 			}
-			
+
 			auto iter = interactionGraphCopy.begin();
-			while( interactionGraphCopy.begin() != interactionGraphCopy.end() ) {
-				if( (iter->first.first == name) || (iter->first.second == name) ) {
+			while (interactionGraphCopy.begin() != interactionGraphCopy.end()) {
+				if ((iter->first.first == name) || (iter->first.second == name)) {
 					auto toDelete = iter;
 					++iter;
 					interactionGraphCopy.erase(toDelete);
-				} else {
+				}
+				else {
 					++iter;
 				}
-				if( iter == interactionGraphCopy.end() ) {
+				if (iter == interactionGraphCopy.end()) {
 					numbersOfEdges.erase(name);
 					break;
 				}
@@ -199,29 +205,29 @@ namespace RegAlloc {
 		}
 
 		//select
-		while( true ) {
+		while (true) {
 			auto top = candidates.top();
 			candidates.pop();
-			std::vector<std::string> neighboors;
-			for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
-				if( iter->first.first == top.first ) {
+			std::vector<int> neighboors;
+			for (auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter) {
+				if (iter->first.first == top.first) {
 					neighboors.push_back(iter->first.second);
 				}
 			}
 
 			std::set<int> availableNumbers;
-			for( int i = 0; i < numberOfColors; ++i ) {
+			for (int i = 0; i < numberOfColors; ++i) {
 				availableNumbers.insert(i);
 			}
 
-			for( unsigned i = 0; i <= neighboors.size(); ++i ) {
+			for (unsigned i = 0; i <= neighboors.size(); ++i) {
 				auto neighboor = colors.find(neighboors[i]);
-				if( neighboor != colors.end() ) {
+				if (neighboor != colors.end()) {
 					availableNumbers.erase(neighboor->second);
 				}
 			}
 
-			if( availableNumbers.begin() == availableNumbers.end() ) {
+			if (availableNumbers.begin() == availableNumbers.end()) {
 				std::cout << "Error: no available color!\n";
 				//тут должен происходить сброс в стек
 				break;
@@ -232,14 +238,14 @@ namespace RegAlloc {
 
 	void RegisterAllocator::doSomethingWithInteractionGraph() {
 
-		for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
+		for (auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter) {
 			std::cout << iter->first.first << " -> " << iter->first.second << '\n';
 		}
 
 	}
 
 	void RegisterAllocator::generateTempExample() {
-		
+
 		//////////////////
 		// 0: a:= 0
 		// 1: b:= a+1
@@ -276,17 +282,17 @@ namespace RegAlloc {
 		in_edges[4].insert(3);
 		in_edges[5].insert(4);
 
-		def[0].insert("a");
-		def[1].insert("b");
-		def[2].insert("c");
-		def[3].insert("a");
+		def[0].insert(0);
+		def[1].insert(1);
+		def[2].insert(2);
+		def[3].insert(0);
 
-		use[1].insert("a");
-		use[2].insert("b");
-		use[2].insert("c");
-		use[3].insert("b");
-		use[4].insert("a");
-		use[5].insert("c");
+		use[1].insert(0);
+		use[2].insert(1);
+		use[2].insert(2);
+		use[3].insert(3);
+		use[4].insert(0);
+		use[5].insert(2);
 
 		isMove.resize(numberOfVerteces);
 		isMove[0] = true;
@@ -302,21 +308,21 @@ namespace RegAlloc {
 
 	void RegisterAllocator::printState() {
 		std::cout << "\tuse\tdef\tin\tout\n";
-		for( int i = 0; i < numberOfVerteces; ++i ) {
-			std::cout << (i+1) << '\t';
-			for( auto iter = use[i].begin(); iter != use[i].end(); ++iter ) {
+		for (int i = 0; i < numberOfVerteces; ++i) {
+			std::cout << (i + 1) << '\t';
+			for (auto iter = use[i].begin(); iter != use[i].end(); ++iter) {
 				std::cout << *iter << ' ';
 			}
 			std::cout << ";\t";
-			for( auto iter = def[i].begin(); iter != def[i].end(); ++iter ) {
+			for (auto iter = def[i].begin(); iter != def[i].end(); ++iter) {
 				std::cout << *iter << ' ';
 			}
 			std::cout << ";\t";
-			for( auto iter = live_in[i].begin(); iter != live_in[i].end(); ++iter ) {
+			for (auto iter = live_in[i].begin(); iter != live_in[i].end(); ++iter) {
 				std::cout << *iter << ' ';
 			}
 			std::cout << ";\t";
-			for( auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter ) {
+			for (auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter) {
 				std::cout << *iter << ' ';
 			}
 			std::cout << '\n';

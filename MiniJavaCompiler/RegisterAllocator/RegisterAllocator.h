@@ -19,7 +19,7 @@ namespace RegAlloc {
 	public:
 
 		void initialisation();
-		void initialisation( CSharedPtrVector<COperation> code );
+		void initialisation( CSharedPtrVector<IInstruction>& code );
 
 		void work();
 
@@ -27,14 +27,14 @@ namespace RegAlloc {
 
 		unsigned int numberOfVerteces;
 		// Здесь хранятся переменных, "живых" на каком-то входящем ребре в вершину N.
-		std::vector<std::set<std::string>> live_in;
+		std::vector<std::set<int>> live_in;
 		// Здесь хранятся переменных, "живых" на каком-то исходящем ребре из вершины N.
-		std::vector<std::set<std::string>> live_out;
+		std::vector<std::set<int>> live_out;
 
 		// Здесь хранятся переменные, определяемых в вершине N.
-		std::vector<std::set<std::string>> def;
+		std::vector<std::set<int>> def;
 		// Здесь хранятся переменные, используемых в вершине N.
-		std::vector<std::set<std::string>> use;
+		std::vector<std::set<int>> use;
 
 		// Здесь хранятся номера вершин, куда следует ребро из вершины N.
 		std::vector<std::set<int>> out_edges;
@@ -45,9 +45,9 @@ namespace RegAlloc {
 		std::vector<bool> isMove;
 
 		//Граф взаимодействия переменных.
-		std::set<std::pair<std::pair<std::string, std::string>, bool>> interactionGraph;
+		std::set<std::pair<std::pair<int, int>, bool>> interactionGraph;
 		//Цвета a.k.a. номера.
-		std::map<std::string, int> colors;
+		std::map<int, int> colors;
 
 		void createTableWithLifeTime();
 		void createInteractionGraph();
