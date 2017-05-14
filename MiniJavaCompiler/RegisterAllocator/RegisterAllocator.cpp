@@ -32,6 +32,7 @@ namespace RegAlloc {
 		for (unsigned int codeLineIndex = 0; codeLineIndex < numberOfVerteces; ++codeLineIndex) {
 			std::shared_ptr<COperation> operation = DYNAMIC_CAST<COperation>(code[codeLineIndex]);
 			if (operation != 0) {
+				if (operation->GetInstructionCode() == OT_Call) continue;
 				// initialisation out_edges && in_edges
 				CSharedPtrVector<CLabel> jumpPoints = operation->GetJumpPoints();
 				for (unsigned int jump = 0; jump < jumpPoints.size(); ++jump) {
