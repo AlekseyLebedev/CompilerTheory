@@ -19,14 +19,6 @@ std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>> CGe
 		codeGeneratorVisitor->SetFrame( block->second );
 		codeGeneratorVisitor->Visit( std::dynamic_pointer_cast<IRTSSeq>(block->first).get() );
 		CodeGeneration::CSharedPtrVector<CodeGeneration::IInstruction> code = codeGeneratorVisitor->GetCode();
-
-		// initialisation code
-		for( unsigned int i = 0; i < code.size(); ++i ) {
-	
-			RegAlloc::RegisterAllocator ra;
-			//ra.initialisation( code );
-			//ra.work();
-		}
 	}
 
 	return basicBlocks;
@@ -36,6 +28,7 @@ void CGenerator::SplitIRTree()
 {
 	std::shared_ptr<IRTree::CCodeFragment> currentCodeFragment = root;	
 	while( currentCodeFragment != 0 ) {
+		int currentBasicBlockCount = basicBlocks.size();
 		std::shared_ptr<IRTStatement> currentStatement = currentCodeFragment->GetTree();	
 		currentFrame = currentCodeFragment->GetFrame();
 		while( currentStatement != 0 ) {

@@ -1,9 +1,15 @@
 #pragma once
 
+#include <memory>
+#include <list>
 #include "Instruction.h"
+
+#include "..\IRTree\Frame.h"
+#include "..\IRTree\IRTStatement.h"
 
 namespace CodeGeneration
 {
+	void HandleBlocks( std::list<std::pair<std::shared_ptr<IRTree::IRTStatement>, std::shared_ptr<IRTree::CFrame>>>& basisBlocks, int& fileIndex );
 
 	class CAssemlerCodePrinter {
 	public:

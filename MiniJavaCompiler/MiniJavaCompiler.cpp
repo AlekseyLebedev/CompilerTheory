@@ -80,21 +80,8 @@ int main( int argc, char** argv )
 			}
 			CGenerator generator( irtree.GetCode() );
 			generator.SplitIRTree();
-			CodeGeneration::CCodeGeneratorVisitor* codeGeneratorVisitor;
 			std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>> basisBlocks = generator.GetBasicBlocks();
-			CodeGeneration::CAssemlerCodePrinter assemblePrinter( L"code-" + std::to_wstring( fileIndex++ ) );
-			for( std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>>::iterator block = basisBlocks.begin();
-				block != basisBlocks.end(); ++block ) {
-				codeGeneratorVisitor = new CodeGeneration::CCodeGeneratorVisitor();
-				codeGeneratorVisitor->SetFrame( block->second );
-				codeGeneratorVisitor->Visit( std::dynamic_pointer_cast<IRTSSeq>(block->first).get() );
-				CodeGeneration::CSharedPtrVector<CodeGeneration::IInstruction> code = codeGeneratorVisitor->GetCode();
-				RegAlloc::RegisterAllocator regAlloc;
-				regAlloc.initialisation(code);
-				regAlloc.work();
-				assemblePrinter.PrintBlock( code );
-			}
-			assemblePrinter.Close();
+			CodeGeneration::HandleBlocks( basisBlocks, fileIndex );
 		}
 	}
 	return 0;
