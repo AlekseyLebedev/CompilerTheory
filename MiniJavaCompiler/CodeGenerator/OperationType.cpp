@@ -53,17 +53,17 @@ namespace CodeGeneration {
 			case OT_LoadTemp:
 				return L"LOAD ' '";
 			case OT_AndTemps:
-				return L"AND ' '";
+				return L"AND ' ' '";
 			case OT_OrTemps:
-				return L"OR ' '";
+				return L"OR ' ' '";
 			case OT_XorTemps:
-				return L"XOR ' '";
+				return L"XOR ' ' '";
 			case OT_AndTempConst:
-				return L"ANDI ' !";
+				return L"ANDI ' ' !";
 			case OT_OrTempConst:
-				return L"ORI ' !";
+				return L"ORI ' ' !";
 			case OT_XorTempConst:
-				return L"XORI ' !";
+				return L"XORI ' ' !";
 			case OT_CMP:
 				return L"CMP ' '";
 			case OT_CMPC:
@@ -83,7 +83,7 @@ namespace CodeGeneration {
 			case OT_JLE:
 				return L"JLE ^";
 			case OT_JumpNonZero:
-				return L"JNZ ' ^";
+				return L"JNZ ^";
 			case OT_Movem:
 				return L"MOVEM M['] M[']";
 			case OT_MoveMemToFramePointerPlusConst:
