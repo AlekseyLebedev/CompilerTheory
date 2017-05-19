@@ -436,17 +436,29 @@ namespace CodeGeneration {
 				std::shared_ptr<IRTree::IRTEBinop> sourceBinop = DYNAMIC_CAST<IRTree::IRTEBinop>( sourceMem->GetExp() );
 				if( sourceBinop ) {
 					std::shared_ptr<IRTree::IAccess> sourceBinopAccess = DYNAMIC_CAST<IRTree::IAccess>( sourceBinop->GetLeft() );
-					std::shared_ptr<IRTree::IConst> sourceBinopConst = DYNAMIC_CAST<IRTree::IConst>( sourceBinop->GetRight() );
-					assert( sourceBinopAccess != 0 );
-					assert( sourceBinopConst != 0 );
-					assert( sourceBinopAccess->GetName() == IRTree::CFrame::FramePointerName );
-					std::shared_ptr<COperation> loadOperation = NEW<COperation>( OT_MemFramePointerPlusConst );
-					std::shared_ptr<CTemp> temp = newTemp();
-					loadOperation->GetArguments().push_back( temp );
-					loadOperation->GetDefinedTemps().push_back( temp );
-					loadOperation->GetConstants().push_back( sourceBinopConst->GetValueAsInt() );
-					code.push_back( loadOperation );
-					operation->GetArguments().push_back( temp );
+					std::shared_ptr<IRTree::IRTEBinop> sourceBinopBinop = DYNAMIC_CAST<IRTree::IRTEBinop>( sourceBinop->GetLeft() );
+					if( sourceBinopAccess ) {
+						std::shared_ptr<IRTree::IConst> sourceBinopConst = DYNAMIC_CAST<IRTree::IConst>( sourceBinop->GetRight() );
+						assert( sourceBinopAccess != 0 );
+						assert( sourceBinopConst != 0 );
+						assert( sourceBinopAccess->GetName() == IRTree::CFrame::FramePointerName );
+						std::shared_ptr<COperation> loadOperation = NEW<COperation>( OT_MemFramePointerPlusConst );
+						std::shared_ptr<CTemp> temp = newTemp();
+						loadOperation->GetArguments().push_back( temp );
+						loadOperation->GetDefinedTemps().push_back( temp );
+						loadOperation->GetConstants().push_back( sourceBinopConst->GetValueAsInt() );
+						code.push_back( loadOperation );
+						operation->GetArguments().push_back( temp );
+					} else {
+						std::shared_ptr<CTemp> address = visitExpression( sourceBinop );
+						std::shared_ptr<COperation> loadOperation = NEW<COperation>( OT_MemReg );
+						std::shared_ptr<CTemp> temp = newTemp();
+						loadOperation->GetArguments().push_back( temp );
+						loadOperation->GetArguments().push_back( address );
+						loadOperation->GetDefinedTemps().push_back( temp );
+						code.push_back( loadOperation );
+						operation->GetArguments().push_back( temp );
+					}
 				} else {
 					std::shared_ptr<CTemp> sourceTemp = visitExpression( sourceMem->GetExp() );
 					operation->GetArguments().push_back( sourceTemp );
