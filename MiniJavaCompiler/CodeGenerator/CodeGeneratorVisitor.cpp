@@ -321,10 +321,11 @@ namespace CodeGeneration {
 								assert( false );
 								return;
 						}
+						std::shared_ptr<CTemp> leftRes = visitExpression( binop->GetLeft() );
 						returnValue = newTemp();
 						operation->GetArguments().push_back( returnValue );
 						operation->GetDefinedTemps().push_back( returnValue );
-						operation->GetArguments().push_back( visitExpression( binop->GetLeft() ) );
+						operation->GetArguments().push_back( leftRes );
 						operation->GetConstants().push_back( rightConst->GetValue() );
 						code.push_back( operation );
 						return;
@@ -712,10 +713,11 @@ namespace CodeGeneration {
 			{
 				universalBinopVisit( relop, expLeft, expRight );
 				std::shared_ptr<COperation> operation = NEW<COperation>( OT_CMPC );
-				operation->GetArguments().push_back( DYNAMIC_CAST<COperation>( code.back() )->GetArguments().front() );
+				operation->GetArguments().push_back( returnValue );
 				operation->GetConstants().push_back( 0 );
 				code.push_back( operation );
 				operationLeft = NEW<COperation>( OT_JumpNonZero );
+				returnValue = 0;
 				break;
 			}
 		}
