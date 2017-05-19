@@ -101,6 +101,11 @@ namespace CodeGeneration {
 		IRTree::RELOP opType = node->GetBinop();
 		std::shared_ptr<IRTree::IRTExpression> left = node->GetLeft();
 		std::shared_ptr<IRTree::IRTExpression> right = node->GetRight();
+		universalBinopVisit( opType, left, right );
+	}
+
+	void CCodeGeneratorVisitor::universalBinopVisit( IRTree::RELOP opType, std::shared_ptr<IRTree::IRTExpression> left, std::shared_ptr<IRTree::IRTExpression> right )
+	{
 		std::shared_ptr<IRTree::IConst> leftIConst = DYNAMIC_CAST<IRTree::IConst>( left );
 		std::shared_ptr<IRTree::IConst> rightIConst = DYNAMIC_CAST<IRTree::IConst>( right );
 		std::shared_ptr<COperation> operation;
@@ -316,10 +321,11 @@ namespace CodeGeneration {
 								assert( false );
 								return;
 						}
+						std::shared_ptr<CTemp> leftRes = visitExpression( binop->GetLeft() );
 						returnValue = newTemp();
 						operation->GetArguments().push_back( returnValue );
 						operation->GetDefinedTemps().push_back( returnValue );
-						operation->GetArguments().push_back( visitExpression( binop->GetLeft() ) );
+						operation->GetArguments().push_back( leftRes );
 						operation->GetConstants().push_back( rightConst->GetValue() );
 						code.push_back( operation );
 						return;
@@ -427,8 +433,36 @@ namespace CodeGeneration {
 				std::shared_ptr<IRTree::IRTEConst> memConst = DYNAMIC_CAST<IRTree::IRTEConst>( destMemBinop->GetRight() );
 				assert( memConst != 0 );
 				operation = NEW<COperation>( OT_MoveMemToFramePointerPlusConst );
-				std::shared_ptr<CTemp> sourceTemp = visitExpression( sourceMem->GetExp() );
-				operation->GetArguments().push_back( sourceTemp );
+				std::shared_ptr<IRTree::IRTEBinop> sourceBinop = DYNAMIC_CAST<IRTree::IRTEBinop>( sourceMem->GetExp() );
+				if( sourceBinop ) {
+					std::shared_ptr<IRTree::IAccess> sourceBinopAccess = DYNAMIC_CAST<IRTree::IAccess>( sourceBinop->GetLeft() );
+					std::shared_ptr<IRTree::IRTEBinop> sourceBinopBinop = DYNAMIC_CAST<IRTree::IRTEBinop>( sourceBinop->GetLeft() );
+					if( sourceBinopAccess ) {
+						std::shared_ptr<IRTree::IConst> sourceBinopConst = DYNAMIC_CAST<IRTree::IConst>( sourceBinop->GetRight() );
+						assert( sourceBinopAccess != 0 );
+						assert( sourceBinopConst != 0 );
+						assert( sourceBinopAccess->GetName() == IRTree::CFrame::FramePointerName );
+						std::shared_ptr<COperation> loadOperation = NEW<COperation>( OT_MemFramePointerPlusConst );
+						std::shared_ptr<CTemp> temp = newTemp();
+						loadOperation->GetArguments().push_back( temp );
+						loadOperation->GetDefinedTemps().push_back( temp );
+						loadOperation->GetConstants().push_back( sourceBinopConst->GetValueAsInt() );
+						code.push_back( loadOperation );
+						operation->GetArguments().push_back( temp );
+					} else {
+						std::shared_ptr<CTemp> address = visitExpression( sourceBinop );
+						std::shared_ptr<COperation> loadOperation = NEW<COperation>( OT_MemReg );
+						std::shared_ptr<CTemp> temp = newTemp();
+						loadOperation->GetArguments().push_back( temp );
+						loadOperation->GetArguments().push_back( address );
+						loadOperation->GetDefinedTemps().push_back( temp );
+						code.push_back( loadOperation );
+						operation->GetArguments().push_back( temp );
+					}
+				} else {
+					std::shared_ptr<CTemp> sourceTemp = visitExpression( sourceMem->GetExp() );
+					operation->GetArguments().push_back( sourceTemp );
+				}
 				operation->GetConstants().push_back( memConst->GetValue() );
 			} else {
 				std::shared_ptr<IRTree::IAccess> destAccess = DYNAMIC_CAST<IRTree::IAccess>( distMem->GetExp() );
@@ -690,8 +724,16 @@ namespace CodeGeneration {
 				operationLeft = NEW<COperation>( OT_JG );
 				break;
 			default:
-				assert( false );
+			{
+				universalBinopVisit( relop, expLeft, expRight );
+				std::shared_ptr<COperation> operation = NEW<COperation>( OT_CMPC );
+				operation->GetArguments().push_back( returnValue );
+				operation->GetConstants().push_back( 0 );
+				code.push_back( operation );
+				operationLeft = NEW<COperation>( OT_JumpNonZero );
+				returnValue = 0;
 				break;
+			}
 		}
 
 		operationLeft->GetJumpPoints().push_back( labelLeft );

@@ -68,6 +68,7 @@ namespace CodeGeneration {
 
 		void startVisit();
 		void startMethod();
+		void universalBinopVisit( IRTree::RELOP opType, std::shared_ptr<IRTree::IRTExpression> left, std::shared_ptr<IRTree::IRTExpression> right );
 	};
 
 } // namespace CodeGeneration
