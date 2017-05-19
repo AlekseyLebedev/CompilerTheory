@@ -445,6 +445,8 @@ namespace CodeGeneration {
 					loadOperation->GetArguments().push_back( temp );
 					loadOperation->GetDefinedTemps().push_back( temp );
 					loadOperation->GetConstants().push_back( sourceBinopConst->GetValueAsInt() );
+					code.push_back( loadOperation );
+					operation->GetArguments().push_back( temp );
 				} else {
 					std::shared_ptr<CTemp> sourceTemp = visitExpression( sourceMem->GetExp() );
 					operation->GetArguments().push_back( sourceTemp );
