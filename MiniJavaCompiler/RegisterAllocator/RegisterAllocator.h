@@ -21,7 +21,8 @@ namespace RegAlloc {
 		void initialisation();
 		void initialisation( CSharedPtrVector<IInstruction>& code );
 
-		void work();
+		//-1 -- если всё ОК
+		int work();
 
 		std::map<int, int>& getColors();
 
@@ -53,7 +54,8 @@ namespace RegAlloc {
 
 		void createTableWithLifeTime();
 		void createInteractionGraph();
-		void simplify( unsigned int numberOfColors );
+		//-1 -- если всё ОК
+		int simplify( unsigned int numberOfColors );
 		void doSomethingWithInteractionGraph();
 
 		//void generateTempExample();
