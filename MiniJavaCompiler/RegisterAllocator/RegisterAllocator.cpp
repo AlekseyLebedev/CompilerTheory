@@ -260,9 +260,9 @@ namespace RegAlloc {
 			}
 
 			if( availableNumbers.begin() == availableNumbers.end() ) {
-				std::cout << "Error: no available color!\n";
 				
-				//тут должен происходить сброс в стек
+				// тут должен происходить сброс в стек
+				// Смотри Printer.cpp, всё происходт там, тут лишь сообщается о пробемной переменной
 				
 				answer = top.first;
 				break;

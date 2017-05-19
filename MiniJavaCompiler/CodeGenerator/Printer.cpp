@@ -54,8 +54,8 @@ namespace CodeGeneration
 		}
 			
 		for( size_t i = 0; i < commands.size(); i++ ) {
-			bool isRepeat = false;
-			while( !isRepeat ) {
+			bool isRepeat = true;
+			while( isRepeat ) {
 				isRepeat = false;
 				
 				RegAlloc::RegisterAllocator regAlloc;
@@ -64,6 +64,14 @@ namespace CodeGeneration
 				if( result == -1 ) {
 					assemblePrinter.PrintBlock( commands[i], regAlloc.getColors() );
 				} else {
+
+#define DEBUG_MODE
+#ifdef DEBUG_MODE
+					std::cerr << "Цветов не хватает!\n";
+					exit(1);
+					// assemblePrinter.PrintBlock( commands[i], regAlloc.getColors() ); //or
+#endif //DEBUG_MODE
+
 					isRepeat = true;
 					
 					// В result -- переменная, на которой произошла ошибка (которой не хватило цвета)
@@ -89,11 +97,17 @@ namespace CodeGeneration
 					// Берём информацию о "плохой" переменной.
 					std::shared_ptr<IAccess> info = frame->GetDataInfo( result );
 					
-					// Меняем код...
-					// Тут должно появиться смещение...
-					frame->InsertVariable( result, info, true );
-
+					// Меняем frame...
 					
+					frame->InsertTemp( result ); //or InsertTemp( result, info ); ???
+					
+					// Перенаправить команды load и read, дабы разгрузить упоминание переменной
+
+					// MAIN TODO
+
+					// operation->GetDefinedTemps().push_back(returnValue); //from CodeGenerationVisitor
+					// code.push_back(operation);
+
 					// Генеририруем новый код
 					codeGeneratorVisitor.SetFrame( frame );
 					CodeGeneration::CSharedPtrVector<CodeGeneration::IInstruction> code = codeGeneratorVisitor.GetCode();

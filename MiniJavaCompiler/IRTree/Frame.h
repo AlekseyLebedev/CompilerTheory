@@ -13,6 +13,7 @@ namespace IRTree {
 	public:
 		CFrame( int className, std::shared_ptr<Label> label );
 		void InsertVariable( int name, std::shared_ptr<IAccess> access, bool argument );
+		void InsertTemp( int name ); // TODO
 		std::shared_ptr<IAccess> GetDataInfo( int name );
 		std::shared_ptr<Label> GetLabel();
 		std::shared_ptr<IAccess> GetThisAccess();

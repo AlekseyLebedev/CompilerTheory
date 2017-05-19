@@ -109,8 +109,7 @@ namespace CodeGeneration {
 		std::shared_ptr<IRTree::IConst> leftIConst = DYNAMIC_CAST<IRTree::IConst>( left );
 		std::shared_ptr<IRTree::IConst> rightIConst = DYNAMIC_CAST<IRTree::IConst>( right );
 		std::shared_ptr<COperation> operation;
-		std::shared_ptr<CTemp> resultTemp;
-		resultTemp = newTemp();
+		std::shared_ptr<CTemp> resultTemp = newTemp();
 
 		// 1 случай: оба константы
 		if( leftIConst && rightIConst ) {
