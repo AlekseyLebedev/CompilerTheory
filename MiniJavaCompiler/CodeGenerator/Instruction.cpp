@@ -90,6 +90,9 @@ namespace CodeGeneration {
 					break;
 			}
 		}
+		assert( constIndex == constants.size() );
+		assert( jumpIndex == jumpPoints.size() );
+		assert( tempIndex == arguments.size() || instructionCode == OT_Call );
 		return result.str();
 	}
 
