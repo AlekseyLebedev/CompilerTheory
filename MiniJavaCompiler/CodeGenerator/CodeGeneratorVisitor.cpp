@@ -101,6 +101,11 @@ namespace CodeGeneration {
 		IRTree::RELOP opType = node->GetBinop();
 		std::shared_ptr<IRTree::IRTExpression> left = node->GetLeft();
 		std::shared_ptr<IRTree::IRTExpression> right = node->GetRight();
+		universalBinopVisit( opType, left, right );
+	}
+
+	void CCodeGeneratorVisitor::universalBinopVisit( IRTree::RELOP opType, std::shared_ptr<IRTree::IRTExpression> left, std::shared_ptr<IRTree::IRTExpression> right )
+	{
 		std::shared_ptr<IRTree::IConst> leftIConst = DYNAMIC_CAST<IRTree::IConst>( left );
 		std::shared_ptr<IRTree::IConst> rightIConst = DYNAMIC_CAST<IRTree::IConst>( right );
 		std::shared_ptr<COperation> operation;
@@ -434,10 +439,10 @@ namespace CodeGeneration {
 					assert( sourceBinopAccess != 0 );
 					assert( sourceBinopConst != 0 );
 					assert( sourceBinopAccess->GetName() == IRTree::CFrame::FramePointerName );
-					std::shared_ptr<COperation> loadOperation = NEW<COperation>(OT_MemFramePointerPlusConst);
+					std::shared_ptr<COperation> loadOperation = NEW<COperation>( OT_MemFramePointerPlusConst );
 					std::shared_ptr<CTemp> temp = newTemp();
 					loadOperation->GetArguments().push_back( temp );
-					loadOperation->GetDefinedTemps().push_back(temp);
+					loadOperation->GetDefinedTemps().push_back( temp );
 					loadOperation->GetConstants().push_back( sourceBinopConst->GetValueAsInt() );
 				} else {
 					std::shared_ptr<CTemp> sourceTemp = visitExpression( sourceMem->GetExp() );
@@ -704,8 +709,15 @@ namespace CodeGeneration {
 				operationLeft = NEW<COperation>( OT_JG );
 				break;
 			default:
-				assert( false );
+			{
+				universalBinopVisit( relop, expLeft, expRight );
+				std::shared_ptr<COperation> operation = NEW<COperation>( OT_CMPC );
+				operation->GetArguments().push_back( DYNAMIC_CAST<COperation>( code.back() )->GetArguments().front() );
+				operation->GetConstants().push_back( 0 );
+				code.push_back( operation );
+				operationLeft = NEW<COperation>( OT_JumpNonZero );
 				break;
+			}
 		}
 
 		operationLeft->GetJumpPoints().push_back( labelLeft );
