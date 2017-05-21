@@ -356,10 +356,11 @@ namespace CodeGeneration {
 						return;
 					} else {
 						std::shared_ptr<COperation> operation = NEW<COperation>( OT_MemReg );
+						std::shared_ptr<CTemp> bufferTemp = visitExpression(expression);
 						returnValue = newTemp();
 						operation->GetDefinedTemps().push_back( returnValue );
-						operation->GetArguments().push_back( returnValue );
-						operation->GetArguments().push_back( visitExpression( expression ) );
+						operation->GetArguments().push_back( returnValue );						
+						operation->GetArguments().push_back(bufferTemp);
 						code.push_back( operation );
 						return;
 					}
