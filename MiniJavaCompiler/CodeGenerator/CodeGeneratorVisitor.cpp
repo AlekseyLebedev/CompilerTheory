@@ -471,7 +471,7 @@ namespace CodeGeneration {
 					operation->GetArguments().push_back( sourceTemp );
 				}
 				operation->GetConstants().push_back( memConst->GetValue() );
-			} else if (else {
+			} else {
 				std::shared_ptr<IRTree::IAccess> destAccess = DYNAMIC_CAST<IRTree::IAccess>( distMem->GetExp() );
 				if( destAccess ) {
 					assert( destAccess->GetName() == IRTree::CFrame::ReturnName );
