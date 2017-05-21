@@ -427,7 +427,14 @@ namespace CodeGeneration {
 		std::shared_ptr<IRTree::IRTEMem> sourceMem = DYNAMIC_CAST<IRTree::IRTEMem>( source );
 		std::shared_ptr<COperation> operation;
 		if( sourceMem && distMem ) {
-			std::shared_ptr<IRTree::IRTEBinop> destMemBinop = DYNAMIC_CAST<IRTree::IRTEBinop>( distMem->GetExp() );
+			std::shared_ptr<IRTree::IRTEBinop> destMemBinop = DYNAMIC_CAST<IRTree::IRTEBinop>( distMem->GetExp() );			
+			// TODO: Здесь не обработана такая ситуация:
+			// destMemBinop->GetLeft() == Mem
+			// destMemBInop->GetRight() == Binop_Plus
+			// аналогично srcMemBinop != 0, потомки такие же
+			// Это типо MOVE одного элемента массива в другой
+			// Должен раскрываться в загрузку элемента в буффер и выгрузку его в другой элемент
+			// т.е. комбинация STORE-LOAD
 			if( destMemBinop && (DYNAMIC_CAST<IRTree::IAccess>( destMemBinop->GetLeft() ) != 0) ) {
 				assert( destMemBinop->GetBinop() == IRTree::BINOP_PLUS );
 				std::shared_ptr<IRTree::IRTEConst> memConst = DYNAMIC_CAST<IRTree::IRTEConst>( destMemBinop->GetRight() );
@@ -464,7 +471,7 @@ namespace CodeGeneration {
 					operation->GetArguments().push_back( sourceTemp );
 				}
 				operation->GetConstants().push_back( memConst->GetValue() );
-			} else {
+			} else if (else {
 				std::shared_ptr<IRTree::IAccess> destAccess = DYNAMIC_CAST<IRTree::IAccess>( distMem->GetExp() );
 				if( destAccess ) {
 					assert( destAccess->GetName() == IRTree::CFrame::ReturnName );
