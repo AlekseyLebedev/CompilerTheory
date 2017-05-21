@@ -1,4 +1,4 @@
-#include <string>
+﻿#include <string>
 #include <cassert>
 #include <iostream>
 #include <fstream>
@@ -52,11 +52,72 @@ namespace CodeGeneration
 				commands.back().push_back( code[i] );
 			}
 		}
+			
 		for( size_t i = 0; i < commands.size(); i++ ) {
-			RegAlloc::RegisterAllocator regAlloc;
-			regAlloc.initialisation( commands[i] );
-			regAlloc.work();
-			assemblePrinter.PrintBlock( commands[i], regAlloc.getColors() );
+			bool isRepeat = true;
+			while( isRepeat ) {
+				isRepeat = false;
+				
+				RegAlloc::RegisterAllocator regAlloc;
+				regAlloc.initialisation( commands[i] );
+				int result = regAlloc.work();
+				if( result == -1 ) {
+					assemblePrinter.PrintBlock( commands[i], regAlloc.getColors() );
+				} else {
+
+#define DEBUG_MODE
+#ifdef DEBUG_MODE
+					std::cerr << "Цветов не хватает!\n";
+					exit(1);
+					// assemblePrinter.PrintBlock( commands[i], regAlloc.getColors() ); //or
+#endif //DEBUG_MODE
+
+					isRepeat = true;
+					
+					// В result -- переменная, на которой произошла ошибка (которой не хватило цвета)
+				
+					// Нужно: Записать в локальную переменную на стеке...
+
+					// -------
+					// start
+					// -------
+					
+					CCodeGeneratorVisitor codeGeneratorVisitor;
+
+					// Ищем блок, в котором произошла ошибка.
+					int idx = i;
+					auto block = basisBlocks.begin();
+					while( idx > 0 ) {
+						++block;
+						--idx;
+					}
+
+					auto frame = block->second;
+					
+					// Берём информацию о "плохой" переменной.
+					std::shared_ptr<IAccess> info = frame->GetDataInfo( result );
+					
+					// Меняем frame...
+					
+					frame->InsertTemp( result ); //or InsertTemp( result, info ); ???
+					
+					// Перенаправить команды load и read, дабы разгрузить упоминание переменной
+
+					// MAIN TODO
+
+					// operation->GetDefinedTemps().push_back(returnValue); //from CodeGenerationVisitor
+					// code.push_back(operation);
+
+					// Генеририруем новый код
+					codeGeneratorVisitor.SetFrame( frame );
+					CodeGeneration::CSharedPtrVector<CodeGeneration::IInstruction> code = codeGeneratorVisitor.GetCode();
+					commands[i] = code;
+
+					// -------
+					// end
+					// -------
+				}
+			}
 		}
 
 		assemblePrinter.Close();

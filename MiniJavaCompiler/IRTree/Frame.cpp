@@ -24,6 +24,11 @@ namespace IRTree {
 		}
 	}
 
+	void CFrame::InsertTemp( int name )
+	{
+		// TODO
+	}
+
 	std::shared_ptr<IAccess> CFrame::GetDataInfo( int name )
 	{
 		auto iter = variables.find( name );

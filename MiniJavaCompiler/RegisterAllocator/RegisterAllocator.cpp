@@ -88,7 +88,7 @@ namespace RegAlloc {
 		}
 	}
 
-	void RegisterAllocator::work()
+	int RegisterAllocator::work()
 	{
 
 		createTableWithLifeTime();
@@ -96,8 +96,7 @@ namespace RegAlloc {
 
 		doSomethingWithInteractionGraph();
 
-		simplify( 5 );
-
+		return simplify( 5 );
 	}
 
 	std::map<int, int>& RegisterAllocator::getColors()
@@ -181,8 +180,10 @@ namespace RegAlloc {
 		}
 	}
 
-	void RegisterAllocator::simplify( unsigned int numberOfColors )
+	int RegisterAllocator::simplify( unsigned int numberOfColors )
 	{
+		int answer = -1;
+
 		// Для подсчёта соседей.
 		std::map<int, int> numbersOfEdges;
 		//Стек для алгоритма раскраски, bool -- для move-инструкций (если делать оптимизацию с ними).
@@ -259,12 +260,17 @@ namespace RegAlloc {
 			}
 
 			if( availableNumbers.begin() == availableNumbers.end() ) {
-				std::cout << "Error: no available color!\n";
-				//тут должен происходить сброс в стек
+				
+				// тут должен происходить сброс в стек
+				// Смотри Printer.cpp, всё происходт там, тут лишь сообщается о пробемной переменной
+				
+				answer = top.first;
 				break;
 			}
 			colors.insert( std::make_pair( top.first, *availableNumbers.begin() ) );
 		}
+
+		return answer;
 	}
 
 	void RegisterAllocator::doSomethingWithInteractionGraph()

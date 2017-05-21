@@ -1,4 +1,4 @@
-#include <cassert>
+п»ї#include <cassert>
 #include <memory>
 
 #include "CodeGeneratorVisitor.h"
@@ -34,7 +34,7 @@ namespace CodeGeneration {
 		}
 		callArguments.push_back( resultTemp );
 
-		// На самом деле все равно, что положить в returnValue. Это не используется. На всякий случай, поддержал правильную семантику оператора запятая
+		// РќР° СЃР°РјРѕРј РґРµР»Рµ РІСЃРµ СЂР°РІРЅРѕ, С‡С‚Рѕ РїРѕР»РѕР¶РёС‚СЊ РІ returnValue. Р­С‚Рѕ РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ. РќР° РІСЃСЏРєРёР№ СЃР»СѓС‡Р°Р№, РїРѕРґРґРµСЂР¶Р°Р» РїСЂР°РІРёР»СЊРЅСѓСЋ СЃРµРјР°РЅС‚РёРєСѓ РѕРїРµСЂР°С‚РѕСЂР° Р·Р°РїСЏС‚Р°СЏ
 		returnValue = visitExpression( node->GetTail() );
 		if( returnValue == 0 ) {
 			returnValue = resultTemp;
@@ -44,14 +44,14 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEConst * node )
 	{
 		startMethod();
-		// Должны найти это при разборе случаев сверху
+		// Р”РѕР»Р¶РЅС‹ РЅР°Р№С‚Рё СЌС‚Рѕ РїСЂРё СЂР°Р·Р±РѕСЂРµ СЃР»СѓС‡Р°РµРІ СЃРІРµСЂС…Сѓ
 		assert( false );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEName * node )
 	{
 		startMethod();
-		// Предположительно сюда не заходим, но это не факт
+		// РџСЂРµРґРїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕ СЃСЋРґР° РЅРµ Р·Р°С…РѕРґРёРј, РЅРѕ СЌС‚Рѕ РЅРµ С„Р°РєС‚
 		assert( false ); //TODO
 	}
 
@@ -109,10 +109,9 @@ namespace CodeGeneration {
 		std::shared_ptr<IRTree::IConst> leftIConst = DYNAMIC_CAST<IRTree::IConst>( left );
 		std::shared_ptr<IRTree::IConst> rightIConst = DYNAMIC_CAST<IRTree::IConst>( right );
 		std::shared_ptr<COperation> operation;
-		std::shared_ptr<CTemp> resultTemp;
-		resultTemp = newTemp();
+		std::shared_ptr<CTemp> resultTemp = newTemp();
 
-		// 1 случай: оба константы
+		// 1 СЃР»СѓС‡Р°Р№: РѕР±Р° РєРѕРЅСЃС‚Р°РЅС‚С‹
 		if( leftIConst && rightIConst ) {
 			operation = NEW<COperation>( OT_LoadConst );
 			if( opType >= IRTree::BINOP_PLUS && opType <= IRTree::BINOP_MOD ) {
@@ -129,7 +128,7 @@ namespace CodeGeneration {
 				operation->GetArguments().push_back( resultTemp );
 			}
 		}
-		// 2 случай: один из аргументов константа, другой - регистр
+		// 2 СЃР»СѓС‡Р°Р№: РѕРґРёРЅ РёР· Р°СЂРіСѓРјРµРЅС‚РѕРІ РєРѕРЅСЃС‚Р°РЅС‚Р°, РґСЂСѓРіРѕР№ - СЂРµРіРёСЃС‚СЂ
 		else if( (!leftIConst && rightIConst) || (leftIConst && !rightIConst) ) {
 
 			std::shared_ptr<CTemp> temp;
@@ -218,7 +217,7 @@ namespace CodeGeneration {
 				operation->GetConstants().push_back( constInt );
 			}
 		}
-		// 3 случай: оба регистры
+		// 3 СЃР»СѓС‡Р°Р№: РѕР±Р° СЂРµРіРёСЃС‚СЂС‹
 		else {
 			assert( !rightIConst );
 			assert( !leftIConst );
@@ -415,7 +414,7 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEEseq * node )
 	{
 		startMethod();
-		// Этих узлов быть не должно
+		// Р­С‚РёС… СѓР·Р»РѕРІ Р±С‹С‚СЊ РЅРµ РґРѕР»Р¶РЅРѕ
 		assert( false );
 	}
 
@@ -534,7 +533,7 @@ namespace CodeGeneration {
 						assert( false );
 					}
 				} else  if( distExpConst ) {
-					assert( false ); // TODO: очень странно записывать что-то в константу
+					assert( false ); // TODO: РѕС‡РµРЅСЊ СЃС‚СЂР°РЅРЅРѕ Р·Р°РїРёСЃС‹РІР°С‚СЊ С‡С‚Рѕ-С‚Рѕ РІ РєРѕРЅСЃС‚Р°РЅС‚Сѓ
 					operation = NEW<COperation>( OT_StoreConst );
 					operation->GetConstants().push_back( distExpConst->GetValue() );
 				} else {
@@ -553,7 +552,7 @@ namespace CodeGeneration {
 			assert( operation != 0 );
 			std::shared_ptr<IRTree::IConst> constExpr = DYNAMIC_CAST<IRTree::IConst>( source );
 			if( constExpr != 0 ) {
-				// TODO: костыль, нужно переделать
+				// TODO: РєРѕСЃС‚С‹Р»СЊ, РЅСѓР¶РЅРѕ РїРµСЂРµРґРµР»Р°С‚СЊ
 				std::shared_ptr<COperation> kostyl = NEW<COperation>( OT_LoadConst );
 				kostyl->GetArguments().push_back( newTemp() );
 				kostyl->GetDefinedTemps().push_back( kostyl->GetArguments()[0] );
@@ -585,13 +584,13 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTSExp * node )
 	{
 		startMethod();
-		// Тут нужно что-то делать только если внутри Call (оптимизация)
-		// TODO: а вдруг я не прав? Вроде бы ничего другого не могло вызвать побочных эффектов
+		// РўСѓС‚ РЅСѓР¶РЅРѕ С‡С‚Рѕ-С‚Рѕ РґРµР»Р°С‚СЊ С‚РѕР»СЊРєРѕ РµСЃР»Рё РІРЅСѓС‚СЂРё Call (РѕРїС‚РёРјРёР·Р°С†РёСЏ)
+		// TODO: Р° РІРґСЂСѓРі СЏ РЅРµ РїСЂР°РІ? Р’СЂРѕРґРµ Р±С‹ РЅРёС‡РµРіРѕ РґСЂСѓРіРѕРіРѕ РЅРµ РјРѕРіР»Рѕ РІС‹Р·РІР°С‚СЊ РїРѕР±РѕС‡РЅС‹С… СЌС„С„РµРєС‚РѕРІ
 		int codeSize = code.size();
 		hasCall = false;
 		visitExpression( node->GetExp() );
 		if( !hasCall ) {
-			// Оптимизаяци: удаляем лишнее, если не было Call внутри.
+			// РћРїС‚РёРјРёР·Р°С†РёСЏ: СѓРґР°Р»СЏРµРј Р»РёС€РЅРµРµ, РµСЃР»Рё РЅРµ Р±С‹Р»Рѕ Call РІРЅСѓС‚СЂРё.
 			code.erase( code.begin() + codeSize, code.end() );
 		}
 		hasCall = false;
@@ -640,7 +639,7 @@ namespace CodeGeneration {
 		std::shared_ptr<IRTree::IConst> leftIConst = DYNAMIC_CAST<IRTree::IConst>( expLeft );
 		std::shared_ptr<IRTree::IConst> rightIConst = DYNAMIC_CAST<IRTree::IConst>( expRight );
 
-		// если оба константы 
+		// РµСЃР»Рё РѕР±Р° РєРѕРЅСЃС‚Р°РЅС‚С‹ 
 		if( leftIConst && rightIConst ) {
 			std::shared_ptr<IRTree::IRTEConst> leftConst = DYNAMIC_CAST<IRTree::IRTEConst>( leftIConst );
 			std::shared_ptr<IRTree::IRTEConst> rightConst = DYNAMIC_CAST<IRTree::IRTEConst>( rightIConst );
@@ -681,9 +680,9 @@ namespace CodeGeneration {
 			code.push_back( operation );
 			return;
 
-		} // если одна константа // считаем что всегда константа справа типа сравнение if( a < 5 )
+		} // РµСЃР»Рё РѕРґРЅР° РєРѕРЅСЃС‚Р°РЅС‚Р° // СЃС‡РёС‚Р°РµРј С‡С‚Рѕ РІСЃРµРіРґР° РєРѕРЅСЃС‚Р°РЅС‚Р° СЃРїСЂР°РІР° С‚РёРїР° СЃСЂР°РІРЅРµРЅРёРµ if( a < 5 )
 		else if( (!leftIConst && rightIConst) || (leftIConst && !rightIConst) ) {
-			// теперь константа всегда справа
+			// С‚РµРїРµСЂСЊ РєРѕРЅСЃС‚Р°РЅС‚Р° РІСЃРµРіРґР° СЃРїСЂР°РІР°
 			if( leftIConst && !rightIConst ) {
 				std::swap( leftIConst, rightIConst );
 				relop = exchangeOperator( relop );
@@ -694,7 +693,7 @@ namespace CodeGeneration {
 			operation->GetConstants().push_back( rightConst->GetValueAsInt() );
 			code.push_back( operation );
 
-		} // если нет констант
+		} // РµСЃР»Рё РЅРµС‚ РєРѕРЅСЃС‚Р°РЅС‚
 		else {
 			std::shared_ptr<COperation> operation = NEW<COperation>( OT_CMP );
 			operation->GetArguments().push_back( visitExpression( expLeft ) );
@@ -761,14 +760,14 @@ namespace CodeGeneration {
 	void CCodeGeneratorVisitor::Visit( const IRTree::IAccess * node )
 	{
 		startMethod();
-		// Должны найти это при разборе случаев сверху
+		// Р”РѕР»Р¶РЅС‹ РЅР°Р№С‚Рё СЌС‚Рѕ РїСЂРё СЂР°Р·Р±РѕСЂРµ СЃР»СѓС‡Р°РµРІ СЃРІРµСЂС…Сѓ
 		assert( false );
 	}
 
 	void CCodeGeneratorVisitor::Visit( const IRTree::IRTEConstBool * node )
 	{
 		startMethod();
-		// Должны найти это при разборе случаев сверху
+		// Р”РѕР»Р¶РЅС‹ РЅР°Р№С‚Рё СЌС‚Рѕ РїСЂРё СЂР°Р·Р±РѕСЂРµ СЃР»СѓС‡Р°РµРІ СЃРІРµСЂС…Сѓ
 		assert( false );
 	}
 
