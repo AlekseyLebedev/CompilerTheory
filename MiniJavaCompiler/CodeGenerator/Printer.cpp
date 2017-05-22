@@ -112,9 +112,18 @@ namespace CodeGeneration
 					code.push_back( operation );
 
 					// Поиск упоминаний, где перенаправить вывод
-					// operation = std::make_shared<COperation>( OT_MoveFramePointerPlusConstToMem );
-					// operation->GetArguments().push_back( ??? );
-					// operation->GetConstants().push_back( ??? );
+					size_t size = code.size();
+					for( size_t idx = 0; idx < size; ++idx ) {
+						auto operation = std::dynamic_pointer_cast<COperation>( code[idx] );
+						// Задать условие
+						// if( operation->GetInstructionCode() == OT_StoreToFramePointerPlusConst 
+							// && старый ли это темп) {
+							// operationChange = std::make_shared<COperation>( OT_MoveFramePointerPlusConstToMem );
+							// operationChange->GetArguments().push_back( ??? );
+							// operationChange->GetConstants().push_back( ??? );
+							// code.push_back( operationChange );
+						// }
+					}
 
 					commands[i] = code;
 
