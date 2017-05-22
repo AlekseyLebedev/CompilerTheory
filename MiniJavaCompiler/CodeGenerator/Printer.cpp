@@ -68,8 +68,9 @@ namespace CodeGeneration
 #define DEBUG_MODE
 #ifdef DEBUG_MODE
 					std::cerr << "Цветов не хватает!\n";
-					exit(1);
-					// assemblePrinter.PrintBlock( commands[i], regAlloc.getColors() ); //or
+					// exit(1);
+					assemblePrinter.PrintBlock( commands[i], regAlloc.getColors() ); //or
+					break; // or
 #endif //DEBUG_MODE
 
 					isRepeat = true;
@@ -81,8 +82,6 @@ namespace CodeGeneration
 					// -------
 					// start
 					// -------
-					
-					CCodeGeneratorVisitor codeGeneratorVisitor;
 
 					// Ищем блок, в котором произошла ошибка.
 					int idx = i;
@@ -98,19 +97,25 @@ namespace CodeGeneration
 					std::shared_ptr<IAccess> info = frame->GetDataInfo( result );
 					
 					// Меняем frame...
-					
-					frame->InsertTemp( result ); //or InsertTemp( result, info ); ???
+					int frameNumber = frame->InsertTemp( result, info );
 					
 					// Перенаправить команды load и read, дабы разгрузить упоминание переменной
 
-					// MAIN TODO
-
-					// operation->GetDefinedTemps().push_back(returnValue); //from CodeGenerationVisitor
-					// code.push_back(operation);
-
-					// Генеририруем новый код
+					// Генеририруем новый код с новым темпом.
+					CCodeGeneratorVisitor codeGeneratorVisitor;
 					codeGeneratorVisitor.SetFrame( frame );
 					CodeGeneration::CSharedPtrVector<CodeGeneration::IInstruction> code = codeGeneratorVisitor.GetCode();
+
+					std::shared_ptr<COperation> operation = std::make_shared<COperation>( OT_StoreToFramePointerPlusConst );
+					int offset = 4 * frame->VariableOffset() + 1 + frameNumber; // Формула от Лёши
+					operation->GetConstants().push_back( offset );
+					code.push_back( operation );
+
+					// Поиск упоминаний, где перенаправить вывод
+					// operation = std::make_shared<COperation>( OT_MoveFramePointerPlusConstToMem );
+					// operation->GetArguments().push_back( ??? );
+					// operation->GetConstants().push_back( ??? );
+
 					commands[i] = code;
 
 					// -------
