@@ -24,9 +24,11 @@ namespace IRTree {
 		}
 	}
 
-	void CFrame::InsertTemp( int name )
+	int CFrame::InsertTemp( int name, std::shared_ptr<IAccess> info )
 	{
-		// TODO
+		variables.insert(std::pair<int, std::shared_ptr<IAccess>>(name, info));
+
+		return tempCounter++;
 	}
 
 	std::shared_ptr<IAccess> CFrame::GetDataInfo( int name )
