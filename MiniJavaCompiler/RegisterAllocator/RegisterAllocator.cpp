@@ -98,6 +98,7 @@ namespace RegAlloc {
 
 		doSomethingWithInteractionGraph();
 
+		removeLoops();
 		return simplify( 5 );
 	}
 
@@ -179,6 +180,20 @@ namespace RegAlloc {
 					}
 				}
 			}
+		}
+	}
+
+	void RegisterAllocator::removeLoops()
+	{
+		std::vector<std::pair<std::pair<int, int>, bool>> loops;
+		for (auto iter = interactionGraph.begin(); iter != interactionGraph.end(); iter++) {
+			auto node = iter->first;
+			if (node.first == node.second) {
+				loops.push_back(*iter);
+			}
+		}
+		for (int i = 0; i < loops.size(); i++) {
+			interactionGraph.erase(loops[i]);
 		}
 	}
 
