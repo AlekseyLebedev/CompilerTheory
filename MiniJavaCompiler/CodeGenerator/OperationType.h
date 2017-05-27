@@ -54,10 +54,9 @@ namespace CodeGeneration {
 		OT_StoreConst, // Store c одной константой
 		OT_StoreTemp, // Store c одним Temp
 		OT_StoreTemps, // Store с двумя Temp 
-		OT_LoadTemp, // Запоминаем регистр в temp
-
-		OT_Push, // 
-		OT_Pop //
+		OT_Push, // Push на стэк
+		OT_Pop, // Pop со стэка
+		OT_StoreRegisters // Служебная команда сохранения регистров. Сложно развертывается. В ассеблере нет
 	};
 
 	std::wstring GetOperationString( TOperationType type );

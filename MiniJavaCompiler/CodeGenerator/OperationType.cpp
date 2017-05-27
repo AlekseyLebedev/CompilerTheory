@@ -50,8 +50,6 @@ namespace CodeGeneration {
 				return L"DIVI  ' ! '";
 			case OT_LoadConst:
 				return L"LOAD ' !";
-			case OT_LoadTemp:
-				return L"LOAD ' '";
 			case OT_AndTemps:
 				return L"AND ' ' '";
 			case OT_OrTemps:
@@ -106,6 +104,10 @@ namespace CodeGeneration {
 				return L"STORE M['] '";
 			case OT_StoreTemps:
 				return L"STPRE ' '";
+			case OT_Push:
+				return L"PUSH '";
+			case OT_Pop:
+				return L"POP '";
 			default:
 				assert( false );
 				break;

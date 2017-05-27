@@ -355,11 +355,11 @@ namespace CodeGeneration {
 						return;
 					} else {
 						std::shared_ptr<COperation> operation = NEW<COperation>( OT_MemReg );
-						std::shared_ptr<CTemp> bufferTemp = visitExpression(expression);
+						std::shared_ptr<CTemp> bufferTemp = visitExpression( expression );
 						returnValue = newTemp();
 						operation->GetDefinedTemps().push_back( returnValue );
-						operation->GetArguments().push_back( returnValue );						
-						operation->GetArguments().push_back(bufferTemp);
+						operation->GetArguments().push_back( returnValue );
+						operation->GetArguments().push_back( bufferTemp );
 						code.push_back( operation );
 						return;
 					}
@@ -403,7 +403,9 @@ namespace CodeGeneration {
 		operation->GetArguments().push_back( returnValue );
 
 		for( size_t i = 0; i < callArguments.size(); i++ ) {
-			operation->GetArguments().push_back( callArguments[i] );
+			std::shared_ptr<COperation> pushOperation = NEW<COperation>( OT_Push );
+			pushOperation->GetArguments().push_back( callArguments[i] );
+			code.push_back( pushOperation );
 		}
 		code.push_back( operation );
 
@@ -427,7 +429,7 @@ namespace CodeGeneration {
 		std::shared_ptr<IRTree::IRTEMem> sourceMem = DYNAMIC_CAST<IRTree::IRTEMem>( source );
 		std::shared_ptr<COperation> operation;
 		if( sourceMem && distMem ) {
-			std::shared_ptr<IRTree::IRTEBinop> destMemBinop = DYNAMIC_CAST<IRTree::IRTEBinop>( distMem->GetExp() );			
+			std::shared_ptr<IRTree::IRTEBinop> destMemBinop = DYNAMIC_CAST<IRTree::IRTEBinop>( distMem->GetExp() );
 			// TODO: Здесь не обработана такая ситуация:
 			// destMemBinop->GetLeft() == Mem
 			// destMemBInop->GetRight() == Binop_Plus
@@ -574,9 +576,7 @@ namespace CodeGeneration {
 			std::shared_ptr<IRTree::IRTETemp> sourceTemp = DYNAMIC_CAST<IRTree::IRTETemp>( source );
 			if( dstTemp ) {
 				std::shared_ptr<CTemp> temp = dstTemp->GetTemp();
-				operation = NEW<COperation>( OT_LoadTemp );
-				operation->GetArguments().push_back( temp );
-				operation->GetArguments().push_back( visitExpression( source ) );
+				operation = NEW<CMoveOperation>( visitExpression( source ), temp );
 			} else if( sourceTemp ) {
 				std::shared_ptr<CTemp> temp = sourceTemp->GetTemp();
 				operation = NEW<COperation>( OT_StoreTemps );

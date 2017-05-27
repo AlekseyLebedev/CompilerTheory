@@ -50,6 +50,7 @@ namespace CodeGeneration {
 		CSharedPtrVector<CTemp>& GetDefinedTemps();
 		CSharedPtrVector<CLabel>& GetJumpPoints();
 		std::vector<int>& GetConstants();
+		TOperationType GetType() const;
 		virtual std::wstring ToCode( std::map<int, int>& ) override;
 
 	private:

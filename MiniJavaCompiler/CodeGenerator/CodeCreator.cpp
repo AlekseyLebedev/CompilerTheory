@@ -23,6 +23,7 @@ namespace CodeGeneration
 
 	void CAssemlerCodePrinter::PrintBlock( CSharedPtrVector<IInstruction>& code, std::map<int, int>& reg )
 	{
+		output << std::endl;
 		for( size_t i = 0; i < code.size(); i++ ) {
 			output << code[i]->ToCode( reg ) << std::endl;
 		}
@@ -35,20 +36,45 @@ namespace CodeGeneration
 		output.close();
 	}
 
-	static inline bool isReadOperation( CSharedPtrVector<CTemp>& arguments, int index )
+	static inline bool isReadOperation( std::shared_ptr<COperation>& operation, int index )
 	{
-		assert( index < arguments.size() );
-		return index > 0;
+		// assert( index < operation->GetArguments().size() ); // Бесполезен, но верен
+		int argcount = operation->GetArguments().size();
+		switch( argcount ) {
+			case 2:
+			case 3:
+				return index > 0;
+				break;
+			case 1:
+				switch( operation->GetType() ) {
+					case OT_Push:
+					case OT_StoreToFramePointerPlusConst:
+						return true;
+					case OT_Pop:
+					case OT_MemFramePointerPlusConst:
+					case OT_Call:
+					case OT_LoadConst:
+						return false;
+					default:
+						// ДОБАВЬ В ВЕТКИ ВЫШЕ!!!!!!
+						assert( false );
+						break;
+				}
+				break;
+			default:
+				assert( false );
+				break;
+		}
 	}
 
-	static inline bool isCurrentTempReaded( CSharedPtrVector<CTemp>& arguments, int index, std::shared_ptr<CTemp>& temp )
+	static inline bool isCurrentTempReaded( std::shared_ptr<COperation>& operation, int index, std::shared_ptr<CTemp>& temp )
 	{
-		return arguments[index] == temp &&  isReadOperation( arguments, index );
+		return operation->GetArguments()[index] == temp &&  isReadOperation( operation, index );
 	}
 
-	static inline bool isCurrentTempWrited( CSharedPtrVector<CTemp>& arguments, int index, std::shared_ptr<CTemp>& temp )
+	static inline bool isCurrentTempWrited( std::shared_ptr<COperation>& operation, int index, std::shared_ptr<CTemp>& temp )
 	{
-		return arguments[index] == temp && (!isReadOperation( arguments, index ));
+		return operation->GetArguments()[index] == temp && (!isReadOperation( operation, index ));
 	}
 
 	CAssemblerCodeCreator::CAssemblerCodeCreator( std::list<std::pair<std::shared_ptr<IRTree::IRTStatement>, std::shared_ptr<IRTree::CFrame>>>& basisBlocks, std::wstring& filename ) :
@@ -121,19 +147,19 @@ namespace CodeGeneration
 				for( int i = operation->GetArguments().size() - 1; i >= 0; i-- ) {
 					if( storeInsertIndex < 0 ) {
 
-						if( isCurrentTempWrited( operation->GetArguments(), i, problemTemp ) ) {
+						if( isCurrentTempWrited( operation, i, problemTemp ) ) {
 							storeInsertIndex = operationIndex + 1; // после вставляем
 						}
 
 					} else {
 
-						if( isCurrentTempWrited( operation->GetArguments(), i, problemTemp ) ) {
+						if( isCurrentTempWrited( operation, i, problemTemp ) ) {
 							if( loadInsertIndex == -1 ) {
 								loadInsertIndex = -2; // Не надо читать, мы перезаписали
 							}
 							operation->GetArguments()[i] = dublicateTemp;
 						}
-						if( isCurrentTempReaded( operation->GetArguments(), i, problemTemp ) ) {
+						if( isCurrentTempReaded( operation, i, problemTemp ) ) {
 							if( loadInsertIndex == -1 ) {
 								loadInsertIndex = operationIndex + 1; // здесь +1 т.к. уже сохранение вставлено, а выполняется до операции
 							}

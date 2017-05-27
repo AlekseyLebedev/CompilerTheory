@@ -42,6 +42,11 @@ namespace CodeGeneration {
 		return constants;
 	}
 
+	TOperationType COperation::GetType() const
+	{
+		return instructionCode;
+	}
+
 	static const wchar_t* registerPrefix = L"r";
 
 	std::wstring COperation::ToCode( std::map<int, int>& colors )
@@ -121,15 +126,10 @@ namespace CodeGeneration {
 	std::wstring CCallOperation::ToCode( std::map<int, int>& colors )
 	{
 		std::wstringstream result;
-		result << L"; begin call" << std::endl;
 		// TODO сохранение регистров!!!
 
 		// первый аргумент зарезервирован под возвращаемое значение
-		assert( GetArguments().size() > 0 );
-		for( size_t i = 1; i < GetArguments().size(); i++ ) {
-			// —корее всего будем делать так, по cdecl
-			result << "PUSH " << registerPrefix << GetArguments()[i]->GetName() << std::endl;
-		}
+		assert( GetArguments().size() == 1 );
 		result << COperation::ToCode( colors ) << std::endl;
 		// ј вот это не по cdecl. “ип вызвающа€ функци€ чистит только аргументы
 		// TODO: либо переделать по cdecl с учетом текущей щан€тости стека, либо придумать как делаем
