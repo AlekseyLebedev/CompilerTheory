@@ -204,9 +204,9 @@ namespace RegAlloc {
 		}
 
 		bool isAll = true;
-
-		for( unsigned int i = 0; i < numberOfVerteces; ++i ) {
-			int minNumberOfEdges = numberOfVerteces;
+		int tempsCount = numbersOfEdges.size();
+		for( unsigned int i = 0; i < tempsCount; ++i ) {
+			int minNumberOfEdges = tempsCount;
 			int name;
 			for( auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter ) {
 				if( iter->second < minNumberOfEdges ) {
