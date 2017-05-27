@@ -189,7 +189,8 @@ namespace RegAlloc {
 		// Для подсчёта соседей.
 		std::map<int, int> numbersOfEdges;
 		//Стек для алгоритма раскраски, bool -- для move-инструкций (если делать оптимизацию с ними).
-		std::stack<std::pair<int, bool>> candidates;
+		std::stack<std::pair<int, bool>> candidates; // кандидаты на отправку в стек
+		std::stack<std::pair<int, bool>> tempStack; // вершинины с кол-вом соседей, меньшим кол-ва цветов
 
 		std::set<std::pair<std::pair<int, int>, bool>> interactionGraphCopy = interactionGraph;
 
@@ -205,6 +206,8 @@ namespace RegAlloc {
 
 		bool isAll = true;
 		int tempsCount = numbersOfEdges.size();
+
+		
 		for( unsigned int i = 0; i < tempsCount; ++i ) {
 			int minNumberOfEdges = tempsCount;
 			int name;
@@ -214,31 +217,63 @@ namespace RegAlloc {
 					name = iter->first;
 				}
 			}
-
-			if( minNumberOfEdges > numberOfColors ) {
-				candidates.push( std::make_pair( name, true ) );
-			} else {
-				candidates.push( std::make_pair( name, false ) );
-				isAll = false;
+			
+			if (minNumberOfEdges < numberOfColors) {
+				tempStack.push(std::make_pair(name, false));
+				auto iter = interactionGraphCopy.begin();
+				while (interactionGraphCopy.begin() != interactionGraphCopy.end()) {
+					if ((iter->first.first == name) || (iter->first.second == name)) {
+						auto toDelete = iter;
+						++iter;
+						interactionGraphCopy.erase(toDelete);
+					}
+					else {
+						++iter;
+					}
+					if (iter == interactionGraphCopy.end()) {
+						numbersOfEdges.erase(name);
+						break;
+					}
+				}
 			}
-
-			auto iter = interactionGraphCopy.begin();
-			while( interactionGraphCopy.begin() != interactionGraphCopy.end() ) {
-				if( (iter->first.first == name) || (iter->first.second == name) ) {
-					auto toDelete = iter;
-					++iter;
-					interactionGraphCopy.erase( toDelete );
-				} else {
-					++iter;
-				}
-				if( iter == interactionGraphCopy.end() ) {
-					numbersOfEdges.erase( name );
-					break;
-				}
+			else {
+				for (auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter) {
+					candidates.push(std::make_pair(iter->first, true));
+					
+				}				
+				numbersOfEdges.clear();
+				break;
 			}
 		}
 
-		//select
+		// Красим жадно те вершины, у которых мало соседей
+		while (!tempStack.empty()) {
+			auto top = tempStack.top();
+			tempStack.pop();
+			std::vector<int> neighboors;
+			for (auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter) {
+				if (iter->first.first == top.first) {
+					neighboors.push_back(iter->first.second);
+				}
+			}
+
+			std::set<int> availableNumbers;
+			for (int i = 0; i < numberOfColors; ++i) {
+				availableNumbers.insert(i);
+			}
+
+			for (unsigned i = 0; i < neighboors.size(); ++i) {
+				auto neighboor = colors.find(neighboors[i]);
+				if (neighboor != colors.end()) {
+					availableNumbers.erase(neighboor->second);
+				}
+			}
+
+			colors.insert(std::make_pair(top.first, *availableNumbers.begin()));
+		}
+
+
+		// Пытаемся покрасить кандидатов
 		while( !candidates.empty() ) {
 			auto top = candidates.top();
 			candidates.pop();
