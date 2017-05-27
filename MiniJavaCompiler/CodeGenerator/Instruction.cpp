@@ -56,27 +56,31 @@ namespace CodeGeneration {
 				case L'\'':
 				{
 					int regNum = arguments[tempIndex++]->GetName();
-					//switch( colors[regNum] ) {
-					//	case 0:
-					//		result << "%eax";
-					//		break;
-					//	case 1:
-					//		result << "%ebx";
-					//		break;
-					//	case 2:
-					//		result << "%ecx";
-					//		break;
-					//	case 3:
-					//		result << "%edx";
-					//		break;
-					//	case 4:
-					//		result << "%eex";
-					//		break;
-					//	default:
-					//		assert( false );
-					//		break;
-					//}
-					result << registerPrefix << registerPrefix << regNum;
+					auto iterator = colors.find( regNum );
+					if( iterator != colors.end() ) {
+						switch( iterator->second ) {
+							case 0:
+								result << "%eax";
+								break;
+							case 1:
+								result << "%ebx";
+								break;
+							case 2:
+								result << "%ecx";
+								break;
+							case 3:
+								result << "%edx";
+								break;
+							case 4:
+								result << "%eex";
+								break;
+							default:
+								assert( false );
+								break;
+						}
+					} else {
+						result << registerPrefix << regNum;
+					}
 					break;
 				}
 				case L'!':
@@ -84,6 +88,9 @@ namespace CodeGeneration {
 					break;
 				case L'^':
 					result << L"" << jumpPoints[jumpIndex++]->GetAssmeblerName();
+					break;
+				case L'+':
+					result << (constants[constIndex] >= 0 ? "+" : "");
 					break;
 				default:
 					result << codeTemplate[i];

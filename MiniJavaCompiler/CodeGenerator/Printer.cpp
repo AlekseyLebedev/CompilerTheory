@@ -26,6 +26,8 @@ namespace CodeGeneration
 		for( size_t i = 0; i < code.size(); i++ ) {
 			output << code[i]->ToCode( reg ) << std::endl;
 		}
+		//TODO
+		output.flush();
 	}
 
 	void CAssemlerCodePrinter::Close()
@@ -82,6 +84,9 @@ namespace CodeGeneration
 					assemblePrinter.PrintBlock( commands[blockIndex], regAlloc.GetColors() );
 				} else {
 					isRepeat = true;
+					// Test
+					assemblePrinter.PrintBlock( commands[blockIndex], regAlloc.GetColors() );
+
 
 					// В result -- переменная, на которой произошла ошибка (которой не хватило цвета)
 					auto frame = frames[blockIndex];
