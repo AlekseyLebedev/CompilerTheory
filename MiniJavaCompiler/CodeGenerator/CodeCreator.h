@@ -10,12 +10,10 @@
 
 namespace CodeGeneration
 {
-	void HandleBlocks( std::list<std::pair<std::shared_ptr<IRTree::IRTStatement>, std::shared_ptr<IRTree::CFrame>>>& basisBlocks, int& fileIndex );
-
-	class CAssemlerCodeCreator {
+	class CAssemlerCodePrinter {
 	public:
-		CAssemlerCodeCreator( const std::wstring& filename );
-		~CAssemlerCodeCreator();
+		CAssemlerCodePrinter( const std::wstring& filename );
+		~CAssemlerCodePrinter();
 
 		void PrintBlock( CSharedPtrVector<IInstruction>& code, std::map<int, int>& colors );
 
@@ -23,5 +21,19 @@ namespace CodeGeneration
 
 	private:
 		std::wofstream output;
+	};
+
+	class CAssemblerCodeCreator {
+	public:
+		CAssemblerCodeCreator( std::list<std::pair<std::shared_ptr<IRTree::IRTStatement>, std::shared_ptr<IRTree::CFrame>>>& basisBlocks, std::wstring& filename );
+		void AllocateRegistersAndPrint();
+
+
+	private:
+		CodeGeneration::CAssemlerCodePrinter assemblePrinter;
+		std::vector<CSharedPtrVector<IInstruction>> commands;
+		CSharedPtrVector<IRTree::CFrame> frames;
+
+		void addTempToStack( int blockIndex, std::shared_ptr<CTemp>& problemTemp );
 	};
 } // namespace CodeGeneration
