@@ -4,7 +4,7 @@
 
 namespace RegAlloc {
 
-	void RegisterAllocator::initialisation()
+	void RegisterAllocator::Initialisation()
 	{
 
 		// temporary
@@ -15,7 +15,7 @@ namespace RegAlloc {
 	using namespace CodeGeneration;
 
 	// Должно быть:
-	void RegisterAllocator::initialisation( CSharedPtrVector<IInstruction>& code )
+	void RegisterAllocator::Initialisation( CSharedPtrVector<IInstruction>& code )
 	{
 
 		numberOfVerteces = code.size();
@@ -79,7 +79,9 @@ namespace RegAlloc {
 				for( unsigned int argIndex = 0; argIndex < arguments.size(); ++argIndex ) {
 					// Получить идентификатор переменной:
 					// arguments[argIndex] => variable
-					use[codeLineIndex].insert( arguments[argIndex]->GetName() );
+					int name = arguments[argIndex]->GetName();
+					use[codeLineIndex].insert( name );
+					temps[name] = arguments[argIndex];
 				}
 
 				// initialisation isMove
@@ -88,7 +90,7 @@ namespace RegAlloc {
 		}
 	}
 
-	int RegisterAllocator::work()
+	std::shared_ptr<CTemp> RegisterAllocator::Work()
 	{
 
 		createTableWithLifeTime();
@@ -99,7 +101,7 @@ namespace RegAlloc {
 		return simplify( 5 );
 	}
 
-	std::map<int, int>& RegisterAllocator::getColors()
+	std::map<int, int>& RegisterAllocator::GetColors()
 	{
 		return colors;
 	}
@@ -180,7 +182,7 @@ namespace RegAlloc {
 		}
 	}
 
-	int RegisterAllocator::simplify( unsigned int numberOfColors )
+	std::shared_ptr<CTemp> RegisterAllocator::simplify( unsigned int numberOfColors )
 	{
 		int answer = -1;
 
@@ -260,17 +262,17 @@ namespace RegAlloc {
 			}
 
 			if( availableNumbers.begin() == availableNumbers.end() ) {
-				
+
 				// тут должен происходить сброс в стек
 				// Смотри Printer.cpp, всё происходт там, тут лишь сообщается о пробемной переменной
-				
+
 				answer = top.first;
 				break;
 			}
 			colors.insert( std::make_pair( top.first, *availableNumbers.begin() ) );
 		}
 
-		return answer;
+		return answer < 0 ? 0 : temps[answer];
 	}
 
 	void RegisterAllocator::doSomethingWithInteractionGraph()

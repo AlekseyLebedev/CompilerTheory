@@ -13,7 +13,7 @@ namespace IRTree {
 	public:
 		CFrame( int className, std::shared_ptr<Label> label );
 		void InsertVariable( int name, std::shared_ptr<IAccess> access, bool argument );
-		int InsertTemp( int name, std::shared_ptr<IAccess> info );
+		void AddStackTemp();
 		std::shared_ptr<IAccess> GetDataInfo( int name );
 		std::shared_ptr<Label> GetLabel();
 		std::shared_ptr<IAccess> GetThisAccess();
@@ -25,6 +25,7 @@ namespace IRTree {
 		int VariableOffset();
 		int ArgumentOffset();
 		int NewTemp();
+		int AllocatedMemory();
 
 	private:
 		std::shared_ptr<IAccess> thisAccess;
@@ -36,5 +37,6 @@ namespace IRTree {
 		int argumentCount;
 		int variableCount;
 		int tempCounter;
+		int stackTempCounter;
 	};
 }

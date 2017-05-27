@@ -9,8 +9,8 @@ namespace IRTree {
 
 	CFrame::CFrame( int className, std::shared_ptr<Label> _label ) : className( className ), label( _label ),
 		thisAccess( std::make_shared<IAccess>( ThisName, className, 2 * SymbolTable::CClassInfo::MachineWordSize, L"this" ) ),
-		returnAccess( std::make_shared<IAccess>( ReturnName, className, 0, L"return" ) ), argumentCount( 0 ), variableCount( 0 ), tempCounter(0),
-		framePointerAccess( std::make_shared<IAccess>( FramePointerName, className, 0, L"framePointer" ) )
+		returnAccess( std::make_shared<IAccess>( ReturnName, className, 0, L"return" ) ), argumentCount( 0 ), variableCount( 0 ), tempCounter( 0 ),
+		framePointerAccess( std::make_shared<IAccess>( FramePointerName, className, 0, L"framePointer" ) ), stackTempCounter( 0 )
 	{
 	}
 
@@ -24,11 +24,9 @@ namespace IRTree {
 		}
 	}
 
-	int CFrame::InsertTemp( int name, std::shared_ptr<IAccess> info )
+	void CFrame::AddStackTemp()
 	{
-		variables.insert(std::pair<int, std::shared_ptr<IAccess>>(name, info));
-
-		return tempCounter++;
+		stackTempCounter++;
 	}
 
 	std::shared_ptr<IAccess> CFrame::GetDataInfo( int name )
@@ -76,6 +74,11 @@ namespace IRTree {
 	int CFrame::NewTemp()
 	{
 		return tempCounter++;
+	}
+
+	int CFrame::AllocatedMemory()
+	{
+		return SymbolTable::CClassInfo::MachineWordSize * (variableCount + stackTempCounter);
 	}
 
 	const int CFrame::ThisName = -11;

@@ -6,6 +6,7 @@
 #include "Printer.h"
 #include "CodeGeneratorVisitor.h"
 #include "..\RegisterAllocator\RegisterAllocator.h"
+#include "..\SymbolTable\ClassInfo.h"
 
 using namespace IRTree;
 
@@ -32,12 +33,28 @@ namespace CodeGeneration
 		output.close();
 	}
 
+	static inline bool isReadOperation( CSharedPtrVector<CTemp>& arguments, int index )
+	{
+		assert( index < arguments.size() );
+		return index > 0;
+	}
+
+	static inline bool isCurrentTempReaded( CSharedPtrVector<CTemp>& arguments, int index, std::shared_ptr<CTemp>& temp )
+	{
+		return arguments[index] == temp &&  isReadOperation( arguments, index );
+	}
+
+	static inline bool isCurrentTempWrited( CSharedPtrVector<CTemp>& arguments, int index, std::shared_ptr<CTemp>& temp )
+	{
+		return arguments[index] == temp && (!isReadOperation( arguments, index ));
+	}
 
 	void HandleBlocks( std::list<std::pair<std::shared_ptr<IRTree::IRTStatement>, std::shared_ptr<IRTree::CFrame>>>& basisBlocks, int& fileIndex )
 	{
 		CodeGeneration::CAssemlerCodePrinter assemblePrinter( L"code-" + std::to_wstring( fileIndex++ ) );
 		CFrame* lastFrame = 0;
 		std::vector<CSharedPtrVector<IInstruction>> commands;
+		CSharedPtrVector<CFrame> frames;
 		for( std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>>::iterator block = basisBlocks.begin();
 			block != basisBlocks.end(); ++block ) {
 			CCodeGeneratorVisitor codeGeneratorVisitor;
@@ -47,89 +64,77 @@ namespace CodeGeneration
 			if( lastFrame != block->second.get() ) {
 				lastFrame = block->second.get();
 				commands.push_back( CSharedPtrVector<IInstruction>() );
+				frames.push_back( block->second );
 			}
 			for( size_t i = 0; i < code.size(); i++ ) {
 				commands.back().push_back( code[i] );
 			}
 		}
-			
-		for( size_t i = 0; i < commands.size(); i++ ) {
+
+		for( size_t blockIndex = 0; blockIndex < commands.size(); blockIndex++ ) {
 			bool isRepeat = true;
 			while( isRepeat ) {
-				isRepeat = false;
-				
 				RegAlloc::RegisterAllocator regAlloc;
-				regAlloc.initialisation( commands[i] );
-				int result = regAlloc.work();
-				if( result == -1 ) {
-					assemblePrinter.PrintBlock( commands[i], regAlloc.getColors() );
+				regAlloc.Initialisation( commands[blockIndex] );
+				std::shared_ptr<CTemp> problemTemp = regAlloc.Work();
+				if( problemTemp == 0 ) {
+					isRepeat = false;
+					assemblePrinter.PrintBlock( commands[blockIndex], regAlloc.GetColors() );
 				} else {
-
-#define DEBUG_MODE
-#ifdef DEBUG_MODE
-					std::cerr << "Цветов не хватает!\n";
-					// exit(1);
-					assemblePrinter.PrintBlock( commands[i], regAlloc.getColors() ); //or
-					break; // or
-#endif //DEBUG_MODE
-
 					isRepeat = true;
-					
+
 					// В result -- переменная, на которой произошла ошибка (которой не хватило цвета)
-				
-					// Нужно: Записать в локальную переменную на стеке...
+					auto frame = frames[blockIndex];
 
-					// -------
-					// start
-					// -------
-
-					// Ищем блок, в котором произошла ошибка.
-					int idx = i;
-					auto block = basisBlocks.begin();
-					while( idx > 0 ) {
-						++block;
-						--idx;
-					}
-
-					auto frame = block->second;
-					
-					// Берём информацию о "плохой" переменной.
-					std::shared_ptr<IAccess> info = frame->GetDataInfo( result );
-					
 					// Меняем frame...
-					int frameNumber = frame->InsertTemp( result, info );
-					
-					// Перенаправить команды load и read, дабы разгрузить упоминание переменной
-
-					// Генеририруем новый код с новым темпом.
-					CCodeGeneratorVisitor codeGeneratorVisitor;
-					codeGeneratorVisitor.SetFrame( frame );
-					CodeGeneration::CSharedPtrVector<CodeGeneration::IInstruction> code = codeGeneratorVisitor.GetCode();
-
+					std::shared_ptr<CTemp> dublicateTemp = std::make_shared<CTemp>( frame->NewTemp() );
 					std::shared_ptr<COperation> operation = std::make_shared<COperation>( OT_StoreToFramePointerPlusConst );
-					int offset = 4 * frame->VariableOffset() + 1 + frameNumber; // Формула от Лёши
+					int offset = -frame->AllocatedMemory();
+					frame->AddStackTemp(); // Иммено после offset
 					operation->GetConstants().push_back( offset );
-					code.push_back( operation );
 
 					// Поиск упоминаний, где перенаправить вывод
+					CSharedPtrVector<IInstruction>& code = commands[blockIndex];
 					size_t size = code.size();
-					for( size_t idx = 0; idx < size; ++idx ) {
-						auto operation = std::dynamic_pointer_cast<COperation>( code[idx] );
-						// Задать условие
-						// if( operation->GetInstructionCode() == OT_StoreToFramePointerPlusConst 
-							// && старый ли это темп) {
-							// operationChange = std::make_shared<COperation>( OT_MoveFramePointerPlusConstToMem );
-							// operationChange->GetArguments().push_back( ??? );
-							// operationChange->GetConstants().push_back( ??? );
-							// code.push_back( operationChange );
-						// }
+					int storeInsertIndex = -1;
+					int loadInsertIndex = -1;
+					for( size_t operationIndex = 0; operationIndex < size; ++operationIndex ) {
+						auto operation = std::dynamic_pointer_cast<COperation>(code[operationIndex]);
+						if( operation ) {
+							// Обратный порядок важен!
+							for( int i = operation->GetArguments().size() - 1; i >= 0; i-- ) {
+								if( storeInsertIndex < 0 ) {
+
+									if( isCurrentTempWrited( operation->GetArguments(), i, problemTemp ) ) {
+										storeInsertIndex = operationIndex + 1; // после вставляем
+									}
+
+								} else {
+
+									if( isCurrentTempWrited( operation->GetArguments(), i, problemTemp ) ) {
+										if( loadInsertIndex == -1 ) {
+											loadInsertIndex = -2; // Не надо читать, мы перезаписали
+										}
+										operation->GetArguments()[i] = dublicateTemp;
+									}
+									if( isCurrentTempReaded( operation->GetArguments(), i, problemTemp ) ) {
+										if( loadInsertIndex == -1 ) {
+											loadInsertIndex = operationIndex + 1; // здесь +1 т.к. уже сохранение вставлено, а выполняется до операции
+										}
+										operation->GetArguments()[i] = dublicateTemp;
+									}
+								}
+							}
+
+							if( storeInsertIndex >= 0 && storeInsertIndex <= operationIndex ) {
+								for( size_t i = 0; i < operation->GetDefinedTemps().size(); i++ ) {
+									assert( operation->GetDefinedTemps()[i] != problemTemp );
+								}
+							}
+						}
 					}
 
-					commands[i] = code;
 
-					// -------
-					// end
-					// -------
 				}
 			}
 		}

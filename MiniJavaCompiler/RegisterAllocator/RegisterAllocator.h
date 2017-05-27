@@ -18,13 +18,13 @@ namespace RegAlloc {
 
 	public:
 
-		void initialisation();
-		void initialisation( CSharedPtrVector<IInstruction>& code );
+		void Initialisation();
+		void Initialisation( CSharedPtrVector<IInstruction>& code );
 
-		//-1 -- если всё ОК
-		int work();
+		//0 -- если всё ОК
+		std::shared_ptr<CTemp> Work();
 
-		std::map<int, int>& getColors();
+		std::map<int, int>& GetColors();
 
 	private:
 
@@ -51,11 +51,13 @@ namespace RegAlloc {
 		std::set<std::pair<std::pair<int, int>, bool>> interactionGraph;
 		//Цвета a.k.a. номера.
 		std::map<int, int> colors;
+		// Map из номеров в темпы
+		std::map<int, std::shared_ptr<CTemp> > temps;
 
 		void createTableWithLifeTime();
 		void createInteractionGraph();
 		//-1 -- если всё ОК
-		int simplify( unsigned int numberOfColors );
+		std::shared_ptr<CTemp> simplify( unsigned int numberOfColors );
 		void doSomethingWithInteractionGraph();
 
 		//void generateTempExample();
