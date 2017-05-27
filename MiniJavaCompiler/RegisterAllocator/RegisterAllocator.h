@@ -57,6 +57,7 @@ namespace RegAlloc {
 		void createTableWithLifeTime();
 		void createInteractionGraph();
 		//-1 -- если всё ОК
+		void removeLoops();
 		std::shared_ptr<CTemp> simplify( unsigned int numberOfColors );
 		void doSomethingWithInteractionGraph();
 
