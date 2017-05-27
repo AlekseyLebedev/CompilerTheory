@@ -88,10 +88,11 @@ namespace CodeGeneration
 
 					// Меняем frame...
 					std::shared_ptr<CTemp> dublicateTemp = std::make_shared<CTemp>( frame->NewTemp() );
-					std::shared_ptr<COperation> operation = std::make_shared<COperation>( OT_StoreToFramePointerPlusConst );
+					std::shared_ptr<COperation> storeOperation = std::make_shared<COperation>( OT_StoreToFramePointerPlusConst );
 					int offset = -frame->AllocatedMemory();
 					frame->AddStackTemp(); // Иммено после offset
-					operation->GetConstants().push_back( offset );
+					storeOperation->GetConstants().push_back( offset );
+					storeOperation->GetArguments().push_back( problemTemp );
 
 					// Поиск упоминаний, где перенаправить вывод
 					CSharedPtrVector<IInstruction>& code = commands[blockIndex];
@@ -134,6 +135,15 @@ namespace CodeGeneration
 						}
 					}
 
+					assert( storeInsertIndex >= 0 );
+					code.insert( code.begin() + storeInsertIndex, storeOperation );
+					if( loadInsertIndex > 0 ) {
+						std::shared_ptr<COperation> loadOperation = std::make_shared<COperation>( OT_MemFramePointerPlusConst );
+						loadOperation->GetConstants().push_back( offset );
+						loadOperation->GetArguments().push_back( dublicateTemp );
+						loadOperation->GetDefinedTemps().push_back( dublicateTemp );
+						code.insert( code.begin() + loadInsertIndex, loadOperation );
+					}
 
 				}
 			}
