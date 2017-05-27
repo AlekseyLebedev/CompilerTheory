@@ -17,7 +17,7 @@
 #include "IRTree\IRTreeVisitor.h"
 #include "CodeGenerator\Generator.h"
 #include "CodeGenerator\CodeGeneratorVisitor.h"
-#include "CodeGenerator\Printer.h"
+#include "CodeGenerator\CodeCreator.h"
 #include "RegisterAllocator\RegisterAllocator.h"
 
 // :-!
@@ -81,7 +81,8 @@ int main( int argc, char** argv )
 			CGenerator generator( irtree.GetCode() );
 			generator.SplitIRTree();
 			std::list<std::pair<std::shared_ptr<IRTStatement>, std::shared_ptr<CFrame>>> basisBlocks = generator.GetBasicBlocks();
-			CodeGeneration::HandleBlocks( basisBlocks, fileIndex );
+			CodeGeneration::CAssemblerCodeCreator codeCreator( basisBlocks, L"code-" + std::to_wstring( fileIndex++ ) );
+			codeCreator.AllocateRegistersAndPrint();
 		}
 	}
 	return 0;

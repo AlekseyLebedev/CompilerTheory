@@ -74,6 +74,7 @@ namespace CodeGeneration {
 							case 4:
 								result << "%eex";
 								break;
+
 							default:
 								assert( false );
 								break;

@@ -446,7 +446,7 @@
     <ClInclude Include="CodeGenerator\Generator.h" />
     <ClInclude Include="CodeGenerator\Instruction.h" />
     <ClInclude Include="CodeGenerator\OperationType.h" />
-    <ClInclude Include="CodeGenerator\Printer.h" />
+    <ClInclude Include="CodeGenerator\CodeCreator.h" />
     <ClInclude Include="Graphwiz\BaseDotOutput.h" />
     <ClInclude Include="Graphwiz\IRTDotOutputVisitor.h" />
     <ClInclude Include="IRTree\Access.h" />
@@ -537,7 +537,7 @@
     <ClCompile Include="CodeGenerator\Generator.cpp" />
     <ClCompile Include="CodeGenerator\Instruction.cpp" />
     <ClCompile Include="CodeGenerator\OperationType.cpp" />
-    <ClCompile Include="CodeGenerator\Printer.cpp" />
+    <ClCompile Include="CodeGenerator\CodeCreator.cpp" />
     <ClCompile Include="Graphwiz\IRTDotOutputVisitor.cpp" />
     <ClCompile Include="IRTree\Access.cpp" />
     <ClCompile Include="IRTree\AccessRemoverVisitor.cpp" />
