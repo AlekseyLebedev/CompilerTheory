@@ -12,10 +12,10 @@ namespace CodeGeneration
 {
 	void HandleBlocks( std::list<std::pair<std::shared_ptr<IRTree::IRTStatement>, std::shared_ptr<IRTree::CFrame>>>& basisBlocks, int& fileIndex );
 
-	class CAssemlerCodePrinter {
+	class CAssemlerCodeCreator {
 	public:
-		CAssemlerCodePrinter( const std::wstring& filename );
-		~CAssemlerCodePrinter();
+		CAssemlerCodeCreator( const std::wstring& filename );
+		~CAssemlerCodeCreator();
 
 		void PrintBlock( CSharedPtrVector<IInstruction>& code, std::map<int, int>& colors );
 

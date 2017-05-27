@@ -17,7 +17,7 @@
 #include "IRTree\IRTreeVisitor.h"
 #include "CodeGenerator\Generator.h"
 #include "CodeGenerator\CodeGeneratorVisitor.h"
-#include "CodeGenerator\Printer.h"
+#include "CodeGenerator\CodeCreator.h"
 #include "RegisterAllocator\RegisterAllocator.h"
 
 // :-!

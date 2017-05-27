@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Printer.h"
+#include "CodeCreator.h"
 #include "CodeGeneratorVisitor.h"
 #include "..\RegisterAllocator\RegisterAllocator.h"
 #include "..\SymbolTable\ClassInfo.h"
@@ -12,16 +12,16 @@ using namespace IRTree;
 
 namespace CodeGeneration
 {
-	CAssemlerCodePrinter::CAssemlerCodePrinter( const std::wstring& filename ) : output( filename + L".txt" )
+	CAssemlerCodeCreator::CAssemlerCodeCreator( const std::wstring& filename ) : output( filename + L".txt" )
 	{
 	}
 
-	CAssemlerCodePrinter::~CAssemlerCodePrinter()
+	CAssemlerCodeCreator::~CAssemlerCodeCreator()
 	{
 		assert( !output.is_open() );
 	}
 
-	void CAssemlerCodePrinter::PrintBlock( CSharedPtrVector<IInstruction>& code, std::map<int, int>& reg )
+	void CAssemlerCodeCreator::PrintBlock( CSharedPtrVector<IInstruction>& code, std::map<int, int>& reg )
 	{
 		for( size_t i = 0; i < code.size(); i++ ) {
 			output << code[i]->ToCode( reg ) << std::endl;
@@ -30,7 +30,7 @@ namespace CodeGeneration
 		output.flush();
 	}
 
-	void CAssemlerCodePrinter::Close()
+	void CAssemlerCodeCreator::Close()
 	{
 		output.close();
 	}
@@ -53,7 +53,7 @@ namespace CodeGeneration
 
 	void HandleBlocks( std::list<std::pair<std::shared_ptr<IRTree::IRTStatement>, std::shared_ptr<IRTree::CFrame>>>& basisBlocks, int& fileIndex )
 	{
-		CodeGeneration::CAssemlerCodePrinter assemblePrinter( L"code-" + std::to_wstring( fileIndex++ ) );
+		CodeGeneration::CAssemlerCodeCreator assemblePrinter( L"code-" + std::to_wstring( fileIndex++ ) );
 		CFrame* lastFrame = 0;
 		std::vector<CSharedPtrVector<IInstruction>> commands;
 		CSharedPtrVector<CFrame> frames;

@@ -361,11 +361,11 @@
     <ClInclude Include="CodeGenerator\CodeGeneratorVisitor.h">
       <Filter>CodeGenerator\h</Filter>
     </ClInclude>
-    <ClInclude Include="CodeGenerator\Printer.h">
-      <Filter>CodeGenerator\h</Filter>
-    </ClInclude>
     <ClInclude Include="RegisterAllocator\RegisterAllocator.h">
       <Filter>RegisterAllocator\h</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeGenerator\CodeCreator.h">
+      <Filter>CodeGenerator\h</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -609,11 +609,11 @@
     <ClCompile Include="CodeGenerator\OperationType.cpp">
       <Filter>CodeGenerator\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="CodeGenerator\Printer.cpp">
-      <Filter>CodeGenerator\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="RegisterAllocator\RegisterAllocator.cpp">
       <Filter>RegisterAllocator\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeGenerator\CodeCreator.cpp">
+      <Filter>CodeGenerator\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
