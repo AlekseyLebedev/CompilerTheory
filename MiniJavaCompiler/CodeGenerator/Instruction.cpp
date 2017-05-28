@@ -130,7 +130,7 @@ namespace CodeGeneration {
 		// первый аргумент зарезервирован под возвращаемое значение
 		assert( GetArguments().size() == 1 );
 		result << COperation::ToCode( colors );
-		assert( GetArguments()[0]->GetName() == 0 );
+		assert( colors[GetArguments()[0]->GetName()] == 0 );
 
 		return result.str();
 	}
