@@ -110,6 +110,11 @@ namespace CodeGeneration
 					assemblePrinter.PrintFrame( commands[blockIndex], regAlloc.GetColors(), frames[blockIndex] );
 				} else {
 					isRepeat = true;
+
+#ifdef DEBUG_STACK_TEMPS
+					assemblePrinter.PrintFrame( commands[blockIndex], regAlloc.GetColors(), frames[blockIndex] );
+#endif //DEBUG_STACK_TEMPS
+
 					addTempToStack( blockIndex, problemTemp );
 				}
 			}

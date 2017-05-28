@@ -65,7 +65,11 @@ namespace CodeGeneration {
 					if( iterator != colors.end() ) {
 						result << RegisterName( iterator->second );
 					} else {
+#ifndef DEBUG_STACK_TEMPS
+						assert( false );
+#else
 						result << registerPrefix << regNum;
+#endif // !DEBUG_STACK_TEMPS
 					}
 					break;
 				}
@@ -119,6 +123,19 @@ namespace CodeGeneration {
 	std::shared_ptr<CTemp> CMoveOperation::GetTo()
 	{
 		return GetArguments()[0];
+	}
+
+	std::wstring CMoveOperation::ToCode( std::map<int, int>& colors )
+	{
+#ifndef DEBUG_STACK_TEMPS
+		if( (colors.find( GetTo()->GetName() )->second) == (colors.find( GetFrom()->GetName() )->second) ) {
+			return L"; Useless move";
+		} else {
+			return COperation::ToCode( colors );
+		}
+#else
+		return COperation::ToCode( colors );
+#endif // !DEBUG_STACK_TEMPS
 	}
 
 	//-----------------------------------------------------------------------------------------------------------------

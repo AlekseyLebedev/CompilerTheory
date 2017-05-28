@@ -8,6 +8,8 @@
 
 #include "OperationType.h"
 
+#define DEBUG_STACK_TEMPS
+
 namespace CodeGeneration {
 
 	template <typename T>
@@ -74,6 +76,8 @@ namespace CodeGeneration {
 
 		std::shared_ptr<CTemp> GetFrom();
 		std::shared_ptr<CTemp> GetTo();
+
+		virtual std::wstring ToCode( std::map<int, int>& colors );
 	};
 
 	// Операция вызова функции. Отдельно - т.к. сложная платформозависимая логика расопложения
