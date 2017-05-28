@@ -7,7 +7,8 @@ namespace IRTree {
 	}
 
 	Label::Label( const int _name, const std::wstring& _info ) : name( _name ), info( _info )
-	{ }
+	{
+	}
 
 	const int Label::GetName() const
 	{
@@ -38,7 +39,7 @@ namespace IRTree {
 				default:
 					break;
 			}
-			return L"lblp" + std::to_wstring( name );
+			return L"lblp" + std::to_wstring( name ) + suffix;
 		}
 	}
 
