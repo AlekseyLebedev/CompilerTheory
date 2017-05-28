@@ -71,25 +71,26 @@ namespace RegAlloc {
 				}
 
 				// initialisation def
-				CSharedPtrVector<CTemp> defined = operation->GetDefinedTemps();
-				for( unsigned int argIndex = 0; argIndex < defined.size(); ++argIndex ) {
-					// Получить идентификатор переменной:
-					// defined[argIndex] => variable
-					if( !CodeGeneration::IsReadOperation( operation, argIndex ) ) {
-						def[codeLineIndex].insert( defined[argIndex]->GetName() );
-					}
-				}
+				//CSharedPtrVector<CTemp> defined = operation->GetDefinedTemps();
+				//for( unsigned int argIndex = 0; argIndex < defined.size(); ++argIndex ) {
+				//}
 
 				// initialisation use
 				CSharedPtrVector<CTemp> arguments = operation->GetArguments();
 				for( unsigned int argIndex = 0; argIndex < arguments.size(); ++argIndex ) {
-					// Получить идентификатор переменной:
-					// arguments[argIndex] => variable
-					if( CodeGeneration::IsReadOperation( operation, argIndex ) ) {
-						int name = arguments[argIndex]->GetName();
-						use[codeLineIndex].insert( name );
-						temps[name] = arguments[argIndex];
+					int name = arguments[argIndex]->GetName();
+					assert( CodeGeneration::IsReadOperation( operation, argIndex ) ^ (!CodeGeneration::IsReadOperation( operation, argIndex )) );
+					if( !CodeGeneration::IsReadOperation( operation, argIndex ) ) {
+						// Получить идентификатор переменной:
+						// defined[argIndex] => variable
+						def[codeLineIndex].insert( name );
 					}
+					if( CodeGeneration::IsReadOperation( operation, argIndex ) ) {
+						// Получить идентификатор переменной:
+						// arguments[argIndex] => variable
+						use[codeLineIndex].insert( name );
+					}
+					temps[name] = arguments[argIndex];
 				}
 
 				// initialisation isMove
