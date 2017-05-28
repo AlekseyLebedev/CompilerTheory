@@ -8,7 +8,7 @@
 
 #include "OperationType.h"
 
-#define DEBUG_STACK_TEMPS
+//#define DEBUG_STACK_TEMPS
 
 namespace CodeGeneration {
 
