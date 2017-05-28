@@ -548,7 +548,8 @@ namespace CodeGeneration {
 							operation->GetConstants().push_back( binopRightConst->GetValue() );
 						}
 					} else {
-						assert( false );
+						operation = NEW<COperation>( OT_StoreTemp );
+						operation->GetArguments().push_back( visitExpression( distExpBinop ) );
 					}
 				} else  if( distExpConst ) {
 					assert( false ); // TODO: очень странно записывать что-то в константу
