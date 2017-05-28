@@ -105,9 +105,17 @@ namespace RegAlloc {
 		createTableWithLifeTime();
 		createInteractionGraph();
 
+//#define DEBUG_WITH_PRINT
+#ifdef DEBUG_WITH_PRINT
 		doSomethingWithInteractionGraph();
-
+#endif // DEBUG_WITH_PRINT
+		
 		removeLoops();
+
+#ifdef DEBUG_WITH_PRINT
+		doSomethingWithInteractionGraph();
+#endif // DEBUG_WITH_PRINT
+
 		return simplify( 5 );
 	}
 
@@ -168,7 +176,9 @@ namespace RegAlloc {
 				i = 0;
 			}
 		}
-		//printState();
+#ifdef DEBUG_WITH_PRINT
+		printState();
+#endif // DEBUG_WITH_PRINT
 	}
 
 	void RegisterAllocator::createInteractionGraph()
@@ -177,12 +187,13 @@ namespace RegAlloc {
 			for( auto defined = def[i].begin(); defined != def[i].end(); ++defined ) {
 				for( auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter ) {
 					if( isMove[i] ) {
-						if( *defined != *iter ) {
+						if( ( *iter != *use[i].begin() ) && ( *defined != *iter ) ) {
 							interactionGraph.insert( std::make_pair( std::make_pair( *defined, *iter ), true ) );
 							interactionGraph.insert( std::make_pair( std::make_pair( *iter, *defined ), true ) );
 						}
 					} else {
-						if( interactionGraph.find( std::make_pair( std::make_pair( *defined, *iter ), true ) ) == interactionGraph.end() ) {
+						if( interactionGraph.find( std::make_pair( std::make_pair( *defined, *iter ), true ) ) == interactionGraph.end() 
+							&& ( *defined != *iter ) ) {
 							interactionGraph.insert( std::make_pair( std::make_pair( *defined, *iter ), false ) );
 							interactionGraph.insert( std::make_pair( std::make_pair( *iter, *defined ), false ) );
 						}
@@ -257,11 +268,11 @@ namespace RegAlloc {
 					} else {
 						++iter;
 					}
-					if( iter == interactionGraphCopy.end() ) {
-						numbersOfEdges.erase( name );
+					if( iter == interactionGraphCopy.end() ) {						
 						break;
 					}
 				}
+				numbersOfEdges.erase(name);
 			} else {
 				for( auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter ) {
 					if( constraints.find( iter->first ) != constraints.end() ) {
@@ -269,7 +280,6 @@ namespace RegAlloc {
 					} else {
 						candidates.push( std::make_pair( iter->first, true ) );
 					}
-
 				}
 				numbersOfEdges.clear();
 				break;
@@ -362,11 +372,9 @@ namespace RegAlloc {
 
 	void RegisterAllocator::doSomethingWithInteractionGraph()
 	{
-
-		//for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
-		//	std::cout << iter->first.first << " -> " << iter->first.second << '\n';
-		//}
-
+		for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
+			std::cout << iter->first.first << " -> " << iter->first.second << ' ' << ( iter->second ? "T" : "F" ) << '\n';
+		}
 	}
 
 	//void RegisterAllocator::generateTempExample()
@@ -435,21 +443,21 @@ namespace RegAlloc {
 	void RegisterAllocator::printState()
 	{
 		//assert( false );
-		std::cout << "\tuse\tdef\tin\tout\n";
+		std::cout << "\tuse\t\tdef\t\tin\t\tout\n";
 		for( int i = 0; i < numberOfVerteces; ++i ) {
 			std::cout << (i + 1) << '\t';
 			for( auto iter = use[i].begin(); iter != use[i].end(); ++iter ) {
 				std::cout << *iter << ' ';
 			}
-			std::cout << ";\t";
+			std::cout << "\t\t";
 			for( auto iter = def[i].begin(); iter != def[i].end(); ++iter ) {
 				std::cout << *iter << ' ';
 			}
-			std::cout << ";\t";
+			std::cout << "\t\t";
 			for( auto iter = live_in[i].begin(); iter != live_in[i].end(); ++iter ) {
 				std::cout << *iter << ' ';
 			}
-			std::cout << ";\t";
+			std::cout << "\t\t";
 			for( auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter ) {
 				std::cout << *iter << ' ';
 			}
