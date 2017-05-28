@@ -261,7 +261,12 @@ namespace RegAlloc {
 			}
 			else {
 				for (auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter) {
-					candidates.push(std::make_pair(iter->first, true));
+					if (constraints.find(iter->first) != constraints.end()) {
+						colored.push_back(iter->first);
+					}
+					else {
+						candidates.push(std::make_pair(iter->first, true));
+					}
 					
 				}				
 				numbersOfEdges.clear();
@@ -271,6 +276,21 @@ namespace RegAlloc {
 
 		// Сперва красим предопределенные вершины 
 		for (int i = 0; i < colored.size(); i++) {
+			int color  = constraints.find(colored[i])->second;
+			std::vector<int> neighboors;
+			for (auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter) {
+				if (iter->first.first == colored[i]) {
+					neighboors.push_back(iter->first.second);
+				}
+			}
+		
+			for (int j = 0; j < neighboors.size(); j++) {
+				if (constraints.find(neighboors[j]) != constraints.end()
+				&& constraints.find(neighboors[j])->second == color) {
+					answer = colored[i];
+					return answer < 0 ? 0 : temps[answer];
+				}
+			}
 			colors.insert(std::make_pair(colored[i], constraints.find(colored[i])->second));
 		}
 
