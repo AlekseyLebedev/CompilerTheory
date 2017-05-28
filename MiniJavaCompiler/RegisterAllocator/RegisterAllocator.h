@@ -43,6 +43,8 @@ namespace RegAlloc {
 		std::vector<std::set<int>> out_edges;
 		// Здесь хранятся номера вершин, откуда следует ребро в вершину N.
 		std::vector<std::set<int>> in_edges;
+		// Ограничения на цвета. Map из номера темпа в цвет
+		std::map<int, int> constraints;
 
 		//Является ли N-ная вершина move-инструкцией.
 		std::vector<bool> isMove;

@@ -54,6 +54,9 @@ namespace RegAlloc {
 						}
 						assert( find );
 					}
+				} else {
+					assert( operation->GetArguments().size() == 1 );
+					constraints[operation->GetArguments()[0]->GetName()] = 0; // Результат CALL всегда в %eax
 				}
 
 				// Поиск следующей операции
