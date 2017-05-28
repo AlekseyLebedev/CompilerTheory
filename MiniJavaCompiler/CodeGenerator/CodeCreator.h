@@ -59,6 +59,9 @@ namespace CodeGeneration
 					case OT_CMPC:
 					case OT_MoveMemToEax:
 					case OT_MoveTempToEax:
+					case OT_MoveFramePointerPlusConstToMem:
+					case OT_MoveFramePointerPlusConstToEax:
+					case OT_MoveMemToFramePointerPlusConst:
 						return true;
 					case OT_Pop:
 					case OT_MemFramePointerPlusConst:
