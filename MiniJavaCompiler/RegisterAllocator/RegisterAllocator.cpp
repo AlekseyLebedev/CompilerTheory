@@ -209,6 +209,7 @@ namespace RegAlloc {
 		//Стек для алгоритма раскраски, bool -- для move-инструкций (если делать оптимизацию с ними).
 		std::stack<std::pair<int, bool>> candidates; // кандидаты на отправку в стек
 		std::stack<std::pair<int, bool>> tempStack; // вершинины с кол-вом соседей, меньшим кол-ва цветов
+		std::vector<int> colored;
 
 		std::set<std::pair<std::pair<int, int>, bool>> interactionGraphCopy = interactionGraph;
 
@@ -223,8 +224,7 @@ namespace RegAlloc {
 		}
 
 		bool isAll = true;
-		int tempsCount = numbersOfEdges.size();
-
+		int tempsCount = numbersOfEdges.size();		
 		
 		for( unsigned int i = 0; i < tempsCount; ++i ) {
 			int minNumberOfEdges = tempsCount;
@@ -237,7 +237,12 @@ namespace RegAlloc {
 			}
 			
 			if (minNumberOfEdges < numberOfColors) {
-				tempStack.push(std::make_pair(name, false));
+				if (constraints.find(name) != constraints.end()) {
+					colored.push_back(name);
+				}
+				else {
+					tempStack.push(std::make_pair(name, false));
+				}
 				auto iter = interactionGraphCopy.begin();
 				while (interactionGraphCopy.begin() != interactionGraphCopy.end()) {
 					if ((iter->first.first == name) || (iter->first.second == name)) {
@@ -262,6 +267,11 @@ namespace RegAlloc {
 				numbersOfEdges.clear();
 				break;
 			}
+		}
+
+		// Сперва красим предопределенные вершины 
+		for (int i = 0; i < colored.size(); i++) {
+			colors.insert(std::make_pair(colored[i], constraints.find(colored[i])->second));
 		}
 
 		// Красим жадно те вершины, у которых мало соседей
