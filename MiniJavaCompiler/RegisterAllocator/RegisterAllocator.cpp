@@ -256,11 +256,11 @@ namespace RegAlloc {
 					} else {
 						++iter;
 					}
-					if( iter == interactionGraphCopy.end() ) {
-						numbersOfEdges.erase( name );
+					if( iter == interactionGraphCopy.end() ) {						
 						break;
 					}
 				}
+				numbersOfEdges.erase(name);
 			} else {
 				for( auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter ) {
 					if( constraints.find( iter->first ) != constraints.end() ) {
@@ -268,7 +268,6 @@ namespace RegAlloc {
 					} else {
 						candidates.push( std::make_pair( iter->first, true ) );
 					}
-
 				}
 				numbersOfEdges.clear();
 				break;
