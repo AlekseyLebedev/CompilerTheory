@@ -128,9 +128,10 @@ namespace CodeGeneration {
 		std::wstringstream result;
 
 		// первый аргумент зарезервирован под возвращаемое значение
-		assert( GetArguments().size() == 1 );
 		result << COperation::ToCode( colors );
-		assert( colors[GetArguments()[0]->GetName()] == 0 );
+		assert( GetArguments().size() == 1 );
+		result << std::endl << L"TODO: TempInfo: " << RegisterName( colors[GetArguments()[0]->GetName()] );
+		//assert( colors[GetArguments()[0]->GetName()] == 0 );
 
 		return result.str();
 	}
