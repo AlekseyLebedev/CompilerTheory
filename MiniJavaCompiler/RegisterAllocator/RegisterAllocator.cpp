@@ -294,12 +294,19 @@ namespace RegAlloc {
 				}
 			}
 
+			bool problem = false;
+			int minName = colored[i]; 
 			for( int j = 0; j < neighboors.size(); j++ ) {
 				if( constraints.find( neighboors[j] ) != constraints.end()
 					&& constraints.find( neighboors[j] )->second == color ) {
-					int answer = colored[i];
-					return answer < 0 ? 0 : temps[answer];
+					problem = true;
+					if (neighboors[j] < minName) {
+						minName = neighboors[j];
+					}					
 				}
+			}
+			if (problem) {
+				return temps[minName];
 			}
 			colors.insert( std::make_pair( colored[i], constraints.find( colored[i] )->second ) );
 		}
