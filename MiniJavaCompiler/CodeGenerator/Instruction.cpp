@@ -131,12 +131,7 @@ namespace CodeGeneration {
 		// первый аргумент зарезервирован под возвращаемое значение
 		assert( GetArguments().size() == 1 );
 		result << COperation::ToCode( colors ) << std::endl;
-		// ј вот это не по cdecl. “ип вызвающа€ функци€ чистит только аргументы
-		// TODO: либо переделать по cdecl с учетом текущей щан€тости стека, либо придумать как делаем
-		result << L"; TODO: rewrite after temps moved to registers and stack" << std::endl;
-		//result << "ADD %esp " << ((GetArguments().size() - 1) * sizeof( int )) << std::endl;
-		// ¬озвращаемое значение тоже по cdecl
-		result << "MOV " << registerPrefix << GetArguments()[0]->GetName() << L" %eax";
+		assert( GetArguments()[0]->GetName() == 0 );
 		result << L"; end call" << std::endl;
 
 		return result.str();

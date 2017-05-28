@@ -47,7 +47,16 @@ namespace CodeGeneration
 		for( size_t i = 0; i < code.size(); i++ ) {
 			output << code[i]->ToCode( reg ) << std::endl;
 		}
+		// Эпилог
+		output << "; Epilog" << std::endl;
+		for( auto reg = calleeSaveRegisters.rbegin(); reg != calleeSaveRegisters.rend(); ++reg ) {
+			output << L"POP " << COperation::RegisterName( *reg ) << std::endl;
+		}
+		output << L"ADD %esp " << frame->AllocatedMemory() << std::endl;
+		output << L"POP %ebp" << std::endl;
+		output << L"RET" << std::endl;
 		output << std::endl;
+
 		//TODO
 		output.flush();
 	}

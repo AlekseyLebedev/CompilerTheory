@@ -38,6 +38,8 @@ namespace CodeGeneration {
 				return L"DIV  ' ' '";
 			case OT_AddTempConst:
 				return L"ADDI  ' ' !";
+			case OT_AddEspConst:
+				return L"ADD %esp !";
 			case OT_SubTempConstRight:
 				return L"SUBI  ' ' !";
 			case OT_SubTempConstLeft:
