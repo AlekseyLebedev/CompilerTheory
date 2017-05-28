@@ -1,4 +1,5 @@
 ﻿#include "RegisterAllocator.h"
+#include "..\CodeGenerator\CodeCreator.h"
 
 #define DYNAMIC_CAST std::dynamic_pointer_cast
 
@@ -70,20 +71,25 @@ namespace RegAlloc {
 				}
 
 				// initialisation def
-				CSharedPtrVector<CTemp> defined = operation->GetDefinedTemps();
-				for( unsigned int argIndex = 0; argIndex < defined.size(); ++argIndex ) {
-					// Получить идентификатор переменной:
-					// defined[argIndex] => variable
-					def[codeLineIndex].insert( defined[argIndex]->GetName() );
-				}
+				//CSharedPtrVector<CTemp> defined = operation->GetDefinedTemps();
+				//for( unsigned int argIndex = 0; argIndex < defined.size(); ++argIndex ) {
+				//}
 
 				// initialisation use
 				CSharedPtrVector<CTemp> arguments = operation->GetArguments();
 				for( unsigned int argIndex = 0; argIndex < arguments.size(); ++argIndex ) {
-					// Получить идентификатор переменной:
-					// arguments[argIndex] => variable
 					int name = arguments[argIndex]->GetName();
-					use[codeLineIndex].insert( name );
+					assert( CodeGeneration::IsReadOperation( operation, argIndex ) ^ (!CodeGeneration::IsReadOperation( operation, argIndex )) );
+					if( !CodeGeneration::IsReadOperation( operation, argIndex ) ) {
+						// Получить идентификатор переменной:
+						// defined[argIndex] => variable
+						def[codeLineIndex].insert( name );
+					}
+					if( CodeGeneration::IsReadOperation( operation, argIndex ) ) {
+						// Получить идентификатор переменной:
+						// arguments[argIndex] => variable
+						use[codeLineIndex].insert( name );
+					}
 					temps[name] = arguments[argIndex];
 				}
 
@@ -99,9 +105,17 @@ namespace RegAlloc {
 		createTableWithLifeTime();
 		createInteractionGraph();
 
+		//#define DEBUG_WITH_PRINT
+#ifdef DEBUG_WITH_PRINT
 		doSomethingWithInteractionGraph();
+#endif // DEBUG_WITH_PRINT
 
 		removeLoops();
+
+#ifdef DEBUG_WITH_PRINT
+		doSomethingWithInteractionGraph();
+#endif // DEBUG_WITH_PRINT
+
 		return simplify( 5 );
 	}
 
@@ -162,7 +176,9 @@ namespace RegAlloc {
 				i = 0;
 			}
 		}
-		//printState();
+#ifdef DEBUG_WITH_PRINT
+		printState();
+#endif // DEBUG_WITH_PRINT
 	}
 
 	void RegisterAllocator::createInteractionGraph()
@@ -171,12 +187,13 @@ namespace RegAlloc {
 			for( auto defined = def[i].begin(); defined != def[i].end(); ++defined ) {
 				for( auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter ) {
 					if( isMove[i] ) {
-						if( *defined != *iter ) {
+						if( (*iter != *use[i].begin()) && (*defined != *iter) ) {
 							interactionGraph.insert( std::make_pair( std::make_pair( *defined, *iter ), true ) );
 							interactionGraph.insert( std::make_pair( std::make_pair( *iter, *defined ), true ) );
 						}
 					} else {
-						if( interactionGraph.find( std::make_pair( std::make_pair( *defined, *iter ), true ) ) == interactionGraph.end() ) {
+						if( interactionGraph.find( std::make_pair( std::make_pair( *defined, *iter ), true ) ) == interactionGraph.end()
+							&& (*defined != *iter) ) {
 							interactionGraph.insert( std::make_pair( std::make_pair( *defined, *iter ), false ) );
 							interactionGraph.insert( std::make_pair( std::make_pair( *iter, *defined ), false ) );
 						}
@@ -189,21 +206,19 @@ namespace RegAlloc {
 	void RegisterAllocator::removeLoops()
 	{
 		std::vector<std::pair<std::pair<int, int>, bool>> loops;
-		for (auto iter = interactionGraph.begin(); iter != interactionGraph.end(); iter++) {
+		for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); iter++ ) {
 			auto node = iter->first;
-			if (node.first == node.second) {
-				loops.push_back(*iter);
+			if( node.first == node.second ) {
+				loops.push_back( *iter );
 			}
 		}
-		for (int i = 0; i < loops.size(); i++) {
-			interactionGraph.erase(loops[i]);
+		for( int i = 0; i < loops.size(); i++ ) {
+			interactionGraph.erase( loops[i] );
 		}
 	}
 
 	std::shared_ptr<CTemp> RegisterAllocator::simplify( unsigned int numberOfColors )
 	{
-		int answer = -1;
-
 		// Для подсчёта соседей.
 		std::map<int, int> numbersOfEdges;
 		//Стек для алгоритма раскраски, bool -- для move-инструкций (если делать оптимизацию с ними).
@@ -224,8 +239,8 @@ namespace RegAlloc {
 		}
 
 		bool isAll = true;
-		int tempsCount = numbersOfEdges.size();		
-		
+		int tempsCount = numbersOfEdges.size();
+
 		for( unsigned int i = 0; i < tempsCount; ++i ) {
 			int minNumberOfEdges = tempsCount;
 			int name;
@@ -235,69 +250,91 @@ namespace RegAlloc {
 					name = iter->first;
 				}
 			}
-			
-			if (minNumberOfEdges < numberOfColors) {
-				if (constraints.find(name) != constraints.end()) {
-					colored.push_back(name);
-				}
-				else {
-					tempStack.push(std::make_pair(name, false));
+
+			if( minNumberOfEdges < numberOfColors ) {
+				if( constraints.find( name ) != constraints.end() ) {
+					colored.push_back( name );
+				} else {
+					tempStack.push( std::make_pair( name, false ) );
 				}
 				auto iter = interactionGraphCopy.begin();
-				while (interactionGraphCopy.begin() != interactionGraphCopy.end()) {
-					if ((iter->first.first == name) || (iter->first.second == name)) {
+				while( interactionGraphCopy.begin() != interactionGraphCopy.end() ) {
+					if( (iter->first.first == name) || (iter->first.second == name) ) {
 						auto toDelete = iter;
 						++iter;
-						interactionGraphCopy.erase(toDelete);
-					}
-					else {
+						interactionGraphCopy.erase( toDelete );
+					} else {
 						++iter;
 					}
-					if (iter == interactionGraphCopy.end()) {
-						numbersOfEdges.erase(name);
+					if( iter == interactionGraphCopy.end() ) {
 						break;
 					}
 				}
-			}
-			else {
-				for (auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter) {
-					candidates.push(std::make_pair(iter->first, true));
-					
-				}				
+				numbersOfEdges.erase( name );
+			} else {
+				for( auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter ) {
+					if( constraints.find( iter->first ) != constraints.end() ) {
+						colored.push_back( iter->first );
+					} else {
+						candidates.push( std::make_pair( iter->first, true ) );
+					}
+				}
 				numbersOfEdges.clear();
 				break;
 			}
 		}
 
 		// Сперва красим предопределенные вершины 
-		for (int i = 0; i < colored.size(); i++) {
-			colors.insert(std::make_pair(colored[i], constraints.find(colored[i])->second));
+		for( int i = 0; i < colored.size(); i++ ) {
+			int color = constraints.find( colored[i] )->second;
+			std::vector<int> neighboors;
+			for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
+				if( iter->first.first == colored[i] ) {
+					neighboors.push_back( iter->first.second );
+				}
+			}
+
+			bool problem = false;
+			int minName = colored[i]; 
+			for( int j = 0; j < neighboors.size(); j++ ) {
+				if( constraints.find( neighboors[j] ) != constraints.end()
+					&& constraints.find( neighboors[j] )->second == color ) {
+					problem = true;
+					if (neighboors[j] < minName) {
+						minName = neighboors[j];
+					}					
+				}
+			}
+			if (problem) {
+				return temps[minName];
+			}
+			colors.insert( std::make_pair( colored[i], constraints.find( colored[i] )->second ) );
 		}
 
 		// Красим жадно те вершины, у которых мало соседей
-		while (!tempStack.empty()) {
+		while( !tempStack.empty() ) {
 			auto top = tempStack.top();
 			tempStack.pop();
 			std::vector<int> neighboors;
-			for (auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter) {
-				if (iter->first.first == top.first) {
-					neighboors.push_back(iter->first.second);
+			for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
+				if( iter->first.first == top.first ) {
+					neighboors.push_back( iter->first.second );
 				}
 			}
 
 			std::set<int> availableNumbers;
-			for (int i = 0; i < numberOfColors; ++i) {
-				availableNumbers.insert(i);
+			for( int i = 0; i < numberOfColors; ++i ) {
+				availableNumbers.insert( i );
 			}
 
-			for (unsigned i = 0; i < neighboors.size(); ++i) {
-				auto neighboor = colors.find(neighboors[i]);
-				if (neighboor != colors.end()) {
-					availableNumbers.erase(neighboor->second);
+			for( unsigned i = 0; i < neighboors.size(); ++i ) {
+				auto neighboor = colors.find( neighboors[i] );
+				if( neighboor != colors.end() ) {
+					availableNumbers.erase( neighboor->second );
 				}
 			}
 
-			colors.insert(std::make_pair(top.first, *availableNumbers.begin()));
+			colors.insert( std::make_pair( top.first, *availableNumbers.begin() ) );
 		}
 
 
@@ -325,26 +362,29 @@ namespace RegAlloc {
 			}
 
 			if( availableNumbers.begin() == availableNumbers.end() ) {
-
-				// тут должен происходить сброс в стек
-				// Смотри Printer.cpp, всё происходт там, тут лишь сообщается о пробемной переменной
-
-				answer = top.first;
+				// Смотри CodeCreater.cpp, там сброс в стек
+				return temps[top.first];
 				break;
 			}
 			colors.insert( std::make_pair( top.first, *availableNumbers.begin() ) );
 		}
 
-		return answer < 0 ? 0 : temps[answer];
+		for( auto temp : temps ) {
+			int name = temp.first;
+			auto iterator = colors.find( name );
+			if( iterator == colors.end() ) {
+				colors[name] = 0;
+			}
+		}
+
+		return 0;
 	}
 
 	void RegisterAllocator::doSomethingWithInteractionGraph()
 	{
-
-		//for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
-		//	std::cout << iter->first.first << " -> " << iter->first.second << '\n';
-		//}
-
+		for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
+			std::cout << iter->first.first << " -> " << iter->first.second << ' ' << (iter->second ? "T" : "F") << '\n';
+		}
 	}
 
 	//void RegisterAllocator::generateTempExample()
@@ -413,21 +453,21 @@ namespace RegAlloc {
 	void RegisterAllocator::printState()
 	{
 		//assert( false );
-		std::cout << "\tuse\tdef\tin\tout\n";
+		std::cout << "\tuse\t\tdef\t\tin\t\tout\n";
 		for( int i = 0; i < numberOfVerteces; ++i ) {
 			std::cout << (i + 1) << '\t';
 			for( auto iter = use[i].begin(); iter != use[i].end(); ++iter ) {
 				std::cout << *iter << ' ';
 			}
-			std::cout << ";\t";
+			std::cout << "\t\t";
 			for( auto iter = def[i].begin(); iter != def[i].end(); ++iter ) {
 				std::cout << *iter << ' ';
 			}
-			std::cout << ";\t";
+			std::cout << "\t\t";
 			for( auto iter = live_in[i].begin(); iter != live_in[i].end(); ++iter ) {
 				std::cout << *iter << ' ';
 			}
-			std::cout << ";\t";
+			std::cout << "\t\t";
 			for( auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter ) {
 				std::cout << *iter << ' ';
 			}

@@ -65,7 +65,11 @@ namespace CodeGeneration {
 					if( iterator != colors.end() ) {
 						result << RegisterName( iterator->second );
 					} else {
+#ifndef DEBUG_STACK_TEMPS
+						assert( false );
+#else
 						result << registerPrefix << regNum;
+#endif // !DEBUG_STACK_TEMPS
 					}
 					break;
 				}
@@ -121,15 +125,29 @@ namespace CodeGeneration {
 		return GetArguments()[0];
 	}
 
+	std::wstring CMoveOperation::ToCode( std::map<int, int>& colors )
+	{
+#ifndef DEBUG_STACK_TEMPS
+		if( (colors.find( GetTo()->GetName() )->second) == (colors.find( GetFrom()->GetName() )->second) ) {
+			return L"; Useless move";
+		} else {
+			return COperation::ToCode( colors );
+		}
+#else
+		return COperation::ToCode( colors );
+#endif // !DEBUG_STACK_TEMPS
+	}
+
 	//-----------------------------------------------------------------------------------------------------------------
 
 	std::wstring CCallOperation::ToCode( std::map<int, int>& colors )
 	{
 		std::wstringstream result;
 
+		result << COperation::ToCode( colors );
 		// первый аргумент зарезервирован под возвращаемое значение
 		assert( GetArguments().size() == 1 );
-		result << COperation::ToCode( colors );
+		// result << std::endl << L"TODO: TempInfo: " << RegisterName( colors[GetArguments()[0]->GetName()] );
 		assert( colors[GetArguments()[0]->GetName()] == 0 );
 
 		return result.str();

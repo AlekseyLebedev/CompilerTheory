@@ -7,6 +7,9 @@
 extern std::shared_ptr<AbstractTreeGenerator::CStringTable> glabalStringTable;
 
 namespace SymbolTable {
+	CMethodInfo::CMethodInfo()
+	{
+	}
 
 	int CMethodInfo::GetReturnType() const
 	{
@@ -80,6 +83,7 @@ namespace SymbolTable {
 	std::shared_ptr<IRTree::Label> CMethodInfo::GetLabel() const
 	{
 		if( label == 0 ) {
+			assert( false );
 			++methodCount;
 			label = std::make_shared<IRTree::Label>( -methodCount, glabalStringTable->wfind( name ) );
 		}
@@ -89,6 +93,8 @@ namespace SymbolTable {
 	void CMethodInfo::SetName( int _name )
 	{
 		name = _name;
+		++methodCount;
+		label = std::make_shared<IRTree::Label>( -methodCount, glabalStringTable->wfind( name ) );
 	}
 
 	int CMethodInfo::methodCount = 0;

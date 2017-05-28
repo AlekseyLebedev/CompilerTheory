@@ -499,14 +499,20 @@ namespace CodeGeneration {
 					std::shared_ptr<IRTree::IRTEBinop> sourcebinop = DYNAMIC_CAST<IRTree::IRTEBinop>( sourceMem->GetExp() );
 					std::shared_ptr<CTemp> distTemp = visitExpression( distMem->GetExp() );
 					if( sourcebinop != 0 ) {
-						operation = NEW<COperation>( OT_MoveFramePointerPlusConstToMem );
-						operation->GetArguments().push_back( distTemp );
 						assert( sourcebinop->GetBinop() == IRTree::BINOP_PLUS );
-						assert( DYNAMIC_CAST<IRTree::IAccess>( sourcebinop->GetLeft() ) != 0 );
-						assert( DYNAMIC_CAST<IRTree::IAccess>( sourcebinop->GetLeft() )->GetName() == IRTree::CFrame::FramePointerName );
-						std::shared_ptr<IRTree::IRTEConst> rightconst = DYNAMIC_CAST<IRTree::IRTEConst>( sourcebinop->GetRight() );
-						assert( rightconst != 0 );
-						operation->GetConstants().push_back( rightconst->GetValueAsInt() );
+						std::shared_ptr<IRTree::IAccess> sourcebinopLeftAccess = DYNAMIC_CAST<IRTree::IAccess>( sourcebinop->GetLeft() );
+						if( sourcebinopLeftAccess ) {
+							operation = NEW<COperation>( OT_MoveFramePointerPlusConstToMem );
+							operation->GetArguments().push_back( distTemp );
+							assert( sourcebinopLeftAccess->GetName() == IRTree::CFrame::FramePointerName );
+							std::shared_ptr<IRTree::IRTEConst> rightconst = DYNAMIC_CAST<IRTree::IRTEConst>( sourcebinop->GetRight() );
+							assert( rightconst != 0 );
+							operation->GetConstants().push_back( rightconst->GetValueAsInt() );
+						} else {
+							operation = NEW<COperation>( OT_Movem );
+							operation->GetArguments().push_back( distTemp );
+							operation->GetArguments().push_back( visitExpression( sourcebinop ) );
+						}
 					} else {
 						operation = NEW<COperation>( OT_Movem );
 						std::shared_ptr<CTemp> sourceTemp = visitExpression( sourceMem->GetExp() );
@@ -542,7 +548,8 @@ namespace CodeGeneration {
 							operation->GetConstants().push_back( binopRightConst->GetValue() );
 						}
 					} else {
-						assert( false );
+						operation = NEW<COperation>( OT_StoreTemp );
+						operation->GetArguments().push_back( visitExpression( distExpBinop ) );
 					}
 				} else  if( distExpConst ) {
 					assert( false ); // TODO: очень странно записывать что-то в константу
@@ -582,9 +589,7 @@ namespace CodeGeneration {
 				operation = NEW<CMoveOperation>( visitExpression( source ), temp );
 			} else if( sourceTemp ) {
 				std::shared_ptr<CTemp> temp = sourceTemp->GetTemp();
-				operation = NEW<COperation>( OT_StoreTemps );
-				operation->GetArguments().push_back( temp );
-				operation->GetArguments().push_back( visitExpression( dist ) );
+				operation = NEW<CMoveOperation>( temp, visitExpression( dist ) );
 			}
 		}
 		assert( operation );

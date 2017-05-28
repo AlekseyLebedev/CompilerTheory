@@ -1,4 +1,5 @@
-﻿#include "IRTLabel.h"
+﻿#include <cassert>
+#include "IRTLabel.h"
 
 namespace IRTree {
 	Label::Label() : Label( counter++, L"" )
@@ -22,9 +23,23 @@ namespace IRTree {
 	std::wstring Label::GetAssmeblerName()
 	{
 		if( name < 0 ) {
-			return L"lbln" + std::to_wstring( -name );
+			return L"lbln" + std::to_wstring( -name ) + L"_" + info;
 		} else {
-			return L"lblp" + std::to_wstring( name );
+			std::wstring suffix;
+			switch( name ) {
+				case 0:
+					assert( false );
+					break;
+				case 1:
+					suffix = L"_alloc";
+					break;
+				case 2:
+					suffix = L"_println";
+					break;
+				default:
+					break;
+			}
+			return L"lblp" + std::to_wstring( name ) + suffix;
 		}
 	}
 

@@ -13,6 +13,7 @@ namespace SymbolTable {
 	// информация о методах
 	class CMethodInfo {
 	public:
+		CMethodInfo();
 		int GetReturnType() const;
 		void SetReturnType( const int id );
 		const CVariableInfo & GetVarInfo( const int id, const AbstractTreeGenerator::INode * brokenNode = 0 ) const;
