@@ -582,9 +582,7 @@ namespace CodeGeneration {
 				operation = NEW<CMoveOperation>( visitExpression( source ), temp );
 			} else if( sourceTemp ) {
 				std::shared_ptr<CTemp> temp = sourceTemp->GetTemp();
-				operation = NEW<COperation>( OT_StoreTemps );
-				operation->GetArguments().push_back( temp );
-				operation->GetArguments().push_back( visitExpression( dist ) );
+				operation = NEW<CMoveOperation>( temp, visitExpression( dist ) );
 			}
 		}
 		assert( operation );

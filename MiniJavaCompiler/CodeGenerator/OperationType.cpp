@@ -104,8 +104,6 @@ namespace CodeGeneration {
 				return L"STORE M[!] '";
 			case OT_StoreTemp:
 				return L"STORE M['] '";
-			case OT_StoreTemps:
-				return L"STPRE ' '";
 			case OT_Push:
 				return L"PUSH '";
 			case OT_Pop:

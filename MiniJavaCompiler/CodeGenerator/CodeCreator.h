@@ -49,6 +49,18 @@ namespace CodeGeneration
 		int argcount = operation->GetArguments().size();
 		switch( argcount ) {
 			case 2:
+				switch( operation->GetType() ) {
+					case OT_CMP:
+					case OT_Movem:
+					case OT_Store:
+					case OT_StoreTemp:
+						return true;
+						// case OT_...:
+						// 	return false;
+					default:
+						return index > 0;
+				}
+				break;
 			case 3:
 				return index > 0;
 				break;
@@ -74,10 +86,8 @@ namespace CodeGeneration
 						assert( false );
 						break;
 				}
-				break;
 			default:
-				assert( false );
-				break;
+				return false;
 		}
 	}
 } // namespace CodeGeneration

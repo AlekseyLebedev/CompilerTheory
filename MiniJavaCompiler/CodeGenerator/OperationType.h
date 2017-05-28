@@ -54,7 +54,6 @@ namespace CodeGeneration {
 		OT_StoreToFramePointerPlusConst, // Store в память MEM(FramePointer + const )
 		OT_StoreConst, // Store c одной константой
 		OT_StoreTemp, // Store c одним Temp
-		OT_StoreTemps, // Store с двумя Temp 
 		OT_Push, // Push на стэк
 		OT_Pop, // Pop со стэка
 	};
