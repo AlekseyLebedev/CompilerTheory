@@ -408,7 +408,7 @@ namespace CodeGeneration {
 			code.push_back( pushOperation );
 		}
 		code.push_back( operation );
-		std::shared_ptr<COperation> clearArgumentOperation = NEW<COperation>( OT_Push );
+		std::shared_ptr<COperation> clearArgumentOperation = NEW<COperation>( OT_AddEspConst );
 		clearArgumentOperation->GetConstants().push_back( callArguments.size()*SymbolTable::CClassInfo::MachineWordSize );
 		code.push_back( clearArgumentOperation );
 

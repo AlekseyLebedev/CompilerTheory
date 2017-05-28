@@ -126,13 +126,11 @@ namespace CodeGeneration {
 	std::wstring CCallOperation::ToCode( std::map<int, int>& colors )
 	{
 		std::wstringstream result;
-		// TODO сохранение регистров!!!
 
 		// первый аргумент зарезервирован под возвращаемое значение
 		assert( GetArguments().size() == 1 );
-		result << COperation::ToCode( colors ) << std::endl;
+		result << COperation::ToCode( colors );
 		assert( GetArguments()[0]->GetName() == 0 );
-		result << L"; end call" << std::endl;
 
 		return result.str();
 	}
