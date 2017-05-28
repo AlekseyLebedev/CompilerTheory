@@ -63,27 +63,7 @@ namespace CodeGeneration {
 					int regNum = arguments[tempIndex++]->GetName();
 					auto iterator = colors.find( regNum );
 					if( iterator != colors.end() ) {
-						switch( iterator->second ) {
-							case 0:
-								result << "%eax";
-								break;
-							case 1:
-								result << "%ebx";
-								break;
-							case 2:
-								result << "%ecx";
-								break;
-							case 3:
-								result << "%edx";
-								break;
-							case 4:
-								result << "%eex";
-								break;
-
-							default:
-								assert( false );
-								break;
-						}
+						result << RegisterName( iterator->second );
 					} else {
 						result << registerPrefix << regNum;
 					}
@@ -107,6 +87,26 @@ namespace CodeGeneration {
 		assert( jumpIndex == jumpPoints.size() );
 		assert( tempIndex == arguments.size() || instructionCode == OT_Call );
 		return result.str();
+	}
+
+	std::wstring COperation::RegisterName( int registerIndex )
+	{
+		switch( registerIndex ) {
+			case 0:
+				return L"%eax";
+			case 1:
+				return L"%ebx";
+			case 2:
+				return L"%ecx";
+			case 3:
+				return L"%edx";
+			case 4:
+				return L"%eex";
+
+			default:
+				assert( false );
+				return L"Internal Program Error";
+		}
 	}
 
 	//-----------------------------------------------------------------------------------------------------------------

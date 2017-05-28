@@ -21,12 +21,33 @@ namespace CodeGeneration
 		assert( !output.is_open() );
 	}
 
-	void CAssemlerCodePrinter::PrintBlock( CSharedPtrVector<IInstruction>& code, std::map<int, int>& reg )
+	void CAssemlerCodePrinter::PrintFrame( CSharedPtrVector<IInstruction>& code, std::map<int, int>& reg, std::shared_ptr<CFrame>& frame )
 	{
+		// Вычисление callee-save регистров
+		std::set<int> calleeSaveRegisters;
+		for( auto i = reg.begin(); i != reg.end(); ++i ) {
+			int regName = i->second;
+			if( regName != 0 ) { // %eax caller-save (и исопльзуется для возвращаемого значения)
+				calleeSaveRegisters.insert( regName );
+			}
+		}
+
+		// Пролог
 		output << std::endl;
+		output << "; New frame: " << frame->GetLabel()->GetInfo() << std::endl;
+		output << frame->GetLabel()->GetAssmeblerName() << ":" << std::endl;
+		output << L"PUSH %ebp" << std::endl;
+		output << L"MOVE %ebp %esp" << std::endl;
+		output << L"SUB %esp " << frame->AllocatedMemory() << std::endl;
+		for( auto reg : calleeSaveRegisters ) {
+			output << L"PUSH " << COperation::RegisterName( reg ) << std::endl;
+		}
+		output << "; End prolog " << std::endl;
+
 		for( size_t i = 0; i < code.size(); i++ ) {
 			output << code[i]->ToCode( reg ) << std::endl;
 		}
+		output << std::endl;
 		//TODO
 		output.flush();
 	}
@@ -112,11 +133,11 @@ namespace CodeGeneration
 				std::shared_ptr<CTemp> problemTemp = regAlloc.Work();
 				if( problemTemp == 0 ) {
 					isRepeat = false;
-					assemblePrinter.PrintBlock( commands[blockIndex], regAlloc.GetColors() );
+					assemblePrinter.PrintFrame( commands[blockIndex], regAlloc.GetColors(), frames[blockIndex] );
 				} else {
 					isRepeat = true;
-					// Test
-					assemblePrinter.PrintBlock( commands[blockIndex], regAlloc.GetColors() );
+					// Test. TODO: remove
+					assemblePrinter.PrintFrame( commands[blockIndex], regAlloc.GetColors(), frames[blockIndex] );
 
 					addTempToStack( blockIndex, problemTemp );
 				}

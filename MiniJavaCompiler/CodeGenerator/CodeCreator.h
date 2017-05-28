@@ -15,7 +15,7 @@ namespace CodeGeneration
 		CAssemlerCodePrinter( const std::wstring& filename );
 		~CAssemlerCodePrinter();
 
-		void PrintBlock( CSharedPtrVector<IInstruction>& code, std::map<int, int>& colors );
+		void PrintFrame( CSharedPtrVector<IInstruction>& code, std::map<int, int>& colors, std::shared_ptr<IRTree::CFrame>& frame );
 
 		void Close();
 

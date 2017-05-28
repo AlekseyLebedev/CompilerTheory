@@ -53,6 +53,8 @@ namespace CodeGeneration {
 		TOperationType GetType() const;
 		virtual std::wstring ToCode( std::map<int, int>& ) override;
 
+		static std::wstring RegisterName( int registerIndex );
+
 	private:
 		TOperationType instructionCode;
 		CSharedPtrVector<CTemp> arguments;
