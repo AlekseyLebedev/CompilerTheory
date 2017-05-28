@@ -105,11 +105,11 @@ namespace RegAlloc {
 		createTableWithLifeTime();
 		createInteractionGraph();
 
-//#define DEBUG_WITH_PRINT
+		//#define DEBUG_WITH_PRINT
 #ifdef DEBUG_WITH_PRINT
 		doSomethingWithInteractionGraph();
 #endif // DEBUG_WITH_PRINT
-		
+
 		removeLoops();
 
 #ifdef DEBUG_WITH_PRINT
@@ -187,13 +187,13 @@ namespace RegAlloc {
 			for( auto defined = def[i].begin(); defined != def[i].end(); ++defined ) {
 				for( auto iter = live_out[i].begin(); iter != live_out[i].end(); ++iter ) {
 					if( isMove[i] ) {
-						if( ( *iter != *use[i].begin() ) && ( *defined != *iter ) ) {
+						if( (*iter != *use[i].begin()) && (*defined != *iter) ) {
 							interactionGraph.insert( std::make_pair( std::make_pair( *defined, *iter ), true ) );
 							interactionGraph.insert( std::make_pair( std::make_pair( *iter, *defined ), true ) );
 						}
 					} else {
-						if( interactionGraph.find( std::make_pair( std::make_pair( *defined, *iter ), true ) ) == interactionGraph.end() 
-							&& ( *defined != *iter ) ) {
+						if( interactionGraph.find( std::make_pair( std::make_pair( *defined, *iter ), true ) ) == interactionGraph.end()
+							&& (*defined != *iter) ) {
 							interactionGraph.insert( std::make_pair( std::make_pair( *defined, *iter ), false ) );
 							interactionGraph.insert( std::make_pair( std::make_pair( *iter, *defined ), false ) );
 						}
@@ -219,8 +219,6 @@ namespace RegAlloc {
 
 	std::shared_ptr<CTemp> RegisterAllocator::simplify( unsigned int numberOfColors )
 	{
-		int answer = -1;
-
 		// Для подсчёта соседей.
 		std::map<int, int> numbersOfEdges;
 		//Стек для алгоритма раскраски, bool -- для move-инструкций (если делать оптимизацию с ними).
@@ -268,11 +266,11 @@ namespace RegAlloc {
 					} else {
 						++iter;
 					}
-					if( iter == interactionGraphCopy.end() ) {						
+					if( iter == interactionGraphCopy.end() ) {
 						break;
 					}
 				}
-				numbersOfEdges.erase(name);
+				numbersOfEdges.erase( name );
 			} else {
 				for( auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter ) {
 					if( constraints.find( iter->first ) != constraints.end() ) {
@@ -299,7 +297,7 @@ namespace RegAlloc {
 			for( int j = 0; j < neighboors.size(); j++ ) {
 				if( constraints.find( neighboors[j] ) != constraints.end()
 					&& constraints.find( neighboors[j] )->second == color ) {
-					answer = colored[i];
+					int answer = colored[i];
 					return answer < 0 ? 0 : temps[answer];
 				}
 			}
@@ -357,23 +355,28 @@ namespace RegAlloc {
 			}
 
 			if( availableNumbers.begin() == availableNumbers.end() ) {
-
-				// тут должен происходить сброс в стек
-				// Смотри Printer.cpp, всё происходт там, тут лишь сообщается о пробемной переменной
-
-				answer = top.first;
+				// Смотри CodeCreater.cpp, там сброс в стек
+				return temps[top.first];
 				break;
 			}
 			colors.insert( std::make_pair( top.first, *availableNumbers.begin() ) );
 		}
 
-		return answer < 0 ? 0 : temps[answer];
+		for( auto temp : temps ) {
+			int name = temp.first;
+			auto iterator = colors.find( name );
+			if( iterator == colors.end() ) {
+				colors[name] = 0;
+			}
+		}
+
+		return 0;
 	}
 
 	void RegisterAllocator::doSomethingWithInteractionGraph()
 	{
 		for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
-			std::cout << iter->first.first << " -> " << iter->first.second << ' ' << ( iter->second ? "T" : "F" ) << '\n';
+			std::cout << iter->first.first << " -> " << iter->first.second << ' ' << (iter->second ? "T" : "F") << '\n';
 		}
 	}
 
