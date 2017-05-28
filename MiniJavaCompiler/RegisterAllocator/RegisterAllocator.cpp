@@ -1,4 +1,5 @@
 ﻿#include "RegisterAllocator.h"
+#include "..\CodeGenerator\CodeCreator.h"
 
 #define DYNAMIC_CAST std::dynamic_pointer_cast
 
@@ -74,7 +75,9 @@ namespace RegAlloc {
 				for( unsigned int argIndex = 0; argIndex < defined.size(); ++argIndex ) {
 					// Получить идентификатор переменной:
 					// defined[argIndex] => variable
-					def[codeLineIndex].insert( defined[argIndex]->GetName() );
+					if( !CodeGeneration::IsReadOperation( operation, argIndex ) ) {
+						def[codeLineIndex].insert( defined[argIndex]->GetName() );
+					}
 				}
 
 				// initialisation use
@@ -82,9 +85,11 @@ namespace RegAlloc {
 				for( unsigned int argIndex = 0; argIndex < arguments.size(); ++argIndex ) {
 					// Получить идентификатор переменной:
 					// arguments[argIndex] => variable
-					int name = arguments[argIndex]->GetName();
-					use[codeLineIndex].insert( name );
-					temps[name] = arguments[argIndex];
+					if( CodeGeneration::IsReadOperation( operation, argIndex ) ) {
+						int name = arguments[argIndex]->GetName();
+						use[codeLineIndex].insert( name );
+						temps[name] = arguments[argIndex];
+					}
 				}
 
 				// initialisation isMove
@@ -189,14 +194,14 @@ namespace RegAlloc {
 	void RegisterAllocator::removeLoops()
 	{
 		std::vector<std::pair<std::pair<int, int>, bool>> loops;
-		for (auto iter = interactionGraph.begin(); iter != interactionGraph.end(); iter++) {
+		for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); iter++ ) {
 			auto node = iter->first;
-			if (node.first == node.second) {
-				loops.push_back(*iter);
+			if( node.first == node.second ) {
+				loops.push_back( *iter );
 			}
 		}
-		for (int i = 0; i < loops.size(); i++) {
-			interactionGraph.erase(loops[i]);
+		for( int i = 0; i < loops.size(); i++ ) {
+			interactionGraph.erase( loops[i] );
 		}
 	}
 
@@ -224,8 +229,8 @@ namespace RegAlloc {
 		}
 
 		bool isAll = true;
-		int tempsCount = numbersOfEdges.size();		
-		
+		int tempsCount = numbersOfEdges.size();
+
 		for( unsigned int i = 0; i < tempsCount; ++i ) {
 			int minNumberOfEdges = tempsCount;
 			int name;
@@ -235,89 +240,85 @@ namespace RegAlloc {
 					name = iter->first;
 				}
 			}
-			
-			if (minNumberOfEdges < numberOfColors) {
-				if (constraints.find(name) != constraints.end()) {
-					colored.push_back(name);
-				}
-				else {
-					tempStack.push(std::make_pair(name, false));
+
+			if( minNumberOfEdges < numberOfColors ) {
+				if( constraints.find( name ) != constraints.end() ) {
+					colored.push_back( name );
+				} else {
+					tempStack.push( std::make_pair( name, false ) );
 				}
 				auto iter = interactionGraphCopy.begin();
-				while (interactionGraphCopy.begin() != interactionGraphCopy.end()) {
-					if ((iter->first.first == name) || (iter->first.second == name)) {
+				while( interactionGraphCopy.begin() != interactionGraphCopy.end() ) {
+					if( (iter->first.first == name) || (iter->first.second == name) ) {
 						auto toDelete = iter;
 						++iter;
-						interactionGraphCopy.erase(toDelete);
-					}
-					else {
+						interactionGraphCopy.erase( toDelete );
+					} else {
 						++iter;
 					}
-					if (iter == interactionGraphCopy.end()) {
-						numbersOfEdges.erase(name);
+					if( iter == interactionGraphCopy.end() ) {
+						numbersOfEdges.erase( name );
 						break;
 					}
 				}
-			}
-			else {
-				for (auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter) {
-					if (constraints.find(iter->first) != constraints.end()) {
-						colored.push_back(iter->first);
+			} else {
+				for( auto iter = numbersOfEdges.begin(); iter != numbersOfEdges.end(); ++iter ) {
+					if( constraints.find( iter->first ) != constraints.end() ) {
+						colored.push_back( iter->first );
+					} else {
+						candidates.push( std::make_pair( iter->first, true ) );
 					}
-					else {
-						candidates.push(std::make_pair(iter->first, true));
-					}
-					
-				}				
+
+				}
 				numbersOfEdges.clear();
 				break;
 			}
 		}
 
 		// Сперва красим предопределенные вершины 
-		for (int i = 0; i < colored.size(); i++) {
-			int color  = constraints.find(colored[i])->second;
+		for( int i = 0; i < colored.size(); i++ ) {
+			int color = constraints.find( colored[i] )->second;
 			std::vector<int> neighboors;
-			for (auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter) {
-				if (iter->first.first == colored[i]) {
-					neighboors.push_back(iter->first.second);
+			for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
+				if( iter->first.first == colored[i] ) {
+					neighboors.push_back( iter->first.second );
 				}
 			}
-		
-			for (int j = 0; j < neighboors.size(); j++) {
-				if (constraints.find(neighboors[j]) != constraints.end()
-				&& constraints.find(neighboors[j])->second == color) {
+
+			for( int j = 0; j < neighboors.size(); j++ ) {
+				if( constraints.find( neighboors[j] ) != constraints.end()
+					&& constraints.find( neighboors[j] )->second == color ) {
 					answer = colored[i];
 					return answer < 0 ? 0 : temps[answer];
 				}
 			}
-			colors.insert(std::make_pair(colored[i], constraints.find(colored[i])->second));
+			colors.insert( std::make_pair( colored[i], constraints.find( colored[i] )->second ) );
 		}
 
 		// Красим жадно те вершины, у которых мало соседей
-		while (!tempStack.empty()) {
+		while( !tempStack.empty() ) {
 			auto top = tempStack.top();
 			tempStack.pop();
 			std::vector<int> neighboors;
-			for (auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter) {
-				if (iter->first.first == top.first) {
-					neighboors.push_back(iter->first.second);
+			for( auto iter = interactionGraph.begin(); iter != interactionGraph.end(); ++iter ) {
+				if( iter->first.first == top.first ) {
+					neighboors.push_back( iter->first.second );
 				}
 			}
 
 			std::set<int> availableNumbers;
-			for (int i = 0; i < numberOfColors; ++i) {
-				availableNumbers.insert(i);
+			for( int i = 0; i < numberOfColors; ++i ) {
+				availableNumbers.insert( i );
 			}
 
-			for (unsigned i = 0; i < neighboors.size(); ++i) {
-				auto neighboor = colors.find(neighboors[i]);
-				if (neighboor != colors.end()) {
-					availableNumbers.erase(neighboor->second);
+			for( unsigned i = 0; i < neighboors.size(); ++i ) {
+				auto neighboor = colors.find( neighboors[i] );
+				if( neighboor != colors.end() ) {
+					availableNumbers.erase( neighboor->second );
 				}
 			}
 
-			colors.insert(std::make_pair(top.first, *availableNumbers.begin()));
+			colors.insert( std::make_pair( top.first, *availableNumbers.begin() ) );
 		}
 
 
