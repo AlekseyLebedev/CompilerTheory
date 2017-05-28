@@ -49,11 +49,15 @@ namespace CodeGeneration
 				switch( operation->GetType() ) {
 					case OT_Push:
 					case OT_StoreToFramePointerPlusConst:
+					case OT_CMPC:
+					case OT_MoveMemToEax:
+					case OT_MoveTempToEax:
 						return true;
 					case OT_Pop:
 					case OT_MemFramePointerPlusConst:
 					case OT_Call:
 					case OT_LoadConst:
+					case OT_MemConst:
 						return false;
 					default:
 						// ДОБАВЬ В ВЕТКИ ВЫШЕ!!!!!!

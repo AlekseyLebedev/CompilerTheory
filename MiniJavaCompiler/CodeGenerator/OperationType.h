@@ -56,7 +56,6 @@ namespace CodeGeneration {
 		OT_StoreTemps, // Store с двумя Temp 
 		OT_Push, // Push на стэк
 		OT_Pop, // Pop со стэка
-		OT_StoreRegisters // Служебная команда сохранения регистров. Сложно развертывается. В ассеблере нет
 	};
 
 	std::wstring GetOperationString( TOperationType type );
